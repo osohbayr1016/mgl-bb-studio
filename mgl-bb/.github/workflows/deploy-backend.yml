@@ -1,0 +1,97 @@
+# Deploy the mgl-progress-api Worker, including the IFC → .xkt converter
+# ⚠️ ЭНЭ WORKFLOW ОДООГООР АЖИЛЛАХГҮЙ.  Deploy нь локал wrangler CLI-ээр
+#    хийгддэг (CLAUDE.md → "Deploying").  Энд үлдээсэн шалтгаан нь ирээдүйд
+#    CI-г сэргээхэд суурь болгох.  Сэргээхийн өмнө репогийн Settings →
+#    Secrets/Variables дотор доорхыг тохируулна:
+#      secrets.CLOUDFLARE_API_TOKEN     — deploy эрхтэй токен
+#      secrets.CLOUDFLARE_ACCOUNT_ID    — account id (ӨМНӨ НЬ ЭНД ШУУД
+#                                         БИЧИГДСЭН БАЙСАН — устгасан)
+
+# container. Hosted runners have Docker available, so wrangler can build
+# and push the container image as part of the deploy — no local Docker
+# required on developer machines.
+#
+# REQUIRED REPOSITORY SECRETS:
+#   - CLOUDFLARE_API_TOKEN          API token with permissions:
+#                                     * Workers Scripts:Edit
+#                                     * D1:Edit
+#                                     * Workers R2 Storage:Edit
+#                                     * Workers Containers:Edit
+#                                     * Workers AI:Edit
+#                                     * Browser Rendering:Edit
+#   - CONVERT_CALLBACK_SECRET       Long random string. The converter
+#                                   container includes this header on
+#                                   callbacks; the Worker rejects any
+#                                   call missing it. Generate with e.g.
+#                                   `openssl rand -hex 32`.
+#
+# Triggers: pushes to main that touch the backend, or manual dispatch.
+
+name: Deploy backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+# Only one deploy at a time — newer pushes wait for the current run to
+# finish so we don't race two `wrangler deploy` invocations against the
+# same Worker.
+concurrency:
+  group: deploy-backend
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install backend deps
+        run: npm ci --legacy-peer-deps
+
+      # Apply any unapplied D1 migrations FIRST. If we deployed code that
+      # depends on a new column before applying the migration, the live
+      # Worker would 500 until the migration ran.
+      - name: Apply D1 migrations
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npm run db:migrate:all:remote
+
+      # Push the shared callback secret. `wrangler secret put` reads
+      # from stdin when run non-interactively, so we pipe it in. This is
+      # idempotent — repeated runs simply update the secret in place.
+      - name: Set CONVERT_CALLBACK_SECRET
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          SECRET: ${{ secrets.CONVERT_CALLBACK_SECRET }}
+        run: |
+          if [ -z "$SECRET" ]; then
+            echo "CONVERT_CALLBACK_SECRET is not set in repo secrets — aborting" >&2
+            exit 1
+          fi
+          printf '%s' "$SECRET" | npx wrangler secret put CONVERT_CALLBACK_SECRET
+
+      # Final step: build the converter container image and deploy the
+      # Worker. `wrangler deploy` handles both — it sees the
+      # [[containers]] block in wrangler.toml, builds the Dockerfile at
+      # backend/converter/, pushes the image to Cloudflare's registry,
+      # then rolls out the Worker that references it.
+      - name: Deploy Worker + container
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: npx wrangler deploy

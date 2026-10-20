@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mglai-reasoning-v1-case/1",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "category",
+    "difficulty",
+    "languages",
+    "modes",
+    "expected",
+    "provenance"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(MN|NR|AR|ER|CL|HT|CV|XS)-[0-9]{3}$"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "category": {
+      "enum": [
+        "mongolian-understanding",
+        "norm-retrieval",
+        "applied-rule",
+        "engineering-reasoning",
+        "clarification",
+        "hallucination-traps",
+        "conversation",
+        "cross-source"
+      ]
+    },
+    "difficulty": {
+      "enum": [
+        "easy",
+        "medium",
+        "hard"
+      ]
+    },
+    "languages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "modes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "MODEL_ONLY_EVIDENCE",
+          "FULL_RAG",
+          "ADVERSARIAL_SYSTEM"
+        ]
+      }
+    },
+    "question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "turns": {
+      "type": "array",
+      "minItems": 1
+    },
+    "evidence_fixture": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "adversarial_fixture": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "expected": {
+      "type": "object",
+      "minProperties": 1
+    },
+    "safety": {
+      "type": "object"
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "source",
+        "review_status"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review_status": {
+          "enum": [
+            "REFERENCE_VERIFIED",
+            "SYNTHETIC_DETERMINISTIC",
+            "PORTED_FROM_EXISTING_GOLD",
+            "PORTED_FROM_EXISTING_HELDOUT",
+            "NEEDS_HUMAN_REVIEW",
+            "HUMAN_REVIEWED"
+          ]
+        }
+      }
+    },
+    "variants": {
+      "type": "array"
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "question"
+      ]
+    },
+    {
+      "required": [
+        "turns"
+      ]
+    }
+  ],
+  "additionalProperties": true
+}

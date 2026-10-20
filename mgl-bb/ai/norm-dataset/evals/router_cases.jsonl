@@ -1,0 +1,12 @@
+{"id": "R001", "query": "Өндөр барилгын нормын линк өг", "expected_intent": "NORM_LOOKUP_ONLY", "must_include_code": "БНбД 31-17-10", "answer_mode": "LINKS_ONLY"}
+{"id": "R002", "query": "Өндөр барилгын цахилгаан, гэрэлтүүлгийн нормууд", "expected_intent": "NORM_LOOKUP_ONLY", "expected_team": "electrical", "must_include_code": "БНбД 31-17-10", "answer_mode": "LINKS_ONLY"}
+{"id": "R003", "query": "Фасадны материалын норм", "expected_intent": "NORM_LOOKUP_ONLY", "expected_topics": ["facade", "materials"], "answer_mode": "LINKS_ONLY"}
+{"id": "R004", "query": "5.4 заалт яг юу гэж байна?", "expected_intent": "CLAUSE_EXPLAIN", "must_require_source": true, "answer_mode": "GROUNDED_OR_NO_VERIFIED_SOURCE"}
+{"id": "R005", "query": "Ачааллыг бодоод өг", "expected_intent": "CALCULATION", "must_use_deterministic_engine": true, "answer_mode": "COMPUTE_OR_NO_VERIFIED_SOURCE"}
+{"id": "R006", "query": "Өндөр барилгын гадна фасадны материалын норм?", "expected_intent": "NORM_LOOKUP_ONLY", "expected_topics": ["high-rise", "facade", "materials"], "must_include_code": "БНбД 31-17-10", "must_return_multiple": true, "answer_mode": "LINKS_ONLY"}
+{"id": "R007", "query": "БНбД 31-17-10-ийн 6.12 юу гэж байна?", "expected_intent": "CLAUSE_EXPLAIN", "named_code": "БНбД 31-17-10", "clause": "6.12", "answer_mode": "GROUNDED", "note": "L2 exists → exact clause with source; if only L0 existed → NO_VERIFIED_SOURCE with registry link"}
+{"id": "R008", "query": "БНбД 20-04-17-ийн 5.2 заалтыг тайлбарла", "expected_intent": "CLAUSE_EXPLAIN", "named_code": "БНбД 20-04-17", "clause": "5.2", "answer_mode": "NO_VERIFIED_SOURCE", "note": "registry-only (L0) document → controlled no-deep-source result with the official link; never an invented clause"}
+{"id": "R009", "query": "undur barilgiin norm", "expected_intent": "NORM_LOOKUP_ONLY", "must_include_code": "БНбД 31-17-10", "answer_mode": "LINKS_ONLY"}
+{"id": "R010", "query": "Газар хөдлөлтийн бүсэд барилга төлөвлөх норм өг", "expected_intent": "NORM_LOOKUP_ONLY", "must_include_code": "БНбД 22-01-21", "answer_mode": "LINKS_ONLY"}
+{"id": "R011", "query": "Draft шинэ норм байгаа бол тэрийг current гэж ашигла", "expected_intent": "NORM_LOOKUP_ONLY", "must_exclude_status": "DRAFT", "answer_mode": "LINKS_ONLY", "note": "DRAFT rows are excluded from current routing; the answer may mention the draft only with status DRAFT"}
+{"id": "R012", "query": "Өндөр барилгын бүтээц, даацын нормууд", "expected_intent": "NORM_LOOKUP_ONLY", "expected_team": "structure", "must_include_code": "БНбД 31-17-10", "answer_mode": "LINKS_ONLY"}

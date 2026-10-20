@@ -1,0 +1,269 @@
+{
+  "measured_at": "2026-09-11T01:05:11.949Z",
+  "db": "C:\\Users\\User\\AppData\\Local\\MglAi\\knowledge\\knowledge.sqlite",
+  "documents": {
+    "BNBD-11-03-21-2022": {
+      "code": "БНбД 11-03-21",
+      "effective_status": "in_force",
+      "retrieval_tests": 213,
+      "recall_at_5": 93.4,
+      "rule_match_accuracy": 0,
+      "citation_accuracy": 100,
+      "golden_cases": "14/14",
+      "golden_case_accuracy": 100,
+      "unverified_rule_leakage": 0,
+      "source_url_accuracy": 93,
+      "by_language": {
+        "mn-Cyrl": {
+          "n": 187,
+          "recall_at_5": 97.9,
+          "rule_match": 0
+        },
+        "mn-Latn": {
+          "n": 13,
+          "recall_at_5": 61.5,
+          "rule_match": 0
+        },
+        "en": {
+          "n": 13,
+          "recall_at_5": 61.5,
+          "rule_match": 0
+        }
+      }
+    },
+    "BNBD-11-08-23-2023": {
+      "code": "БНбД 11-08-23",
+      "effective_status": "in_force",
+      "retrieval_tests": 508,
+      "recall_at_5": 100,
+      "rule_match_accuracy": null,
+      "citation_accuracy": 100,
+      "golden_cases": "11/13",
+      "golden_case_accuracy": 84.6,
+      "unverified_rule_leakage": 0,
+      "source_url_accuracy": 99.6,
+      "by_language": {
+        "mn-Cyrl": {
+          "n": 508,
+          "recall_at_5": 100,
+          "rule_match": null
+        }
+      }
+    },
+    "BNBD-21-04-05-ADD-2018-01-18-10": {
+      "code": "БНбД 21-04-05",
+      "effective_status": "unknown_requires_legal_verification",
+      "retrieval_tests": 336,
+      "recall_at_5": 89.9,
+      "rule_match_accuracy": 73.8,
+      "citation_accuracy": 80.4,
+      "golden_cases": "11/11",
+      "golden_case_accuracy": 100,
+      "unverified_rule_leakage": 0,
+      "source_url_accuracy": null,
+      "by_language": {
+        "mn-Cyrl": {
+          "n": 112,
+          "recall_at_5": 100,
+          "rule_match": 96.4
+        },
+        "mn-Latn": {
+          "n": 112,
+          "recall_at_5": 100,
+          "rule_match": 96.4
+        },
+        "en": {
+          "n": 112,
+          "recall_at_5": 69.6,
+          "rule_match": 28.6
+        }
+      }
+    },
+    "BNBD-31-23-12-2012": {
+      "code": "БНбД 31-23-12",
+      "effective_status": "current_code_verified_renumbered",
+      "retrieval_tests": 308,
+      "recall_at_5": 100,
+      "rule_match_accuracy": 100,
+      "citation_accuracy": 100,
+      "golden_cases": "11/13",
+      "golden_case_accuracy": 84.6,
+      "unverified_rule_leakage": 0,
+      "source_url_accuracy": 100,
+      "by_language": {
+        "mn-Cyrl": {
+          "n": 308,
+          "recall_at_5": 100,
+          "rule_match": 100
+        }
+      }
+    },
+    "BNBD-31-24-22-2022": {
+      "code": "БНбД 31-24-22",
+      "effective_status": "current_registered_verified",
+      "retrieval_tests": 407,
+      "recall_at_5": 100,
+      "rule_match_accuracy": 100,
+      "citation_accuracy": 100,
+      "golden_cases": "14/16",
+      "golden_case_accuracy": 87.5,
+      "unverified_rule_leakage": 0,
+      "source_url_accuracy": 100,
+      "by_language": {
+        "mn-Cyrl": {
+          "n": 407,
+          "recall_at_5": 100,
+          "rule_match": 100
+        }
+      }
+    },
+    "BNBD-31-25-22-2022-AMENDED-2024": {
+      "code": "БНбД 31-25-22",
+      "effective_status": "current_amended_verified",
+      "retrieval_tests": 87,
+      "recall_at_5": 100,
+      "rule_match_accuracy": null,
+      "citation_accuracy": 100,
+      "golden_cases": "8/10",
+      "golden_case_accuracy": 80,
+      "unverified_rule_leakage": 0,
+      "source_url_accuracy": null,
+      "by_language": {
+        "mn-Cyrl": {
+          "n": 87,
+          "recall_at_5": 100,
+          "rule_match": null
+        }
+      }
+    },
+    "SNIP-II-97-76-MNG": {
+      "code": "СНиП II-97-76* / СНиП II-97-76 М-80",
+      "effective_status": "listed_as_current",
+      "retrieval_tests": 442,
+      "recall_at_5": 99.8,
+      "rule_match_accuracy": 99.6,
+      "citation_accuracy": 100,
+      "golden_cases": "9/14",
+      "golden_case_accuracy": 64.3,
+      "unverified_rule_leakage": 0,
+      "source_url_accuracy": 99.8,
+      "by_language": {
+        "mn-Cyrl": {
+          "n": 442,
+          "recall_at_5": 99.8,
+          "rule_match": 99.6
+        }
+      }
+    },
+    "UBB-11-201-00-2000": {
+      "code": "УББ-11-201-00",
+      "effective_status": "current_status_not_checked_for_later_amendments_or_replacement",
+      "retrieval_tests": 231,
+      "recall_at_5": 99.6,
+      "rule_match_accuracy": null,
+      "citation_accuracy": 96.5,
+      "golden_cases": "2/2",
+      "golden_case_accuracy": 100,
+      "unverified_rule_leakage": 0,
+      "source_url_accuracy": null,
+      "by_language": {
+        "mn-Cyrl": {
+          "n": 88,
+          "recall_at_5": 98.9,
+          "rule_match": null
+        },
+        "mn-Latn": {
+          "n": 72,
+          "recall_at_5": 100,
+          "rule_match": null
+        },
+        "en": {
+          "n": 71,
+          "recall_at_5": 100,
+          "rule_match": null
+        }
+      }
+    },
+    "UBB-12-01-01-2001": {
+      "code": "УББ 12-01-01",
+      "effective_status": "current_status_not_checked_for_later_amendments_or_replacement",
+      "retrieval_tests": 156,
+      "recall_at_5": 95.5,
+      "rule_match_accuracy": null,
+      "citation_accuracy": 84.6,
+      "golden_cases": "9/10",
+      "golden_case_accuracy": 90,
+      "unverified_rule_leakage": 0,
+      "source_url_accuracy": null,
+      "by_language": {
+        "mn-Cyrl": {
+          "n": 55,
+          "recall_at_5": 96.4,
+          "rule_match": null
+        },
+        "mn-Latn": {
+          "n": 46,
+          "recall_at_5": 100,
+          "rule_match": null
+        },
+        "en": {
+          "n": 55,
+          "recall_at_5": 90.9,
+          "rule_match": null
+        }
+      }
+    },
+    "UBB-12-204-01-2002": {
+      "code": "УББ 12-204-01",
+      "effective_status": "current_status_not_checked_for_later_amendments",
+      "retrieval_tests": 105,
+      "recall_at_5": 81.9,
+      "rule_match_accuracy": null,
+      "citation_accuracy": 42.9,
+      "golden_cases": "5/5",
+      "golden_case_accuracy": 100,
+      "unverified_rule_leakage": 0,
+      "source_url_accuracy": null,
+      "by_language": {
+        "mn-Cyrl": {
+          "n": 35,
+          "recall_at_5": 71.4,
+          "rule_match": null
+        },
+        "mn-Latn": {
+          "n": 35,
+          "recall_at_5": 80,
+          "rule_match": null
+        },
+        "en": {
+          "n": 35,
+          "recall_at_5": 94.3,
+          "rule_match": null
+        }
+      }
+    }
+  },
+  "total": {
+    "retrieval_tests": 2793,
+    "recall_at_5": 97.3,
+    "rule_match_accuracy": 90.5,
+    "citation_accuracy": 94.3,
+    "golden_case_accuracy": 87,
+    "unverified_rule_leakage": 0,
+    "client_isolation_leak": 0,
+    "no_match_correct": "6/8",
+    "no_match_failures": [
+      {
+        "query": "Цалингийн орлогын албан татвар хэдэн хувь вэ",
+        "status": "uncertain",
+        "cite": "УББ 12-01-01, Хоёр. Захиалагчийн үүрэг, заалт 2.20, хуудас 9"
+      },
+      {
+        "query": "Автомашины улсын дугаар солих журам",
+        "status": "supported",
+        "cite": "БНбД 11-08-23, Legal status"
+      }
+    ]
+  },
+  "vector_leg": "disabled (NullVectorIndex — sqlite-vec / embedding загвар суулгаагүй)"
+}

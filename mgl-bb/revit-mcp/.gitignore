@@ -1,0 +1,23 @@
+# Python virtualenv & cache
+server/.venv/
+**/__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# .NET build output
+addin/bin/
+addin/obj/
+
+# Packaged distribution zips (produced by scripts/package-addin.ps1)
+dist/
+
+# Revit auto-backup files (.0001.rvt, .0002.rvt, ...)
+*.0[0-9][0-9][0-9].rvt
+
+# Superpowers scratch / progress ledgers
+.superpowers/
+
+# OS
+Thumbs.db
+.DS_Store

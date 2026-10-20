@@ -1,0 +1,510 @@
+{
+  "cases": [
+    {
+      "id": "ER-001",
+      "version": 1,
+      "category": "engineering-reasoning",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "Q=18000 МДж, S=20 м² бол хувийн галын ачаалал g хэд вэ?",
+      "evidence_fixture": "evidence/fire-load-bd-21-101-12.json",
+      "expected": {
+        "decision": {
+          "value": "CALCULATED",
+          "accept": [
+            "900"
+          ],
+          "reject": []
+        },
+        "calculation": {
+          "result": 900,
+          "unit": "МДж/м²",
+          "unit_patterns": [
+            "МДж\\s*/?\\s*м[²2]|MJ\\s*/?\\s*m2"
+          ]
+        },
+        "required_sources": [
+          {
+            "document": "БД 21-101-12"
+          }
+        ],
+        "allowed_numbers": [
+          18000,
+          20,
+          900
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "generated BD 21-101-12 C001",
+        "review_status": "REFERENCE_VERIFIED"
+      },
+      "variants": [
+        {
+          "id": "ER-001-P1",
+          "kind": "paraphrase",
+          "question": "Q нь 18000 МДж, талбай S нь 20 м² бол g=Q/S хэд болох вэ?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "ER-002",
+      "version": 1,
+      "category": "engineering-reasoning",
+      "difficulty": "hard",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "Q=5000 МДж, g=1000 МДж/м², H=2 м. Q ≥ 0.64gH² нөхцөл биелэх үү, босго хэд вэ?",
+      "evidence_fixture": "evidence/fire-load-bd-21-101-12.json",
+      "expected": {
+        "decision": {
+          "value": "UPGRADE_REQUIRED",
+          "accept": [
+            "биелнэ|хангана|upgrade|required|дээд ангилал"
+          ],
+          "reject": [
+            "биелэхгүй"
+          ]
+        },
+        "calculation": {
+          "result": 2560,
+          "unit": "МДж",
+          "unit_patterns": [
+            "МДж|MJ"
+          ]
+        },
+        "required_sources": [
+          {
+            "document": "БД 21-101-12",
+            "clause": "4.20"
+          }
+        ],
+        "allowed_numbers": [
+          5000,
+          1000,
+          2,
+          0.64,
+          2560
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "generated BD 21-101-12 C004",
+        "review_status": "REFERENCE_VERIFIED"
+      },
+      "variants": [
+        {
+          "id": "ER-002-P1",
+          "kind": "paraphrase",
+          "question": "Q=5000 МДж, g=1000 МДж/м², H=2 м өгөгдлөөр 0.64gH² босгыг бодож, Q түүнээс бага эсэхийг шалга.",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "ER-003",
+      "version": 1,
+      "category": "engineering-reasoning",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "Гараар хаах шугам хоолойн тооцоот хаах хугацаа хэд вэ?",
+      "evidence_fixture": "evidence/fire-load-bd-21-101-12.json",
+      "expected": {
+        "decision": {
+          "value": "300_SECONDS",
+          "accept": [
+            "300.*сек"
+          ],
+          "reject": [
+            "120.*сек"
+          ]
+        },
+        "calculation": {
+          "result": 300,
+          "unit": "секунд",
+          "unit_patterns": [
+            "секунд|сек|s"
+          ]
+        },
+        "required_sources": [
+          {
+            "document": "БД 21-101-12"
+          }
+        ],
+        "allowed_numbers": [
+          300
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "generated BD 21-101-12 C007",
+        "review_status": "REFERENCE_VERIFIED"
+      },
+      "variants": [
+        {
+          "id": "ER-003-P1",
+          "kind": "paraphrase",
+          "question": "Эх сурвалжид гараар хаах шугам хоолойн тооцоот хугацааг хэдэн секунд гэж өгсөн бэ?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "ER-004",
+      "version": 1,
+      "category": "engineering-reasoning",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "Өрөөний геометр эзлэхүүн 500 м³, тоног төхөөрөмжийн эзлэхүүнийг тогтоох боломжгүй бол чөлөөт эзлэхүүнийг хэд гэж авах вэ?",
+      "evidence_fixture": "evidence/fire-load-bd-21-101-12.json",
+      "expected": {
+        "decision": {
+          "value": "400_M3",
+          "accept": [
+            "400"
+          ],
+          "reject": []
+        },
+        "calculation": {
+          "result": 400,
+          "unit": "м³",
+          "unit_patterns": [
+            "м³|м3|m3"
+          ]
+        },
+        "required_sources": [
+          {
+            "document": "БД 21-101-12",
+            "clause": "4.4"
+          }
+        ],
+        "allowed_numbers": [
+          500,
+          400
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "generated BD 21-101-12 C008",
+        "review_status": "REFERENCE_VERIFIED"
+      },
+      "variants": [
+        {
+          "id": "ER-004-P1",
+          "kind": "paraphrase",
+          "question": "Өрөөний нийт эзлэхүүн 500 м³. Тоног төхөөрөмжийн эзлэхүүн тодорхойгүй үед чөлөөт эзлэхүүний жишиг хэд вэ?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "ER-005",
+      "version": 1,
+      "category": "engineering-reasoning",
+      "difficulty": "easy",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "Хувийн галын ачаалал g=2500 МДж/м² бол аль В дэд ангилал вэ?",
+      "evidence_fixture": "evidence/fire-load-bd-21-101-12.json",
+      "expected": {
+        "decision": {
+          "value": "V1",
+          "accept": [
+            "В1|V1"
+          ],
+          "reject": [
+            "В2|V2|В3|V3|В4|V4"
+          ]
+        },
+        "required_sources": [
+          {
+            "document": "БД 21-101-12"
+          }
+        ],
+        "allowed_numbers": [
+          2500,
+          2200
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "generated BD 21-101-12 R003",
+        "review_status": "REFERENCE_VERIFIED"
+      },
+      "variants": [
+        {
+          "id": "ER-005-P1",
+          "kind": "paraphrase",
+          "question": "g=2500 МДж/м² гэсэн хувийн галын ачаалал хүснэгт 4-ийн аль В дэд ангилалд багтах вэ?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "ER-006",
+      "version": 1,
+      "category": "engineering-reasoning",
+      "difficulty": "hard",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "g=1800 МДж/м² бол эхний В ангилал юу вэ?",
+      "evidence_fixture": "evidence/fire-load-bd-21-101-12.json",
+      "expected": {
+        "decision": {
+          "value": "V2",
+          "accept": [
+            "В2|V2"
+          ],
+          "reject": [
+            "В1|V1|В3|V3|В4|V4"
+          ]
+        },
+        "required_sources": [
+          {
+            "document": "БД 21-101-12"
+          }
+        ],
+        "allowed_numbers": [
+          1800,
+          1401,
+          2200
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "generated BD 21-101-12 R004",
+        "review_status": "REFERENCE_VERIFIED"
+      },
+      "variants": [
+        {
+          "id": "ER-006-BELOW",
+          "kind": "boundary",
+          "question": "g=1400 МДж/м² бол эхний ангилал?",
+          "same_semantics": false,
+          "expected_patch": {
+            "decision": {
+              "value": "V3",
+              "accept": [
+                "В3|V3"
+              ],
+              "reject": [
+                "В2|V2"
+              ]
+            },
+            "allowed_numbers": [
+              1400,
+              181
+            ]
+          }
+        },
+        {
+          "id": "ER-006-LOWER",
+          "kind": "boundary",
+          "question": "g=1401 МДж/м² бол эхний ангилал?",
+          "same_semantics": true,
+          "expected_patch": {
+            "allowed_numbers": [
+              1401,
+              2200
+            ]
+          }
+        },
+        {
+          "id": "ER-006-UPPER",
+          "kind": "boundary",
+          "question": "g=2200 МДж/м² бол эхний ангилал?",
+          "same_semantics": true,
+          "expected_patch": {
+            "allowed_numbers": [
+              1401,
+              2200
+            ]
+          }
+        },
+        {
+          "id": "ER-006-ABOVE",
+          "kind": "boundary",
+          "question": "g=2201 МДж/м² бол эхний ангилал?",
+          "same_semantics": false,
+          "expected_patch": {
+            "decision": {
+              "value": "V1",
+              "accept": [
+                "В1|V1"
+              ],
+              "reject": [
+                "В2|V2"
+              ]
+            },
+            "allowed_numbers": [
+              2201,
+              2200
+            ]
+          }
+        },
+        {
+          "id": "ER-006-COMMA",
+          "kind": "decimal-comma",
+          "question": "g=1800,0 МДж/м² бол эхний ангилал?",
+          "same_semantics": true,
+          "expected_patch": {
+            "allowed_numbers": [
+              1800,
+              1401,
+              2200
+            ]
+          }
+        },
+        {
+          "id": "ER-006-SPACES",
+          "kind": "space-thousands",
+          "question": "g=1 800 МДж/м² бол эхний ангилал?",
+          "same_semantics": true,
+          "expected_patch": {
+            "allowed_numbers": [
+              1800,
+              1401,
+              2200
+            ]
+          }
+        },
+        {
+          "id": "ER-006-DOT",
+          "kind": "ambiguous-dot",
+          "question": "g=1.800 МДж/м² гэж бичсэн бол аль ангилал вэ?",
+          "same_semantics": false,
+          "expected_patch": {
+            "decision": {
+              "value": "CLARIFY",
+              "accept": [
+                "тодруул|хоёрдмол|1\\.800.*юуг"
+              ],
+              "reject": [
+                "В1|В2|В3|В4"
+              ]
+            },
+            "allowed_numbers": [
+              1.8,
+              1800
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ER-007",
+      "version": 1,
+      "category": "engineering-reasoning",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "H=8 м үед хялбар авалцан асах шингэний галын ачааллын хэсгүүдийн хамгийн бага зай хэд вэ?",
+      "evidence_fixture": "evidence/fire-load-bd-21-101-12.json",
+      "expected": {
+        "decision": {
+          "value": "18_M",
+          "accept": [
+            "18.*м"
+          ],
+          "reject": []
+        },
+        "calculation": {
+          "result": 18,
+          "unit": "м",
+          "unit_patterns": [
+            "\\bм\\b|m"
+          ]
+        },
+        "required_sources": [
+          {
+            "document": "БД 21-101-12"
+          }
+        ],
+        "allowed_numbers": [
+          8,
+          18
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "generated BD 21-101-12 C002",
+        "review_status": "REFERENCE_VERIFIED"
+      },
+      "variants": [
+        {
+          "id": "ER-007-P1",
+          "kind": "paraphrase",
+          "question": "H=8 м гэсэн нөхцөлд хялбар авалцан асах шингэний галын ачааллын хэсгүүдийн хоорондын хамгийн бага зайг хэл.",
+          "same_semantics": true
+        }
+      ]
+    }
+  ]
+}

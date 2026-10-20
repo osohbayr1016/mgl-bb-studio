@@ -1,0 +1,105 @@
+name: Developer workbench validation
+run-name: "Workbench ${{ inputs.target_ref }} · ${{ inputs.suite }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: "workbench/* branch to validate"
+        required: true
+        type: string
+      suite:
+        description: "Validation suite"
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - frontend
+          - backend
+          - ai
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dev-workbench-${{ inputs.target_ref }}-${{ inputs.suite }}
+  cancel-in-progress: true
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    outputs:
+      allowed: ${{ steps.ref.outputs.allowed }}
+    steps:
+      - id: ref
+        shell: bash
+        run: |
+          case "${{ inputs.target_ref }}" in
+            workbench/*) echo "allowed=true" >> "$GITHUB_OUTPUT" ;;
+            *) echo "Only workbench/* branches are allowed"; exit 1 ;;
+          esac
+
+  frontend:
+    needs: guard
+    if: ${{ inputs.suite == 'all' || inputs.suite == 'frontend' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+      - run: npm run verify
+        working-directory: frontend
+
+  backend:
+    needs: guard
+    if: ${{ inputs.suite == 'all' || inputs.suite == 'backend' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - run: npm ci --legacy-peer-deps
+        working-directory: backend
+      - run: npm run verify
+        working-directory: backend
+
+  ai:
+    needs: guard
+    if: ${{ inputs.suite == 'all' || inputs.suite == 'ai' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            ai/package-lock.json
+            backend/package-lock.json
+            frontend/package-lock.json
+      - run: npm ci
+        working-directory: ai
+      - run: npm ci --legacy-peer-deps
+        working-directory: backend
+      - run: npm ci
+        working-directory: frontend
+      - run: npm run ai:check
+        working-directory: ai

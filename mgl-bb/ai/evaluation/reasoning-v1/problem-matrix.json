@@ -1,0 +1,607 @@
+{
+  "schema": "mglai-reasoning-v1-problem-matrix/1",
+  "baseline_main_sha": "dd1d8b70e01abcdeced0b6f97cff0880b643e6da",
+  "generated_at": "2026-10-03T11:25:14Z",
+  "session": 0,
+  "behavior_changes": false,
+  "status_values": [
+    "VERIFIED_CURRENT",
+    "HISTORICAL_FIXED",
+    "NOT_REPRODUCED",
+    "REGRESSION",
+    "BLOCKED",
+    "FIXED_THIS_WORK"
+  ],
+  "problems": [
+    {
+      "id": "RISK-001",
+      "area": "evaluation architecture",
+      "severity": "P0",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Current evaluators combine routing/retrieval/tools/model/validation/repair; no isolated MODEL_ONLY_EVIDENCE runner.",
+      "expected": "Independent model-only, full-RAG and adversarial modes.",
+      "actual": "Raw/final exists in places but model reasoning cannot be isolated.",
+      "root_cause": "Evaluation unit is the product pipeline.",
+      "candidate_solution": "Session 1: three evaluation modes using existing components.",
+      "tests": [
+        "mode isolation"
+      ]
+    },
+    {
+      "id": "RISK-002",
+      "area": "benchmark freshness",
+      "severity": "P0",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Stored generated references are mainly 2026-09-10/11 while current main contains later changes.",
+      "expected": "Scores generated against current immutable identity.",
+      "actual": "Stored scores are stale for current main.",
+      "root_cause": "No enforced freshness/identity comparison gate.",
+      "candidate_solution": "Add immutable benchmark identity and comparison guard.",
+      "tests": [
+        "identity compatibility"
+      ]
+    },
+    {
+      "id": "RISK-003",
+      "area": "benchmark identity",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Existing result identity is partial; required git/model/adapter/DB/dataset hashes are not uniformly present.",
+      "expected": "Complete immutable identity on every result.",
+      "actual": "Cross-run comparison is not rigorous.",
+      "root_cause": "Identity evolved independently per evaluator.",
+      "candidate_solution": "Single reasoning-v1 identity builder.",
+      "tests": [
+        "required fields",
+        "hash stability"
+      ]
+    },
+    {
+      "id": "RISK-004",
+      "area": "AEC reasoning coverage",
+      "severity": "P0",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Held-out is 38 cases/43 turns and is product-behavior oriented, not >=48 structured AEC reasoning cores.",
+      "expected": "Dedicated applied-rule/engineering/clarification/hallucination/multiturn/cross-source benchmark.",
+      "actual": "Deep AEC reasoning is under-measured.",
+      "root_cause": "Existing suites target regressions rather than reasoning decomposition.",
+      "candidate_solution": "Build MGL-AEC Reasoning Benchmark v1.",
+      "tests": [
+        "case count/category gate"
+      ]
+    },
+    {
+      "id": "RISK-005",
+      "area": "reasoning scoring",
+      "severity": "P0",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Held-out relies heavily on require/forbid and contract checks.",
+      "expected": "Score decision, constraints, comparison, missing conditions, sources, calculations, unsupported assertions.",
+      "actual": "Required words can coexist with wrong reasoning.",
+      "root_cause": "No typed semantic expectation schema.",
+      "candidate_solution": "Add structured expectations and semantic scorer.",
+      "tests": [
+        "wrong conclusion with required words"
+      ]
+    },
+    {
+      "id": "RISK-006",
+      "area": "Mongolian naturalness",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Style suite catches 37/39 targeted bad patterns; misses st006/st049; no stable human naturalness score for current model.",
+      "expected": "Natural professional Mongolian measured separately from language routing.",
+      "actual": "Routing/lint exist, subjective quality is partial.",
+      "root_cause": "Objective lint is only a proxy.",
+      "candidate_solution": "Dedicated language suite + stable blind human review export.",
+      "tests": [
+        "mongolian language cases",
+        "human review schema"
+      ]
+    },
+    {
+      "id": "RISK-007",
+      "area": "intent routing",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Current probes: Standard бланк, Өргөн хэрэглээний бараа, normal ажиллаж байна all route NORMATIVE.",
+      "expected": "Contextual negative evidence prevents non-regulatory false positives.",
+      "actual": "Ambiguous positive keywords dominate context.",
+      "root_cause": "Router lacks sufficient negative evidence.",
+      "candidate_solution": "Session 2 contextual negative scoring, keep deterministic router.",
+      "tests": [
+        "standard pair",
+        "өргөн pair",
+        "normal/norm pair"
+      ]
+    },
+    {
+      "id": "RISK-008",
+      "area": "applied normative reasoning",
+      "severity": "P0",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "No general AppliedRuleDecision for arbitrary supplied rules; deterministic decisions are domain-specific.",
+      "expected": "facts -> conditions -> compare -> satisfied/not/unknown -> decision + missing + citations.",
+      "actual": "General applied reasoning remains generation/template dependent.",
+      "root_cause": "Rule engine and explanation evolved separately.",
+      "candidate_solution": "Session 4 Applied Rule Frame.",
+      "tests": [
+        "2y vs 3y",
+        "missing certificate",
+        "AND/unknown"
+      ]
+    },
+    {
+      "id": "RISK-009",
+      "area": "causal honesty",
+      "severity": "P1",
+      "status": "HISTORICAL_FIXED",
+      "reproduction": "Current norm explanation has explicit why guard and tests that do not invent rationale absent from source.",
+      "expected": "Requirement and rationale authority remain separated.",
+      "actual": "Source-level protection exists.",
+      "root_cause": "Historical free generation filled plausible reasons.",
+      "candidate_solution": "Preserve; add adversarial reasoning-v1 cases.",
+      "tests": [
+        "normExplain why"
+      ]
+    },
+    {
+      "id": "RISK-010",
+      "area": "numeric provenance",
+      "severity": "P0",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Trusted-number guards exist but no universal SOURCE/TOOL/USER/DETERMINISTIC_CALCULATION provenance object for every emitted number.",
+      "expected": "Every engineering/normative number traceable; unsupported normative number hard-zero.",
+      "actual": "Protection is pipeline/validator-specific.",
+      "root_cause": "No common claim provenance model.",
+      "candidate_solution": "Session 5 universal numerical provenance.",
+      "tests": [
+        "unsupported fire rating",
+        "derived provenance"
+      ]
+    },
+    {
+      "id": "RISK-011",
+      "area": "missing information",
+      "severity": "P0",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Some norm calculators model missing inputs, but broad engineering task requirement schemas are absent.",
+      "expected": "Typed required inputs and concise clarification.",
+      "actual": "Coverage is task-specific/incomplete.",
+      "root_cause": "Engineering schemas not first-class.",
+      "candidate_solution": "Session 5 CalculationRequirement registry.",
+      "tests": [
+        "pressurization height-only",
+        "sprinkler area-only",
+        "ambiguous unit"
+      ]
+    },
+    {
+      "id": "RISK-012",
+      "area": "engineering calculators",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Typed norm calculators exist for selected domains, not a complete verified formula infrastructure.",
+      "expected": "LLM interprets; deterministic code computes verified formulas with IDs/units/ranges/citations/rounding.",
+      "actual": "Only selected calculations are deterministic.",
+      "root_cause": "Formula support depends on verified sources.",
+      "candidate_solution": "Extend only where formula provenance is verified.",
+      "tests": [
+        "formula provenance",
+        "unit/range"
+      ]
+    },
+    {
+      "id": "RISK-013",
+      "area": "cross-source synthesis",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Cross-document retrieval exists but no benchmarked claim-level synthesis contract across multiple authorities.",
+      "expected": "Each synthesized claim linked to supporting evidence/currentness.",
+      "actual": "Top-k evidence can be combined without explicit claim graph.",
+      "root_cause": "Retrieval and answer contract are separate.",
+      "candidate_solution": "Source-aware synthesis + cross-source cases.",
+      "tests": [
+        "definition+threshold+registry",
+        "norm+ERP"
+      ]
+    },
+    {
+      "id": "RISK-014",
+      "area": "norm currentness",
+      "severity": "P0",
+      "status": "HISTORICAL_FIXED",
+      "reproduction": "currentness.ts separates current/review/superseded/historical/unknown and tests prevent usable flags elevating unverified sources.",
+      "expected": "Text relevance and legal status stay separate.",
+      "actual": "Current fail-closed protection exists.",
+      "root_cause": "Historical datasets mixed usability with authority.",
+      "candidate_solution": "Preserve and score explicitly.",
+      "tests": [
+        "usable flag cannot elevate",
+        "superseded tests"
+      ]
+    },
+    {
+      "id": "RISK-015",
+      "area": "retrieval relevance",
+      "severity": "P0",
+      "status": "BLOCKED",
+      "reproduction": "Current pipeline contains rare-subject/anchor gates, but knowledge.sqlite is absent so lift-shaft vs connecting-passage cannot be rerun.",
+      "expected": "Subject entailment before evidence use.",
+      "actual": "Mitigation exists; current corpus behavior unmeasured.",
+      "root_cause": "Needs local ingested corpus.",
+      "candidate_solution": "Session 3 run near-neighbor suite before any fix.",
+      "tests": [
+        "lift shaft/passage",
+        "car wash/washroom",
+        "stair/lobby"
+      ]
+    },
+    {
+      "id": "RISK-016",
+      "area": "conversation reasoning",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Existing tests cover follow-up/correction, but no stable 5–10-turn engineering reasoning benchmark.",
+      "expected": "Relevant constraints accumulate; unrelated state does not leak.",
+      "actual": "Long AEC reasoning under-measured.",
+      "root_cause": "Current suites focus routing/product regressions.",
+      "candidate_solution": "Session 6 long engineering fixtures.",
+      "tests": [
+        "5-turn calculation discussion",
+        "topic switch/return"
+      ]
+    },
+    {
+      "id": "RISK-017",
+      "area": "invalid history",
+      "severity": "P0",
+      "status": "HISTORICAL_FIXED",
+      "reproduction": "Current streaming/history tests filter interrupted/invalid assistant answers from authoritative reuse.",
+      "expected": "UNSUPPORTED/ERROR/INTERRUPTED never become truth.",
+      "actual": "Safeguards pass current deterministic tests.",
+      "root_cause": "Historical severity-only history filtering.",
+      "candidate_solution": "Preserve; expose validity in reasoning benchmark.",
+      "tests": [
+        "streaming faults",
+        "invalid history"
+      ]
+    },
+    {
+      "id": "RISK-018",
+      "area": "user corrections",
+      "severity": "P1",
+      "status": "NOT_REPRODUCED",
+      "reproduction": "Correction routing exists, but Session 0 did not prove a generic typed engineering-fact newest-correction-wins ledger.",
+      "expected": "Explicit correction replaces earlier value with audit trail.",
+      "actual": "No failure demonstrated; generic provenance unproven.",
+      "root_cause": "Needs targeted multi-turn test.",
+      "candidate_solution": "Session 6 reproduce first.",
+      "tests": [
+        "90m -> 75m"
+      ]
+    },
+    {
+      "id": "RISK-019",
+      "area": "raw vs repaired visibility",
+      "severity": "P1",
+      "status": "HISTORICAL_FIXED",
+      "reproduction": "2026-09-10 reference already reports raw 21/43 vs final 33/43 and model/repaired source counts.",
+      "expected": "Repair never hides raw quality.",
+      "actual": "Raw/final visibility exists.",
+      "root_cause": "Earlier score interpretation could obscure it.",
+      "candidate_solution": "Reuse in reasoning-v1 + model-only score.",
+      "tests": [
+        "accounting invariant"
+      ]
+    },
+    {
+      "id": "RISK-020",
+      "area": "repair observability",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Repair exists but mandated normalized repair-reason frequency taxonomy is not unified across evaluators.",
+      "expected": "Common failure/repair reason accounting.",
+      "actual": "Diagnostics are distributed.",
+      "root_cause": "No common failure-event schema.",
+      "candidate_solution": "Session 1 failure-report schema.",
+      "tests": [
+        "repair reason accounting"
+      ]
+    },
+    {
+      "id": "RISK-021",
+      "area": "training architecture",
+      "severity": "P0",
+      "status": "HISTORICAL_FIXED",
+      "reproduction": "Docs/SFT builder separate knowledge from behavior and exclude live facts/norm memorization patterns.",
+      "expected": "Norm/live knowledge stays retrieval/tools.",
+      "actual": "Architecture follows knowledge != behavior.",
+      "root_cause": "Already addressed.",
+      "candidate_solution": "Preserve and protect reasoning-v1 fingerprints.",
+      "tests": [
+        "dynamic fact lint",
+        "norm-code exclusion"
+      ]
+    },
+    {
+      "id": "RISK-022",
+      "area": "train/eval leakage",
+      "severity": "P0",
+      "status": "BLOCKED",
+      "reproduction": "Leak tooling exists but CI has train=0/val=0/test=0 because training/out is absent; zero overlap is vacuous.",
+      "expected": "Audit actual candidate train/val against all eval fingerprints.",
+      "actual": "Current candidate files not verified here.",
+      "root_cause": "Generated artifacts not in checkout.",
+      "candidate_solution": "Session 7 run on training host and protect reasoning-v1.",
+      "tests": [
+        "non-empty split audit",
+        "fuzzy leakage"
+      ]
+    },
+    {
+      "id": "RISK-023",
+      "area": "dataset corruption",
+      "severity": "P0",
+      "status": "BLOCKED",
+      "reproduction": "Dataset lint includes PYTHON_REPR/collision/verification checks but ai/data-train-files is absent in CI.",
+      "expected": "Current corpus proves zero corruption errors.",
+      "actual": "Tool exists; corpus state unknown.",
+      "root_cause": "Dataset external/generated.",
+      "candidate_solution": "Run lint where corpus is mounted.",
+      "tests": [
+        "PYTHON_REPR",
+        "mojibake",
+        "duplicate IDs"
+      ]
+    },
+    {
+      "id": "RISK-024",
+      "area": "numeric parsing",
+      "severity": "P0",
+      "status": "HISTORICAL_FIXED",
+      "reproduction": "Direct probes correctly parse 2 200, g ni/нь 2200, 1800,5 and mark 1.800 ambiguous.",
+      "expected": "Deterministic parsing without silent ambiguity guess.",
+      "actual": "Matches expected.",
+      "root_cause": "Historical separator/parser assumptions fixed.",
+      "candidate_solution": "No change; retain regressions.",
+      "tests": [
+        "normEntities GAP-022"
+      ]
+    },
+    {
+      "id": "RISK-025",
+      "area": "trusted facts",
+      "severity": "P0",
+      "status": "HISTORICAL_FIXED",
+      "reproduction": "Current grounding/trusted-fact tests pass and historical leading-user contradiction paths have protection.",
+      "expected": "Verified tool/norm facts override user framing.",
+      "actual": "Protection exists.",
+      "root_cause": "Historical generation could agree with premise.",
+      "candidate_solution": "Preserve; include adversarial cases.",
+      "tests": [
+        "trusted contradiction",
+        "grounding guard"
+      ]
+    },
+    {
+      "id": "RISK-026",
+      "area": "Revit compliance authority",
+      "severity": "P0",
+      "status": "NOT_REPRODUCED",
+      "reproduction": "Architecture states Revit fact != norm compliance, but live Revit+norm combined path unavailable.",
+      "expected": "Compliance requires verified model fact + applicable verified rule.",
+      "actual": "No current counterexample reproduced.",
+      "root_cause": "End-to-end requires fixtures/corpus.",
+      "candidate_solution": "Build deterministic fixtures before modifying behavior.",
+      "tests": [
+        "measurement no norm",
+        "measurement + rule"
+      ]
+    },
+    {
+      "id": "RISK-027",
+      "area": "client tool exposure",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "tools/registry.ts currently lists describe_system for client mode.",
+      "expected": "Only PUBLIC/CLIENT_SAFE capability surface in client mode.",
+      "actual": "Client can route to describe_system; response leakage still needs Session 8 probe.",
+      "root_cause": "Role lists lack explicit exposure class.",
+      "candidate_solution": "Session 8 reproduce payload then classify tools.",
+      "tests": [
+        "client registry",
+        "client payload"
+      ]
+    },
+    {
+      "id": "RISK-028",
+      "area": "data freshness",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Freshness support exists but there is no complete typed LIVE/CACHED/STALE/UNKNOWN provenance for every dynamic box.",
+      "expected": "Material dynamic data carries as_of/source/freshness; stale disclosed.",
+      "actual": "Semantics incomplete.",
+      "root_cause": "Optional prompt text rather than typed provenance.",
+      "candidate_solution": "Session 8 typed freshness.",
+      "tests": [
+        "stale ERP",
+        "no current wording when stale"
+      ]
+    },
+    {
+      "id": "RISK-029",
+      "area": "redaction",
+      "severity": "P0",
+      "status": "HISTORICAL_FIXED",
+      "reproduction": "Canonical mglai-common redaction exists; backend/deployment parity tests enforce shared implementation.",
+      "expected": "One canonical redactor across consumers.",
+      "actual": "Current canonical package/regressions exist.",
+      "root_cause": "Historical duplicated rules.",
+      "candidate_solution": "Preserve; audit every surface in Session 8.",
+      "tests": [
+        "cross-consumer redaction",
+        "sentinels"
+      ]
+    },
+    {
+      "id": "RISK-030",
+      "area": "performance/concurrency",
+      "severity": "P1",
+      "status": "BLOCKED",
+      "reproduction": "ai:perf has 2 blocked checks because runtime/backend are unavailable; old RTX3070 queueing result is historical only.",
+      "expected": "Current device-class p50/p90/p95 at concurrency 1/2/4.",
+      "actual": "Current performance unknown.",
+      "root_cause": "No local model/GPU in CI.",
+      "candidate_solution": "Session 8 remeasure on reference workstation.",
+      "tests": [
+        "current perf baseline"
+      ]
+    },
+    {
+      "id": "RISK-031",
+      "area": "human naturalness",
+      "severity": "P2",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Blind-review artifacts exist historically but no stable reasoning-v1 human-review export for current outputs.",
+      "expected": "Human ratings, not Qwen self-grading.",
+      "actual": "Current stable naturalness benchmark absent.",
+      "root_cause": "Reviews are run-specific.",
+      "candidate_solution": "Session 1 human-review export schema.",
+      "tests": [
+        "review export completeness"
+      ]
+    },
+    {
+      "id": "RISK-032",
+      "area": "paraphrase consistency",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "No dedicated metamorphic semantic consistency metric across Cyrillic/Latin/abbreviation/negation groups.",
+      "expected": "Equivalent meaning -> equivalent semantic result.",
+      "actual": "Variants scored independently.",
+      "root_cause": "No group-level canonical expectation.",
+      "candidate_solution": "Session 1 metamorphic groups.",
+      "tests": [
+        "V2 variants",
+        "negation pairs"
+      ]
+    },
+    {
+      "id": "RISK-033",
+      "area": "adversarial leading questions",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Some trusted-contradiction cases exist but no broad adversarial mode with false premises, conflicting/irrelevant evidence and missing tools.",
+      "expected": "Evidence beats leading premise consistently.",
+      "actual": "Coverage partial.",
+      "root_cause": "No ADVERSARIAL_SYSTEM mode.",
+      "candidate_solution": "Session 1 adversarial fixtures.",
+      "tests": [
+        "wrong V2 range",
+        "REI premise",
+        "wrong employee count"
+      ]
+    },
+    {
+      "id": "RISK-034",
+      "area": "AEC terminology",
+      "severity": "P2",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Selected abbreviations are hardcoded in hints, but no provenance-backed ai/knowledge/terminology layer exists.",
+      "expected": "Verified glossary; unknown abbreviations clarified/searched.",
+      "actual": "Terminology distributed across hints/data.",
+      "root_cause": "Terms added ad hoc.",
+      "candidate_solution": "Session 2 terminology layer.",
+      "tests": [
+        "known acronym",
+        "unknown acronym"
+      ]
+    },
+    {
+      "id": "RISK-035",
+      "area": "release gates",
+      "severity": "P0",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "Safety checks exist separately; no unified reasoning-v1 hard-zero gate across citation/number/trusted-fact/secret/verification/leakage failures.",
+      "expected": "Any hard-zero violation blocks default release.",
+      "actual": "No unified candidate reasoning gate.",
+      "root_cause": "No reasoning-v1 aggregator yet.",
+      "candidate_solution": "Session 1 aggregate existing gates.",
+      "tests": [
+        "hard-gate aggregation"
+      ]
+    },
+    {
+      "id": "RISK-036",
+      "area": "current model evaluation",
+      "severity": "P0",
+      "status": "BLOCKED",
+      "reproduction": "mn needs token; conv/heldout/gold need backend; norm/retrieval need knowledge.sqlite; all absent in CI.",
+      "expected": "Fresh current model/RAG baseline against frozen identity.",
+      "actual": "Current generative quality unknown.",
+      "root_cause": "Evaluator assumes employee-machine services/artifacts.",
+      "candidate_solution": "Make identity/export portable and run on reference machine.",
+      "tests": [
+        "live baseline"
+      ]
+    },
+    {
+      "id": "RISK-037",
+      "area": "candidate lifecycle",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "mgl-adapter-0.5 report status is CANDIDATE_TRAINED_NOT_EVALUATED; deployed=false.",
+      "expected": "No activation before untouched held-out comparison.",
+      "actual": "0.5 cannot be called active/better.",
+      "root_cause": "Training and evaluation deliberately separate.",
+      "candidate_solution": "Evaluate only after benchmark is frozen.",
+      "tests": [
+        "candidate status gate"
+      ]
+    },
+    {
+      "id": "RISK-038",
+      "area": "identity metadata drift",
+      "severity": "P1",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "version.ts BASE_MODEL_CANDIDATE is Qwen3.5-4B-Instruct while serving registry/training records use Qwen3-8B.",
+      "expected": "Identity derives from actual runtime/release manifest.",
+      "actual": "Metadata surfaces disagree.",
+      "root_cause": "Legacy candidate constant remained after 8B switch.",
+      "candidate_solution": "Session 1 identity builder reads authoritative runtime manifest.",
+      "tests": [
+        "identity consistency"
+      ]
+    },
+    {
+      "id": "RISK-039",
+      "area": "style validator coverage",
+      "severity": "P2",
+      "status": "VERIFIED_CURRENT",
+      "reproduction": "ai:eval:style catches 37/39 declared bad styles; st006 repeated-conclusion and st049 unnatural-wording are missed.",
+      "expected": "Declared objective lints catch target patterns without false positives.",
+      "actual": "2 known misses, 0 good-side false positives.",
+      "root_cause": "Heuristics do not cover those patterns.",
+      "candidate_solution": "Session 2 improve only if reproduced in model outputs.",
+      "tests": [
+        "st006",
+        "st049"
+      ]
+    },
+    {
+      "id": "RISK-040",
+      "area": "training/dataset portability",
+      "severity": "P1",
+      "status": "BLOCKED",
+      "reproduction": "split/training lint sees 0 generated SFT rows; dataset lint cannot find ai/data-train-files.",
+      "expected": "Baseline can audit actual candidate data by manifest/hash.",
+      "actual": "CI checkout cannot substantively audit private/generated artifacts.",
+      "root_cause": "Artifacts live outside tracked checkout.",
+      "candidate_solution": "Session 7 materializable manifest/hash audit on training host.",
+      "tests": [
+        "non-empty artifact audit"
+      ]
+    }
+  ]
+}

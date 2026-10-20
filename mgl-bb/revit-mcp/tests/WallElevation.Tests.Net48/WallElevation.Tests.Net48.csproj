@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «Ханын дэлгээс»-ийн Core тестийг Revit 2024-ийн runtime (.NET Framework 4.8) дээр ажиллуулна.  Production R24 build нь Core-ийг
+    net48-аар ЭМХЭТГЭДЭГ ч хэзээ ч АЖИЛЛУУЛЖ шалгаагүй байсан (2026-10-13 release gate-ийн аудит) — тоо форматлалт, LINQ, string
+    API-ийн ялгаа энд л илэрнэ.  Эх файл нь WallElevation.Tests-тэй ИЖИЛ (хуулбар биш) — тусдаа obj-той тул хоёр төсөл зөрчилдөхгүй.
+
+      dotnet run   (revit-mcp/tests/WallElevation.Tests.Net48 хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>WallElevation.Tests.Net48</AssemblyName>
+    <RootNamespace>RevitMcpAddin.WallElevation.Tests</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\WallElevation\Core\*.cs" />
+    <Compile Include="..\WallElevation.Tests\*.cs" />
+  </ItemGroup>
+
+</Project>

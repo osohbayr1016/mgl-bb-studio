@@ -1,0 +1,9 @@
+# ⚠️ `account_id`-г ЗААВАЛ энд бэхлэнэ.  Байхгүй үед wrangler нь өөр (ихэвчлэн
+# хамгийн сүүлд хэрэглэсэн) account сонгодог — 2026-08-21-нд `wrangler pages
+# project list` нь ХУУЧИН account руу (c78d4826…) хандаж алдаа өгснөөр
+# батлагдсан.  Токен хуучин account руу хандах эрхтэй байсан бол Pages
+# deploy нь ЧИМЭЭГҮЙ буруу газар буух байсан.
+account_id = "a01b2b194850c45387e7035eb9ebaca6"
+
+name = "mgl-progress-frontend"
+pages_build_output_dir = "dist"

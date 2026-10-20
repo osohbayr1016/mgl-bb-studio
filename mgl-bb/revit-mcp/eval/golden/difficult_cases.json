@@ -1,0 +1,7 @@
+{
+ "_note": "GOLDEN-EVAL · хилийн зурвасаас нэр дэвшсэн бодит тохиолдлууд.  `nominate.py` НЭР ДЭВШҮҮЛНЭ, хүн `freeze.py add`-ээр БАТАЛНА.  Автомат оруулах нь загварыг өөрөө өөрийгөө шалгах гогцоо болгоно.",
+ "partition": "difficult_cases",
+ "frozen": true,
+ "preprocess_contract": "fold-v1",
+ "rows": []
+}

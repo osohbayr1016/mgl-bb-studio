@@ -1,0 +1,7751 @@
+{
+ "_note": "ОЛОН ХЭЛНИЙ БАГЦ — англи · латинаар бичсэн монгол · кирилл (бүдүүлэг/алдаатай) · холимог.  1291 мөр, 9 санаа × 4 хэл тэнцвэртэй.\n\n⚠️ АНГЛИ НЬ ТЭНЦҮҮ ЭРХТЭЙ.  Бүтээгдэхүүнийг бусад компанид зарах зорилготой тул англи нь «нэмэлт» биш, үндсэн хэл.\n\n⚠️ ЛАТИН-МОНГОЛ нь СТАНДАРТГҮЙ: ө→o/u, ү→u, х→h/kh, ц→ts/c, й→i/y.  Нэг үгийн олон бичлэгийг ЗОРИУД оруулсан.  `textfold` нь ихэнхийг нь нэг хэлбэрт буулгадаг ч бүгдийг биш.\n\n⚠️ АЛДААТАЙ/ДУТУУ БИЧЛЭГ нь захиалагчийн ТУСГАЙ шаардлага: «үг үсэг үлдээж бичдэг, дутуу бичдэг хүмүүсийн үгийг ойлгодог болго».\n\nҮүсгэлт: 11 зэрэг агент → 2 аудитлагч (хөндлөн мөргөлдөөн + хэлний хамрах хүрээ).  60 мөр ХАСАЖ, 129 мөр НЭМСЭН.  Тайлан: multilang-audit.md",
+ "rows": [
+  {
+   "text": "send my progress to MGL",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "record today work in the system",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "submit my daily progress",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "log the work i did today",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "push progress for BA-01",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "mark HAS-02 as 60% and send it",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "save my work progress to the web app",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "update my task progress on the site",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "close BA-04 at 100% and submit",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "enter my progress into MGL",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "set CAH-07 to 30 percent and send",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "put my sheet progress into the system now",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "could you please submit my progress now",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "please record what i did today",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "can you send my work progress to the system please",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "can i submit my progress now?",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "should i push my progress before i go home?",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how do i send my progress?",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "is it ok if i log my work now?",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "can you register 70% for BA-01?",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "submit progress",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "push progress",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "log work",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "send 80%",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "BA-03 done, send",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "progress submit now",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sumbit my progres",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "send my progres to mgl pls",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "plz recrod todays work",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "puhs the progress now",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "i finshed BA-01, sned it",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "I finished the elevation sheets today, please submit that progress to the MGL system",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "I am done for today, please record my work progress in the web system before i close revit",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "khiisen ajlaa ilgekh",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "yvtsaa ilge",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "yavtsilgee",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "onoodriin khiisniig burtguulye",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "TsAKh-07 iig 30 huvi bolgoloo ilgee",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "BA-05 duuslaa, ilgeed ogooch",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "ajliin yavtsaa sistem ruu ogye",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "huudasnii yavtsaa burtguulmeer baina",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "huudsuudiin yavtsiig ilgeeye",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "bi onoodor BA-02 iig 40% bolgoloo",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "ilgeegeech yavtsaa",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "yavtsaa burtguuleed ogooch",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "khiisen ajliin dungee ilgee",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "ene huudsiig 100% bolgochihloo, ilge",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "ajlaa duusgasnaa temdegluulye",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "yavtsaa shinechileed yavuulya",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "yavtsaa 55 huvi gej oruulya",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "onoodriin ajlaa MGL deer burtguulye",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "yavtsa ilgeeh",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "khiisen zuraguudaa temdegleed ilgee",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "BA-01 iig 60 huv bolgood ilgeechih",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "ilgee dee yavtsaa",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "ajlaa burtguulmaar bn",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "onoodriin yavtsaa odoo damjuulya",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "yavtsiig ni ilgeej ogno uu",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "TsBU-05 iig 70 huvi bolgoloo",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "BB-11 iig duusgachihlaa, burtguul",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "odoo ilgeej bolokh uu yavtsaa",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yaj yavtsaa burtguuldeg ve",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "hisnee ilgeech",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "unudriin ajlaa burtgul",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "onoodor bi guraw huudas deer ajilsan, yavtsaa 50 huviar burtguulmeer baina",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "BA-01 BA-02 khoyriig duusgalaa, tednii yavtsiig sistem ruu ilgeej ogooch",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "явцаа илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "явц илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хийснээ илг",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа бүртгүүл дээ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "ажлаа илгэчих",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "БА-01 60 болголоо илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "оноодрийн явцаа илгээе",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсаа 70 хув болголоо",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа явуул",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "илгээчих дээ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хийсэнээ бүртгүүл",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ЦАХ-09 30% болов илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "дуусгачихлаа илгээ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "явцаа өгчих",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "ажлаа бүртгүүлэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хийсн ажлаа илгээ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ББ-07 ыг 90 болгож илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "явцаа орууллаа",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "ЦБУ-02 дуусав илгээе",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "явцаа тэмдэглээд илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "өнөөдрийнхийг илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа мэдэгдье",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "БА-03 ыг хааад илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа бүрт гүүлье",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явцыг ни илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа шинчлээд илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хийсэн ажлаа өгье",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "ХАС-06 ийг 25 болголоо",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "progress оо send хийе",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "sheet ийн явцаа submit хийчих",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "өнөөдрийн work оо MGL руу илгээе",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "БА-02 ыг 70% гэж mark хийгээд илгээ",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "progress ээ web рүү илгээчих",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "task ийнхаа явцыг илгээе",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "ЦБУ-08 complete боллоо, илгээе",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "yavtsaa submit hiiye",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "progress oo burtguulye",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "өнөөдрийн daily progress ээ явуулъя",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "БА-05 ийг 40 percent болголоо",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "sheet үүдийнхээ явцыг push хийе",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "хийсэн ажлаа MGL portal руу илгээж өгөөч",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "ХАС-03 ыг 60% болгож save хий",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "ажлаа log хийе",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "явцаа system ruu ilgeeye",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "БА-01 ийг finish хийлээ, илгээ",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "checklist аа дуусгалаа, submit хийе",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "progres оо илгэ",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "show me all the sheets in this model",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "list every sheet in the file",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "give me the sheet list",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "print all sheet names and numbers",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "display the sheets of this project",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "open the list of sheets",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show all drawing sheets here",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "could you show me all the sheets please",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "please give me a list of the sheets in this file",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "can you list the sheets for me thanks",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "hello, please list all sheets of the current model",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "if it is possible show me the full sheet list",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "how many sheets are in this file",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what sheets do we have here",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "which sheets exist in this model",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what are the sheet numbers in this project",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "is there any interior sheet in the list",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how many sheets does this project have in total",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "do we have architecture sheets listed here",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "all sheets",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sheet names",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sheet numbers",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sheet count",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "show sheets",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sheets in file",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "show me all sheeets",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "list the sheet plz",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "giv me sheet list",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "hom many sheets in this file",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "sheet lsit please",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "before i start working i want to see every sheet that is inside this revit file, list them",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "i am not sure which sheets are in this model, please go through the file and list all of them with numbers",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "huudsuudiin ners iig garga",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "fail deerh buh huudsiig jagsaa",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "shifruudee garga",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "khuudsuudaa dugaaraar ni jagsaa",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "zuraguudiin jagsaaltiig garga",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "huudasnuudaa neriin daraalalaar jagsaa",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "modeliin huudsuudiig neg gargaad ir",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "hudsuudiin dugaariig haruul",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "buh khuudsiig jagsaaltaar ni uzuul",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "sain baina uu, failiin huudsuudiig jagsaaj ugnu uu",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "bolomjtoi bol huudasnii jagsaaltiig gargaj ugooch",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "huudsuudiin ners iig haruulj tuslaach",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "ta buh huudsiig jagsaagaad ogooch",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "nadad ene modeliin huudasnuudiig uzuulj bolokh uu",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "khuudasnii jagsaaltiig avch bolokh uu",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "ene fail deer heden huudas baigaa ve",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yamar shifruud baigaa ve",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "huudsuudiin ners ni yu yu ve",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "BA giin huudsuud jagsaaltad baina uu",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "khed huudastai ve ene project",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "zuraguud ni yu yu baina ve",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "odoo neelttei baigaa fail deer yamar huudsuud baina ve",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "huudsuudiin dugaar ni yamar baidag ve",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "huudasnii ners",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "shifruud",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "heden huudas",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "failiin buh huudas",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "zuraguudiin jagsaalt",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "huudsuudiin dugaar",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "huudsuudiin nesr iig haruul",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "hudasnii jagsalat garga ogooch",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "buh huudsiig jgsaa",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "yamar hudsuud bnaa ve",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "ajil ehleheesee omno ene fail dotor yamar huudsuud baigaag haramaar baina, jagsaaj ogooch",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "bi ene modeliig shine avsan tul dotor ni yamar shifruud baigaag medehgui bain, buh huudsiig jagsaa",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "хуудснуудаа гарг",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсуудынхаа нэрийг харул",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудасныжагсаалт гарга",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "бүх хуудсаа жагсаачих",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсуудаа дугаараар нь жагса",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ямр хуудсууд байгааг харул",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "шифрүүдээ гаргач",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсуудаа тоолоод хэлээч",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудаснуудынхаа жагсаалт",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсуудаа нэрээр нь жагса",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "бух хуудсаа гарга",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "энэ файлд ямр хуудсууд бн",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсын дугаарууудыг нь харуул",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудасныннэрс гарга",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ямар зургууд байгааг жагса",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсуудыгжагсаа",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "оноодрийн файлын хуудсууд юу вэ",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсуудаа шалгаад жагса",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "модел дээрхи хуудсуудаа харул",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудасны жагсаалтг гарга",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудснууд",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "шифр жагсаалт",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хуудасны нэрс",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хуудсын дугаарууд",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "зургуудын жагсаалт",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хэдэн хуудас",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "бүх шифр",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хуудсууд юу вэ",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хуудсуудаа",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "sheet үүдийн нэрсийг гарга",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "энэ RVT д ямар sheet үүд байна",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "sheet бүрийг жагсаагаад өгөөч",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "хуудсуудаа number ээр нь sort хийж жагсаа",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "sheet index ээ нээгээд өгөөч",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "link хийсэн model ийн sheet үүд ч орох уу, бүгдийг жагсаа",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "бүх sheet ний нэр дугаарыг харуулаач",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "drawing sheet үүдээ жагсаа",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "бүх sheet ээ list лээд өгөөч",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "active document ийн хуудсуудыг харуул",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "current file д хэдэн sheet байна вэ",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "АЗ ийн sheet үүд хэд байна вэ",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "бүх хуудсыг list лэ дарааллаар нь",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "sheet үүдээ дугаарын order оор харуул",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "модел дээрх sheet тоог хэлээд өгөөч",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "plz sheet үүдээ жагсаагаад өгөөч",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "ажлын зургийн sheet үүдийг бүгдийг нь харуул",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "надад одоогийн sheet үүдийг дугаартай нь жагсаагаад өгөөч",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "verbose"
+  },
+  {
+   "text": "sheet lst ээ гаргаад өг",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "бүх sheet үүдээ жагсаагад өг",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "isolate sheet A-101",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "show only the elements of sheet E-05",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "hide everything except A-201",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "leave only sheet S-03 visible",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "focus on sheet M-02",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "just show BA-01, nothing else",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "isolate the elements of this sheet",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "please isolate the current sheet in 3d",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "i want to see only sheet HAS-12 elements",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "could you please isolate sheet A-101 so i can check the layout",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "isolat sheet BB-21",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "isolate shet A-102",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "isolete BA-03 pls",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "only this sheet",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sheet A-101 only",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "is it possible to isolate sheet TSAH-07?",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "can you show me only the elements that belong to sheet A-201?",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "hide the rest and keep sheet IZ-04",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "isolate A-101 in the 3d view",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show elements from sheet BA-05 alone",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "please leave only S-01 on the screen",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "isolate the sheet i am working on right now",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "keep only BB-04 visible and hide the others",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i need only sheet ET-02 elements visible for checking, hide the rest",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "isolate sheet number A-303",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "make only BA-09 visible",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "isolate that sheet again",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "pls isolate HAS-02",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "isolate sheet a101",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "select sheet A-201 and isolate it",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "isolate current sheet elements only please",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "turn off everything except sheet A-105",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "isolate sheet BA-02 elemnts",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "A-101 iig tusgaarlaach",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "huudas BA-05 iig gantsaaran ni haruul",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "zovhon BA-01 iig uzuul",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "zowhon UA-03 iin elementuudiig harmaar baina",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "BB-04 iin elementuudiig l uldee",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "TSAH-07 oos busdiig ni nuuchih",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "ene huudsiig l uldeegeed busdiig ni nuu",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "AZ-14 iig tusgaarlana uu",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "khuudas E-05 iig yalgaj haruulaach",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "khaas-12 iig tusgaarlaad ugooch",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "tsakh-07 iig ganchaaran ni haruulaach",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "buh yumiig nuugaad A-101 iig l uldee",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "M-02 iig l harmaar bn",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "huudsiig tusgarlach",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "tusgaarlaach ene huudsiig",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "S-01 huudsiig ontsloood ug",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "gants ene huudsiig uzuuleech",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "ET-02 iig yalgaad ugooch",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "AG-06 iig tusgaarlaad harii",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "huudas BA-03 iig 3d dotor tusgaarlaj bolh uu",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "TSBU-05 iig yalgamaar bna",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "odoo neelttei baigaa huudsaa tusgaarla",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "IZ-04 iig gantshan uldee",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "MT-09 iin yumnuudiig l gargaj ireech",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "ZT-01 huudsiig yalgaj chadah uu",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "BN-02 ig tusgaarlaj uzuuleerei",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "ene huudasnaas busad elementiig nuuj bolh uu",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "bi A-201 iig l harah gesen yum, busdiig ni nuugaach",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "BA-07 iig l harval boloh uu",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "huudsaa ganctsaarang ni gargaach",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "A-105 iig tusgaarlaj bolhuu",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "tusgaarlaya ene huudsiig",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "TSBU-02 iin zurgiig l uldeegeed busdiig ni nuu",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "HAS-08 iig ontsolj haruulaach",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "AZ-22 huudsiig ilruulj haruul",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "А-101 г тусгарла",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ба-05 харул",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсаа ялга",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "зөвхөн БА-01",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "БА-01 л үлдээ",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "тусгаарлаад ог",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ЦАХ-07 иг тусгарлаач",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хас-12 ялга",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "энэ хуудсыг л",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "А-201ыг ялгачих",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "БА-09ийгтусгаарла",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ЦБУ-05 г ганцаарн харуул",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "бусдыгнь нуу БА-01 үлдээ",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ЗТ-01 иг ялгаж харул",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "УА-03 тусгаарлж өг",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудас ялгах",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "энэ хуудас ганцаар",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "агааржуулалтын хуудсыг ялга",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "МТ-09 тусгаарл",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "бүгдийг нуу А-101 үлдээ",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "ИЗ-04 ыг л гарга",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "БН-02 иг тусгарлан харуулна у",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тэр нэг хуудсаа ялгаад өгөөчээ",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсыг тусгаарлмаар бна",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "оноодор ажилласан хуудсаа ялга",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "БА-01ийг ялгаад бусдыгнь нуучх",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ХАС-08 онцлоод харуул",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "фокус БА-03 дээр",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "зөвхөн энэ хуудсны юмыг",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "А-105 г ялгаж үзүүлэ",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "бусдыг нь hide хийгээд A-101 ийг үлдээ",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "current sheet ээ тусгаарла",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "sheet A-201 only харуул",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "focus хий ЦАХ-07 дээр",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "ХАС-12 ийн element үүдийг л show хий",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "3D дээр sheet БА-09 ийг ялгаад өгөөч",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "зөвхөн ЦБУ-03 ийн element үүд visible байг",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "хуудсаа select хийгээд isolate хийчих",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "БА-02 г solo хийгээд үзүүл",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "hide all except БА-01",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "энэ sheet ийг ганцаарнг нь show хийгээч",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "ЗТ-01 sheet ийг filter хийж харуул",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "one sheet only харуулаач",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "МТ-09 ийн elements ийг тусгаарлана уу",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "АГ-06 sheet ийг view дээр ялгаад өгөөч",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "isolate хийгээд A-105 ийг л үлдээ",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "энэ хуудсны element үүдээс бусдыг нь temporary hide хий",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "verbose"
+  },
+  {
+   "text": "БА-07 sheet ийг ганцааранг нь харуулж болох уу",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "тэр sheet ээ isolate хийж чадах уу",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "reset the isolation please",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "show all elements again",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "turn off isolate mode",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "bring back all the elements in the model",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "unhide everything in the view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "cancel isolation",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "reset view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "can you undo the isolation?",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "please switch the isolation off",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "restore the full model view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i finished checking, please show whole model",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "remove isolate from this sheet",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "put the view back to normal",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "everything is hidden now, bring the elements back",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "stop isolating the sheet elements",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "how do i cancel the isolation?",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "plz reset isolatoin",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "show the hidden elements back",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "undo isolate for BA-01",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i want to see all elements again, reset it",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "clear the isolation and show the full building",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "could you please return the view to its original state",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "unisolate",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "reset the model view for me",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "un hide all elemnts",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "the isolation is not needed anymore, cancel it",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "back to whole model",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "revert the view to normal",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "disable isolation now",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "give me back the entire model view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "reset isolatin pls",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "we are done with this sheet, unisolate everything",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "is it possible to show all elements again?",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "tusgaarlaltiig tsutslaarai",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "tusgarlaltaa boliul",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "buh elementee butsaagaad haruulaach",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "modeliig buten baidald ni oruul",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "haragdatsiig heveer ni bolgooch",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "tusgaarlalt hereggui boloo, buh elementee garga",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "khuudsiin tusgaarlaltiig tsutsal",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "tusgaarlaltaa avaad buten barilgaa harya",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "nuusan zuilsee butsaaj garga",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "tsutslaach tusgaarlaltaa",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "haragdatsaa hevend ni oruulchih",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "bugdiig ni buttsaagaad haruul",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "tusgaarlasnaa boliulaach",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "BA-01 iin tusgaarlaltiig tsutsal",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "tusgaarlaltiig ni yaaj tsutslah ve",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "buten zagvaraa butsaagaad haruulj bolh uu",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "bugdiig ni ergeed haruulchihaach",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "tusgaarlaltaa hayachih",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "zagvaraa anhnii baidald ni oruul",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "tusgaarlaltiig ustgaad buh yumaa haruul",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "zagvaraa buteneer ni uzeh gesen yum, tusgaarlaltaa avchih",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "tusgaarlaltaa tsutslaad bugdiig haruulna uu",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "tusgarlaltig avchihaach",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "buh elementee butsaaj uzmeer baina",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "tusgaarlaltaa boliulaad ugooch",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "haragdatsaa buten bolgooch",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "nuuchihsan elementuudee garga",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "tusgaarlaltaa arilga",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "buh zuiliig ni butsaagaad haruulchihaarai",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "hevendee oruulaach zagvaraa",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "tusgaarlaltiig hasaad buh elementee garga",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "ene tusgaarlaltiig ni boliulj bolohuu",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "buh elemntee butsaagad haruul",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "tusgaarlaltiig tailaad butsaaya",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "khuudsaa uzej duuslaa, tusgaarlaltaa avchih",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "тусгарлалтыг болиул",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "бух элементээ харуул",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тусгаарлалт ав",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "бугдийг нь буцаагаад харуул",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тусгаарлалтаа арилга",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "загвараа бутэн болго",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "нуусан элементуудээ гарга",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тусгаарлалтааболиул",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "харагдац хэвэнд нь",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "тусгаарлалт хасах",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "бух юмаа буцаагаад харул",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тусгарлалтаа авчих",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "элементуудээ буцаа",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тусгаарлалтаа тайл",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "загварыг бутнээр нь харуул",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тусгаарлалтыг цуцалж",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "нуучихсан элементээ гарга",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "тусгаарлалт хаа",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "БА-01 тусгаарлалтыг ав",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "тусгарлалтаа болиулаад бух элементээ гарга",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тусгаарлалтаа цуцлаад өг",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "бүх элемент буцаа",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "тусгаарлалтыг больё",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "загвараа бүтнээр харья",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "тусгаарлалт цуцлх",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "элеметүүдээ буцаагаад харуул",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тсгаарлалтыг цуцал",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тусгаарлалтаа буцаагаад харулчих",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "isolate ээ болиулаад бүх element ээ харуул",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "reset view хийчих",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "бүх element ийг back болгоод өгөөч",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "isolation оо cancel хий",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "буцаад full model оо харуулж болох уу?",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "unhide all хийгээд өгөөч",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "sheet ийн isolate ээ off болго",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "view оо normal болго",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "isolate mode оо унтраа",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "бүх element үүдээ show хий",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "isolation reset хийж өгнө үү",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "hide хийсэн element үүдээ буцаагаад харуул",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "clear хийчих тусгаарлалтаа",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "БА-01 ийн isolation оо undo хий",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "restore хийгээд бүтэн model оо гарга",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "тусгаарлалтаа болиод анхны view лүү буцъя",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "verbose"
+  },
+  {
+   "text": "view reset хийх үү?",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "яаж isolation оо cancel хийх вэ?",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "бүх элементээ visible болгоод өгөөч",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "isolate off болгоод бүтэн барилгаа харуулаач",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "show me what changed since the baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "which sheets were edited after i captured the baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "give me the diff please",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "changes since baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "compare the current model with the baseline and show me every difference",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "what elements are new",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "any walls added since baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "show the modified sheets only",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i want to see what my colleague changed in this file",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "did anything get deleted from the model",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "show change summary",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "pls show whats chnaged",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "what is diffrence from baselne",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "Could you please compare with the snapshot I took this morning and tell me what is different",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "changes",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "what changed after lunch",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "show all modifications made today",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "how many elements were added and how many removed",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "run the diff again",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "is there any change in the model since i set the baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "show me the edited views",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "what did i change in the last hour",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "check if anything changed",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "give change report",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "wat changd today",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "show diff for the linked model",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "anything new since morning",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "display changed elements",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "difference from last snapshot",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "did any door get moved",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "show what was updated",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "changes since baselin plz",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "tell me what is different now",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "hamgiin suuliin uurchlultiig haruul",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "hen yu zassan bolohiig haruulaach",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "suuliin neg tsagt yamar uurchlult orson be",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "hana nemegdsen uu",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yamar element ustsan be",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "zagvar uurchlugdsun uu",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "diffee dahin ajilluulj ug",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "hadgalsanaas hoish yu uurchlugdsun",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "ene doloo honogt yamar uurchlult orson bolohiig haruulaach",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "suuri avsnii daraa yu bolsniig tovchhon heleech",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "uurchlultiin jagsaalt gargaj ug",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "shineer zursan yumaa haruul",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "hoyor huvilbariig haritsuulj ug",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "heden shine element orj irsen be",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "shiljsen element baina uu",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yu hudulsun be",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "haalga tsonhond uurchlult orson uu",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "suuriasaa hoishhi yalgaag gargaad ug",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "hiisen zasvaruudaa haryaa",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "yu uurchlugdsuniig medmeer bn",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "ymr uurchlult garav",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "model deer yu shinechlegdsen be",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "tsonhnii too uurchlugdsun uu",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "buh uurchlultiig delgerengui haruulaach",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "ochigdriinhtei adilhan uu esvel uurchlult orson uu",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "uurchlult baigaa esehiig shalgaad heleech",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "huudsuudad orson uurchlultiig gargaj ireech",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "yu nemegdej yu hasagdsaniig haruul",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "unuudur oorchlogdson yumiig haruul",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "tsahilgaanii huudsuudad uurchlult orson uu",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yu zassaniig sanuulaach",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "zagvariin oorchloltiig shalgaach",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "heden uurchlult garsniig too gargaj ug",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "umnuh baidaltai haritsuulj ug",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "uurchlult baival haruul, baihgui bol heleech",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "юу оорчлогдсоныг харул",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "оорчлолтиг гарга",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "суурьтай тулга",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "юу нэмэгдсн",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хана нэмэгдсэн уу",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "оорчлолт байнуу",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "юу засагдав",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "загвар оорчлогдсн уу",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хамгийн суулийн оорчлолт",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "юу шинэчлэгдсн бэ",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "оорчлолт харул",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "юу хасагдсн",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "суурьаас хойш юу болсон",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ялгааг гарга",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "оорчлогдсн хуудас",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хэн юу зассан",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "юу ходолсон",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "шинэ элемент байна уу",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "оорчлолтын жагсаалт",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "юуг зассн бэ",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "углооноос хойш юу оорчлогдсон",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "загварт юу болсон",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "diffээ шалга",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "юу зурагдсн",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ЦА хуудаст ямар оорчлолт",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хэдэн юм оорчлогдсн",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "оорчлолт байгаа юу",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "суурьтайгаа жиш",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "baseline capture хийснээс хойш юу болсон бэ",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "model д ямар change орсныг show хийгээч",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "diff ээ run хийж үзье",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "element үүд add хийгдсэн үү",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "wall нэмэгдсэн үү delete хийгдсэн үү",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "snapshot тайгаа compare хийгээд үзүүл",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "change list ээ гаргаад өгөөч",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "юу update хийгдсэнийг харуул",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "last baseline аас хойшхи difference ийг харуулаач",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "sheet үүдэд ямар edit орсон бэ",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "delete хийгдсэн element байгаа юу",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "change summary гаргаад өгөөч",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "өнөөдөр юу modify хийгдсэн бэ",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "baseline тэй одоогийн model ийг харьцуул",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "new element орж ирсэн үү",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "revision орсон хуудсуудыг харуул",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "yamar change orson be",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "хийгдсэн modification уудыг харуул",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "morning аас хойш юу өөрчлөгдсөн бэ",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "link хийсэн файлд өөрчлөлт орсон уу",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "capture baseline",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "set the baseline now",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "save current model state as baseline",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "mark the starting point",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "take a snapshot of the model",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "record where the model is right now",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "make this the base version",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "start counting from here",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "begin tracking from now on",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "freeze this state as the base",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "overwrite the old baseline",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "re-baseline the model",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "baseline it",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "new baseline",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "mark start",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "could you please save the current state as the baseline",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "please take a baseline before i start drawing",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "would you set a baseline for me first",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "i want to save a baseline please",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "can you set the baseline now?",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "may i take a baseline before starting?",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "capture baselien",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "set basline pls",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "save the currnt state as base",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "snapshoot the model now",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "mak the start poin",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "before i start modeling the kitchen ceiling please capture the current model state as the baseline",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "i am going to work on sheet BA-01 today so first store the model condition now as reference",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "suuriig avya",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "ehleliin tseg tavi",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "odoogiin zagvariig suuri bolgo",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "ene tuluviig suuri bolgoj hadgal",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "endees toolood ehel",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "suuriigaa shinechil",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "huuchin suuriig soliod shine av",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "ajil ehlehees umnu suuri temdegleye",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "suuriig avch ug",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "ene mochiig temdegleed hadgal",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "zagvariin odoogiin tuluviig bichij av",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "shine baseline tavi",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "modeliin odoogiin baidliig temdegle",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "tooloh ehleliig ni tavi",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "yag odoogiin baidliig suuri bolgoy",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "suuri tavichih",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "ehlel tavi",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "suuri hadgal",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "suuriig ni av",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "odoo bui baidliig suuri bolgono uu",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "ta suuriig avch ugnu uu",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "bolomjtoi bol ehleliig temdeglej ugooch",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "suuriig ni hadgalj ugvul bayarlah baisan",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "ehleed suuri avaad ugchihuuch",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "suuriig shinechilj bolokh uu?",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "odoo suuri avch bolokh uu?",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "ehleliin tsegee tavij bolokh uu?",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "snapshot avch bolno uu?",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "suuriig temdegl",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "ehleliin tseg tavii",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "odoogin baidliig hadgalchih",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "snapshoot av",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "suur avaad ug",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "bi odoo BA-05 huudsan deer ajillah gej baina ehleed odoogiin baidliig suuri bolgoj hadgalchih",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "unuudur zurag zasah gej baigaa tul ehlehiin umnu suuriig avch tavichihaach",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "суурь тавь",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "суурь хадгал",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "эхлэл тавь",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "суурь болго",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "снапшот ав",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "тоолох эхлэл тавь",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "энэ хэвээр тэмдэглэ",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "суурь аваарай",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "одоо байгаагаар нь суурь болго",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "одоохондоо суурь ав",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "суур ав",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "эхлэл темдэгл",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "эхлэлтэмдэгл",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "одоогийн байдлыг суур болго",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "суурьа шинчил",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "энэ байдлыг суур болгоод хадга",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "бэйслайн хий",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "оноогийн байдлыг хадгал",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "эхлэлээ тавьчи",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "суур авмаар байна",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хуучин суурийг солчих",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "суурь ав лдаа",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "эхлэх цэгээ тэмдэгл",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "суурьхий",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "одоогийн байдал хадгл",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "суурьаа авчхъя",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "baseline оо аваад өгөөч",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "snapshot аа хадгалчих",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "одоогийн model оо baseline болгоё",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "current state ийг суурь болгоод хадгал",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "reference point тавьчих",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "checkpoint үүсгэчих",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "start point оо mark хийчих",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "model ийн snapshot оо аваарай",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "хуучин baseline оо overwrite хийчих",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "шинэ baseline үүсгэ",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "sheet BA-01 дээр ажиллахын өмнө baseline capture хий",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "verbose"
+  },
+  {
+   "text": "одоогийн байдлыг save хийгээд base болго",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "snapshot оо refresh хий",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "загварын state оо record хийчих",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "ажил эхлэхийн өмнө checkpoint ав",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "baseline ээ дахин авмаар байна",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "одооноос count хийж эхлэхийн тулд baseline тавь",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "verbose"
+  },
+  {
+   "text": "current model оо base болгож хадгалаач",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "baseliine хийчих",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "одоо baseline авч болох уу?",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "what is my progress right now",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how many percent is BA-01 sheet",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "show me the current progress",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "check my progress",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "progress status",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "how much is done",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "is it already 100 percent",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how much work is left",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "Could you please tell me the current progress of my work today",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "what percent did i reach",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "tell me the percentage",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "% done?",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "how many checklist items are done",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "did HAS-12 reach 50 percent",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "current percentage please",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "show progress of this sheet",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "how far am i on this drawing",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what percentage is saved in the system",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "is my task finished",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how much work remain for me",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "wat is progress now",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "progres percent?",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "how many % complete",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "Please show me how many percent of the work is completed today",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "I would like to see the progress of all my sheets before i go home",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "give me the status of my task",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i want to know the total progress of this project and how much is remaining",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "any percent left on BB-04",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how much did i finish this week",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "status",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "see percentage",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "is BA-09 still not finished",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "chek my percent",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "Can i see how many percent is registered for my sheets please",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "im at how many percent",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "yavts hed huvi bolson be",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "minii yavts odoo hed baina",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "heden huvi hurchihev",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yavtsaa neg harmaar bna",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "BA-01 duussan uu",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "hed huvitai yavj baigaa ve",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yavc hed bolov",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yavtsiin medeelliig haruulaach",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "heden huvi uldsen be",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "TSAH-04 hed huvitai bolson be",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "ajil hed huvi bolsniig heleech",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "minii ajil hed huvtai ve",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "unuudriin ajil yamar tuvshind bn",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yavtsaa neg shalgaach",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "ene huudsiin yavts hed ve",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "hed huvi duussan bn",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yavts ni hed hurev",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "TSBU-05 khed khuvtai bolchikhov",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yavtsaa uzey",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "dutuu hed uldev",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "yvts hed bn",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "hedn huv bolson be",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "yavtsaa haruul l daa",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "ajliin yavts yamar bn",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yavtsiig ni heleed ugooch",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "BB-12 100 huvi bolson uu",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "hed huvid hurchihsen bn",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "minii huudsuudiin yavts hed ve",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "iavts hed bolov",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "unuudur heden huvi hiigdev",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "ajlaa hed huvi duusgasan baigaa ve",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yavtsaa shalgaya",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "HAS-08 duusahad hed uldev",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "Uuchlaarai, minii unuudriin yavts hed bolsniig heleed ugnu uu",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "yavtsaa medmeer bna",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "хэд болсныг хараач",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хэдэн хув болсон",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа хару",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ажил маань хэд дээр вэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "явцхэд вэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хэд хувтай вэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "оноодрийн явц хэд",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хэд дууссн",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явц ямр вэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "БА-01 хэд вэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хэдэн % вэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "статс",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явц харуул даа",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хэд болчихов",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "дуусхад хэд үлдэв",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ажлын явц хэд бн",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хэдэн хувдээ явж бна",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явцыг харья",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "миний хув хэд вэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ЦАХ-04 хэд хувтай",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хэд хүрсэн",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "явцаа хараад ав",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хэдэн хувиа мэдмээр бна",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ажил хэд явж бна",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "явцын мэдээлл",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хэд хувь дутуу вэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "чеклист хэд болов",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа үзье",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "progress оо харуул",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "миний progress хэд вэ",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "status аа шалгая",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "ЦАХ-11 ийн percent хэд вэ",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "progress check хий",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "хэдэн % done болсон бэ",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "ХАС-12 ийн progress хэд хүрсэн бэ",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "current progress ээ харъя",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "task ийн status хэд вэ",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "progres хэд дээр байна",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "энэ sheet хэдэн хувь дууссан бэ",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "явцын percent ийг харуулаач",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "төслийн total progress хэд вэ",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "энэ task дуусах хүртэл хэд үлдсэн бэ",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "my progress хэд болсон бэ",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "progress оо show хийгээч",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "ЦБУ-03 finish болсон уу",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "хэд болсныг check хийе",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "MGL дээр миний percent хэд харагдаж байна",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "explain what this assistant does",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "give me instructions",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "teach me how to use you",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "tell me your abilities",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "give me some examples of what i can type",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "explain how to start",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "tell me what i am allowed to ask",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "could you tell me what you are able to do",
+   "intent": "help",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "please give me a short introduction",
+   "intent": "help",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "sorry, can i get some instructions please",
+   "intent": "help",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "i am using this first time, please explain it to me",
+   "intent": "help",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "would you mind explaining how this works",
+   "intent": "help",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "please tell me which commands you understand",
+   "intent": "help",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "may i see the help menu",
+   "intent": "help",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "what can you do",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how do i use this",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how does this work",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what are your features",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "do you have a help menu",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what should i write here",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "is there any documentation for this",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how do i start",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "guide",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "instructions",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "manual",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "usage",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "need help",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "wat can u do",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "how to use ths",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "helpp",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "hepl me",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "instrucions",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "i just opened this panel and i have no idea what to type, can you explain everything first",
+   "intent": "help",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "i dont understand how this thing works please explain it to me from the beginning",
+   "intent": "help",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "yu hiideg yumaa tailbarla",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "chadvaraa hel dee",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "herhen ashiglahiig zaaj ugooch",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "kherkhen ajilladagiig tailbarlaad ugooch",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "tuslamjiin tses gargaach",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "bi anh udaa oruulj baina yaaj ehleh ve",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "hamgiin ehleed yu hiih ve",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "chi yund hereg boloh ve",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "chi yu oilgodog ve",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "bolomjuudaa tailbarlaach",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "namaig surgaach yaaj ashiglahiig",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "jishee hel dee yu bichih ve",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "yu bichvel oilgoh ve chi",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "zaavriig ni ugooch",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "yu medehiig chin medmeer bna",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "zaavr",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "tuslah medeelel ugooch",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "chinii chadvaruud yu ve",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "namaig zaavarchilaach",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "taniltsuulgaa hiigeed ugooch",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "bogino tailbar hiigeed ugooch",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "yu hiideg vee",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "ymr tushaal baidag ve",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "yaj ashigladag yum be ene",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "ene tuslah yu hiideg yumiig ni oilguulaach",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "tushaaluudaa hel",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "medehgui baina yu gej bichih ve",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "zaaj uguuch",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "hereglekh zaavar bii yuu",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "chamd yamar bolomj baigaa yum be",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "chi yund zoriulagdsan ve",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "shineer ehelj baigaa yum, tuslaach",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "тусламч",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "зааварчилгаа",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "заавр хэрэгтэй",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "чи надад юугаараа тусалдг вэ",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "дэмждэг зүйлсээ хэлчих",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "яаж ашиглах в",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "яж хэрэглэх вэ",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тушаал юу байдаг",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "тушаалуудаа хэл",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "командуд",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "цэс гарга",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "тусламжийн цэс",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "чадвраа хэл",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "юу бичихээ мэдхгүй бна",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "яаж эхлэх в",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "эхлэх заавар",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "тайлбарлаад өг",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "юу хийдгээ тайлбарлаач",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "богино заавр",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хэрэглэх заавар",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хэрэглэх зааврр байна уу",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "юуг нь дараад эхлэх вэ",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "юунд хэрэглдэг юм бэ",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "заавартай юу",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "боломжуудаа хэлчих",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "чи юу хийдэг вээ",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "туслаач яаж ажилладаг вэ",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "юу асуувал болох вэ chat дээр",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "энэ панел юу хийдгийг explain хийгээд өгөөч",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "guide байгаа юу",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "ямар option ууд байна вэ",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "яаж ажилладгийг тайлбарлаж өгөөч please",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "чи ямар tool уудтай вэ",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "instruction өгөөч",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "би first time ашиглаж байна, заавар өгөөч",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "чиний capability юу вэ",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "documentation байгаа юу энэн дээр",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "юу мэддэгээ share хийгээч",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "help товч хаана байдаг вэ",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "яаж use хийдэг юм бэ",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "яаж ажиллуулахыг нь step by step хэлээч",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "энэ AI юу хийж өгдөг юм бэ",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "short intro хийж өгөөч",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "example хэлээд өгөөч юу бичихийг",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "start яаж хийх вэ",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "tutorial байхгүй юу",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "хэлп хэрэгтэй",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "clock me in for today",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "did I forget to clock out yesterday",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how many hours did I work this week",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "Could you please register my attendance, I forgot to do it this morning",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "I want to take a day off next monday, can you request it for me",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "log 2 hours of overtime for me",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "how many leave days do I have left",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "approve the overtime request of my team",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "am I late today",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "sick leave for tomorrow please",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "pls aprove my leav request",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "send an email to the client",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "chek my inbox",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "reply to the last letter from the client",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "cna you snd this to the client",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "make a price quote for this building",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "what is the tariff for 1200 square meters",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "write the meeting notes for me",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "when is the next meeting with the client",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "assign this task to Bataa",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show my tasks for today",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "what is my score on the leaderboard",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "open my personal growth plan",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "start the skill assessment round",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "download the performance report",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "export the report to excel",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "print the contract for me",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "draw a wall here",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "add a colum on grid 5",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "create a new sheet",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "make a section view of this wall",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "delete this window",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "change the wall thickness to 250",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "save the file",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sync with central",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "export this to dwg",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "print all sheets to pdf",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "select all the doors",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "put a dimension between these two grids",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "list all the 3d views",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "how many families are loaded in this model",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "can you calculate the beam size",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "good morning",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "see you tomorrow",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "irtsee daraad ogooch",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "garah tsagaa daraagui bna",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "irtsiin tailan garga",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "chuluu avmaar baina margaash",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "chuluunii husel bicheed ogooch",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "iluu tsagaa burtguuleh",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "unuudur 3 tsag iluu ajillasan yumaa burtguulmeer bna",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "jiliin eeljiin amraltaa avya",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "hurlin temdeglee oruulya",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "hural hezee bolokh ve",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "email shalgaad ogooch",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "zahidald hariu bichie",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "uniin sanal beltgeye",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "uniin sanaliin pdf iig tataad og",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "daalgavar nemeed ogooch",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "minii daalgavruudiig haruul",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "hugatsaa hetersen ajluudiig haruul",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "unelgeenii asuulgaa buglumeer baina",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "verbose"
+  },
+  {
+   "text": "leaderboard deer hedduger yavaa ve",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "pgp plangaa shinechilye",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "tailangaa tataad ogooch",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "geree hevleye",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "akt bichij ogooch",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "dam nuruu tavi",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "handraga nemeed ogooch",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "agaarjuulaltiin suvag tatah",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "us hoolyn shugam zur",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "ene hanig ustga",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "ene haalgiig huulaad tavi",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "buh tsonhig son",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "hemjeed ogooch heden metr ve",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "failaa hadgalaad haa",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "buh hudsaa hevle",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "navisworks ruu garga",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "3d haragdats neegeed og",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "level uudiig jagsaa",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "hereggui familyg tseverle",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "workset uusgeed og",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "imperative"
+  },
+  {
+   "text": "margaash uulzii",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "shine jiliin mend hurgey",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "polite"
+  },
+  {
+   "text": "гарах цагаа дарж өгөөч",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "polite"
+  },
+  {
+   "text": "ирцийн тайланг сараар нь гаргаж өгөөч",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "verbose"
+  },
+  {
+   "text": "өнөөдөр хоцорсон уу",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "question"
+  },
+  {
+   "text": "өвчний чөлөө бүртгүүлэх",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "илүү цагийн хүсэлтийг зөвшөөр",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "маргаашийн хурлыг товлоё",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "хурлын бичлэгийг бичвэр болгож хөрвүүл",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "ирсэн захидлуудыг шалгаад өгөөч",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "polite"
+  },
+  {
+   "text": "захидлын дугаар олгоно уу",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "polite"
+  },
+  {
+   "text": "хяналтын төсөв бодуулъя",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "үнийн саналын англи хувилбарыг үүсгэе",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "надад даалгавар оноогоод өгөөч",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "polite"
+  },
+  {
+   "text": "хугацаа хэтэрсэн даалгавруудыг харуул",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "ур чадварын үнэлгээ эхлүүлье",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "хөгжлийн төлөвлөгөөгөө шинэчилье",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "гэрээгээ татаж авъя",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "актаа хэвлэж өгөөч",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "polite"
+  },
+  {
+   "text": "албан бичиг үүсгэж өгөөч",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "polite"
+  },
+  {
+   "text": "цалингийн тооцоогоо хараад өгөөч",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "polite"
+  },
+  {
+   "text": "дам нуруу тавьж өгөөч",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "polite"
+  },
+  {
+   "text": "энэ хаалгыг устгачих",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "энэ ханыг хуулж тавь",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "тэнхлэгийг 300 мм зөө",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "гэрэлтүүлгийн хэрэгсэл байрлуулж өгөөч",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "polite"
+  },
+  {
+   "text": "3D харагдац нээ",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "бүх түвшнийг жагсаа",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "imperative"
+  },
+  {
+   "text": "холбоос файлуудаа шинчил",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "файлаа сервер рүү нийлүүлэх",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "өглөөний мэнд",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "сайхан амраарай",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "polite"
+  },
+  {
+   "text": "attendance-аа бүртгүүлье",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "leave request илгээе",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "overtime оо бүртгүл",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "meeting notes-оо оруулъя",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "inbox-оо шалгаад өгөөч",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "quote-ын PDF-ийг татаад өг",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "my tasks нээгээд өгөөч",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "leaderboard дээр би хэддүгээрт байна вэ",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "PGP гээ шинэчлие",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "report-оо download хийе",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "central рүү sync хийгээд өгөөч",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "column-оо copy хийгээд тавиад өг",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "3D view үүсгээд өгөөч",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "sheet-үүдээ pdf болгож export хий",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "imperative"
+  },
+  {
+   "text": "family-гаа load хийж өгөөч",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "polite"
+  },
+  {
+   "text": "ЯВЦАА ИЛГЭЭ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хийсэнээ явул",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "onoodriin ajlaa ilge",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "БА01иг 45 хувь болголоо",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "pls send progress",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "явцаа сситем руу явуул",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "60 хув болов илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ЦАХ 3 ыг дуусгасн бүртгүүл",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "hiisnee ilgekh",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "явцаагаа илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "progres ilgee",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "ажла өгчих",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "send hiij ug yavtsaa",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "ба 1 дуусгав илгээ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "ХАС02 100 болов илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "tailanaa yavuul",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "явцаа дамжуулчи",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "бүх худсаа харул",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ХУУДСАА ЖАГСАА",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "huudas jagsaa",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "хуудсуудаагарга",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "sheetuudee haruul",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "list sheet plz",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "бух хуудсаа үзүүл",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "huudsuudiig ni garga",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "шифруудээ гарга",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "sheet bugdiig garga",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "файлн хуудсуудыг гарга",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "bh huudsaa garga",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "зурагнудаа жагсаа",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "БА01 ялгачи",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ба 5 г тусгарла",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "isolate ba01 plz",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "ЦБУ07ыг л үлдээ",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "has 3 tusgaarla",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "ХД-02 ИЙГ ЯЛГА",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "бб11 тусгаарл",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ene huudsiig gantsaarn ni uldee",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "ЦАХ 6 ыг ялгаад бусдын нуу",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "иЗ-09 ийг тусгарлаад өг",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "tsbu05 isolate hi",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "ЕТ-01 ийг тусгаарлаж харул",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "АУ 02 ыг л харуул бусдыг нь ну",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ba-1 iig yalga",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "ЭЗ-03 ыг тусгарлачи",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "isolate hiich ЦБУ-02",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "БҮХ ЭЛЕМЕНТЭЭ ХАРУУЛ",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "tusgaarlaltiig av",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "isolate ee boliul",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "бух элементээ буцааж харул",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "загвараа хэвэндээ оруулчи",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "тусгаарлалтболиул",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "reset isolation plz",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "buh elementee butsaagaad garg",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "нуусан элементүүдээ гарг",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ТУСГААРЛАЛТ ЦУЦАЛ",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "tusgaarlaltaa avchi",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "загварыг бүтнээр н харуул",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "isolate off хийчи",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "elementuudee butsaa",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "юу оорчлогдсон",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ӨӨРЧЛӨЛТӨӨ ХАРУУЛ",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "oorchlolt haruul",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "юуөөрчлөгдсөн бэ",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "suuriaas hoish yu bolov",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "өнөөдр юу засагдав",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "what changed today",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "БА хуудсуудад өөрчлөлт орсн уу",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "юу нэмэгдсн бэ",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "хэдэн элемент нэмэгдсн",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "өчигдрөс хойш юу шинэчлэгдэв",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "суур аваад өг",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "СУУРЬ АВЧИХ",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "suuri avchi",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "эхлэлээ тэмдэгл",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "baselin hii",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "endees toolj ehel",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "эхлэл цэг тавь одо",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "СУУРЬАА ШИНЭЧИЛ",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "ehleliig temdeglechi",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "загварын одоогийн төлвийг хадга",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "явц хэд бэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "ХЭДЭН ХУВЬТАЙ БАЙНА ВЭ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "yavts hed bolson bn",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "хэдэн хув болов",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "БА01 хэд болсн бэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "how much progress",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "явцаахараач",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "статус хэд вэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "ЦБУ 5 хэд хувтай вэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "hed uldev",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "миний явц хэд бн",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "явц 50 болсн уу",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "yavtsaa shalgach",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "ХАС02 дуусав уу",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "progress hed ve",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "terse"
+  },
+  {
+   "text": "дуусахд хэд үлдсэн бэ",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "туслмж",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ТУСЛАМЖ ХЭРЭГТЭЙ",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "tuslmj",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "чи юу чадах вэ",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "yu hiij chadh ve",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "help pls",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "заавар өг доо",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "юу хйиж чадах юм",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "чамайг яж ашиглах вэ",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "hereglekh zaavar",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "юу бичих вэ би",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "тусламжхэрэгтэй бна",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "ирцэ бүртгүүл",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "typo"
+  },
+  {
+   "text": "цалин хэзээ өгөх вэ",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "нууц үгээ мартчихлаа",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "хоолны цаг хэдэд бэ",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "printer ajilahgui bna",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "боли доо",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "revit унчихлаа яах вэ",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "typo"
+  },
+  {
+   "text": "явц илгэчих",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "yavtsa yavuul",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "тусгаарлалтыг нь тайлчих",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "өөрчлөлт орсон эсэхийг нэг хараач",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "суурьаа шинээр ав",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "diff ээ гаргаад өг",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "актаа илгээе",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "гарах цагаа бүртгүүл",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "thanks, that is all for today",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "захидлаа илгээе",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "цалингийн хүсэлтээ явуулъя",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "what commands do you accept",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "ene panel deer yu hiij bolohiig heleech",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "Revit дээр юу юу хийж өгдгөө хэлээч",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "question"
+  },
+  {
+   "text": "шинэ хүн байна, юунаас эхлэх вэ",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "question"
+  },
+  {
+   "text": "ЦАХ-05 ыг 80 хувь болгоод илгээчих",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "yavtsaa oruulchihlaa",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "ЦАХ-07 ийг 45 хувь гэж оруулчихлаа",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "record my progress for BA-02 at 75 percent",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "before the team syncs, capture the base state",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "make this state the reference for the diff",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "БА-05 дээр ажиллахаас өмнө суурь ав",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "одооны төлвийг лавлагаа болгож ав",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "suuri ni huuchirchee, shineer avaach",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "endees hoish yu uurchlugdsuniig hardag bolyo, suuri tavi",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "ehleliin tsegiig ni odoo tavichih",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "ehleh uyiin baidliig hadgalchih",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "файлын бүх шифрийг гаргаад өг",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хуудсуудаа дугаартай нь бүгдийг гарга",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "huudsuudaa buguding ni jagsaachih",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "list the sheets of the linked file too",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "миний өнөөдөр оруулсан явц хэд байна",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "question"
+  },
+  {
+   "text": "sistem deer minii huvi hed baina",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "энэ долоо хоногт хэд хувь хийчихэв",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "question"
+  },
+  {
+   "text": "temp hide хийснээ бүгдийг нь буцаа",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "ХАС-12 ийг ганцааранг нь үлдээ",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "суурьтайгаа харьцуулж үзүүлээч",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хэн ямар элемент нэмснийг харуулаач",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "БА-01 дууслаа",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "ЦАХ-05 дуусгасан",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "BA-04 duuslaa",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "huudsaa duusgachihlaa",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "A-101 finished",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "BA-03 done",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "БА-03 done боллоо",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "za ilgee",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "тийм илгэ",
+   "intent": "submit_progress",
+   "lang": "mn-cyrl",
+   "style": "terse"
+  },
+  {
+   "text": "ok send it",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "yes submit it",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "yavcaa ilgee",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "yavtsaa ilgeh",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "hiisne ilgee",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "khiisen ajlaa ilgeye",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "huudsaa duusgaw, ilgee",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "i want send my progress",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "please make submit my work today",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "ILGEE YAVTSAA",
+   "intent": "submit_progress",
+   "lang": "mn-latn",
+   "style": "terse"
+  },
+  {
+   "text": "sendmyprogress",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "progress аа push хийчих",
+   "intent": "submit_progress",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "give me sheets",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sheet list pls",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "SHOW ALL SHEETS",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "yamar huudsuud bayna ve",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "huudasnuudyg jagsaa",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "huudsuudaajagsaa",
+   "intent": "list_sheets",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "sheet үүдээ show хий",
+   "intent": "list_sheets",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "хуудсаа бүгдийг нь харуул",
+   "intent": "list_sheets",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "isolate this sheet",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "show just this sheet",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "only A-101 please",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "CAH-07 iig tusgaarla",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "ba01 yalga",
+   "intent": "isolate_sheet",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "isolate хий БА-01",
+   "intent": "isolate_sheet",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "БА-04 ыг ганцааранг нь үлдээ",
+   "intent": "isolate_sheet",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "unhide all",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "show all elements",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "show everything again",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "unisolate all",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "show hidden elements",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "showallelements",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "buh yumaa haruul",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "cucal tusgaarlaltaa",
+   "intent": "reset_view",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "isolate ee off хий",
+   "intent": "reset_view",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "нуусан бүх юмаа гарга",
+   "intent": "reset_view",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "who changed what in this model",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "any update after the baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what is different now from baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "yu oorchlogdsoniig haruulaach",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "suuriyg avsnaas hoish yu bolov",
+   "intent": "whats_changed",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "юу өөрчлөгдсөнийг шалгаад өгөөч",
+   "intent": "whats_changed",
+   "lang": "mn-cyrl",
+   "style": "polite"
+  },
+  {
+   "text": "change хийгдсэн юмаа харуул",
+   "intent": "whats_changed",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "save baseline",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "make baseline now",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "take baseline first",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "suuriyg av",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "suuri avaad ehley",
+   "intent": "set_baseline",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "baseline set хийчих",
+   "intent": "set_baseline",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "суурьаа тавьчихъя",
+   "intent": "set_baseline",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "how many percent i have",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "my sheet how many percent",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "can you show progress of my sheets",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "ХАС-06 25 хувь болсон уу",
+   "intent": "progress_status",
+   "lang": "mn-cyrl",
+   "style": "question"
+  },
+  {
+   "text": "BA-01 60 huv bolson uu",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "БА-05 40 percent болсон уу",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "question"
+  },
+  {
+   "text": "yavcaa harya",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "typo"
+  },
+  {
+   "text": "yavtsyg ni haruul",
+   "intent": "progress_status",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "percent хэд вэ",
+   "intent": "progress_status",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "what commands you have",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "which words i can write here",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how i can use this",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "chamaig yaaj ashiglah ve",
+   "intent": "help",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "help хэрэгтэй байна",
+   "intent": "help",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "юу хийж чадахаа хэлээч",
+   "intent": "help",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "submit my attendance for today",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "record my overtime hours",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "send my leave request to the manager",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "log my attendance",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "register my leave for tomorrow",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "hide this wall",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "энэ ханыг нуу",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "cyrillic"
+  },
+  {
+   "text": "irtsee ilgeeye",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "chuluunii huseltee ilgeeye",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "iluu tsagaa ilgeeye",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "hurlin temdegleegee burtguulye",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "latin"
+  },
+  {
+   "text": "hed tsag ajillasan be",
+   "intent": "unknown",
+   "lang": "mn-latn",
+   "style": "question"
+  },
+  {
+   "text": "хэдэн цаг ажилласан бэ",
+   "intent": "unknown",
+   "lang": "mn-cyrl",
+   "style": "question"
+  },
+  {
+   "text": "attendance аа submit хийе",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "leave request аа send хийе",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "overtime оо log хийе",
+   "intent": "unknown",
+   "lang": "mixed",
+   "style": "codeswitch"
+  }
+ ]
+}

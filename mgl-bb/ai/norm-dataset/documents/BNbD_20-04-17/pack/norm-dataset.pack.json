@@ -1,0 +1,21 @@
+{
+  "schema": "norm-dataset.pack/1",
+  "dataset_id": "norm-dataset-bnbd_20-04-17",
+  "version": "0.1.0",
+  "document_code": "БНбД 20-04-17",
+  "doc_id": "BNBD-20-04-17-2017",
+  "source_sha256": "d47090e33ada74919946567b19b33104fa331305d259ed4db54ff77c479351c1",
+  "text_verification_status": "official_pdf_text_layer_auto_extracted",
+  "counts": {
+    "chunks": 352,
+    "clauses": 203,
+    "tables": 73,
+    "formulas": 40,
+    "definitions": 14,
+    "numeric_requirements": 16,
+    "references": 20,
+    "qa_tests": 36,
+    "calculation_cases": 0
+  },
+  "built_at": "2026-09-23"
+}

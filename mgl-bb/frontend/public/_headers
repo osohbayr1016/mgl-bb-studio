@@ -1,0 +1,35 @@
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: credentialless
+
+# ⚠️ Do NOT narrow the `/*` block above to exclude /sw.js.
+#
+# Chrome refuses to register a service worker from a cross-origin-isolated
+# document unless the WORKER SCRIPT ITSELF is served with a compatible COEP
+# header — the isolation is not inherited implicitly, it has to be present on
+# the script response. The blanket `/*` rule is exactly what supplies it. If
+# someone ever "tidies" this by scoping COOP/COEP to `/app/*` (or by adding a
+# more specific /sw.js block that drops them), registration starts failing
+# with a bare SecurityError and push notifications silently die for everyone.
+#
+# Cloudflare Pages MERGES all matching rules and only overrides on a
+# per-header-name basis, so the blocks below add Cache-Control without
+# disturbing the COOP/COEP pair inherited from `/*`.
+
+# The service worker script must never be cached by the HTTP layer, otherwise
+# the hourly `registration.update()` re-validates against a stale copy and a
+# new SW_VERSION can take days to reach a user. `no-cache` still allows a
+# conditional request (304), it just forbids serving without revalidation.
+/sw.js
+  Cache-Control: no-cache
+
+# Short TTL: the manifest changes rarely, but when it does (new shortcut,
+# renamed icon) we want installed clients to notice within the hour.
+/manifest.webmanifest
+  Cache-Control: public, max-age=3600
+
+# Icons are content-stable and referenced by fixed filenames from the
+# manifest and the SW precache — a week is safe, and a rename is the escape
+# hatch if artwork ever changes.
+/icons/*
+  Cache-Control: public, max-age=604800

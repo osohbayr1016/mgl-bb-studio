@@ -1,0 +1,1741 @@
+{
+  "measured_at": "2026-09-10T04:40:02.028Z",
+  "gen": true,
+  "checks": [
+    {
+      "name": "A · META, хэрэгсэлгүй",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "A · гэрээ free",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "A · кирилл хариулт",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "A · identity дурдаагүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "B · get_active_employees дуудав",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "B · гэрээ grounded, active_employees заавал",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "B · эцсийн хариултад ЯГ серверийн тоо",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "B · гэрээнд нийцсэн",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "C1 · get_upcoming_deadlines + сэдэв тогтов",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "C1 · persona none",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "C1 · төслийн нэр хариултад",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "C1 · identity дурдаагүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "C2 · FOLLOW_UP, analyze_project(сэдэв)",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "C2 · сэдвийн мөр prompt-д",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "C2 · төслийг заав",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "C2 · identity дурдаагүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "C2 · гэрээнд нийцсэн (тоо зөвхөн хайрцгаас)",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "D · NEW_TOPIC, түүх 0, ERP хэрэгсэлгүй",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "D · prompt-д төслийн нэр БАЙХГҮЙ",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "D · шийдвэр verified В2, гэрээ authoritative/high",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "D · В2 + 1401/2200 хариултад",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "D · төслийн нэр хариултад БАЙХГҮЙ",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "D · гэрээнд нийцсэн",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "G · CORRECTION → сэдэв B, төслийн хэрэгсэл B дээр",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "G · хариултад B-ийн нэр, A-ийн нэр БИШ",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "E · lookup шийдвэр, gerее authoritative",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "E · В2 + 1401–2200, эх сурвалж",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "E · «м²» талбайн зохиомол тоо БАЙХГҮЙ",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "E · гэрээнд нийцсэн",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "F · MULTI_INTENT, list_projects + шийдвэр",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "F · 1)/2) бүтэц",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "F · идэвхтэй тоо = active_count",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "F · В2 муж 1401–2200",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "H · гэрээ refusal, noMatch",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "H · канон татгалзал эхэнд",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "H · зохиомол тоо, эшлэл БАЙХГҮЙ",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "H · гэрээнд нийцсэн",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "I · локал заалт нотолгоо болов",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "I · хуучин баримт бол трейлер гэрээнд бий",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "I · трейлер хариултын төгсгөлд",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "I · identity дурдаагүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "J · давхардсан өгүүлбэр ≤ 10%",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "J · 4-грамын давталт ≤ 15%",
+      "ok": false,
+      "gen": true
+    },
+    {
+      "name": "J · гогцоо суффикс алга",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "K · persona none, get_overdue_tasks",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "K · identity дурдаагүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "K · гэрээнд нийцсэн",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "L · response_language en, list_projects",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "L · англи хариулт, тоо зөв",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "M · REVIT_READ, ERP хэрэгсэлгүй, кирилл хариулт төлөвлөв",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "M · кирилл хариулт",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "M · зохиомол талбайн тоо БАЙХГҮЙ (Revit холбогдоогүй)",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "N · гэрээнд хориотой хэллэг",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "N · «өөрчиллөө/амжилттай» гэж хэлээгүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "O · memory_hints: answer_length=short, байнгын",
+      "ok": true,
+      "gen": false
+    }
+  ],
+  "cases": [
+    {
+      "question": "chi ymar asuultand hariulj chadah ve",
+      "turn": "NEW_TOPIC",
+      "intent": "META",
+      "tools": [],
+      "norm": null,
+      "contract": {
+        "mode": "free",
+        "risk": "low",
+        "facts": [],
+        "noMatch": true
+      },
+      "planMs": 47,
+      "contextMs": 11,
+      "raw": "Би компанийн ажилтай холбоотой ихэнх асуултад тусалж чадна. Төсөл, deadline, task, ажилтны ачаалал, тайлан, Revit, зураг төслийн баримт бичиг, барилгын норм дүрэм, тооцоо зэрэг.\n\nНорм дүрмийн асуулт бол баталгаатай эх сурвалжаас шалгаж байж хариулна. Revit холбогдсон үед нээлттэй байгаа төсөл, view, сонгосон элементийн мэдээллийг бас ашиглана.",
+      "final": "Би компанийн ажилтай холбоотой ихэнх асуултад тусалж чадна. Төсөл, deadline, task, ажилтны ачаалал, тайлан, Revit, зураг төслийн баримт бичиг, барилгын норм дүрэм, тооцоо зэрэг.\n\nНорм дүрмийн асуулт бол баталгаатай эх сурвалжаас шалгаж байж хариулна. Revit холбогдсон үед нээлттэй байгаа төсөл, view, сонгосон элементийн мэдээллийг бас ашиглана.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [],
+      "repetition": {
+        "raw": {
+          "sentences": 4,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 4,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 334,
+      "genMs": 3195,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 46,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 46,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "manai company heden ajiltantai ve",
+      "turn": "NEW_TOPIC",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "get_active_employees"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "active_employees=57"
+        ],
+        "noMatch": true
+      },
+      "planMs": 49,
+      "contextMs": 13,
+      "raw": "Энэ үе дээр компанийн ажилтны тоо 57-тэй. Харин тус компанид ажилладаг ажилтнуудын төрлөөр нь:\n\n- Архитектор: 22\n- Инженер: 15\n- Эрхэм ажилтан: 12\n- Админ: 8\n\nХэрэв та мэдээллийг бүхэлдэнэ үзэхийг хүсбэл, таамаглах боломжгүй.",
+      "final": "Энэ үе дээр компанийн ажилтны тоо 57-тэй. Харин тус компанид ажилладаг ажилтнуудын төрлөөр нь:\n\n- Архитектор: 22\n- Инженер: 15\n- Эрхэм ажилтан: 12\n- Админ: 8\n\nХэрэв та мэдээллийг бүхэлдэнэ үзэхийг хүсбэл, таамаглах боломжгүй.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 4,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 4,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 147,
+      "genMs": 2416,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 35,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 35,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "ali project hamgiin oir deadline-tei ve",
+      "turn": "NEW_TOPIC",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "list_projects",
+        "get_upcoming_deadlines"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "active_projects=16",
+          "total_projects=24",
+          "overdue_projects=3",
+          "upcoming_count=1",
+          "nearest_project=MGL-260226_MITIC_AZ",
+          "nearest_days=5",
+          "nearest_finish=2026-09-15"
+        ],
+        "noMatch": true
+      },
+      "planMs": 32,
+      "contextMs": 11,
+      "raw": "Энэхүү үзүүлбэр дээр \"MGL-260226_MITIC_AZ\" төсөл нь хамгийн ойр deadlineтай байна. Deadline нь 2026-09-15, өнөөдөр (2026-09-10) -аас 5 өдөр үлдсэн байна.",
+      "final": "Идэвхтэй төсөл: **16** · Хамгийн ойрхон төсөл: **MGL-260226_MITIC_AZ**\n\nЭнэхүү үзүүлбэр дээр \"MGL-260226_MITIC_AZ\" төсөл нь хамгийн ойр deadlineтай байна. Deadline нь 2026-09-15, өнөөдөр (2026-09-10) -аас 5 өдөр үлдсэн байна.",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "FACT_MISSING"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 3,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 610,
+      "genMs": 2392,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 1,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 1,
+          "words": 20,
+          "perHundredWords": 5
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 1,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 1,
+          "words": 28,
+          "perHundredWords": 3.57
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "yagaad udaad bna",
+      "turn": "FOLLOW_UP",
+      "intent": "ERP_ANALYSIS",
+      "tools": [
+        "analyze_project"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "project_name=MGL-260226_MITIC_AZ",
+          "project_progress=8.53",
+          "tasks_overdue=0",
+          "tasks_stale_14d=43",
+          "tasks_unassigned_open=299",
+          "pending_approvals=4"
+        ],
+        "noMatch": true
+      },
+      "planMs": 36,
+      "contextMs": 11,
+      "raw": "Энэ төсөл нь 5 хоногийн дотор дуусах болсон боловч 8.53% үнэ цэнэтэй явцыг үзүүлж, 43 даалгавар 14+ хоног явцгүй зогссон, 299 дуусаагүй даалгавар хариуцагчгүй байна. Сүүлийн батлагдсан явц нь 37 хоногийн өмнө байна. Энэ нь төсөл нь саатаж байгааг хүлээнэ.",
+      "final": "Энэ төсөл нь 5 хоногийн дотор дуусах болсон боловч 8.53% үнэ цэнэтэй явцыг үзүүлж, 43 даалгавар 14+ хоног явцгүй зогссон, 299 дуусаагүй даалгавар хариуцагчгүй байна. Сүүлийн батлагдсан явц нь 37 хоногийн өмнө байна. Энэ нь төсөл нь саатаж байгааг хүлээнэ.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 3,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 3,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 505,
+      "genMs": 3164,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 40,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 40,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "g=1800 MJ/m2 bol V2 yu V3 yu",
+      "turn": "NEW_TOPIC",
+      "intent": "NORMATIVE",
+      "tools": [],
+      "norm": {
+        "status": "uncertain",
+        "cite": "БНбД 21-04-05, Хавсралт №14, Хүснэгт 3, мөр 9.2, хуудас 8"
+      },
+      "contract": {
+        "mode": "authoritative",
+        "risk": "high",
+        "facts": [
+          "fire_category=В2",
+          "range_min=1401",
+          "range_max=2200",
+          "g_input=1800",
+          "source=БД 21-101-12"
+        ],
+        "noMatch": false
+      },
+      "planMs": 32,
+      "contextMs": 22,
+      "raw": "g = 1800 МДж/м² нь В2 ангилалд багтадаг. В3 ангилалд багтаж болохгүй.",
+      "final": "Ангилал: **В2** · Доод хязгаар: **1401 МДж/м²** · Дээд хязгаар: **2200 МДж/м²** · Эх сурвалж: БД 21-101-12\n\ng = 1800 МДж/м² нь В2 ангилалд багтадаг.",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "CATEGORY_CHANGED",
+          "FACT_MISSING",
+          "FACT_MISSING",
+          "CITATION_MISSING"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 603,
+      "genMs": 1342,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 12,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 25,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "MGL-260226_MITIC_AZ төслийн явц хэд вэ?",
+      "turn": "NEW_TOPIC",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "get_project_progress"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "project_progress=8.5",
+          "project_name=MGL-260226_MITIC_AZ"
+        ],
+        "noMatch": true
+      },
+      "planMs": 29,
+      "contextMs": 13,
+      "raw": "MGL-260226_MITIC_AZ төслийн нийт явцыг 8.5% гэж дүгнэж байна. Төсөл 2026-09-15-нд дуусах боломжтой. Төсөлд хамрагдсан бүх тэгшитгэл, даалгавар нь дараах байдлаар байна:\n\n- **Барилга архитектур (BA)**: 188 даалгавар, явцын 53.31%\n- **Барилга бүтээц (BB)**: 159 даалгавар, явцын 5.39%\n- **Халаалт агаар сэлгэлт (HAS)**: 0 даалгавар, явцын 0%\n- **Цэвэр бохир ус (TSBU)**: 90 даалгавар, явцын 0.11%\n- **Цахилгаан (TSAH)**: 0 даалгавар, явцын 0%\n- **Холбоо дохиолол (HD)**: 0 даалгавар, явцын 0%\n- **Автомат удирдлага (AU)**: 0 даалгавар, явцын 0%\n\nТөсөлд хамрагдсан бүх даалгаварын нийт тоо нь 437 байна.",
+      "final": "MGL-260226_MITIC_AZ төслийн нийт явцыг 8.5% гэж дүгнэж байна.\nТөсөл 2026-09-15-нд дуусах боломжтой.\nТөсөлд хамрагдсан бүх тэгшитгэл, даалгавар нь дараах байдлаар байна:\n- **Барилга архитектур (BA)**: 188 даалгавар, явцын 53.31%\n- **Барилга бүтээц (BB)**: 159 даалгавар, явцын 5.39%\n- **Халаалт агаар сэлгэлт (HAS)**: 0 даалгавар, явцын 0%\n- **Цэвэр бохир ус (TSBU)**: 90 даалгавар, явцын 0.11%\n- **Цахилгаан (TSAH)**: 0 даалгавар, явцын 0%\n- **Холбоо дохиолол (HD)**: 0 даалгавар, явцын 0%\n- **Автомат удирдлага (AU)**: 0 даалгавар, явцын 0%",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "UNSUPPORTED_NUMBER"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 11,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0.06666666666666667,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 10,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0.07407407407407407,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 304,
+      "genMs": 6113,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 87,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 78,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "үгүй ээ, MGL-260804 Хүй долоон худаг-Стадион-г хэлсэн юм",
+      "turn": "CORRECTION",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "get_project_progress"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "project_progress=0",
+          "project_name=MGL-260804 Хүй долоон худаг-Стадион"
+        ],
+        "noMatch": true
+      },
+      "planMs": 29,
+      "contextMs": 16,
+      "raw": "Үгүй. MGL-260804 Хүй долоон худаг-Стадион төсөл нь үнэнчээн байдлаар \"үгүй\" байна. Төсөл нь актив байхгүй, progress_percent нь 0, finish_date нь алга. Тиймээс төсөл нь дууссан болохгүй, явц нь 0% байна.",
+      "final": "Үгүй. MGL-260804 Хүй долоон худаг-Стадион төсөл нь үнэнчээн байдлаар \"үгүй\" байна. Төсөл нь актив байхгүй, progress_percent нь 0, finish_date нь алга. Тиймээс төсөл нь дууссан болохгүй, явц нь 0% байна.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 3,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 3,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 388,
+      "genMs": 2283,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 30,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 30,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "V2 galyn achaalal hed ve",
+      "turn": "NEW_TOPIC",
+      "intent": "NORMATIVE",
+      "tools": [],
+      "norm": {
+        "status": "uncertain",
+        "cite": "БНбД 21-04-05, Хавсралт №14, Хүснэгт 3, мөр 9.2, хуудас 8"
+      },
+      "contract": {
+        "mode": "authoritative",
+        "risk": "high",
+        "facts": [
+          "fire_category=В2",
+          "range_min=1401",
+          "range_max=2200",
+          "source=БД 21-101-12"
+        ],
+        "noMatch": false
+      },
+      "planMs": 35,
+      "contextMs": 17,
+      "raw": "g = 1401 – 2200 МДж/м² бол В2 ангилал.",
+      "final": "Ангилал: **В2** · Доод хязгаар: **1401 МДж/м²** · Дээд хязгаар: **2200 МДж/м²** · Эх сурвалж: БД 21-101-12\n\ng = 1401 – 2200 МДж/м² бол В2 ангилал.",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "CITATION_MISSING"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 206,
+      "genMs": 640,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 9,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 26,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Манай компанид хэдэн идэвхтэй төсөл байгаа вэ? Бас В2 ангиллын галын ачаалал хэдээс хэд вэ?",
+      "turn": "MULTI_INTENT",
+      "intent": "NORMATIVE",
+      "tools": [
+        "list_projects"
+      ],
+      "norm": {
+        "status": "uncertain",
+        "cite": "БНбД 21-04-05, Хавсралт №14, Хүснэгт 3, мөр 9.2, хуудас 8"
+      },
+      "contract": {
+        "mode": "authoritative",
+        "risk": "high",
+        "facts": [
+          "fire_category=В2",
+          "range_min=1401",
+          "range_max=2200",
+          "source=БД 21-101-12",
+          "active_projects=16",
+          "total_projects=24",
+          "overdue_projects=3"
+        ],
+        "noMatch": false
+      },
+      "planMs": 27,
+      "contextMs": 15,
+      "raw": "1) Манай компанид 16 идэвхтэй төсөл байгаа.  \n2) В2 ангиллын галын ачаалал ≥1401 … ≤2200 МДж/м²-ээс хамаарна.",
+      "final": "1) Манай компанид 16 идэвхтэй төсөл байгаа. \n2) Ангилал: **В2** · Доод хязгаар: **1401 МДж/м²** · Дээд хязгаар: **2200 МДж/м²** · Идэвхтэй төсөл: **16** · Эх сурвалж: БД 21-101-12\n\nВ2 ангиллын галын ачаалал ≥1401 … ≤2200 МДж/м²-ээс хамаарна.",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "CITATION_MISSING"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 3,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 165,
+      "genMs": 1355,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 17,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 38,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Лифтний хонгилын хананы галд тэсвэрлэх хугацаа хэдэн цаг байх ёстой вэ?",
+      "turn": "NEW_TOPIC",
+      "intent": "NORMATIVE",
+      "tools": [],
+      "norm": {
+        "status": "insufficient_evidence",
+        "cite": null
+      },
+      "contract": {
+        "mode": "refusal",
+        "risk": "high",
+        "facts": [],
+        "noMatch": true
+      },
+      "planMs": 23,
+      "contextMs": 16,
+      "raw": "Энэ шаардлагыг баталгаатай хэлэх эх сурвалж одоогоор олдсонгүй. БНбД 2018 (Барилгын нормын дүрэм) болон бусад стандартуудад тэсвэрлэх хугацаа тухайн нөхцөлийн дагуу үзүүлэгдэж байна. Хонгилын хананы галд тэсвэрлэх хугацаа нь үйлдвэрлэгчийн стандарт, ашиглагдах нөхцөл болон түүнийг барих хүчтэй байдалд хэрэгжих боломжтой.",
+      "final": "Энэ шаардлагыг баталгаатай хэлэх эх сурвалж одоогоор олдсонгүй.\nХонгилын хананы галд тэсвэрлэх хугацаа нь үйлдвэрлэгчийн стандарт, ашиглагдах нөхцөл болон түүнийг барих хүчтэй байдалд хэрэгжих боломжтой.",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "UNSUPPORTED_NUMBER"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 3,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 173,
+      "genMs": 3324,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 1,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 1,
+          "words": 40,
+          "perHundredWords": 2.5
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 25,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Одоо Монгол Улсад нормд тусгагдаагүй шинэ материал ашиглах бол ямар байгууллагаас зөвшөөрөл авах вэ?",
+      "turn": "NEW_TOPIC",
+      "intent": "NORMATIVE",
+      "tools": [],
+      "norm": {
+        "status": "supported",
+        "cite": "УББ-11-201-00, Төслийн үндсэн шийдлийн бүлгүүдийн бүтэц, заалт 5.11, хуудас 17"
+      },
+      "contract": {
+        "mode": "grounded",
+        "risk": "high",
+        "facts": [
+          "source_currentness=NEEDS_HUMAN_REVIEW"
+        ],
+        "noMatch": false
+      },
+      "planMs": 38,
+      "contextMs": 31,
+      "raw": "Энэ асуултын хувьд **УББ-11-201-00** заалт 3.3-ийг шаардаж байна. Түүнд дэвшилтэт хийц, хямд төсөр материалыг ашиглах болон тэдгээрээр орлуулан хэрэглэх асуудлыг **зураг зохиогчийн зөвшөөрөл** авч, зохих журмаар шинжилгээ, туршилт, экспертизэд хамруулан, чанар, стандартын албан ёсны баталгаажилт хийлгэсний үндсэн дээр бат бэх, тогтворжилтыг тогтоосон хэмжээнээс бууруулахгүй, үндсэн бүтцийг өөрчлөхгүйгээр төсвийн батлагдсан дүнд багтаан шийдвэрлэх боломжтой.\n\nТэгэхээр, **шинэ материал ашиглахын тулд зураг зохиогчийн зөвшөөрөл** авах хэрэгтэй. Зураг зохиогч нь үндсэндээ **Монгол Улсын Төрийн захиргааны төв байгууллага** болон **Монгол Улсын Байгаль орчин, Хөрөнгө хамгаалалтын нэгдсэн байгууллага** болон үүнийг хамруулан **Хөгжлийн сан**-ын хүчирхэг байгууллагуудтай холбоотой байдаг. \n\nҮүнийгээ үндэслэн, **шинэ материал ашиглах болон зөвшөөрөл авахын тулд** **Монгол Улсын Төрийн захиргааны төв байгууллага** болон **зураг зохиогчийн зөвшөөрөл** авах хэрэгтэй.",
+      "final": "Энэ асуултын хувьд **УББ-11-201-00** заалт 3.3-ийг шаардаж байна. Түүнд дэвшилтэт хийц, хямд төсөр материалыг ашиглах болон тэдгээрээр орлуулан хэрэглэх асуудлыг **зураг зохиогчийн зөвшөөрөл** авч, зохих журмаар шинжилгээ, туршилт, экспертизэд хамруулан, чанар, стандартын албан ёсны баталгаажилт хийлгэсний үндсэн дээр бат бэх, тогтворжилтыг тогтоосон хэмжээнээс бууруулахгүй, үндсэн бүтцийг өөрчлөхгүйгээр төсвийн батлагдсан дүнд багтаан шийдвэрлэх боломжтой.\n\nТэгэхээр, **шинэ материал ашиглахын тулд зураг зохиогчийн зөвшөөрөл** авах хэрэгтэй. Зураг зохиогч нь үндсэндээ **Монгол Улсын Төрийн захиргааны төв байгууллага** болон **Монгол Улсын Байгаль орчин, Хөрөнгө хамгаалалтын нэгдсэн байгууллага** болон үүнийг хамруулан **Хөгжлийн сан**-ын хүчирхэг байгууллагуудтай холбоотой байдаг. \n\nҮүнийгээ үндэслэн, **шинэ материал ашиглах болон зөвшөөрөл авахын тулд** **Монгол Улсын Төрийн захиргааны төв байгууллага** болон **зураг зохиогчийн зөвшөөрөл** авах хэрэгтэй.\n\nАнхаар: энэ хариулт нь хүчин төгөлдөр байдал нь шалгагдаагүй (хуучин) баримтад тулгуурласан. Одоо мөрдөж буй эрх бүхий байгууллага, журмыг албан ёсны эх сурвалжаас баталгаажуулах шаардлагатай — хүний хяналт хэрэгтэй.",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "TRAILER_MISSING"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 5,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0.05263157894736842,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 7,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0.04195804195804196,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 172,
+      "genMs": 9656,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 1,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 1,
+          "words": 112,
+          "perHundredWords": 0.89
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 1,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 1,
+          "words": 141,
+          "perHundredWords": 0.71
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Барилгын зураг төслийн ажлын үе шатуудыг эхнээс нь дуустал дэлгэрэнгүй тайлбарлаад өгөөч",
+      "turn": "NEW_TOPIC",
+      "intent": "GENERAL_HELP",
+      "tools": [
+        "query_entities"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "free",
+        "risk": "low",
+        "facts": [],
+        "noMatch": true
+      },
+      "planMs": 18,
+      "contextMs": 12,
+      "raw": "Энэ төслийн барилгын зураг төслийн ажлын үе шатуудыг үндэслэн дараах байдлаар тайлбарлаж болно:\n\n1. **Төсөл эхлэх** – Төслийн үүргийг тодорхойлж, ажилтнуудын хүчирхэг, ажлын дүрэм, урьдчилсан төлбөрийг бүрэн зохицуулан эхэлнэ. Төслийн нэр, категори, хугацаа, ажлын үндэсний мэдээлэл болон төлөвлөгөөний төлбөр бүрэн тодорхойлогдсон байдаг.\n\n2. **Төслийн хөтөлбөр** – Төслийн ажлын үе шат, дүн, хүчирхэг, урьдчилсан төлбөр, ажилтан, даалгаварын бүтэц, төсөл болон төлөвлөгөөний төлбөр зэрэг хөтөлбөр бүрэн зохицуулна. Энэ үе шатанд ажилтнуудын хүчирхэг, төслийн төлөвлөгөө, дүн, төлбөр, хөтөлбөр бүрэн зохицуулна.\n\n3. **Төслийн үйл ажиллагаа** – Төслийн ажлын үе шат, дүн, хүчирхэг, урьдчилсан төлбөр, ажилтан, даалгаварын бүтэц, төсөл болон төлөвлөгөөний төлбөр зэрэг хөтөлбөр бүрэн зохицуулна. Энэ үе шатанд ажилтнуудын хүчирхэг, төслийн төлөвлөгөө, дүн, төлбөр, хөтөлбөр бүрэн зохицу",
+      "final": "Энэ төслийн барилгын зураг төслийн ажлын үе шатуудыг үндэслэн дараах байдлаар тайлбарлаж болно:\n\n1. **Төсөл эхлэх** – Төслийн үүргийг тодорхойлж, ажилтнуудын хүчирхэг, ажлын дүрэм, урьдчилсан төлбөрийг бүрэн зохицуулан эхэлнэ. Төслийн нэр, категори, хугацаа, ажлын үндэсний мэдээлэл болон төлөвлөгөөний төлбөр бүрэн тодорхойлогдсон байдаг.\n\n2. **Төслийн хөтөлбөр** – Төслийн ажлын үе шат, дүн, хүчирхэг, урьдчилсан төлбөр, ажилтан, даалгаварын бүтэц, төсөл болон төлөвлөгөөний төлбөр зэрэг хөтөлбөр бүрэн зохицуулна. Энэ үе шатанд ажилтнуудын хүчирхэг, төслийн төлөвлөгөө, дүн, төлбөр, хөтөлбөр бүрэн зохицуулна.\n\n3. **Төслийн үйл ажиллагаа** – Төслийн ажлын үе шат, дүн, хүчирхэг, урьдчилсан төлбөр, ажилтан, даалгаварын бүтэц, төсөл болон төлөвлөгөөний төлбөр зэрэг хөтөлбөр бүрэн зохицуулна. Энэ үе шатанд ажилтнуудын хүчирхэг, төслийн төлөвлөгөө, дүн, төлбөр, хөтөлбөр бүрэн зохицу",
+      "source": "model",
+      "attempts": 1,
+      "violations": [],
+      "repetition": {
+        "raw": {
+          "sentences": 7,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0.2545454545454545,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 7,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0.2545454545454545,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 675,
+      "genMs": 10724,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 113,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 113,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Хамгийн хоцорсон таскууд юу байна?",
+      "turn": "NEW_TOPIC",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "get_overdue_tasks",
+        "query_entities"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "overdue_tasks=0"
+        ],
+        "noMatch": true
+      },
+      "planMs": 34,
+      "contextMs": 12,
+      "raw": "Хамгийн хоцорсон таскууд болон тэдгээс саатаж байгаа төслийг үзүүлэхийн тулд, төслийн ажилтнуудын ачаалал, даалгаврын үнэ цэнэ, deadline-ын харьцаа, төслийн үнэ цэнэ болон төсөлд оролцогчдын тооны нэмэлт мэдээллээс шалгаж байна. Тиймээс таны хүсэлд таамаглах боломжгүй. Энэ мэдээлэл системд алга.",
+      "final": "Хугацаа хэтэрсэн даалгавар: **0**\n\nХамгийн хоцорсон таскууд болон тэдгээс саатаж байгаа төслийг үзүүлэхийн тулд, төслийн ажилтнуудын ачаалал, даалгаврын үнэ цэнэ, deadline-ын харьцаа, төслийн үнэ цэнэ болон төсөлд оролцогчдын тооны нэмэлт мэдээллээс шалгаж байна. Тиймээс таны хүсэлд таамаглах боломжгүй. Энэ мэдээлэл системд алга.",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "FACT_MISSING"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 3,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 4,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 529,
+      "genMs": 3678,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 38,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 42,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "How many active projects do we have right now?",
+      "turn": "NEW_TOPIC",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "list_projects"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "active_projects=16",
+          "total_projects=24",
+          "overdue_projects=3"
+        ],
+        "noMatch": true
+      },
+      "planMs": 23,
+      "contextMs": 23,
+      "raw": "Currently, there are 16 active projects.",
+      "final": "Currently, there are 16 active projects.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 161,
+      "genMs": 336,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 6,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 6,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Revit deer ene wall-iin area hed ve",
+      "turn": "NEW_TOPIC",
+      "intent": "REVIT_READ",
+      "tools": [],
+      "norm": null,
+      "contract": {
+        "mode": "free",
+        "risk": "low",
+        "facts": [],
+        "noMatch": true
+      },
+      "planMs": 25,
+      "contextMs": 7,
+      "raw": "Таны сонгосон wall-ийн площад бүхий мэдээллийг авч үзвэл, түүний нэгж талбайгаа үзүүлнэ. Таны Revit-ийн төслийн холбоог ашиглан тодорхой wall-ийн area-г гаргаж болно. Хэрэв таны нь сонгосон wall-ийн тухайн нэгж талбайг мэдэхийг хүсвэл, түүнийг нэрлэж өгөөч болов уу?",
+      "final": "Таны сонгосон wall-ийн площад бүхий мэдээллийг авч үзвэл, түүний нэгж талбайгаа үзүүлнэ. Таны Revit-ийн төслийн холбоог ашиглан тодорхой wall-ийн area-г гаргаж болно. Хэрэв таны нь сонгосон wall-ийн тухайн нэгж талбайг мэдэхийг хүсвэл, түүнийг нэрлэж өгөөч болов уу?",
+      "source": "model",
+      "attempts": 1,
+      "violations": [],
+      "repetition": {
+        "raw": {
+          "sentences": 3,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 3,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 294,
+      "genMs": 2849,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 1,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 1,
+          "words": 37,
+          "perHundredWords": 2.7
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 1,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 1,
+          "words": 37,
+          "perHundredWords": 2.7
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Сонгосон хананы өндрийг 3 метр болгож өөрчил",
+      "turn": "NEW_TOPIC",
+      "intent": "REVIT_ACTION",
+      "tools": [
+        "get_project_progress✗"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "free",
+        "risk": "medium",
+        "facts": [
+          "tool_failed:get_project_progress=permission_denied"
+        ],
+        "noMatch": true
+      },
+      "planMs": 30,
+      "contextMs": 8,
+      "raw": "Энэ мэдээлэл системд алга.",
+      "final": "Энэ мэдээлэл системд алга.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 314,
+      "genMs": 598,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 4,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 4,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "цаашид хариултаа богино бичээрэй",
+      "turn": "NEW_TOPIC",
+      "intent": "GENERAL_HELP",
+      "tools": [],
+      "norm": null,
+      "contract": {
+        "mode": "free",
+        "risk": "low",
+        "facts": [],
+        "noMatch": true
+      },
+      "planMs": 20,
+      "contextMs": 12,
+      "raw": "Төслийн task, deadline, ачаалал, тайлан, Revit-ийн view, family, parameter дээр суурилж яг хаана саатаж байгааг гаргаж болно. Хэрэв хүсвэл шинжилж өгөөд болно.",
+      "final": "Төслийн task, deadline, ачаалал, тайлан, Revit-ийн view, family, parameter дээр суурилж яг хаана саатаж байгааг гаргаж болно. Хэрэв хүсвэл шинжилж өгөөд болно.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [],
+      "repetition": {
+        "raw": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        },
+        "final": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false
+        }
+      },
+      "firstTokenMs": 163,
+      "genMs": 1408,
+      "dedupRemoved": 0,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 22,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 22,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    }
+  ]
+}

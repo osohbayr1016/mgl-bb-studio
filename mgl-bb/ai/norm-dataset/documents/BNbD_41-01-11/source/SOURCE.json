@@ -1,0 +1,80 @@
+{
+  "document_code": "БНбД 41-01-11",
+  "files": [
+    {
+      "file": "BNbD_41-01-11_mcis_2025-10_stamped.pdf",
+      "sha256": "a5c6d459ba65ecc7c0dd46746f89ade5f83a9c5c641189f69ba7ca6b2cb5d6ce",
+      "bytes": 3668117,
+      "pdf_pages": 111,
+      "printed_pages": "none printed (see U2)",
+      "fetched_at": "2026-09-21",
+      "fetched_from": "https://mcis.gov.mn/storage/uploads/process/202510/file_1761555455516339_161611878330710_stamped.pdf",
+      "authority": "MCIS (Барилгын салбарын нэгдсэн систем, mcis.gov.mn) — official current-norm register entry (MCIS-stamped PDF, 2025-10-27)",
+      "register_record": {
+        "endpoint": "POST https://mcis.gov.mn/mn/getNormList (tools/mcis_verify.py, query \"41-01-11\")",
+        "record_id": "16170734300662",
+        "wfmstatusname": "Хүчин төгөлдөр",
+        "actnumber": "БНбД 41-01-11 / CCM 41-01-11",
+        "title": "Халаалт, агаар сэлгэлт ба кондиционер / Heating, ventilation and conditioning",
+        "decision": "Монгол Улсын зам тээвэр, барилга хот байгуулалтын сайдын 2011 оны 84 дүгээр тушаал | Decree No.84 by the Minister of Construction and Urban Development, 2011",
+        "directurl": "http://mcis.gov.mn/main/single/16170734300662",
+        "category": "Цогцолбор 41. Дулаан хангамж, халаалт, салхивч ба агааржуулалт",
+        "checked_at": "2026-09-21 (first checked 2026-09-16)",
+        "note": "The 2025 register export (registry/cdc-2025) links the same code to a second MCIS detail page, 16201345259112 (verified reachable 2026-09-18). Both ids name the same norm; the getNormList record used here is 16170734300662."
+      },
+      "pdf_metadata": {
+        "title": "",
+        "author": "Microsoft account",
+        "creator": "Microsoft® Word 2013",
+        "producer": "Microsoft® Word 2013; modified using iText 5.5.13.1 (MCIS stamp)",
+        "creationDate": "2022-11-19",
+        "modDate": "2025-10-27"
+      },
+      "text_layer": "Real Unicode Cyrillic (0 legacy Arial-Mon Latin-1 code points, 0 Symbol-font private-use code points — measured 2026-09-21). Word equation objects render as short text lines («Vx = KnvH» + label «(1)»). Section headings are UPPERCASE («1. ХЭРЭГЛЭХ ХҮРЭЭ»), appendices are lettered and written «ХАВСРАЛТ А» … «ХАВСРАЛТ Т» (letters А Б В Г Д Е Ж И К Л М Н П Р С Т — no З, Й, О), appendix clauses «Б.10», «К.2», tables «Хүснэгт Б.1» with typographic slips in the source («Хүснэгт Д,1», «Хүснэгт С1», Latin «Хүснэгт p.1 / P.3 / M.1 / T.3»). The reference list is the body of section 2 (numbered 1–22), the definitions are appendix А («Term – definition»).",
+      "role": "primary_technical_text"
+    }
+  ],
+  "legal_sources": [
+    {
+      "source_id": "SRC-MCIS-REGISTER",
+      "type": "official_current_norm_register_entry",
+      "authority": "MCIS",
+      "url": "http://mcis.gov.mn/main/single/16170734300662",
+      "status": "Хүчин төгөлдөр",
+      "checked_at": "2026-09-21"
+    },
+    {
+      "source_id": "SRC-PDF-APPROVAL-PAGE",
+      "type": "approval_text_printed_in_document",
+      "authority": "The document itself (PDF page 3)",
+      "order_number": "84",
+      "order_date": "2011-03-21",
+      "issuer": "Зам, тээвэр, барилга, хот байгуулалтын сайд",
+      "approval_quote": "1. Зам, тээвэр, барилга, хот байгуулалтын сайдын 2011 оны 3 дугаар сарын 21-ны өдрийн 84 дүгээр тушаалын хавсралтаар батлав.",
+      "repeal_quote": "2. Энэхүү тушаал гарсантай холбогдуулан Дэд Бүтцийн Сайдын 2003 оны 360 дугаар тушаалаар бтлагдсан “Халаалт, агаар сэлгэлт ба кондиционер” /БНбД 41-01-02/ -ыг хүчингүй болсонд тооцсугай.",
+      "edition_quote": "Албан ёсны 2 дах хэвлэл … Улаанбаатар хот 2022 он (cover, PDF p.1–2)",
+      "contains_technical_text": false,
+      "checked_at": "2026-09-21"
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "U1",
+      "topic": "legalinfo_order_84_2011_and_reprint_2022",
+      "note": "No legalinfo.mn page for Зам, тээвэр, барилга, хот байгуулалтын сайдын 2011 оны 84 дүгээр тушаал was located (2026-09-21). The PDF is a 2022 «2 дах хэвлэл» (second official printing) of the 2011 text; whether that reprint incorporates any amendment cannot be established from the document, and no amendment note is printed.",
+      "effect": "effective_status kept at current_status_not_checked_for_later_amendments (→ CURRENT_BUT_LATER_AMENDMENTS_NOT_VERIFIED); approval.effective_from = null."
+    },
+    {
+      "id": "U2",
+      "topic": "no_printed_page_numbers",
+      "note": "The document prints no folio on any page (text layer: only the running header «БНбД 41-01-11»; rendered pages 10 and 72 checked visually 2026-09-21; the contents page lists no page numbers).",
+      "effect": "`source_page` in every parsed record = the PDF page index (metadata.source.printed_page_offset = 0, page_number_mode «none»); `source_pdf_page` is identical. A citation reads «х. 46 (PDF)»; the human verifier uses the PDF page index when comparing against the page image."
+    },
+    {
+      "id": "U3",
+      "topic": "second_mcis_record_id",
+      "note": "registry/cdc-2025 (the 2025 register export) links БНбД 41-01-11 to MCIS detail page 16201345259112, while getNormList returns record 16170734300662 with the stamped 2025-10 PDF. Not checked whether the two pages carry the same PDF.",
+      "effect": "source_url = the getNormList record (16170734300662); the other id is recorded here only."
+    }
+  ]
+}

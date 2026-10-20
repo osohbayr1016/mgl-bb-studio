@@ -1,0 +1,35 @@
+{
+  "parser": "parse_pdf/1",
+  "warnings": [],
+  "anomalies": [
+    "clause numbering gap 3.3 → 3.5 (body)",
+    "out-of-order clause 3.4 accepted (sentence start) (body)",
+    "clause numbering gap 6.22 → 6.24 (body)",
+    "clause numbering gap 9.1.8 → 9.1.10 (body)",
+    "clause numbering gap 9.1.24 → 9.1.26 (body)",
+    "clause numbering gap 9.1.32 → 9.1.35 (body)",
+    "out-of-order clause 13.1.2 accepted (sentence start) (body)",
+    "clause numbering gap 14.34 → 14.36 (body)",
+    "clause numbering gap 14.71 → 14.73 (body)",
+    "clause numbering gap 3.1.10 → 3.1.12 (appendix/3.1)",
+    "out-of-order clause 8.3 accepted (sentence start) (appendix/8)",
+    "clause numbering gap 8.27 → 8.29 (appendix/8)",
+    "uncaptioned ruled grid on printed page 59 (pdf 61)",
+    "uncaptioned ruled grid on printed page 106 (pdf 108)",
+    "uncaptioned ruled grid on printed page 107 (pdf 109)",
+    "uncaptioned ruled grid on printed page 108 (pdf 110)",
+    "uncaptioned ruled grid on printed page 109 (pdf 111)"
+  ],
+  "counts": {
+    "sections": 17,
+    "appendices": 26,
+    "clauses": 593,
+    "tables": 20,
+    "formulas": 51,
+    "references": 147,
+    "definitions": 22,
+    "numeric_requirements": 56,
+    "tables_ruled_grid": 9,
+    "formulas_clean": 32
+  }
+}

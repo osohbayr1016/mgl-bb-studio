@@ -1,0 +1,123 @@
+{
+  "fixture": true,
+  "kind": "EVIDENCE",
+  "id": "fire-load-bd-21-101-12",
+  "provenance": {
+    "source": "backend/src/lib/mglai/norm/generated/bd-21-101-12-2012.generated.ts",
+    "review_status": "REFERENCE_VERIFIED"
+  },
+  "evidence": [
+    {
+      "id": "fire-scope",
+      "kind": "clause",
+      "title": "БД 21-101-12 хамрах хүрээ",
+      "documentUid": "BD-21-101-12-2012",
+      "clauseUid": "intro.scope",
+      "page": 3,
+      "section": "Удиртгал",
+      "text": "Дүрэм нь үйлдвэрлэлийн технологийн процессоос шалтгаалсан шатах, тэсрэх аюулын хэмжээнээс хамааран үйлдвэрийн ба агуулахын зориулалттай барилга, өрөө тасалгааны галын болон тэсэрч шатах аюулын ангиллыг тодорхойлох аргачлалыг тогтооно."
+    },
+    {
+      "id": "fire-v1",
+      "kind": "clause",
+      "title": "Хүснэгт 4 — В1",
+      "documentUid": "BD-21-101-12-2012",
+      "clauseUid": "table-4-v1",
+      "page": 13,
+      "section": "Хүснэгт 4",
+      "text": "В1 ангилал: хувийн галын ачаалал g > 2200 МДж/м²."
+    },
+    {
+      "id": "fire-v2",
+      "kind": "clause",
+      "title": "Хүснэгт 4 — В2",
+      "documentUid": "BD-21-101-12-2012",
+      "clauseUid": "table-4-v2",
+      "page": 13,
+      "section": "Хүснэгт 4",
+      "text": "В2 ангилал: хувийн галын ачаалал g = 1401–2200 МДж/м²."
+    },
+    {
+      "id": "fire-v3",
+      "kind": "clause",
+      "title": "Хүснэгт 4 — В3",
+      "documentUid": "BD-21-101-12-2012",
+      "clauseUid": "table-4-v3",
+      "page": 13,
+      "section": "Хүснэгт 4",
+      "text": "В3 ангилал: хувийн галын ачаалал g = 181–1400 МДж/м²."
+    },
+    {
+      "id": "fire-v4",
+      "kind": "clause",
+      "title": "Хүснэгт 4 — В4",
+      "documentUid": "BD-21-101-12-2012",
+      "clauseUid": "table-4-v4",
+      "page": 13,
+      "section": "Хүснэгт 4",
+      "text": "В4 ангилал: хувийн галын ачаалал g = 1–180 МДж/м²."
+    },
+    {
+      "id": "fire-g",
+      "kind": "clause",
+      "title": "Хувийн галын ачаалал",
+      "documentUid": "BD-21-101-12-2012",
+      "clauseUid": "4.20",
+      "page": 13,
+      "section": "4.20",
+      "text": "Хувийн галын ачаалал g = Q/S. Жишиг баталгаатай кейс: Q=18000 МДж, S=20 м² үед g=900 МДж/м²."
+    },
+    {
+      "id": "fire-upgrade",
+      "kind": "clause",
+      "title": "4.20 дээд ангилал шалгах",
+      "documentUid": "BD-21-101-12-2012",
+      "clauseUid": "4.20",
+      "page": 15,
+      "section": "4.20",
+      "text": "В2 ба В3 ангиллыг тодорхойлоход Q ≥ 0.64 g H² нөхцөлийг хангах үед дээд ангилал руу шилжүүлэх нөхцөл үйлчилнэ. Баталгаатай кейс: Q=5000 МДж, g=1000 МДж/м², H=2 м үед босго 2560 МДж бөгөөд нөхцөл биелнэ."
+    },
+    {
+      "id": "fire-valve",
+      "kind": "clause",
+      "title": "Гараар хаах хугацаа",
+      "documentUid": "BD-21-101-12-2012",
+      "clauseUid": "4.2.valve",
+      "page": 5,
+      "section": "4.2",
+      "text": "Баталгаатай тооцооны кейс: гараар хаах шугам хоолойн тооцоот хаах хугацаа 300 секунд."
+    },
+    {
+      "id": "fire-volume",
+      "kind": "clause",
+      "title": "Чөлөөт эзлэхүүн",
+      "documentUid": "BD-21-101-12-2012",
+      "clauseUid": "4.4",
+      "page": 6,
+      "section": "4.4",
+      "text": "Баталгаатай тооцооны кейс: өрөөний геометр эзлэхүүн 500 м³, тоног төхөөрөмжийн эзлэхүүнийг тодорхойлох боломжгүй бол чөлөөт эзлэхүүнийг 400 м³ гэж авна."
+    }
+  ],
+  "sources": [
+    {
+      "document": "БД 21-101-12",
+      "clause": "Хүснэгт 4",
+      "verification": "verified_from_page_image"
+    },
+    {
+      "document": "БД 21-101-12",
+      "clause": "4.20",
+      "verification": "verified_from_page_image"
+    },
+    {
+      "document": "БД 21-101-12",
+      "clause": "4.2",
+      "verification": "verified_from_page_image"
+    },
+    {
+      "document": "БД 21-101-12",
+      "clause": "4.4",
+      "verification": "verified_from_page_image"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+-- 0171_drop_overtime_requests.sql
+--
+-- «Илүү цагийн хүсэлт» функцийг системээс БҮРЭН хасах (2026-08-10).
+-- Эзний шийдвэр: UI, API, хүснэгт гурвуулаа — хагас арга хэмжээ биш.
+--
+-- ─────────────────────────────────────────────────────────────────────
+-- ⚠️  ХЭРЭГЛЭХИЙН ӨМНӨ НӨӨЦЛӨ.  Энэ нь өгөгдөл БУЦААШГҮЙ устгана.
+--
+--   cd backend
+--   npx wrangler d1 execute mgl-progress-db --remote --config wrangler.toml \
+--     --command "SELECT * FROM overtime_requests" --json > overtime_backup_YYYYMMDD.json
+--
+-- Нөөцийг репод БҮҮ commit хий (энэ репод аль хэдийн 719 KB-ийн
+-- user_points дамп tracked байгаа — түүнийг давтахгүй).
+-- ─────────────────────────────────────────────────────────────────────
+--
+-- ЯАГААД ЭНГИЙН `migrations apply` АЮУЛГҮЙ ВЭ:
+-- CLAUDE.md-д бичсэнчлэн `migrations apply` нь файл бүрийг транзакцид
+-- ороодог тул ЭЦЭГ хүснэгтийг drop хийвэл `ON DELETE CASCADE` ажиллаж
+-- хүүхдүүдийг цоохондоно.  `overtime_requests` нь ЭЦЭГ БИШ — түүн рүү
+-- заасан гадаад түлхүүр огт байхгүй (шалгасан:
+--   grep -rn "REFERENCES overtime_requests" backend/migrations/  → хоосон).
+-- Тэр нь `users`-ийн ХҮҮХЭД (ON DELETE CASCADE) бөгөөд хүүхдийг drop
+-- хийхэд эцэгт юу ч тохиолдохгүй.  Тиймээс path B (d1 execute --file +
+-- гар аргаар d1_migrations INSERT) ШААРДЛАГАГҮЙ.
+--
+-- ЗАН ТӨЛӨВИЙН ӨӨРЧЛӨЛТ (эзэн мэдсээр байж зөвшөөрсөн):
+--   1. Ирцийн тайлангийн `total_minutes` нь өмнө нь
+--      `worked_effective_minutes + overtime_minutes` байсан.  Одоо зөвхөн
+--      `worked_effective_minutes` — ӨМНӨХ САРУУДЫН НИЙТ ЦАГИЙН ТОО
+--      ӨӨРЧЛӨГДӨНӨ.
+--   2. `overtime_minutes` / `overtime_hours` талбарууд API-гийн хариунаас
+--      бүрмөсөн хасагдсан (0 болгож үлдээгээгүй).
+--   3. Батлагдсан илүү цагийн хүсэлт өмнө нь амралтын өдрийн мөр
+--      үүсгэдэг байсан — одоо зөвхөн бодит ирц эсвэл гадуур ажил үүсгэнэ.
+--   4. MCP `analyze_workforce` нь илүү цагийн ачааллын тугийг
+--      мэдээлэхээ болино.
+--
+-- Хамт хасагдсан код: routes/overtime.ts (устгасан), index.ts-ийн mount,
+-- workerScope.ts-ийн allowlist, attendance.ts-ийн тооцоолуур,
+-- leaves.ts-ийн сарын тайлан, mcp/tools/workforce.ts, types.ts,
+-- frontend-ийн MyOvertimeCard + AttendanceAdminPage-ийн таб + i18n.
+--
+-- Хүснэгт нь 0029_leave_hours_overtime_schedule.sql-д үүссэн; индексүүд
+-- нь 0029 (idx_overtime_user, idx_overtime_status, idx_overtime_work_date)
+-- ба 0050 (idx_overtime_user_status_work_date).  DROP TABLE нь холбогдох
+-- индексүүдийг автоматаар устгана.
+
+DROP TABLE IF EXISTS overtime_requests;

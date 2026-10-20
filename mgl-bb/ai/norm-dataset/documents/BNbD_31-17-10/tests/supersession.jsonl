@@ -1,0 +1,6 @@
+{"test_id": "V31-17-10-001", "kind": "status_is", "code": "БНбД 31-17-10", "expected_status": "ACTIVE", "evidence": "MCIS register record 16201345052562 «Хүчин төгөлдөр» (2026-09-16); legalinfo 7524 «Хүчинтэй»"}
+{"test_id": "V31-17-10-002", "kind": "draft_not_current", "code": "БНбД 31-17-23", "expected_status": "DRAFT", "must_not_serve_as_current": true, "evidence": "MCIS 2022-10 PDF approval line blank; no approval order found"}
+{"test_id": "V31-17-10-003", "kind": "draft_query_rejected", "query": "БНбД 31-17-23 шинэ нормыг одоогийн хүчинтэй норм гэж ашиглаад өндөр барилгын өндрийн хязгаарыг хэл", "expected_behavior": "registry answers DRAFT/not-ingested; no clause from 31-17-23 is served; may point to 31-17-10 as the ACTIVE norm"}
+{"test_id": "V31-17-10-004", "kind": "supersedes_empty", "code": "БНбД 31-17-10", "expected_supersedes": [], "note": "order 429 item 2 repeals only СНиП II1-44-77 (tunnels), not a high-rise predecessor"}
+{"test_id": "V31-17-10-005", "kind": "currentness", "code": "БНбД 31-17-10", "expected_currentness": "CURRENT_BUT_LATER_AMENDMENTS_NOT_VERIFIED", "note": "order 222/2022 content unresolved (U1)"}
+{"test_id": "V31-17-10-006", "kind": "retrieval_default_filter", "description": "Default current-answer retrieval must exclude registry rows with status in {SUPERSEDED, DRAFT, HISTORICAL}"}

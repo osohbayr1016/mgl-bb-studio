@@ -1,0 +1,10 @@
+{"test_id": "S20-04-17-001", "kind": "sha256", "file": "source/BNbD_20-04-17_mcis_2022-05.pdf", "expected": "d47090e33ada74919946567b19b33104fa331305d259ed4db54ff77c479351c1"}
+{"test_id": "S20-04-17-002", "kind": "page_offset", "pdf_page": 4, "expected_printed_page": 4, "marker": "1. Хэрэглэх хүрээ", "note": "MCIS render numbering: pages 1-39 print their PDF index"}
+{"test_id": "S20-04-17-003", "kind": "page_offset", "pdf_page": 45, "expected_printed_page": 36, "marker": "А хавсралт (мэдээллийн)", "note": "original edition numbering from pdf page 40 on: printed = pdf - 9"}
+{"test_id": "S20-04-17-004", "kind": "clause_page", "chunk_id": "BNBD-20-04-17-2017:clause:10.11", "expected_page": 23}
+{"test_id": "S20-04-17-005", "kind": "clause_page", "chunk_id": "BNBD-20-04-17-2017:appendix:Д:clause:Д.1.1", "expected_page": 77}
+{"test_id": "S20-04-17-006", "kind": "clause_text_contains", "chunk_id": "BNBD-20-04-17-2017:clause:4.5", "must_contain": "20 хувиар бууруулж авна"}
+{"test_id": "S20-04-17-007", "kind": "clause_text_contains", "chunk_id": "BNBD-20-04-17-2017:clause:10.11", "must_contain": "1,4-өөр авна"}
+{"test_id": "S20-04-17-008", "kind": "no_legacy_glyphs", "description": "Text layer is real Unicode; decoded text must contain no Latin-1 0xC0-0xFF glyphs"}
+{"test_id": "S20-04-17-009", "kind": "every_chunk_has_page_and_url", "description": "Every clause/table/definition chunk carries source_page and source_url"}
+{"test_id": "S20-04-17-010", "kind": "clause_count_min", "expected_min": 190, "description": "Body 15 sections + 4 lettered appendices with numbered clauses; measured 203 on 2026-09-21"}

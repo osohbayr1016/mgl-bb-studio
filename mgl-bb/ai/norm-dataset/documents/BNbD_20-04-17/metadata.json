@@ -1,0 +1,107 @@
+{
+  "canonical_code": "БНбД 20-04-17",
+  "doc_id": "BNBD-20-04-17-2017",
+  "title_mn": "Ачаалал ба үйлчлэл",
+  "title_en": "Loads and actions",
+  "title_variants": [
+    "Loads and Reactions",
+    "Ачаалал ба үйлчлэлийн норм",
+    "Ачаа ба үйлчлэл"
+  ],
+  "document_type": "BNbD",
+  "jurisdiction": "Mongolia",
+  "status": "ACTIVE",
+  "status_evidence": [
+    "MCIS current-norm register record 16201343788762: «Хүчин төгөлдөр» — Барилга, хот байгуулалтын Сайдын 2017 оны 117 дугаар тушаалаар батлав. (checked 2026-09-16, tools/mcis_verify.py)",
+    "PDF p.3 (printed): «Монгол улсын Барилга, хот байгуулалтын Сайдын 2017 оны 6 дугаар сарын 28-ны өдрийн 117 дугаар тушаалаар батлав.»",
+    "MCIS register re-checked 2026-09-23 (tools/mcis_verify.py): record 16201343788762 still «Хүчин төгөлдөр»; PDF re-downloaded, sha256 d47090e3… unchanged.",
+    "legalinfo.mn (checked 2026-09-23): Барилга, хот байгуулалтын сайдын 2017-06-28-ны 117 дугаар тушаал «Барилгын норм, дүрэм батлах тухай» — https://legalinfo.mn/mn/detail/12784; хавсралт «Ачаа ба үйлчлэл» /БНбД 20-04-17/ бичвэр — https://legalinfo.mn/mn/detail?lawId=16530472996431"
+  ],
+  "effective_status": "current_status_not_checked_for_later_amendments",
+  "effective_status_note": "MCIS-ийн бүртгэлд «Хүчин төгөлдөр» (2026-09-16, 2026-09-23 дахин).  Батлах тушаал 117/2017 legalinfo.mn дээр олдсон (2026-09-23), гэвч тэр хуудасны «Нэмэлт өөрчлөлт» самбар динамик — 2017 оноос хойшхи нэмэлт/өөрчлөлтийн тушаал СТАТИК хуудаснаас уншигдаагүй, тиймээс «хожмын нэмэлт шалгагдаагүй» төлөв ХЭВЭЭР (source/SOURCE.json U1).  Мөрдөж эхлэх огноо бичвэрт заагаагүй (U2).",
+  "approval": {
+    "order_number": "117",
+    "order_date": "2017-06-28",
+    "issuer": "Барилга, хот байгуулалтын сайд",
+    "attachment": null,
+    "effective_from": null,
+    "effective_from_evidence": "PDF-ийн бичвэрт «…-ээс эхлэн мөрдөнө» гэсэн огноо БАЙХГҮЙ (2026-09-21 бүх 97 хуудсанд хайсан); зөвхөн батлах тушаалын огноо (2017-06-28) л мэдэгдэж байна."
+  },
+  "aliases": [
+    "БНбД 20-04-17",
+    "BNbD 20-04-17",
+    "CCM 20-04-17",
+    "20-04-17",
+    "Ачаалал ба үйлчлэл",
+    "ачааллын норм",
+    "achaalal ba uilchlel",
+    "Loads and actions",
+    "Loads and Reactions",
+    "Ачаа ба үйлчлэл"
+  ],
+  "supersedes": [
+    "БНбД 2-01-07-90"
+  ],
+  "supersedes_note": "PDF p.3 (printed): «Барилга, хот байгуулалтын комиссын 1990 оны 12 дугаар сарын 27-ны өдрийн 13 дугаар тогтоолоор батлагдсан “Ачаалал ба үйлчлэл” /БНбД 2.01.07-90/-ийг хүчингүй болсонд тооцов.»  legalinfo.mn, order 117/2017 item 3 (checked 2026-09-23): «…Барилга, хот байгуулалтын комиссын 1990 оны 4 болон 13 дугаар тогтоолоор батлагдсан \"Ачаалал ба үйлчлэл\" /БНбД 2.01.07-90/ барилгын норм ба дүрмийг хүчингүй болсонд тооцсугай.»  ⚠️ The two official texts differ on the 1990 resolutions (PDF: №13 only; legalinfo: №4 and №13) — both are recorded verbatim, neither is corrected.",
+  "superseded_by": null,
+  "successor_draft": null,
+  "amendments": [],
+  "teams": [
+    "structure",
+    "architecture",
+    "geotechnical"
+  ],
+  "topics": [
+    "loads",
+    "wind",
+    "snow",
+    "climate",
+    "high-rise",
+    "steel",
+    "concrete",
+    "foundation"
+  ],
+  "building_types": [
+    "residential",
+    "public",
+    "industrial",
+    "high-rise",
+    "warehouse"
+  ],
+  "applicability": {
+    "evidence": "clause 1.1 — барилга, байгууламжийг нэг ба хоёрдугаар бүлгийн хязгаарын төлвөөр тооцоолоход ачаалал, үйлчлэл ба тэдгээрийн хослолд тавигдах шаардлага"
+  },
+  "priority": "P0",
+  "capability_level": "L2",
+  "capability_level_note": "L0 registry + L1 full text + L2 clause/table/appendix/formula structure from the official MCIS PDF text layer (auto-extracted). L3 compute: formulas catalogued only, none executable. Several pages (6, 25, 29, 36, 39, 54, 65, 71) carry their tables/figures as IMAGES — their content is not in the text layer and is therefore absent here (U3).",
+  "deep_ingestion_status": "PARSED",
+  "retrieval_default": true,
+  "source_type": "official",
+  "source_url": "https://mcis.gov.mn/main/single/16201343788762",
+  "source_pdf_url": "https://mcis.gov.mn/storage/uploads/watermarkedPdf/2022051653296696305843.pdf",
+  "legal_source_url": "https://legalinfo.mn/mn/detail/12784",
+  "source": {
+    "file": "BNbD_20-04-17_mcis_2022-05.pdf",
+    "sha256": "d47090e33ada74919946567b19b33104fa331305d259ed4db54ff77c479351c1",
+    "page_number_mode": "top_of_page",
+    "printed_page_offset": 0,
+    "body_first_pdf_page": 4,
+    "pdf_pages": 97
+  },
+  "verification": {
+    "text_verification_status": "official_pdf_text_layer_auto_extracted",
+    "human_verified_clauses": 0,
+    "note": "No clause has been verified by a human against the page image yet. Numeric rules therefore stay non-executable (searchable + citable only)."
+  },
+  "last_verified": "2026-09-23",
+  "dataset_version": "0.1.0",
+  "training_policy": "retrieval_first_do_not_bake_changeable_norms_into_model_weights",
+  "commentary": {
+    "code": "БД 20-102-21",
+    "dir": "commentary",
+    "role": "COMMENTARY_SOURCE",
+    "normative": false,
+    "status_evidence": "MCIS record 16403445357604 «Хүчин төгөлдөр», order 227/2021 (checked 2026-09-23)",
+    "source_url": "https://mcis.gov.mn/main/single/16403445357604"
+  }
+}

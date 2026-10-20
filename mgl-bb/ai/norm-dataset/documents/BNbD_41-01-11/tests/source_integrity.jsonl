@@ -1,0 +1,10 @@
+{"test_id": "S41-01-11-001", "kind": "sha256", "file": "source/BNbD_41-01-11_mcis_2025-10_stamped.pdf", "expected": "a5c6d459ba65ecc7c0dd46746f89ade5f83a9c5c641189f69ba7ca6b2cb5d6ce"}
+{"test_id": "S41-01-11-002", "kind": "page_offset", "pdf_page": 4, "expected_printed_page": 4, "marker": "1. ХЭРЭГЛЭХ ХҮРЭЭ", "note": "no folio is printed anywhere in this document (U2) — source_page = PDF page index"}
+{"test_id": "S41-01-11-003", "kind": "page_offset", "pdf_page": 69, "expected_printed_page": 69, "marker": "ХАВСРАЛТ А"}
+{"test_id": "S41-01-11-004", "kind": "clause_page", "chunk_id": "BNBD-41-01-11-2011:clause:6.4.7", "expected_page": 18}
+{"test_id": "S41-01-11-005", "kind": "clause_page", "chunk_id": "BNBD-41-01-11-2011:clause:9.14", "expected_page": 58}
+{"test_id": "S41-01-11-006", "kind": "clause_text_contains", "chunk_id": "BNBD-41-01-11-2011:clause:4.4.7", "must_contain": "70ºС–аас ихгүй"}
+{"test_id": "S41-01-11-007", "kind": "clause_text_contains", "chunk_id": "BNBD-41-01-11-2011:clause:6.3.5", "must_contain": "60Вт-аас бага авч болохгүй"}
+{"test_id": "S41-01-11-008", "kind": "no_legacy_glyphs", "description": "Decoded text must contain no Latin-1 0xC0-0xFF glyphs and no Symbol-font private-use code points (measured 0 and 0 on 2026-09-21)"}
+{"test_id": "S41-01-11-009", "kind": "every_chunk_has_page_and_url", "description": "Every clause/table/definition chunk carries source_page and source_url"}
+{"test_id": "S41-01-11-010", "kind": "clause_count_min", "expected_min": 250, "description": "Body 14 sections with numbered clauses (a quick line-start count found 320 body clause starts on 2026-09-21) plus lettered appendix clauses (Б, К, Л, М, Н, П, С …)"}

@@ -1,0 +1,473 @@
+{
+  "cases": [
+    {
+      "id": "AR-001",
+      "version": 1,
+      "category": "applied-rule",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Latn"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "bi 2 jil barilga deer ajillasan engineer. daamal bolj chadah uu?",
+      "evidence_fixture": "evidence/foreman-qualification-hl04.json",
+      "expected": {
+        "decision": {
+          "value": "NOT_YET",
+          "accept": [
+            "болохгүй|хараахан|1 жил.*дут"
+          ],
+          "reject": [
+            "тийм.*болно"
+          ]
+        },
+        "required_claims": [
+          {
+            "id": "compare",
+            "any": [
+              "2.*3|3.*2|3-аас доошгүй"
+            ]
+          }
+        ],
+        "required_sources": [
+          {
+            "document": "УББ 12-204-01",
+            "clause": "2.2.1"
+          }
+        ],
+        "allowed_numbers": [
+          1,
+          2,
+          3
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "humanized HL04",
+        "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+      },
+      "variants": [
+        {
+          "id": "AR-001-P1",
+          "kind": "paraphrase",
+          "question": "Би барилгын үйлдвэрлэлд инженерээр 2 жил ажилласан. Талбайн даамлаар томилогдох шаардлагыг хангах уу?",
+          "same_semantics": true
+        },
+        {
+          "id": "AR-001-P2",
+          "kind": "paraphrase",
+          "question": "barilgiin uildverleld 2 jil ajillasan engineer daamal boloh bolomjtoi yu?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "AR-002",
+      "version": 1,
+      "category": "applied-rule",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE"
+      ],
+      "question": "Би барилгын үйлдвэрлэлд 3 жил ажилласан, гэхдээ даамлын сургалтын гэрчилгээ байхгүй. Шаардлага хангах уу?",
+      "evidence_fixture": "evidence/foreman-qualification-hl04.json",
+      "expected": {
+        "decision": {
+          "value": "NOT_YET",
+          "accept": [
+            "болохгүй|хангахгүй|гэрчилгээ.*хэрэгтэй"
+          ],
+          "reject": [
+            "шаардлага.*хангасан"
+          ]
+        },
+        "required_claims": [
+          {
+            "id": "certificate",
+            "any": [
+              "2\\.2\\.2|гэрчилгээ"
+            ]
+          }
+        ],
+        "required_sources": [
+          {
+            "document": "УББ 12-204-01",
+            "clause": "2.2.2"
+          }
+        ],
+        "allowed_numbers": [
+          3
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "humanized HL04 rule application",
+        "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+      },
+      "variants": [
+        {
+          "id": "AR-002-P1",
+          "kind": "paraphrase",
+          "question": "Барилгын ажил дээр 3 жилийн туршлагатай ч даамлын сургалтын гэрчилгээгүй хүн шаардлага хангах уу?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "AR-003",
+      "version": 1,
+      "category": "applied-rule",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE"
+      ],
+      "question": "Даамлын сургалтын гэрчилгээтэй, харин барилгын үйлдвэрлэлийн туршлага 2 жил. Болох уу?",
+      "evidence_fixture": "evidence/foreman-qualification-hl04.json",
+      "expected": {
+        "decision": {
+          "value": "NOT_YET",
+          "accept": [
+            "болохгүй|хараахан|1 жил.*дут"
+          ],
+          "reject": [
+            "гэрчилгээтэй.*болно"
+          ]
+        },
+        "required_claims": [
+          {
+            "id": "experience",
+            "any": [
+              "3-аас доошгүй|3.*жил"
+            ]
+          }
+        ],
+        "required_sources": [
+          {
+            "document": "УББ 12-204-01",
+            "clause": "2.2.1"
+          }
+        ],
+        "allowed_numbers": [
+          1,
+          2,
+          3
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "humanized HL04 rule application",
+        "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+      },
+      "variants": [
+        {
+          "id": "AR-003-P1",
+          "kind": "paraphrase",
+          "question": "Даамлын гэрчилгээ байгаа, харин барилгын үйлдвэрлэлийн туршлага ердөө 2 жил. Одоо томилж болох уу?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "AR-004",
+      "version": 1,
+      "category": "applied-rule",
+      "difficulty": "easy",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE"
+      ],
+      "question": "SYNTHETIC дүрмээр: туршлага 3 жил, certificate_present=true. Eligibility хангах уу?",
+      "evidence_fixture": "evidence/synthetic-and-rule.json",
+      "expected": {
+        "decision": {
+          "value": "ELIGIBLE",
+          "accept": [
+            "хангана|тэнцэнэ|eligible"
+          ],
+          "reject": [
+            "хангахгүй|дутуу"
+          ]
+        },
+        "required_claims": [
+          {
+            "id": "both",
+            "any": [
+              "хоёул|2 нөхцөл|туршлага.*гэрчилгээ|гэрчилгээ.*туршлага"
+            ]
+          }
+        ],
+        "allowed_numbers": [
+          2,
+          3
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "synthetic AND rule",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "AR-004-P1",
+          "kind": "paraphrase",
+          "question": "Зөвхөн энэ хийсвэр AND дүрмээр 3 жилийн туршлага, хүчинтэй гэрчилгээ хоёулаа байгаа бол тэнцэх үү?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "AR-005",
+      "version": 1,
+      "category": "applied-rule",
+      "difficulty": "easy",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE"
+      ],
+      "question": "SYNTHETIC дүрмээр: туршлага 4 жил, certificate_present=false. Eligibility хангах уу?",
+      "evidence_fixture": "evidence/synthetic-and-rule.json",
+      "expected": {
+        "decision": {
+          "value": "NOT_ELIGIBLE",
+          "accept": [
+            "хангахгүй|тэнцэхгүй|eligible биш"
+          ],
+          "reject": [
+            "хангана|тэнцэнэ"
+          ]
+        },
+        "required_claims": [
+          {
+            "id": "false-condition",
+            "any": [
+              "гэрчилгээ.*байхгүй|certificate.*false"
+            ]
+          }
+        ],
+        "allowed_numbers": [
+          3,
+          4
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "synthetic AND rule",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "AR-005-P1",
+          "kind": "paraphrase",
+          "question": "Хийсвэр дүрмийг хэрэглэ: 4 жил ажилласан боловч гэрчилгээгүй хүн тэнцэх үү?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "AR-006",
+      "version": 1,
+      "category": "applied-rule",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE"
+      ],
+      "question": "SYNTHETIC дүрмээр: туршлага 5 жил. Гэрчилгээ байгаа эсэх мэдэгдэхгүй. Eligibility-г одоо шийдэж болох уу?",
+      "evidence_fixture": "evidence/synthetic-and-rule.json",
+      "expected": {
+        "decision": {
+          "value": "INSUFFICIENT_INFORMATION",
+          "accept": [
+            "мэдээлэл.*дутуу|тодруулах|гэрчилгээ.*мэдэгдэхгүй|шийдэх.*боломжгүй"
+          ],
+          "reject": [
+            "тэнцэнэ|хангана"
+          ]
+        },
+        "missing_inputs": [
+          {
+            "id": "certificate",
+            "any": [
+              "гэрчилгээ|certificate"
+            ]
+          }
+        ],
+        "allowed_numbers": [
+          3,
+          5
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "synthetic AND rule",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "AR-006-P1",
+          "kind": "paraphrase",
+          "question": "Хийсвэр AND нөхцөлөөр 5 жилийн туршлагатай, гэрчилгээтэй эсэх нь тодорхойгүй хүнийг одоо тэнцсэн гэж хэлж болох уу?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "AR-007",
+      "version": 1,
+      "category": "applied-rule",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE"
+      ],
+      "question": "SYNTHETIC дүрмээр: 2 жилийн туршлагатай хүн нэмэлт сургалт төгссөн бол 3 жилийн туршлагын босгыг орлуулж болох уу?",
+      "evidence_fixture": "evidence/synthetic-and-rule.json",
+      "expected": {
+        "decision": {
+          "value": "NO_SUBSTITUTION",
+          "accept": [
+            "орлуулахгүй|нөхөхгүй|3.*жил.*шаард"
+          ],
+          "reject": [
+            "орлуулж болно|нөхөж болно"
+          ]
+        },
+        "allowed_numbers": [
+          2,
+          3
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "synthetic AND rule",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "AR-007-P1",
+          "kind": "paraphrase",
+          "question": "Хийсвэр дүрмийн 3 жилийн босгыг 2 жилийн туршлага дээр нэмэлт сургалт төгссөнөөр орлуулж болох уу?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "AR-008",
+      "version": 1,
+      "category": "applied-rule",
+      "difficulty": "hard",
+      "languages": [
+        "mn-Latn"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "solongos kompani manai tosliin zurgiig hiij boloh uu? permission-iig hen avah ve, tootsoo yamar normoor hiih ve?",
+      "evidence_fixture": "evidence/foreign-design-hl05.json",
+      "expected": {
+        "decision": {
+          "value": "ALLOWED_WITH_CONDITIONS",
+          "accept": [
+            "болно"
+          ],
+          "reject": [
+            "болохгүй"
+          ]
+        },
+        "required_claims": [
+          {
+            "id": "customer-permission",
+            "any": [
+              "захиалагч.*зөвшөөр"
+            ]
+          },
+          {
+            "id": "mn-norm",
+            "any": [
+              "Монгол.*норм|Монголд мөрдөж"
+            ]
+          },
+          {
+            "id": "mn-professional",
+            "any": [
+              "Монгол.*байгууллага|Монгол.*зөвлөх"
+            ]
+          }
+        ],
+        "required_sources": [
+          {
+            "document": "БНбД 11-03-02",
+            "clause": "1.3"
+          },
+          {
+            "document": "БНбД 11-03-02",
+            "clause": "2.1.a"
+          },
+          {
+            "document": "БНбД 11-03-02",
+            "clause": "2.4.b"
+          }
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "humanized HL05",
+        "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+      },
+      "variants": [
+        {
+          "id": "AR-008-P1",
+          "kind": "paraphrase",
+          "question": "Солонгосын зураг төслийн компани манай төсөлд оролцож болох уу? Зөвшөөрөл болон тооцооны нормын хариуцлагыг тайлбарла.",
+          "same_semantics": true
+        }
+      ]
+    }
+  ]
+}

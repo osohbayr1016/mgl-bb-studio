@@ -1,0 +1,47 @@
+{
+  "doc_id": "BNBD-22-01-21-2021",
+  "code": "БНбД 22-01-21",
+  "title_mn": "Газар хөдлөлтийн бүс нутагт барилга төлөвлөх",
+  "title_en": "Seismic building design code",
+  "jurisdiction": "Mongolia",
+  "authority": "Барилга, хот байгуулалтын сайд",
+  "order_date": "2021-05-21",
+  "order_number": "117",
+  "version": "2021",
+  "effective_status": "current_amended_verified",
+  "effective_from": "2021-12-01",
+  "dataset_standard": "norm-dataset/1",
+  "source_url": "https://mcis.gov.mn/main/single/17110817013146",
+  "source_pdf_url": "https://mcis.gov.mn/storage/uploads/process/202510/file_1760323453830431_161611878330710_stamped.pdf",
+  "legal_source_url": "https://legalinfo.mn/mn/detail?lawId=16390164225891",
+  "successor_draft": null,
+  "amendments": [
+    {
+      "id": "A-2022-07",
+      "order_number": "07",
+      "order_date": "2022-01-06",
+      "issuer": "Барилга, хот байгуулалтын сайд",
+      "title": "Тушаалын хавсралтыг шинэчлэн батлах тухай",
+      "version_alias": "БНбД 22-01-21*/22",
+      "role": "AMENDMENT_SOURCE",
+      "source_url": "https://legalinfo.mn/storage/uploads/process/202202/file_1644390647161759_163403209487511.pdf",
+      "source_page_url": "https://legalinfo.mn/mn/detail?lawId=16390164225891",
+      "source_sha256": "1bc80390df435e1a75b2d9ff0f191a041039b99d421109f8dd31e8c1a51df1ef",
+      "affects": [
+        "annex:1",
+        "annex:2"
+      ],
+      "effect_quote": "1.Барилга, хот байгуулалтын сайдын 2021 оны 5 дугаар сарын 21-ний өдрийн 117 дугаар тушаалын хавсралтаар баталсан ““Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-21/ барилгын норм, дүрэм”-ийн нэгдүгээр хавсралт болох “Монгол орны газар хөдлөлтийн ерөнхий мужлал (500 болон 2500 жил), хоёрдугаар хавсралт болох “Монгол орны газар хөдлөлтийн ерөнхий мужлалын зураг (500 жилийн давтагдах хугацаа)”-ийг доор дурдсан нэршилтэйгээр өөрчилж, энэ тушаалын нэг, хоёрдугаар хавсралт ёсоор тус тус шинэчлэн баталсугай: 1.1.“Монгол орны хот, суурингуудын хувьд тооцоолсон 500 жил, 2500 жилийн давтагдах хугацааны хөрсний оргил хурдатгал болон MSK64 шаталбарын баллын утгууд” дүрмийн нэгдүгээр хавсралт; 1.2.Монгол орны газар хөдлөлтийн ерөнхий мужлалын зураг (500 жилийн давтагдах хугацаа)-ийг дүрмийн хоёрдугаар хавсралт. 2. Энэ тушаал гарсантай холбогдуулан “Барилга байгууламжийн норм, нормативын баримт бичиг батлах тухай” Барилга, хот байгуулалтын сайдын 2021 оны 5 дугаар сарын 21-ний өдрийн 117 дугаар тушаалын 2 дугаар зүйлийг хүчингүй болсонд тооцсугай.",
+      "notes": "The content of item 2 of order 117/2021 (declared void by item 2 of this order) is not known — order 117's own text was not retrievable."
+    }
+  ],
+  "supersedes": [
+    "БНбД 22-01-01*"
+  ],
+  "superseded_by": null,
+  "applicability": {
+    "evidence": "section 1 — «… MSK шаталбараар 7, 8 ба 9 баллын эрчимтэй талбайд шинээр барих барилгын болон барилга, байгууламжийг сэргээн засварлах, шинэчлэх, ажлын зураг төсөл зохиоход мөрдөнө.»; «Газар хөдлөлтийн 9-өөс дээш баллын эрчимтэй талбайд барилга барихыг зөвшөөрөхгүй.»"
+  },
+  "training_policy": "retrieval_first_do_not_bake_changeable_norms_into_model_weights",
+  "text_verification_status": "official_pdf_text_layer_auto_extracted"
+}

@@ -1,0 +1,103 @@
+{
+  "client_uid": "0de927919d954a159c3fc336951e7510",
+  "doc_uid": "doc-abc",
+  "doc_title": "sim-test",
+  "sender_revit_username": "anandoctane4ZDUG2",
+  "moved": {
+    "label": "Structural Columns · W14x109 · #608203",
+    "category": "Column",
+    "ids": [
+      608203
+    ],
+    "unique_ids": [
+      "e37453ab-55ac-464e-96ef-b2d748a679fc-000947cb"
+    ]
+  },
+  "offset_mm": [
+    1500,
+    0,
+    0
+  ],
+  "distance_mm": 1500,
+  "verdict": "MoveWithReview",
+  "headline": "Хэрэв та «Structural Columns · W14x109 · #608203»-г эндээс тийш зөөвөл (X +1500 мм):",
+  "moved_at": "2026-10-06T02:31:54.838Z",
+  "conflicts": [
+    {
+      "key": "h:608446",
+      "element_id": 608446,
+      "unique_id": "e37453ab-55ac-464e-96ef-b2d748a679fc-000948be",
+      "label": "Structural Framing · W18x55 · #608446",
+      "category": "Structural Framing",
+      "link_name": null,
+      "kind": "Framing",
+      "confirmed": false,
+      "volume_cm3": 0,
+      "consequence": "Бүтцийн дам нуруу — инженерийн шалгалт, дахин зураг шаардлагатай.",
+      "creator": "Paul_F_Aubin",
+      "last_changed_by": "Paul_F_Aubin",
+      "owner": "anandoctane4ZDUG2",
+      "relation": "follows"
+    },
+    {
+      "key": "h:615608",
+      "element_id": 615608,
+      "unique_id": "be230f29-8239-4c14-8dea-73ab8498a467-000964b8",
+      "label": "Structural Framing · W18x55 · #615608",
+      "category": "Structural Framing",
+      "link_name": null,
+      "kind": "Framing",
+      "confirmed": false,
+      "volume_cm3": 0,
+      "consequence": "Бүтцийн дам нуруу — инженерийн шалгалт, дахин зураг шаардлагатай.",
+      "creator": "Paul_F_Aubin",
+      "last_changed_by": "Paul_F_Aubin",
+      "owner": "anandoctane4ZDUG2",
+      "relation": "follows"
+    },
+    {
+      "key": "h:628118",
+      "element_id": 628118,
+      "unique_id": "7219f57e-6781-42c8-b33b-d5eee181914c-00099596",
+      "label": "Structural Framing · W18x55 · #628118",
+      "category": "Structural Framing",
+      "link_name": null,
+      "kind": "Framing",
+      "confirmed": false,
+      "volume_cm3": 0,
+      "consequence": "Бүтцийн дам нуруу — инженерийн шалгалт, дахин зураг шаардлагатай.",
+      "creator": "Paul_F_Aubin",
+      "last_changed_by": "Paul_F_Aubin",
+      "owner": "anandoctane4ZDUG2",
+      "relation": "follows"
+    },
+    {
+      "key": "h:628134",
+      "element_id": 628134,
+      "unique_id": "7219f57e-6781-42c8-b33b-d5eee181914c-000995a6",
+      "label": "Structural Framing · W18x55 · #628134",
+      "category": "Structural Framing",
+      "link_name": null,
+      "kind": "Framing",
+      "confirmed": false,
+      "volume_cm3": 0,
+      "consequence": "Бүтцийн дам нуруу — инженерийн шалгалт, дахин зураг шаардлагатай.",
+      "creator": "Paul_F_Aubin",
+      "last_changed_by": "Paul_F_Aubin",
+      "owner": "anandoctane4ZDUG2",
+      "relation": "follows"
+    }
+  ],
+  "issues": [
+    {
+      "mark": "🟠",
+      "text": "Revit 2 дотоод элементийг (нүх, зүсэлт, тэмдэглэгээ г.м.) шинэчлэхдээ устгана",
+      "consequence": "Зөөлтийн дараа нүх/зүсэлт/хэмжээсийг шалгана уу."
+    }
+  ],
+  "note": "Гарцын өргөнийг нэмэхийн тулд баганыг 1.5 м зөөв — дам нурууны холболтыг шалгана уу.",
+  "manual_user_ids": [
+    8
+  ],
+  "excluded_user_ids": []
+}

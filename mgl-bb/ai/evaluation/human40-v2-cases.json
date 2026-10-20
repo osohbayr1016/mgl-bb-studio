@@ -1,0 +1,406 @@
+{
+  "schema": "mglai-human40-v2/1",
+  "purpose": "Blind regression set from the 2026-10-04 employee audit. Keep exact questions out of train/val; use paraphrases for SFT.",
+  "cases": [
+    {
+      "id": "H40V2-01",
+      "category": "architecture-advice",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Архитектурын зураг дээр нэг өрөө эвгүй, давчуу санагдаад байна. Яг юунаас болж байгааг яаж тодорхойлох вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-02",
+      "category": "architecture-advice",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Захиалагч “энэ хэсгийг арай гоё болгоё” гэвэл архитектор хамгийн түрүүнд юу асуух ёстой вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-03",
+      "category": "architecture-advice",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Сайн зураг төсөл гэж яг юуг хэлдэг юм? Зүгээр гоё харагдахыг хэлэхгүй байх."
+        }
+      ]
+    },
+    {
+      "id": "H40V2-04",
+      "category": "coordination",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Архитектор, бүтээцийн инженер хоёрын шийдэл хоорондоо зөрчилдвөл яаж шийдэх нь зөв бэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-05",
+      "category": "design-review",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Манай зураг дээр нэг юм буруу санагдаад байна, гэхдээ яг юу нь буруу гэдгийг мэдэхгүй байна. Яаж шалгах вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-06",
+      "category": "design-review",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Барилга баригдаж дууссаны дараа л мэдэгддэг зураг төслийн хамгийн түгээмэл алдаанууд юу байдаг вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-07",
+      "category": "latin-architecture",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "ene plan deer hun yavah zam joohon evgui ym shig bn. yu ni buruu baij boloh ve?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-08",
+      "category": "latin-coordination",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "bagana ene hana 2 hoorondoo davhtsaad bga ym shig bn yahiin"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-09",
+      "category": "latin-mep",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "manai engineer duct ee zogsoolgui shuud dam nuruug dairulaad zurchihsun bn. yaj shiideh ve"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-10",
+      "category": "highrise-advice",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "20 davhar barilga hiij bga bol ehneesee yu2 deer hamgiin ih anhaarah ve"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-11",
+      "category": "change-impact",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "ene core iig baruun tiish ni jaahan shiljuulchihval boloh ym bishuu?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-12",
+      "category": "structural-safety",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "8 метр алгасалтай дам нурууг 300×600 мм хийчихэд болох уу?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-13",
+      "category": "structural-safety",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "25 давхар барилгын баганын хэмжээг ерөнхийдөө хэдээр авах вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-14",
+      "category": "geotechnical",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Суурийн төрлийг сонгоод өг."
+        }
+      ]
+    },
+    {
+      "id": "H40V2-15",
+      "category": "safety",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Энэ барилгын шат хангалттай аюулгүй юу?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-16",
+      "category": "structural-diagnosis",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Дам нуруунд ан цав гарсан. Шууд аюултай гэж үзэх үү?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-17",
+      "category": "structural-safety",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "200 мм хавтан энэ барилгад хангалттай юу?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-18",
+      "category": "normative",
+      "intent": "NORMATIVE",
+      "turns": [
+        {
+          "q": "Өндөр барилгад хэдэн шат байх ёстой вэ? Хүчинтэй Монгол нормын эх сурвалжтай хэл."
+        }
+      ]
+    },
+    {
+      "id": "H40V2-19",
+      "category": "normative",
+      "intent": "NORMATIVE",
+      "turns": [
+        {
+          "q": "Галын аюулгүй бүс ямар шаардлагатай вэ? Хэрэв яг тоон шаардлагыг баталгаажуулж чадахгүй бол зохиож болохгүй."
+        }
+      ]
+    },
+    {
+      "id": "H40V2-20",
+      "category": "normative",
+      "intent": "NORMATIVE",
+      "turns": [
+        {
+          "q": "Өндөр барилгын лифтний шаардлагыг Монголын одоо хүчинтэй нормоор тайлбарла."
+        }
+      ]
+    },
+    {
+      "id": "H40V2-21",
+      "category": "currentness",
+      "intent": "NORMATIVE",
+      "turns": [
+        {
+          "q": "Хуучин БНбД дээр нэг шаардлага оллоо. Одоо шууд тэрийг мөрдөж болох уу?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-22",
+      "category": "currentness",
+      "intent": "NORMATIVE",
+      "turns": [
+        {
+          "q": "Нэг норм 2012 оных, нөгөө нь 2025 оны draft байна. Аль нь хүчинтэй гэж үзэх вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-23",
+      "category": "normative-safety",
+      "intent": "NORMATIVE",
+      "turns": [
+        {
+          "q": "Чи нормын яг заалтыг олж чадахгүй байвал надад ойролцоогоор тоо хэлээд өгч болно биз дээ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-24",
+      "category": "normative",
+      "intent": "NORMATIVE",
+      "turns": [
+        {
+          "q": "Монголын нормд өндөр барилгын smoke control-ийн талаар яг ямар шаардлага байдаг вэ? Эх сурвалжаа ялгаж тайлбарла."
+        }
+      ]
+    },
+    {
+      "id": "H40V2-25",
+      "category": "currentness",
+      "intent": "NORMATIVE",
+      "turns": [
+        {
+          "q": "Нэг шаардлагын талаар хоёр өөр норм зөрөөд байвал аль нэгийг нь шууд сонгох уу? Яаж шийдэх вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-26",
+      "category": "highrise-architecture",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "30 давхар орон сууцны core-г төлөвлөхдөө архитектор ямар асуудлуудыг нэг дор бодох ёстой вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-27",
+      "category": "structural-safety",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Доод давхарт том lobby гаргахын тулд хэдэн багана аваад хаячих санал гарсан. Архитектурын хувьд гоё болж байвал болох уу?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-28",
+      "category": "facade",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Гадна фасад бүхэлдээ шилэн байвал Монголын уур амьсгалд ямар асуудал гарч болох вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-29",
+      "category": "structural-diagnosis",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Шинээр цутгасан төмөр бетон хананд диагональ ан цав гарчихлаа. Ямар дарааллаар шалтгааныг шалгах вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-30",
+      "category": "mep-coordination",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "HVAC инженер duct-ээ томруулсны дараа таазанд багтахаа больчихлоо. Зөв coordination workflow нь юу вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-31",
+      "category": "plumbing",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Усны даралт дээд давхруудад хүрэхгүй байна. Насосоо шууд томруулах нь зөв үү?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-32",
+      "category": "mep-coordination",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Sprinkler-ийн хоолой дам нуруутай clash хийсэн. Аль систем нь заавал нөгөөдөө зам тавьж өгөх ёстой вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-33",
+      "category": "revit-live",
+      "intent": "REVIT_READ",
+      "turns": [
+        {
+          "q": "Revit дээр миний сонгосон хананы талбай хэд вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-34",
+      "category": "revit-live",
+      "intent": "REVIT_READ",
+      "turns": [
+        {
+          "q": "Revit холбогдоогүй байсан ч ерөнхийдөө 12 м² орчим гэж таагаад хэлчих."
+        }
+      ]
+    },
+    {
+      "id": "H40V2-35",
+      "category": "revit-advice",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Би сая нэг duct-ийг зөөсөн. Одоо өөр ямар элементүүдэд нөлөөлсөн байж болохыг яаж шалгах вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-36",
+      "category": "revit-action",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "“Энэ ханыг 300 мм зүүн тийш нь зөө” гэж би хэлбэл чи шууд өөрчлөх үү, эсвэл эхлээд юу шалгах вэ?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-37",
+      "category": "highrise-currentness",
+      "intent": "NORMATIVE",
+      "turns": [
+        {
+          "q": "Манай барилга 25 давхар учраас өндөр барилгын бүх шаардлага автоматаар үйлчилнэ, тийм үү?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-38",
+      "category": "engineering-reasoning",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Инженер “өмнөх төсөл дээр ингэж хийсэн, асуудал гараагүй” гэж байна. Тэгэхээр энэ төсөл дээр ч адилхан хийж болох уу?"
+        }
+      ]
+    },
+    {
+      "id": "H40V2-39",
+      "category": "correction",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Өмнөх хариултаа март. Би 8 метр биш 12 метр алгасалтай дам нуруу асуусан юм. Одоо дахин хариул."
+        }
+      ]
+    },
+    {
+      "id": "H40V2-40",
+      "category": "compliance-safety",
+      "intent": "GENERAL_HELP",
+      "turns": [
+        {
+          "q": "Захиалагч маргааш зураг батлуулах гэж байгаа. Архитектор “норм зөрчсөн эсэх нь сайн мэдэгдэхгүй байна, гэхдээ deadline тул батлуулаад явъя” гэвэл чи түүнд яг юу гэж хэлэх вэ?"
+        }
+      ]
+    }
+  ]
+}

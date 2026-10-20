@@ -1,0 +1,1058 @@
+% done?
+...
+16-20 давхрын байгуулалт /c блок/ ийг зураад өг
+1f-таазны байгуулалт дээр тусгаарлаж байснаа болиул
+1f-шалны материал дээр хийсэн ажлаа өгье
+1f-шалны материал дээр өөрчлөлт орсон эсэхийг шалга
+1f-шалны материалыг өөрчил
+65 хувь болголоо
+80% боллоо гэж бүртгүүлээд өг
+?
+a блокт юу өөрчлөгдсөн бэ
+a-101 finished
+add a colum on grid 5
+ajil ehlehiin umnu suuriig avya
+all sheets
+am i late today
+any percent left on bb-04
+any update after the baseline
+any walls added since baseline
+anything new since morning
+approve the overtime request of my team
+asdf
+assign this task to bataa
+au-02 ийн элементүүдийг харуул
+b блокийн явц хэд болов
+ba huudsuudad uurchlult orson uu
+ba-01 aas ba-05 hurtel tusgaarla
+ba-01 huudasnii yavtsiig ilgeeye
+ba-01 ig haruul
+ba-01 iig haruul
+ba-01 iin tusgaarlaltaa avchih
+ba-01 iin yavts hed ve
+ba-03 done
+ba-03 done, send
+ba-03 iig 50 huv bolgoloo
+ba-03 ийг тусгаарла
+ba-07 г isolate
+back to whole model
+baselien хийчих
+baseline hiiy
+baseline it
+baseline аас хойш юу change хийгдсэн
+baseline ав
+baseline авсан уу?
+baseline тэй харьцуулаад diff гаргаад өгөөч
+baseline хий
+baseline хийчих
+baseline шинэчил
+baseline ээ шинэчилье хуучин боллоо
+bayarlalaa
+bayrlalaa shuu
+bb блокийн ачааг тооцоод өгөөч
+bb-04 huudsiig yalgaj uzey
+bb-04 ийн element үүдийг л үлдээгээд isolate хийгээч
+bb-05 ыг 3d view дээр isolate хийе
+bb-21 huudasnii elementuudiig tusgaarla
+bb-21 ig isoalte hii
+bb-21 ийг ялгаж үзүүл
+before i start modeling the kitchen ceiling please capture the current model state as the baseline
+before i start working i want to see every sheet that is inside this revit file, list them
+before the team syncs, capture the base state
+begin tracking from now on
+boliul odoo, buten modeloo harya
+bring back all the elements in the model
+bugd huudsaa jagsaa
+buh elementee haruul
+butsaa
+butsaa, buh elementee haruulchih
+can i see how many percent is registered for my sheets please
+can i submit my progress now?
+can you calculate the beam size
+can you list the sheets for me thanks
+can you register 70% for ba-01?
+can you send my work progress to the system please
+can you set the baseline now?
+can you show me only the elements that belong to sheet a-201?
+can you show progress of my sheets
+can you undo the isolation?
+cancel isolation
+capture baselien
+capture baseline
+capture baseline хийгээд өгөөч
+central file ээ sync хийчих
+chamaig yaaj ashiglahiig zaaj ogooch
+change the wall thickness to 250
+change харуул
+changes
+changes since baselin plz
+changes since baseline
+check if anything changed
+check my progress
+checklist hed bolson bn
+checklist хэд болсон
+checklist хэд болсон бэ
+checklist ээс 3 нь болсон, ингээд илгээе
+checklist ээс хэд нь болсон бэ?
+chek my inbox
+chek my percent
+chi yu hiij chadah ve
+clear the isolation and show the full building
+clock me in for today
+close ba-04 at 100% and submit
+cna you snd this to the client
+commands
+compare the current model with the baseline and show me every difference
+compare хийгээд өөрчлөгдсөн хуудсуудыг гарга
+core төлөвлөлтийн явц хэд болсныг хэлээд өгөөч
+could you please compare with the snapshot i took this morning and tell me what is different
+could you please isolate sheet a-101 so i can check the layout
+could you please register my attendance, i forgot to do it this morning
+could you please return the view to its original state
+could you please save the current state as the baseline
+could you please submit my progress now
+could you please tell me the current progress of my work today
+could you show me all the sheets please
+could you tell me what you are able to do
+create a new sheet
+current percentage please
+daily report оо mgl руу илгээе
+delete this window
+did any door get moved
+did anything get deleted from the model
+did has-12 reach 50 percent
+did i forget to clock out yesterday
+diff
+diff haruulaach
+diff haruulach
+diff харуул
+diff ээ шалгамаар байна
+difference from last snapshot
+disable isolation now
+display changed elements
+display the sheets of this project
+do we have architecture sheets listed here
+do you have a help menu
+download the performance report
+draw a wall here
+dwg болгож гарга
+dwg оруулж ирээч
+ehlel temdegle
+ehleliig temdegl
+ehleliig temdegle
+ehnii baidlaa temdeglechih
+end yu bichij bolno ve
+endees toolj ehleye
+ene huudsiig yalgaj haruul
+enter my progress into mgl
+everything is hidden now, bring the elements back
+explain how to start
+explain what this assistant does
+export the report to excel
+export this to dwg
+ez-01 харуул
+family үүсгэ
+focus on sheet m-02
+freeze this state as the base
+giv me sheet list
+give change report
+give me back the entire model view
+give me instructions
+give me sheets
+give me some examples of what i can type
+give me the diff please
+give me the sheet list
+give me the status of my task
+good morning
+guide
+hana zur
+hana zuraad ogooch
+hana zurad ogoch
+haragdatsaa hevendee oruul
+has ийн sheet үүд өөрчлөгдсөн үү
+has-02 sheet ийг isolate хийж үзүүлээч
+has-02 ын явцыг update хийе
+has-04 ig tusgarlaad ug
+has-09 ыг 45% гэж явуулаач
+has-12 sheet ийг isolate хийгээд өгөөч
+has-12 tusgaarla
+has-12 харуулаач
+hd-03 хуудсыг ялга
+hed uldsen be
+heden huvi bolson
+hello, please list all sheets of the current model
+help
+help pls
+help хийгээд өгөөч
+helpp
+hepl me
+hide everything except a-201
+hide the rest and keep sheet iz-04
+hide this wall
+hide хийснээ буцаа
+hiij chadah zuilsee hel dee
+hiisen ajlaa burtguuly
+hiisnee ilgee
+hlep
+hmm
+hom many sheets in this file
+how do i cancel the isolation?
+how do i send my progress?
+how do i start
+how do i use this
+how does this work
+how far am i on this drawing
+how i can use this
+how many % complete
+how many checklist items are done
+how many elements were added and how many removed
+how many families are loaded in this model
+how many hours did i work this week
+how many leave days do i have left
+how many percent i have
+how many percent is ba-01 sheet
+how many sheets are in this file
+how many sheets does this project have in total
+how much did i finish this week
+how much is done
+how much progress
+how much work is left
+how much work remain for me
+how to use ths
+huudas hed bn
+huudasnii jagsaalt
+huudasnii jagsaalt gagra
+huudasnii jagsaalt garga
+huudsudaa haruul
+huudsuudaa haruul
+huudsuudaa jagsaagaad ugooch
+huudsuudaa neg haruulaach
+huudsuudaa uzuuleech
+huudsuudiin yavts hed bolsniig haruul
+i am done for today, please record my work progress in the web system before i close revit
+i am going to work on sheet ba-01 today so first store the model condition now as reference
+i am not sure which sheets are in this model, please go through the file and list all of them with numbers
+i am using this first time, please explain it to me
+i dont understand how this thing works please explain it to me from the beginning
+i finished checking, please show whole model
+i finished the elevation sheets today, please submit that progress to the mgl system
+i finshed ba-01, sned it
+i just opened this panel and i have no idea what to type, can you explain everything first
+i need only sheet et-02 elements visible for checking, hide the rest
+i want send my progress
+i want to know the total progress of this project and how much is remaining
+i want to save a baseline please
+i want to see all elements again, reset it
+i want to see only sheet has-12 elements
+i want to see what my colleague changed in this file
+i want to take a day off next monday, can you request it for me
+i would like to see the progress of all my sheets before i go home
+if it is possible show me the full sheet list
+ifc export хий
+im at how many percent
+instrucions
+instructions
+irtsee burtguulye
+is ba-09 still not finished
+is it already 100 percent
+is it ok if i log my work now?
+is it possible to isolate sheet tsah-07?
+is it possible to show all elements again?
+is my task finished
+is there any change in the model since i set the baseline
+is there any documentation for this
+is there any interior sheet in the list
+isolat sheet bb-21
+isolate a-101 in the 3d view
+isolate ba-03
+isolate ba01 plz
+isolate current sheet elements only please
+isolate off
+isolate sheet a-101
+isolate sheet a101
+isolate sheet ba-02 elemnts
+isolate sheet number a-303
+isolate shet a-102
+isolate that sheet again
+isolate the elements of this sheet
+isolate the sheet i am working on right now
+isolate this sheet
+isolate ийг болиул
+isolate ийг цуцал
+isolate ыг цуцлад өгөөч
+isolate ээс гадна өөр юу хийж чадах вэ
+isolation оо аваад бүх element ийг харуул
+isolete ba-03 pls
+iz-09 ийг 3d д харуул
+just show ba-01, nothing else
+keep only bb-04 visible and hide the others
+komandiin jagsaaltiig haruul
+leave only sheet s-03 visible
+level нэмэх үү
+list all the 3d views
+list every sheet in the file
+list sheet plz
+list sheets хий
+list sheets хийгээд өгөөч
+list the sheet plz
+list the sheets of the linked file too
+log 2 hours of overtime for me
+log my attendance
+log the work i did today
+log work
+mak the start poin
+make a price quote for this building
+make a section view of this wall
+make baseline now
+make only ba-09 visible
+make this state the reference for the diff
+make this the base version
+manual
+mark has-02 as 60% and send it
+mark start
+mark the starting point
+may i see the help menu
+may i take a baseline before starting?
+menu гаргаад өгөөч юу байдгийг харъя
+mgl рүү явцаа өгье
+mgl-260226_mitic_az ийн overall progress хэд вэ
+mgl-260226_mitic_az төсөл дээрх явцаа бүртгүүлье
+mgl-260501_44 давхар орон сууц дээр юу өөрчлөгдсөн
+mgl-260501_44 давхар орон сууц төслийн явцыг асуумаар байна
+minii ajil heden huvi bolson be
+model deer baigaa huudsuudaa garga
+model ийн одоогийн байдлыг baseline болгож save хийчих
+my sheet how many percent
+need help
+new baseline
+nuusan elementuudee butsaagaad garga
+ochigduruus hoish yamar huudas zasagdsan
+odoo heden huvi deer yavj bna
+odoogiin baidliig hadgal
+odoogiin baidliig hadgl
+ok
+ok send it
+only a-101 please
+only this sheet
+oorchlolt shalga
+open my personal growth plan
+open the list of sheets
+overwrite the old baseline
+please give me a list of the sheets in this file
+please give me a short introduction
+please isolate the current sheet in 3d
+please leave only s-01 on the screen
+please make submit my work today
+please record what i did today
+please show me how many percent of the work is completed today
+please switch the isolation off
+please take a baseline before i start drawing
+please tell me which commands you understand
+pls aprove my leav request
+pls isolate has-02
+pls send progress
+pls show whats chnaged
+plz recrod todays work
+plz reset isolatoin
+print all sheet names and numbers
+print all sheets to pdf
+print the contract for me
+progres hed bolson bn
+progres percent?
+progress push хий
+progress status
+progress submit now
+progress оо одоо push хийж болох уу?
+progress?
+project дээрх sheet үүдээ харъя
+puhs the progress now
+push progress
+push progress for ba-01
+push хий
+put a dimension between these two grids
+put my sheet progress into the system now
+put the view back to normal
+re-baseline the model
+record my overtime hours
+record my progress for ba-02 at 75 percent
+record today work in the system
+record where the model is right now
+register my leave for tomorrow
+remove isolate from this sheet
+render хий
+reply to the last letter from the client
+reset
+reset isolatin pls
+reset isolation plz
+reset isolation хийгээд өгчих
+reset the isolation please
+reset the model view for me
+reset view
+reset хий
+restore the full model view
+revert the view to normal
+revit ee haachih
+run the diff again
+sain uu
+save baseline
+save current model state as baseline
+save my work progress to the web app
+save the currnt state as base
+save the file
+see percentage
+see you tomorrow
+select all the doors
+select sheet a-201 and isolate it
+send 80%
+send an email to the client
+send my leave request to the manager
+send my progres to mgl pls
+send my progress to mgl
+sendmyprogress
+set basline pls
+set cah-07 to 30 percent and send
+set the baseline now
+shalnii material iig solij ogooch
+sheet a-101 only
+sheet count
+sheet list
+sheet list pls
+sheet list ээ гаргаад өгөөч
+sheet lsit please
+sheet name уудыг нь харуул
+sheet names
+sheet number ууд юу вэ
+sheet numbers
+sheet ийн isolate ыг болиод бүтэн model руу буц
+sheet хэд байгаа вэ?
+sheet үүд дээрх явцаа submit хийе
+sheet үүдийн өөрчлөлтийг харуул
+sheet үүдээ харуул
+sheets in file
+should i push my progress before i go home?
+show all drawing sheets here
+show all elements
+show all elements again
+show all modifications made today
+show all sheets
+show change summary
+show diff for the linked model
+show elements from sheet ba-05 alone
+show everything again
+show hidden elements
+show just this sheet
+show me all sheeets
+show me all the sheets in this model
+show me the current progress
+show me the edited views
+show me what changed since the baseline
+show my tasks for today
+show only the elements of sheet e-05
+show progress of this sheet
+show sheets
+show the hidden elements back
+show the modified sheets only
+show what was updated
+showallelements
+sick leave for tomorrow please
+snapshoot the model now
+snapshot
+snapshot avaad hadgalchih
+snapshot ав
+snapshot аваад тавь
+sorry, can i get some instructions please
+start counting from here
+start the skill assessment round
+status
+status haruul
+status харуул
+stop isolating the sheet elements
+submit
+submit my attendance for today
+submit my daily progress
+submit progress
+sumbit my progres
+suuri av
+suuritai tulgaad uzuuleech
+sync with central
+tailangaa yavuulya
+take a snapshot of the model
+take baseline first
+teach me how to use you
+tell me the percentage
+tell me what i am allowed to ask
+tell me what is different now
+tell me your abilities
+test
+thanks, that is all for today
+the isolation is not needed anymore, cancel it
+tsah-06 g tusgaarlaad busdiig ni nuu
+tsah-07 iig gantsaarang ni haruulaach
+tsah-07 sheet ийг л үлдээгээд бусдыг hide хийчих
+tsah-15 ийг тусгаарла
+tsbu-05 ig 3d deer yalgaad ugooch
+tsbu-05 ig isolate hiij bolh uu?
+tsbu-05 isolate хий
+tsutsal
+turn off everything except sheet a-105
+turn off isolate mode
+tusgaarlaltaa tsutlaad ug
+tusgaarlaltaa tsutsal
+tusgaarlaltaa tsutsal hiichi
+tuslamj
+un hide all elemnts
+undo isolate for ba-01
+unhide all
+unhide everything in the view
+unhide бүгдийг нь хийчих
+unhide хий
+unisolate
+unisolate all
+unuudriin ajlaa burtguulye
+unuudriin irts burtguulye
+unuudriin zasvariig jagsaad ug
+unuudur yu ustgagdsan be
+update my task progress on the site
+usage
+uurchlultiig haruul
+uurchlultiig haruull
+view template үүсгээд өг
+view ийг reset хий
+view үүдээ жагсаа
+warning уудаа цэвэрлэ
+wat can u do
+wat changd today
+wat is progress now
+we are done with this sheet, unisolate everything
+what are the sheet numbers in this project
+what are your features
+what can you do
+what changed
+what changed after lunch
+what changed today
+what commands do you accept
+what commands you have
+what did i change in the last hour
+what elements are new
+what is different now from baseline
+what is diffrence from baselne
+what is my progress right now
+what is my score on the leaderboard
+what is the tariff for 1200 square meters
+what percent did i reach
+what percentage is saved in the system
+what sheets do we have here
+what should i write here
+when is the next meeting with the client
+which sheets exist in this model
+which sheets were edited after i captured the baseline
+which words i can write here
+who changed what in this model
+worksharing асаа
+would you mind explaining how this works
+would you set a baseline for me first
+write the meeting notes for me
+yaaj ajilladag yum be
+yaaj ilgeeh ve
+yamar ch tusgaarlalt hereggui, hevendee oruul
+yamar huudsuud baina
+yamar komand baidag ve
+yamar komand baidg ve
+yavts 75% bollo
+yavts hed ve
+yavtsaa 70% gej burtguul
+yavtsaa haruulaach
+yavtsaa haruulach
+yavtsaa ilgeeye
+yavtsaa ilgeye
+yavtsaa mgl ruu damjuulya
+yes submit it
+yu hiij chadah ve
+yu oorchlogdson
+yu uurchlugdsun be
+za bolloo bayartai
+za bolno
+za tegeed
+zaavar heregtei baina
+аа
+ажил эхлэхийн өмнө суурийг тэмдэглэ
+ажил эхлэхээс өмнө одоогийн загварыг суурь болгож хадгалуулах хүсэлтэй байна
+ажилдаа ирснээ бүртгүүлье
+ажлаа дуусгалаа, ба-01 ийн тусгаарлалтыг цуцалж өгөхийг хүсье
+ажлаа дуусгасан илгээе
+ажлаа тайлагнах
+ажлаа тайлганмаар байнаа
+ажлын зургийн хуудсуудыг бүгдийг нь харуулж туслаач
+ажлын тайлангаа явуулахад тусалж өгөөч
+ажлын явц
+ажлынхаа явцыг илгээж өгөөч
+аль хуудас өөрчлөгдсөн
+арматурчлалт хий
+ба хуудсуудад өөрчлөлт орсон уу
+ба-01 болон ба-09 ийг ялга
+ба-01 д change орсон уу
+ба-01 д хаалга нэмээд өгөөч
+ба-01 дуусахад хэд үлдсэн бэ?
+ба-01 дээр эхлэл тэмдэглэ
+ба-01 ийг 60% болголоо, илгээе
+ба-01 ийг isolate хий
+ба-01 ийг pdf болгож хэвлэ
+ба-01 ийг нээ
+ба-01 ийг тусгаарлаж болох уу?
+ба-01 ийг харуул
+ба-01 ийг ялгаж хруул
+ба-01 ийн baseline ав
+ба-01 ийн isolate аа болиул
+ба-01 ийн progress ыг push хий
+ба-01 ийн тусгаарлалтыг цуцал
+ба-01 ийн явц хэд болсон
+ба-01 тусгаарлалт цуцал
+ба-01 харуул
+ба-01 хуудасны элементүүдийг 3d дээр тусгаарлаж харуулна уу
+ба-01 хуудасны явцыг илгээе
+ба-01 ялга
+ба-02 ийг загвар дээр ялгаж харуулъя
+ба-02 тусгарла
+ба-04 ийг л үлдээ
+ба-04 явцаа илгээ
+ба-07 40 хувьтай юу
+ба-07 ийн progress хэд вэ
+ба-07 ыг 40 хувь болгосон
+ба-09 д өөрчлөлт орсон уу
+ба-09 дээр суурь ав
+ба-09 ийг тусгаарлад өгөөч
+ба-09 руу ор
+ба-09 явц хэд
+ба-11 тусгаарлаач
+ба-15 100% болчихсон уу?
+ба-3 ийг ялгачих
+ба-гийн хуудсууд хэд байна харуулаач
+багана нэмээд өг
+багана нэмээд өгөөч
+багийн тайлан хэвлэе
+байгаа бүх хуудсаа жагсаачхаач
+барилга архитектурын хуудсуудаа харуул
+баярлалаа
+бб ийн хуудсууд өөрчлөгдсөн үү?
+бб-04 хуудасны элементүүдийг харъя
+бб-05 ийн бүтээцүүдийг ялгаад өгөөч, харах хэрэгтэй байна
+бб-11 ийг дуусгачихлаа
+бб-12 хуудас хэдэн хувьтай байгааг хараач
+бб-21 хуудсанд байгаа юмыг л үлдээ
+би анх удаа ашиглаж байгаа тул богино зааварчилгаа хэрэгтэй байна
+богино заавар өгөөч
+болиул
+болиулчих, бүх элементээ харъя
+болих
+болих юмаа, бүх элементийг буцааж харуул
+боломжтой бол одоо нээлттэй байгаа файлын хуудсуудыг жагсаагаад үзүүлээч
+боломжтой бол цбу-05 хуудсанд хамаарах элементүүдийг тусгаарлаж өгөөч
+боломжтой бол явцаа одоо бүртгүүлээд өгөөч
+боломжтой бол өчигдрөөс хойшхи өөрчлөлтийг жагсаана уу
+боломжуудаа харуул
+буцаа
+буцааг
+буцаагаад бүх элементийг нь харуулчих
+буцааж хэвэнд нь оруул
+бүгдийг эргүүлж харуул
+бүртгүүл
+бүх sheet харуул
+бүх sheet үүдийг жагсаа
+бүх хуудас
+бүх хуудсаа жагсаа
+бүх хуудсаа жгасаа
+бүх хуудсыг жагсаа
+бүх элементийг харуул
+бүх элементийг эргүүлж харуул
+гэрлийн түүвэр хий
+гүйцэтгэлийн тайлангаа татаад өгөөч
+даалгавраа харуул
+дахиад
+документын sheet үүд хэд вэ
+дуусахад юу үлдсэн бэ
+дууслаа, 100% гэж илгээ
+дууссан уу?
+дэд жагсаалт хэд болсон бэ
+дэмждэг action уудаа жагсаа
+дэмждэг үйлдлүүдээ жагсаагаад өг
+дээвр нэмээд өгөч
+дээвэр нэм
+ет дээр зогсоол зураад өг
+жагсаа
+жагсаалт
+жагсаалтаа харуул тушаалын
+жишээ хэлээд өгөөч
+жкдлф
+за за
+заавар
+заавр өгөөч ээ
+загвараа хэвэнд н оруул
+загвараа хэвэндээ буцаа
+загварт юу нэмэгдсэн бэ
+загварыг эх байдалд нь оруулахыг хүсэж байна
+загварын одоогийн төлөвийг хадгал
+загварын өөрчлөлтийг шалгая
+зургуудынхаа жагсаалтыг харуул
+илгээ
+илүү цагаа бүртгүүлье
+имэйл илгээх үү
+ирц
+ирц бүртгүүлэх
+ирцийн мэдээллээ илгээе
+ирцээ бүртгүүлье
+ккк
+командууд
+координат тааруул
+маргааш амарна уу
+материалын түүвэр гарга
+миний task ийн явц хэд вэ
+миний ажил хаана явж байна
+миний бүртгүүлсэн явц хэд байгааг харуулаач
+миний одоогийн явц хэд байгааг харуул
+миний одоогийн явцын мэдээллийг үзүүлэхийг хүсэж байна
+миний явц
+миний өөрчилсөн юмыг харуул
+модельд байгаа бүх хуудсаа харъя
+надад заавар өг
+надад заавар өгөөч
+нуусан юмаа сэргээ
+нүхний даалгавар бэлд
+нүүр талуудын элементийг тусгаарлаж байснаа буцаа
+нүүр талуудын явц хэдэн хувь вэ
+нүүр талуудын явцыг илгээе
+одоо ажиллаж байгаа хуудсаа ялгаж харуул
+одоо нээлттэй байгаа файлын хуудсуудыг харуул
+одоо суурь авчихвал болох уу?
+одоо тусгаарлалтаа авч бүх элементийг харуулж өгөөч
+одоо тусгаарлалтаа авчих, дараагийн хуудас руу орно
+одоо хэдэн хувьтай байна
+одоо хэдэн хувьтай яваа вэ?
+одоо ямар файл нээлттэй байна
+одоогийн model ийн sheet үүдээ жагсаа
+одоогийн state ийг хадгал
+одоогийн байдлыг суурь болгож хадгал
+одоогийн байдлыг суурь болгож хадгалаач
+одоогийн байдлыг суурь болгож хадгл
+одоогийн байдлыг хадга
+одоогийн төлөвийг эхлэл болгож хадгалаад өгөхийг хүсэж байна
+одоогийн явцаа харж болох уу
+одоогоос эхэлж тоол
+одооноос хойш өөрчлөлтийг тоолж эхэл
+сайн байна уу за
+сайн байна уу, та юу хийж чадахаа товч тайлбарлаж өгөөч
+сайн байна уу, файлын бүх хуудсыг жагсаагаад өгнө үү
+сайн уу
+салхины тооцоо хийж чадах уу
+салхины тооцооны явц хэд хувьтай байна
+сонгосон элементүүдээ харуул
+статик тооцоо гаргаж өг
+статик тооцоо+хөрс дээрх ажлаа бүртгүүлье
+статик тооцоо+хөрс ийг хийж өгөөч
+статсаа харуул
+статус
+суурийг нь аваад өгөөч
+суурь
+суурь ав
+суурь аваад ажлаа эхэлье
+суурь авах
+суурь авснаас хойш өөрчлөлт байна уу?
+суурь авснаас хойшхи ялгааг гарга
+суурь авчихсан юм байгаа юу
+суурь авчиъя
+суурь тэмдэглэгээ хий
+суурь хувилбартай харьцуулсан өөрчлөлтийг гаргаж өгөхийг хүсэж байна
+суурь шинэчил
+суурьаа шинэчилье
+суурьтай харьцуул
+суурьтай харьцуулаад өөрчлөлтийг харуул
+сууурь ав
+сүүлд нээсэн хуудсаа тусгаарла
+та эхлээд одоогийн байдлыг суурь болгож хадгалж өгөөч
+тааз моделчил
+тааз моделчьлоод өгөөч
+тааз модельчлох /гал тогоо/ ажил эхлэхийн өмнө суурийг авъя гэсэн юм
+тавилга байрлуул
+тайлан илгээх
+тайлангаа явуулъя
+такси дуудаад өгөөч
+тийм ээ
+тооцоо хий
+тслмж хэрэгтэй бна
+туршилт
+тусгаарла
+тусгаарлалт болиул
+тусгаарлалт хэрэггүй боллоо цуцлаарай
+тусгаарлалтаа буцаачих одо
+тусгаарлалтаа цуцлаад бүтэн барилгыг харуул
+тусгаарлалтыг ав
+тусгаарлалтыг буцаагаад өгөөч
+тусгаарлалтыг цуцал
+тусгаарлалтыг цуцалбал бүх элемент буцаад харагдах уу?
+тусгаарлалтыг цуцалж өгнө үү
+тусгаарлалтыг цуцлаад бүх элементийг харул
+тусгаарлалтыг яаж цуцлах вэ?
+тусгаарласныг нь цуцлаад бүтэн загварыг харуул
+тусгаарлахаа болъё
+тусламж
+тусламж хэрэгтэй байна
+тусламжийн жагсаалт байна уу?
+тусламжийн цэсээ гаргаад ир
+тусламжйин цэс гаргаач
+тусламш
+туслмаж
+тушаалын жагсаалт харуулаач
+тэгье
+тэнхлэг зур
+тэр хуудсыг ялгаж харуулаач
+тэрийг хий
+түвшин үүсгэ
+төслийн зургуудыг сайтаас харуул
+уучлаарай, ба-01 хуудасны явц хэд болсныг хэлж өгөөч
+уучлаарай, энэ туслахыг хэрхэн ашиглах талаар заавар авч болох уу
+фасад загварчил
+фасадны элемент тодорхойлолт хуудас руу орохын өмнө эхлэл тэмдэглэ
+фасда загварчил
+хаалга байрлуул
+хаана хүрсэн бэ
+хавтан суурийн арматурчлалт загварчилаад өг
+хамгийн сүүлд суурь авснаас хойш юу болсон бэ
+хана зур
+ханын дэлгээс үүсгэ
+харагдацаа хэвндээ оруулчих
+харагдацаа хэвэндээ буцаах уу?
+харагдацыг сэргээ
+харагдацыг хэвэнд нь буцаана уу
+харагдацыг хэвэнд нь оруулаад өгчих
+хас-02 55 хувьтай боллоо
+хас-02 хуудсыг л үлдээгээд бусдыг нь нуу
+хас-04 хуудсыг ялгаж үзүүлэхийг хүсэж байна
+хас-05 ийг тусгаарласнаа болиул
+хас-05 ийн агаар сэлгэлтийн тооцоог шалгаад өгөөч
+хас-08 г ялгаад бусдыг нь нуучих
+хас-12 ийн элементүүдийг л харуулж болох уу?
+хас-12 тусгаарла
+хас-12 тусгарла
+хас-17 ганцаар
+хас-ийн хуудсуудын дундаж явц хэд вэ
+хасагдсан элемент байна уу?
+хийгдсэн ажлын хувийг шалгуулмаар байна, тусална уу
+хийгдсэн засваруудыг нэгтгээд үзүүлээч
+хийсн ажлын явцаа хараач
+хийснээ илгээ
+хийснээ илгээе
+хийснээ илгэээ
+хийсэн ажлаа илгэээ
+хийсэн ажлаа систем рүү дамжуулъя
+хурал хэдэн цагт вэ?
+хурлын тэмдэглэлээ илгээе
+хуудас
+хуудас тусгаарла
+хуудас хэд байна вэ
+хуудас хэд байна вэ?
+хуудаснуудаа шалгая
+хуудасны жагсаалт
+хуудасны жагсаалт гаргаж өгөөч
+хуудасны нэрсийг нь харуулаач
+хуудсууд
+хуудсууд нь бүгд жагсаагдах уу?
+хуудсууд нь юу юу байна
+хуудсууда жагсаа
+хуудсуудаа дугаараар нь жагсаа
+хуудсуудаа харууд
+хуудсуудаа харуул
+хуудсуудаа хруул
+хуудсуудыг үзүүлээч
+хуудсуудын жагсаалтыг нь гаргаад өгөөч
+хуудсуудынхаа жагсаалтыг харж болох уу
+хэвийн болго
+хэвэндээ оруул
+хэд дутуу байна
+хэд хувь дууссан
+хэдэн хувь
+хэдэн хувь болсон бэ
+хэдэн хуудас засагдсан бэ
+хэдэн хуудас өөрчлөгдсөн бэ?
+хэдэн цаг болж байна
+хэдэн элемент нэмэгдэж, хэд нь устсан бэ
+хэмжээс тавь
+хэн чамайг хийсэн бэ
+хэрхэн ашиглах вэ
+хэхэ
+цаг агаар ямар байна
+цагийн бүртгэлээ хийе
+цалин хэзээ орох вэ
+цах хуудсуудын өөрчлөлтийг шалга
+цах ын хуудсууд орсон уу, бүх хуудсаа харуул
+цах-04 ийг 85% болголоо
+цах-04 ийн явц хэд хүрсэн бэ?
+цах-06 ыг тусгаарла даа
+цах-07 л үлдээ
+цах-07 тусгаарла
+цах-07 ыг 30% болгож тэмдэглээд илгээ
+цах-07 ыг 3д дээр ялгаад өгөөч
+цах-07 ыг ялгжа харуул
+цбу-02 ийг ганцаарх нь харуулаач
+цбу-03 ийг isolate горимд оруулаач
+цбу-03 хуудасны юмыг л харуулаач
+цбу-03 ыг ялгад бусдыг нуу
+цбу-05 ийн элементүүдийг ялгаад өгөөч
+цбу-05 хэдэн хувь болсон бэ
+цбу-05 ыг 70 хувь болголоо
+цбу-ийн sheet үүд хэдэн % болсон бэ
+цонх нэм
+цонхны түүврийг үзчихлээ, харагдацаа хэвэнд нь оруул
+цонхны түүвэр гаргаад өгөөч
+цонхны түүвэр дуусгасан, бүртгүүлье
+цуцал
+цэвэрлээд дуусчихлаа одоо эхлэл тэмдэглэе
+чамайг хэн хийсэн бэ?
+чамайг яаж ажиллуулдаг вэ?
+чамайг яаж ашиглахыг хэлээд өгөөч
+чамд ямар боломжууд байгаа юм
+чи хуудсаас өөр юу хийж чадах вэ
+чи хэн бэ
+чи юу хийж чадах вэ
+чи ямар command ууд дэмждэг вэ
+чи ямар модель вэ
+чи ямар үйлдэл дэмждэгээ жагсаа
+чиний feature үүд юу вэ товчхон
+чөлөө авъя, өнөөдөр эрт явна
+чөлөөний хүсэлтээ илгээе
+шал моделчил
+шат зур
+шинэ хуудас үүсгэ
+шифрүүдээ харуулаач
+энд юу бичиж болох вэ
+эндээс diff тоолохын тулд baseline ав
+эндээс тоолж эхэл
+эндээс тоолж эхэлж болох уу?
+эндээс тоолж эхэлье
+энэ isolate ыг болиулж болох уу?
+энэ sheet ийн element үүдийг ялгаж харуул
+энэ ажил хэдэн хувьтай вэ
+энэ долоо хоногийн явц ямар байна
+энэ модельд хэдэн хуудас байгаа вэ
+энэ мөчийг тэмдэглэ
+энэ туслах юу хийдэг юм
+энэ файлд хэдэн хуудас байгаа вэ
+энэ файлд ямар хуудсууд байдаг вэ?
+энэ файлд ямар хуудсууд байна
+энэ хаалганы өргөнийг 900 болго
+энэ хананы зузааныг 200 болго
+энэ хуудас 90% боллоо
+энэ хуудасны элементүүдийг тусгаарлаад өгөөч
+энэ хуудасны явц хэдэн хувь болсон бэ
+энэ хуудсанд ямар элемент орсныг тусгаарлан үзүүлж туслаач
+энэ хуудсыг 100% болголоо, хаачихъя
+энэ хуудсыг 3д дээр ялгаж харуулж чадах уу?
+энэ хуудсыг тусгаарла
+энэ хуудсыг ялгаж үзүүлээч
+энэ хэвээр нь суурь болгоод хадгалчих
+эхлэ тэмдэглэ
+эхлэл тэмдэглэ
+эхлэл тэмдэглэе
+эхлэл тэмдэглэсэн үү?
+эхлэл тэмдэглээ
+эхлэл тэмдэглээд ажилдаа орьё
+эхлэл цэг тавь
+эхлэлийн snapshot ав
+эхлэлийн цэгээ тавья
+эхлэлээ тэмдэглээд өг
+юу асууж болохоо мэдэхгүй байна, тусламж
+юу бичиж болох вэ
+юу гэж бичвэл ойлгох вэ?
+юу гэж бичихээ мэдэхгүй байна яаж эхлэх вэ
+юу мэдэх вэ чи
+юу нэмэгдсэнийг харъя
+юу устгагдсан бэ
+юу устгагдсн бэ
+юу хийдэг вэ
+юу хийж чадах вэ
+юу хийж чадахаа хэлж өгөөч
+юу хийж чадахыг чинь нэг харчихъя
+юу хийж чадх вэ
+юу ч биш
+юу шинэ вэ
+юу шинэчлэгдсэн
+юу юу хийж чадахаа хэлээч
+юу өөрчлөгдсн
+юу өөрчлөгдсн бэ
+юу өөрчлөгдсөн
+юу өөрчлөгдсөн бэ
+яаж ажилладаг юм бэ
+яв хэд вэ
+явц
+явц 80% болсон уу?
+явц илгээ
+явц илгээх
+явц хэд байна вэ?
+явц хэд болсныг хараад өгөөч
+явц хэд вэ
+явц хэд вээ
+явц хэдэн хув болсон бэ
+явцаа бүртгүлье
+явцаа бүтгүүлээд илгэ
+явцаа илгэод өгөөч
+явцаа илгээе
+явцаа илгээж болох уу?
+явцаа орууллаа гэж тэмдэглээд илгээ
+явцаа системд илгээж өгөөч
+явцаа харъя
+явцаа шалгаж өгөоч
+явцаа шалгая
+явцаа яаж бүртгүүлэх вэ
+явцаа өгье
+явцын мэдээлэл
+яг тэр
+ямар function ууд байгаа юм чамд
+ямар sheet устсан бэ
+ямар зургууд байна
+ямар командууд байдаг вэ
+ямар тушаал байдаг вэ
+ямар тушаал ойлгодгоо бичээд өгөөч
+ямар хуудас засагдсан
+ямар хуудсууд байдаг ве
+ямар хуудсууд байна
+ямар шифр байна
+ямар ямар хуудас байгааг харуул
+ямар үйлдлүүд байгаа вэ
+ямар үйлдлүүд дэмжигддэг талаар мэдээлэл өгнө үү
+ямар өөрчлөлт орсныг харуулж өгөөч
+үнийн саналаа илгээе
+өглөөнөөс хойш юу засагдав
+өдрийн мэнд
+өдрийн хоол юу байна
+өмнөх суурийг устгачих
+өмнөх суурийг шинэчилчих
+өмнөхийг нь
+өнөөдрийн progress ийг илгээе
+өнөөдрийн status ийг харуулаач
+өнөөдрийн ажлаа бүртгүүлье
+өнөөдрийн ажлаа хаагаад илгээ
+өнөөдрийн ажлаа эндээс тоолуулахын тулд эхлэлийг тэмдэглэж өгнө үү
+өнөөдрийн ажлаа эндээс тоолуулъя, суурь ав
+өнөөдрийн ажлын явц хэдэн хувь болсныг харуулж өгнө үү
+өнөөдрийн засваруудыг жагсаа
+өнөөдрийн ирцээ тэмдэглүүлье
+өнөөдрийн хийснээ submit хийе
+өнөөдрийн хийсэн ажлаа бүртгүүлэхийг хүсэж байна
+өнөөдрийн явцаа бүртгүүлье
+өнөөдрийн өөрчлөлтийг харъя
+өнөөдрийнхөө ажлыг бүртгэе
+өнөөдрийнхөө ажлыг бүртгүүлж болох уу?
+өнөөдөр хийсэн ажлын явцыг mgl сайт руу дамжуулж өгнө үү
+өнөөдөр юу өөрчлөгдсөн
+өнөөдөр ямар sheet үүд update хийгдсэн бэ
+өнөөдөр ямар хуудсууд өөрчлөгдсөнийг харуулж өгнө үү
+өрөө үүсгэ
+өчигдрөөс хойш юу засагдсн
+өчигдрөөс хойш юу хийгдсэн
+өчигдрөөс хойш явц өөрчлөгдсөн үү
+өчигдрөөс хойш ямар хуудас засагдсан
+өчигдөр авсан суурьтай тулгаад үзүүлээч
+өөрчлөгдсөн хуудсуудыг үзүүлэоч
+өөрчлөгдсөн хуудсуудыг үзүүлээч
+өөрчлөлт
+өөрчлөлт орсон эсэхийг шалгаад мэдэгдэнэ үү
+өөрчлөлт шалга
+өөрчлөлтө хруул

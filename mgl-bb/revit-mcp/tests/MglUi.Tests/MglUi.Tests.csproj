@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    MGL UI-ийн Revit/WPF-гүй ЦЭВЭР логикийн тест (2026-10-03, UI/UX redesign Phase 1):
+    өнгөний токены контраст (математик), цонхны хэмжээ/байрлал (дэлгэц салгах, олон DPI), UI сонголтын
+    JSON (эвдэрсэн файл), хэрэгслийн метадата (нэр, tooltip хэмжээ), нөхцөл шалгах (6 шалтгаан),
+    хайлт (хуучин шошго, латин/монглиш), ribbon-ы бүтэц (R24-д хоосон самбаргүй).
+
+    ⚠️ Revit/WPF assembly ЭНД ОРОХГҮЙ — `addin/Ui/Core` дотор `Autodesk.Revit` эсвэл `System.Windows`
+    гарвал энэ төсөл ЭМХЭТГЭГДЭХГҮЙ.
+
+      dotnet run   (revit-mcp/tests/MglUi.Tests хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>MglUi.Tests</AssemblyName>
+    <RootNamespace>RevitMcpAddin.Ui.Tests</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\Ui\Core\*.cs" />
+    <Compile Include="..\..\addin\TextFold.cs" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

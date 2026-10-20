@@ -1,0 +1,54 @@
+{
+  "run_name": "mgl-adapter-0.3",
+  "exported_at": "2026-09-11T10:35:55",
+  "converter": {
+    "llama_cpp": "f114f91  (grafted, HEAD, tag: b10850)",
+    "script": "convert_lora_to_gguf.py",
+    "outtype": "f16",
+    "seconds": 25
+  },
+  "base": {
+    "model": "Qwen/Qwen3-8B",
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "serving_gguf_sha256": "120307ba529eb2439d6c430d94104dabd578497bc7bfe7e322b5d9933b449bd4"
+  },
+  "adapter_source": {
+    "dir": "C:\\Users\\User\\project\\mgl-e-c\\ai\\models\\adapters\\mgl-adapter-0.3\\adapter",
+    "r": 16,
+    "alpha": 32,
+    "targets": [
+      "q_proj",
+      "gate_proj",
+      "v_proj",
+      "k_proj",
+      "o_proj",
+      "down_proj",
+      "up_proj"
+    ],
+    "files": {
+      "adapter_config.json": "0c9131f513dbc1d4f99b10a6e3bf81c0e0de846a6152fa64a50d853761146c3d",
+      "adapter_model.safetensors": "a1ff03fbef78c18c8651c31b1e2cba5e07f497b942d52dd87cb2f73dbdfdf712",
+      "chat_template.jinja": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9",
+      "README.md": "85e2b3a3fae33eab459538a9f1ce2d9ad6bd9fb7c6b97f9ee97e07923ad3e57a",
+      "tokenizer.json": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "tokenizer_config.json": "154e5ff1e7c152d964edf30da854ea62465c767719ac8e97e58babf2d4fa9079"
+    }
+  },
+  "gguf": {
+    "path": "C:\\Users\\User\\project\\mgl-e-c\\ai\\models\\adapters\\mgl-adapter-0.3\\mgl-adapter-0.3.lora.gguf",
+    "bytes": 87328864,
+    "sha256": "5b2aa5856a336e6bce170d2e75eee9cc0e986fd4860205366d6bf07c1530e398",
+    "header": {
+      "_version": 3,
+      "_tensors": 504,
+      "general.architecture": "qwen3",
+      "general.type": "adapter",
+      "adapter.type": "lora",
+      "general.base_model.0.name": "Qwen3 8B",
+      "general.base_model.0.repo_url": "https://huggingface.co/Qwen/Qwen3-8B",
+      "adapter.lora.alpha": 32.0
+    }
+  },
+  "status": "EXPORTED_NOT_EVALUATED",
+  "deployed": false
+}

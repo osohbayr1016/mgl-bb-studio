@@ -39,6 +39,7 @@
 | `tools/revit-harness/` | Хувийн тусгаар Revit-д шалгах хэрэгсэл — [README](tools/revit-harness/README.md) |
 | `tools/sync-engine.ps1` | Хөдөлгүүрийг `mgl-e-c`-ээс шинэчлэх |
 | `docs/ROADMAP.md` | Дараагийн ажлууд (эрэмбээрээ) |
+| `mgl-bb/` | ЛАВЛАГАА: ББ Студи анх хөгжсөн `mgl-e-c` репогийн хуулбар (салаа `feat/bb-drawing-studio` @ `1f88d505`, 2026-10-20) — үндсэн MGL plugin (`mgl-bb/revit-mcp/addin`), ERP, бүх баримт. `build.ps1` үүнийг БҮТЭЭХГҮЙ. `.claude/` (нууц токентой) хасагдсан |
 
 ## Шаардлага
 

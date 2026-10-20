@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    FAMILY HUB (POC) — Revit-гүй тест.  `Intelligence.Tests`-тэй ижил дүрэм:
+    гадаад пакет БАЙХГҮЙ (xunit/NUnit ч биш), өөрийн жижиг runner, сүлжээгүй
+    машин дээр `dotnet run` ажиллах ёстой.  HTTP нь stub `HttpMessageHandler`,
+    Revit нь санах ойн хуурамч `IRevitGateway`.
+
+    ⚠️ Зөвхөн `FamilyHub/Core` + `FamilyHub/Providers` орно.  `FamilyHub/Revit`
+    ба `Ui` нь Autodesk/WPF-тэй тул ЭНД ОРОХГҮЙ — Core-д `Autodesk.Revit` гэсэн
+    мөр орвол энэ төсөл эмхэтгэгдэхгүй (зориудын хамгаалалт).
+
+      dotnet run   (revit-mcp/tests/FamilyHub.Tests хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>FamilyHub.Tests</AssemblyName>
+    <RootNamespace>RevitMcpAddin.FamilyHub.Tests</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\FamilyHub\Core\*.cs" />
+    <Compile Include="..\..\addin\FamilyHub\Providers\*.cs" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

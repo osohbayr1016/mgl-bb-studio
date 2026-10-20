@@ -1,0 +1,15 @@
+{
+  "comment": "design-sync esbuild alias map. The bundled tsconfigPathsPlugin returns the first existsSync hit, and an empty-extension probe matches a DIRECTORY (Windows: 'Incorrect function' when esbuild reads it as a file). So every barrel directory under src/ that is imported as a bare '@/<dir>' MUST be pinned to its index file (a non-extension '/index' stem lets the plugin's ext loop pick .ts or .tsx) and listed BEFORE the '@/*' wildcard. baseUrl points at frontend/ so the './src/*' targets resolve there.",
+  "compilerOptions": {
+    "baseUrl": "../frontend",
+    "paths": {
+      "@/features/dashboard": ["./src/features/dashboard/index"],
+      "@/features/leaderboard": ["./src/features/leaderboard/index"],
+      "@/features/projects": ["./src/features/projects/index"],
+      "@/shared/components/motion": ["./src/shared/components/motion/index"],
+      "@/shared/i18n": ["./src/shared/i18n/index"],
+      "@/shared/types": ["./src/shared/types/index"],
+      "@/*": ["./src/*"]
+    }
+  }
+}

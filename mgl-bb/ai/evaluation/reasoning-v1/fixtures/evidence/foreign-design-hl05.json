@@ -1,0 +1,73 @@
+{
+  "fixture": true,
+  "kind": "EVIDENCE",
+  "id": "foreign-design-hl05",
+  "provenance": {
+    "source": "ai/training/humanized_review/cases-2026-09-23.json#HL05",
+    "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+  },
+  "evidence": [
+    {
+      "id": "foreign-1.3",
+      "kind": "clause",
+      "title": "Гадаадын байгууллагын зураг төсөл",
+      "documentUid": "BNBD-11-03-02",
+      "clauseUid": "1.3",
+      "page": 4,
+      "section": "1",
+      "text": "БНбД 11-03-02-ийн 1.3-т гадаадын байгууллага дангаараа эсвэл тусгай зөвшөөрөлтэй Монгол байгууллагатай хамтран зураг төсөл боловсруулах боломжтой гэж заасан."
+    },
+    {
+      "id": "foreign-2.1a",
+      "kind": "clause",
+      "title": "Зураг төсөл боловсруулах зөвшөөрөл",
+      "documentUid": "BNBD-11-03-02",
+      "clauseUid": "2.1.a",
+      "page": 4,
+      "section": "2",
+      "text": "БНбД 11-03-02-ийн 2.1.a-д зураг төсөл боловсруулах зөвшөөрлийг захиалагч тусгай зөвшөөрөл олгох эрхтэй төрийн байгууллагаас авна."
+    },
+    {
+      "id": "foreign-2.2",
+      "kind": "clause",
+      "title": "Монгол мэргэжлийн оролцоо",
+      "documentUid": "BNBD-11-03-02",
+      "clauseUid": "2.2",
+      "page": 5,
+      "section": "2",
+      "text": "БНбД 11-03-02-ийн 2.2-т архитектур, бүтээц, инженерийн үндсэн шийдлийг тусгай зөвшөөрөлтэй Монгол байгууллага, зөвлөхийн зөвлөгөөтэйгээр боловсруулах нөхцөл заасан."
+    },
+    {
+      "id": "foreign-2.4b",
+      "kind": "clause",
+      "title": "Монгол норм мөрдөх",
+      "documentUid": "BNBD-11-03-02",
+      "clauseUid": "2.4.b",
+      "page": 6,
+      "section": "2",
+      "text": "БНбД 11-03-02-ийн 2.4.b-д инженерийн тооцоог Монголд мөрдөж буй норм, дүрэм, стандартаар хийхээр заасан."
+    }
+  ],
+  "sources": [
+    {
+      "document": "БНбД 11-03-02",
+      "clause": "1.3",
+      "verification": "ported_verified_reference"
+    },
+    {
+      "document": "БНбД 11-03-02",
+      "clause": "2.1.a",
+      "verification": "ported_verified_reference"
+    },
+    {
+      "document": "БНбД 11-03-02",
+      "clause": "2.2",
+      "verification": "ported_verified_reference"
+    },
+    {
+      "document": "БНбД 11-03-02",
+      "clause": "2.4.b",
+      "verification": "ported_verified_reference"
+    }
+  ]
+}

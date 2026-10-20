@@ -1,0 +1,561 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-09-18",
+  "topics": {
+    "highrise": {
+      "mn": "Өндөр барилга",
+      "aliases": [
+        "өндөр барилга",
+        "өндөр барилгын",
+        "өндөр барилга байгууламж",
+        "high rise",
+        "high-rise",
+        "highrise",
+        "tower building"
+      ],
+      "keywords": [
+        "өндөр барилга"
+      ]
+    },
+    "electrical": {
+      "mn": "Цахилгаан",
+      "aliases": [
+        "цахилгаан",
+        "цахилгаантай",
+        "цахилгааны",
+        "цахилгаан хангамж",
+        "цахилгаан тоног төхөөрөмж",
+        "electrical",
+        "electric",
+        "power supply"
+      ],
+      "keywords": [
+        "цахилгаан",
+        "эрчим хүч"
+      ]
+    },
+    "lighting": {
+      "mn": "Гэрэлтүүлэг",
+      "aliases": [
+        "гэрэлтүүлэг",
+        "гэрэл",
+        "гэрэлтүүлгийн",
+        "байгалийн гэрэлтүүлэг",
+        "зохиомол гэрэлтүүлэг",
+        "lighting",
+        "daylight",
+        "daylighting",
+        "artificial lighting"
+      ],
+      "keywords": [
+        "гэрэлтүүл"
+      ]
+    },
+    "electrical_safety": {
+      "mn": "Цахилгааны аюулгүй байдал",
+      "aliases": [
+        "цахилгааны аюулгүй байдал",
+        "цахилгаан аюулгүй байдал",
+        "electrical safety"
+      ],
+      "keywords": [
+        "цахилгааны аюулгүй",
+        "цахилгаан аюулгүй"
+      ]
+    },
+    "grounding": {
+      "mn": "Газардуулга",
+      "aliases": [
+        "газардуулга",
+        "газардуулгын",
+        "grounding",
+        "earthing"
+      ],
+      "keywords": [
+        "газардуул"
+      ]
+    },
+    "lightning_protection": {
+      "mn": "Аянга хамгаалалт",
+      "aliases": [
+        "аянга хамгаалалт",
+        "аянга зайлуулагч",
+        "lightning protection"
+      ],
+      "keywords": [
+        "аянга хамгаал"
+      ]
+    },
+    "telecom_signal": {
+      "mn": "Холбоо, дохиолол",
+      "aliases": [
+        "дохиолол",
+        "харилцаа холбоо",
+        "холбоо дохиолол",
+        "холбооны систем",
+        "бага гүйдэл",
+        "low voltage",
+        "telecom",
+        "signal",
+        "communication"
+      ],
+      "keywords": [
+        "харилцаа холбоо",
+        "холбоо, дохиол",
+        "холбоо дохиол",
+        "холбоожуулалт",
+        "холбооны байгууламж",
+        "телефон",
+        "радио",
+        "телевиз",
+        "дохиоллын зураг төсөл"
+      ]
+    },
+    "fire_safety": {
+      "mn": "Галын аюулгүй байдал",
+      "aliases": [
+        "галын аюулгүй байдал",
+        "гал хамгаалалт",
+        "fire safety",
+        "fire protection"
+      ],
+      "keywords": [
+        "галын аюул",
+        "гал хамгаал"
+      ]
+    },
+    "fire_alarm": {
+      "mn": "Галын дохиолол ба автомат гал унтраалт",
+      "aliases": [
+        "галын дохиолол",
+        "гал унтраах автомат",
+        "автомат гал унтраах",
+        "fire alarm",
+        "sprinkler",
+        "fire suppression"
+      ],
+      "keywords": [
+        "гал унтраах автомат",
+        "дохиоллын хэрэгсэл"
+      ]
+    },
+    "fire_hazard_classification": {
+      "mn": "Гал, тэсрэх аюулын ангилал",
+      "aliases": [
+        "галын аюулын ангилал",
+        "тэсрэх аюул",
+        "fire hazard classification",
+        "explosion hazard"
+      ],
+      "keywords": [
+        "тэсрэх, шатах",
+        "галын аюулын зэрэглэлийн ангилал"
+      ]
+    },
+    "hvac": {
+      "mn": "Халаалт, агаар сэлгэлт, кондиционер",
+      "aliases": [
+        "халаалт",
+        "агаар сэлгэлт",
+        "агааржуулалт",
+        "кондиционер",
+        "hvac",
+        "ventilation",
+        "heating",
+        "air conditioning"
+      ],
+      "keywords": [
+        "халаалт",
+        "агаар сэлгэлт",
+        "агааржуулалт",
+        "кондиционер"
+      ]
+    },
+    "water_supply": {
+      "mn": "Ус хангамж",
+      "aliases": [
+        "ус хангамж",
+        "усны хангамж",
+        "water supply"
+      ],
+      "keywords": [
+        "ус хангамж"
+      ]
+    },
+    "sewerage": {
+      "mn": "Ариутгах татуурга",
+      "aliases": [
+        "ариутгах татуурга",
+        "бохир ус",
+        "sewerage",
+        "wastewater"
+      ],
+      "keywords": [
+        "ариутгах татуурга",
+        "бохир ус"
+      ]
+    },
+    "gas_supply": {
+      "mn": "Хийн хангамж",
+      "aliases": [
+        "хийн хангамж",
+        "gas supply",
+        "gas system"
+      ],
+      "keywords": [
+        "хийн хангамж"
+      ]
+    },
+    "structural": {
+      "mn": "Барилгын бүтээц",
+      "aliases": [
+        "бүтээц",
+        "даацын бүтээц",
+        "structural",
+        "structure"
+      ],
+      "keywords": [
+        "бүтээц"
+      ]
+    },
+    "loads": {
+      "mn": "Ачаалал ба үйлчлэл",
+      "aliases": [
+        "ачаалал",
+        "үйлчлэл",
+        "салхины ачаалал",
+        "цасны ачаалал",
+        "loads",
+        "wind load",
+        "snow load"
+      ],
+      "keywords": [
+        "ачаалал ба үйлчлэл"
+      ]
+    },
+    "seismic": {
+      "mn": "Газар хөдлөлт",
+      "aliases": [
+        "газар хөдлөлт",
+        "сейсмик",
+        "earthquake",
+        "seismic"
+      ],
+      "keywords": [
+        "газар хөдлөл"
+      ]
+    },
+    "geotechnical": {
+      "mn": "Инженер геологи, геотехник",
+      "aliases": [
+        "геотехник",
+        "инженер геологи",
+        "хөрсний судалгаа",
+        "geotechnical",
+        "engineering geology"
+      ],
+      "keywords": [
+        "геотехник",
+        "инженер геолог",
+        "ул хөрс"
+      ]
+    },
+    "foundation": {
+      "mn": "Буурь, суурь",
+      "aliases": [
+        "суурь",
+        "буурь",
+        "foundation"
+      ],
+      "keywords": [
+        "суурь",
+        "буурь"
+      ]
+    },
+    "accessibility": {
+      "mn": "Хүртээмж",
+      "aliases": [
+        "хүртээмж",
+        "хөгжлийн бэрхшээлтэй",
+        "accessibility",
+        "disabled access"
+      ],
+      "keywords": [
+        "хүртээмж",
+        "хөгжлийн бэрхшээлтэй"
+      ]
+    },
+    "energy_efficiency": {
+      "mn": "Эрчим хүчний хэмнэлт, дулаан хамгаалалт",
+      "aliases": [
+        "эрчим хүчний хэмнэлт",
+        "дулаан хамгаалалт",
+        "energy efficiency",
+        "thermal protection"
+      ],
+      "keywords": [
+        "дулаан хамгаалалт",
+        "эрчим хүчний хэмнэлт"
+      ]
+    },
+    "acoustics": {
+      "mn": "Дуу чимээ, акустик",
+      "aliases": [
+        "дуу чимээ",
+        "акустик",
+        "noise",
+        "acoustics",
+        "sound insulation"
+      ],
+      "keywords": [
+        "дуу чимээ"
+      ]
+    },
+    "climate": {
+      "mn": "Уур амьсгал",
+      "aliases": [
+        "уур амьсгал",
+        "геофизик",
+        "climate"
+      ],
+      "keywords": [
+        "уур амьсгал",
+        "геофизик"
+      ]
+    },
+    "urban_planning": {
+      "mn": "Хот төлөвлөлт",
+      "aliases": [
+        "хот төлөвлөлт",
+        "хот байгуулалт",
+        "urban planning",
+        "master plan"
+      ],
+      "keywords": [
+        "хот, тосгон",
+        "хот тосгон",
+        "хот байгуул"
+      ]
+    },
+    "residential": {
+      "mn": "Орон сууц",
+      "aliases": [
+        "орон сууц",
+        "residential",
+        "apartment"
+      ],
+      "keywords": [
+        "орон сууц"
+      ]
+    },
+    "public_building": {
+      "mn": "Олон нийтийн барилга",
+      "aliases": [
+        "олон нийтийн барилга",
+        "public building",
+        "civic building"
+      ],
+      "keywords": [
+        "олон нийтийн барилга"
+      ]
+    },
+    "administrative_building": {
+      "mn": "Захиргааны барилга",
+      "aliases": [
+        "захиргааны барилга",
+        "оффис",
+        "office",
+        "administrative building"
+      ],
+      "keywords": [
+        "захиргааны зориулалттай",
+        "захиргаа"
+      ]
+    },
+    "preschool": {
+      "mn": "Сургуулийн өмнөх боловсролын барилга",
+      "aliases": [
+        "цэцэрлэг",
+        "сургуулийн өмнөх",
+        "preschool",
+        "kindergarten"
+      ],
+      "keywords": [
+        "сургуулийн өмнөх"
+      ]
+    },
+    "school": {
+      "mn": "Сургууль",
+      "aliases": [
+        "сургууль",
+        "school",
+        "education building"
+      ],
+      "keywords": [
+        "сургууль"
+      ]
+    },
+    "healthcare": {
+      "mn": "Эмнэлэг, эрүүл мэндийн барилга",
+      "aliases": [
+        "эмнэлэг",
+        "эрүүл мэнд",
+        "hospital",
+        "healthcare"
+      ],
+      "keywords": [
+        "эмнэлэг",
+        "эрүүл мэнд"
+      ]
+    },
+    "parking": {
+      "mn": "Авто зогсоол",
+      "aliases": [
+        "авто зогсоол",
+        "зогсоол",
+        "parking",
+        "garage"
+      ],
+      "keywords": [
+        "авто зогсоол",
+        "зогсоол"
+      ]
+    },
+    "elevator": {
+      "mn": "Лифт, өргөх байгууламж",
+      "aliases": [
+        "лифт",
+        "өргүүр",
+        "elevator",
+        "lift"
+      ],
+      "keywords": [
+        "лифт",
+        "өргүүр"
+      ]
+    },
+    "construction_execution": {
+      "mn": "Барилга угсралт, гүйцэтгэл",
+      "aliases": [
+        "барилга угсралт",
+        "угсралт",
+        "гүйцэтгэл",
+        "construction execution",
+        "installation work"
+      ],
+      "keywords": [
+        "угсралтын ажил",
+        "техникийн ажил"
+      ]
+    },
+    "cost_estimation": {
+      "mn": "Төсөв, үнэ бүрдэл",
+      "aliases": [
+        "төсөв",
+        "төсвийн норм",
+        "өртөг",
+        "үнэ бүрдэл",
+        "cost estimate",
+        "cost estimation"
+      ],
+      "keywords": [
+        "төсвийн",
+        "үнэ бүрд"
+      ]
+    },
+    "labour": {
+      "mn": "Хөдөлмөр зарцуулалт",
+      "aliases": [
+        "хөдөлмөр зарцуулалт",
+        "нэгж хугацаа",
+        "labor norm",
+        "labour norm"
+      ],
+      "keywords": [
+        "хөдөлмөр зарцуулалт",
+        "нэгж хугацааны"
+      ]
+    },
+    "survey_geodesy": {
+      "mn": "Геодези, зураглал",
+      "aliases": [
+        "геодези",
+        "геодезийн",
+        "байр зүйн зураглал",
+        "survey",
+        "geodesy",
+        "topographic"
+      ],
+      "keywords": [
+        "геодез",
+        "байр зүйн",
+        "зураглалын ажил"
+      ]
+    },
+    "concrete": {
+      "mn": "Бетон, төмөр бетон",
+      "aliases": [
+        "бетон",
+        "төмөр бетон",
+        "concrete",
+        "reinforced concrete"
+      ],
+      "keywords": [
+        "бетон"
+      ]
+    },
+    "steel": {
+      "mn": "Ган бүтээц",
+      "aliases": [
+        "ган бүтээц",
+        "steel structure",
+        "steel"
+      ],
+      "keywords": [
+        "ган бүтээц"
+      ]
+    },
+    "masonry": {
+      "mn": "Өрөгт бүтээц",
+      "aliases": [
+        "өрөг",
+        "тоосгон",
+        "masonry"
+      ],
+      "keywords": [
+        "өрөг",
+        "тоосгон"
+      ]
+    },
+    "timber": {
+      "mn": "Модон бүтээц",
+      "aliases": [
+        "модон бүтээц",
+        "timber",
+        "wood structure"
+      ],
+      "keywords": [
+        "модон"
+      ]
+    },
+    "materials": {
+      "mn": "Барилгын материал",
+      "aliases": [
+        "барилгын материал",
+        "material",
+        "materials"
+      ],
+      "keywords": [
+        "материал"
+      ]
+    }
+  },
+  "behavior": {
+    "default_scope": "technical_or_regulatory",
+    "exclude_cost_and_labour_unless_requested": true,
+    "return_all_matches_above_threshold": true,
+    "never_claim_current_legal_status_from_2025_baseline_alone": true,
+    "always_return_source_url": true,
+    "prefer_official_pdf_or_detail_when_verified": true
+  }
+}

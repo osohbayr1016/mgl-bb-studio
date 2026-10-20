@@ -1,0 +1,113 @@
+name: MGL AI quality
+
+on:
+  # Feature branches are checked through the PR event only, avoiding duplicate
+  # push + pull_request jobs for the exact same commit. main still gets a
+  # post-merge verification run.
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/src/lib/mglai/**'
+      - 'backend/src/routes/mglAi.ts'
+      - 'ai/**'
+      - 'packages/mglai-common/**'
+      - '.github/workflows/mgl-ai-quality.yml'
+  pull_request:
+    paths:
+      - 'backend/src/lib/mglai/**'
+      - 'backend/src/routes/mglAi.ts'
+      - 'ai/**'
+      - 'packages/mglai-common/**'
+      - '.github/workflows/mgl-ai-quality.yml'
+
+concurrency:
+  group: mgl-ai-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+            ai/package-lock.json
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci --legacy-peer-deps
+
+      - name: Install AI dependencies
+        working-directory: ai
+        run: npm ci
+
+      - name: Install frontend dependencies for browser parity tests
+        working-directory: frontend
+        run: npm ci
+
+      - name: Shared turn-engine tests
+        working-directory: packages/mglai-common
+        run: node --test "test/**/*.test.ts"
+
+      - name: Backend MGL AI tests
+        working-directory: backend
+        run: node --test "src/lib/mglai/*.test.ts"
+
+      - name: High-rise norm coverage/currentness audit
+        working-directory: ai
+        run: npm run ai:norm:highrise:audit:strict
+
+      - name: AEC and high-rise intent routing
+        working-directory: ai
+        run: node --test evaluation/production-readiness/suites/intent-routing.test.mjs
+
+      - name: HUMAN-40 v2 audit routing and ERP isolation
+        working-directory: ai
+        run: npm run ai:eval:human40
+
+      - name: Quality-first batch selection and non-repeat safety
+        working-directory: ai
+        run: npm run ai:eval:quality:test
+
+      - name: Latin Mongolian AEC route audit
+        working-directory: ai
+        run: npm run ai:eval:latin-roast -- --mode static
+
+      - name: AI typecheck and deterministic suites
+        working-directory: ai
+        run: npm run ai:check
+
+      - name: Build serving-format SFT corpus
+        working-directory: ai
+        run: node training/build_behavior_sft.mjs --version ci-${{ github.run_id }}
+  node-22-14-sft-compat:
+    name: Node 22.14 SFT compatibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0'
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            ai/package-lock.json
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
+      - name: Install AI dependencies
+        working-directory: ai
+        run: npm ci
+      - name: Build HUMAN-40 SFT on Node 22.14
+        working-directory: ai
+        run: npm run ai:build:sft -- --version human40-v2-node2214
+

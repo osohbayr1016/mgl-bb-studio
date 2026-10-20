@@ -1,0 +1,30 @@
+name: MGL AI reasoning v1
+
+on:
+  pull_request:
+    paths:
+      - 'ai/**'
+      - 'backend/src/lib/mglai/**'
+      - 'packages/mglai-common/**'
+      - '.github/workflows/mgl-ai-reasoning-v1.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  structural:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --prefix ai
+      - run: npm ci --prefix backend
+      - run: npm ci --prefix frontend
+      - name: Benchmark unit tests
+        run: npm run ai:eval:reasoning:test --prefix ai
+      - name: Benchmark structural validation
+        run: npm run ai:eval:reasoning:structural --prefix ai
+      - name: Existing deterministic MGL AI checks
+        run: npm run ai:check --prefix ai

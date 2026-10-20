@@ -1,0 +1,184 @@
+{
+  "run_name": "mgl-adapter-0.1-smoke",
+  "kind": "smoke-candidate",
+  "trained_at": "2026-09-10T15:40:00",
+  "base_model": "Qwen/Qwen3-8B",
+  "base_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "dataset": {
+    "name": "behavior",
+    "version": "behav-2026-09-10.3",
+    "train_rows": 326,
+    "val_rows": 29,
+    "sha256": {
+      "train": "77a4100a08175b3bf227e4d87bf82b0916396cb38e70b7c8eecbffb62ba39e34",
+      "val": "988bfc249c5ccf2b98346da6e7720243981141ccc010212bb631803948b743ac",
+      "test": "0c64eacadb9b6950c4c0f0086190c71df3ed8827e0e10fee5b500da29a94becc"
+    },
+    "kernel_snapshot": {
+      "prompt_version": "mglai-sys-5",
+      "tool_schema_version": "mglai-tools-1"
+    }
+  },
+  "config": {
+    "base_model": "Qwen/Qwen3-8B",
+    "base_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "dataset": "behavior",
+    "run_name": "mgl-adapter-0.1-smoke",
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "micro_batch": 1,
+    "grad_accum": 8,
+    "max_seq_len": 1536,
+    "learning_rate": 0.0002,
+    "epochs": 2.0,
+    "warmup_ratio": 0.03,
+    "gradient_checkpointing": true,
+    "load_in_4bit": true,
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_compute_dtype": "bfloat16",
+    "bnb_4bit_use_double_quant": true,
+    "optim": "paged_adamw_8bit",
+    "seed": 42,
+    "resume": false,
+    "completion_only": true,
+    "eval_on_val": true,
+    "reason": "smoke: 326 мөр, p95 1917 ток; 1536 = хэмжсэн тогтвортой урт (25% мөр prompt-дунд тайрагдана, зорилт бүтэн); r16/α32 = 43.6M (0.5%) — жижиг багцад overfit-гүй; 2 epoch × accum 8 = 82 optimizer алхам; cosine 2e-4, warmup 3%; GPU-г llama-server-тэй хуваалцахгүй (өмнөх 2 оролдлого 30→117 с/алхам болж унасан)"
+  },
+  "reason": "smoke: 326 мөр, p95 1917 ток; 1536 = хэмжсэн тогтвортой урт (25% мөр prompt-дунд тайрагдана, зорилт бүтэн); r16/α32 = 43.6M (0.5%) — жижиг багцад overfit-гүй; 2 epoch × accum 8 = 82 optimizer алхам; cosine 2e-4, warmup 3%; GPU-г llama-server-тэй хуваалцахгүй (өмнөх 2 оролдлого 30→117 с/алхам болж унасан)",
+  "seq_tokens": {
+    "mean": 1171,
+    "max": 1536,
+    "truncated": 85
+  },
+  "train": {
+    "planned_steps": 82,
+    "completed_steps": 41,
+    "epochs_completed": 1.0,
+    "loss_first": 2.372823715209961,
+    "loss_final": 0.3658190667629242,
+    "loss_trajectory": [
+      [
+        2,
+        2.3728
+      ],
+      [
+        4,
+        1.8863
+      ],
+      [
+        6,
+        1.2544
+      ],
+      [
+        8,
+        1.1845
+      ],
+      [
+        10,
+        0.8425
+      ],
+      [
+        12,
+        0.7785
+      ],
+      [
+        14,
+        0.7726
+      ],
+      [
+        16,
+        0.8721
+      ],
+      [
+        18,
+        0.8756
+      ],
+      [
+        20,
+        0.7757
+      ],
+      [
+        22,
+        0.7465
+      ],
+      [
+        24,
+        0.5761
+      ],
+      [
+        26,
+        1.0475
+      ],
+      [
+        28,
+        0.3384
+      ],
+      [
+        30,
+        0.8535
+      ],
+      [
+        32,
+        0.6809
+      ],
+      [
+        34,
+        0.7674
+      ],
+      [
+        36,
+        0.4562
+      ],
+      [
+        38,
+        0.4383
+      ],
+      [
+        40,
+        0.3658
+      ]
+    ],
+    "grad_norm_max": 3.838447093963623,
+    "duration_s_epoch1": 2370
+  },
+  "eval": {
+    "eval_loss": 0.39926692843437195,
+    "epoch": 1.0
+  },
+  "dynamics": {
+    "nan_steps": 0,
+    "step_s_min": 1.0,
+    "step_s_median": 32.12,
+    "step_s_max": 92.11,
+    "vram_peak_mb": 7158,
+    "vram_reserved_peak_mb": 8392,
+    "load_vram_mb": 5887,
+    "reserved_growth": "7826 → 7970 → 8392 MB (драйвер хуудаслалт: 30 с → 88 с/алхам)"
+  },
+  "adapter": {
+    "path": "models\\adapters\\mgl-adapter-0.1-smoke\\adapter",
+    "source": "checkpoint-41 (epoch 1.0)",
+    "files": {
+      "adapter_config.json": "6a341daa32cff924c30e5aa5adb4a1cd28fc4210641b45cd7962e77c44fed886",
+      "adapter_model.safetensors": "fac478554984b9ac423ce1cb5e21ce956fce3fca5759be13dedbce7405171681",
+      "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "README.md": "85e2b3a3fae33eab459538a9f1ce2d9ad6bd9fb7c6b97f9ee97e07923ad3e57a",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    }
+  },
+  "status": "INTERRUPTED_AT_EPOCH_1_CHECKPOINT — 2-р epoch АЖИЛЛААГҮЙ; checkpoint-41 (trainer_state.json дутуу — хадгалж байх үед процесс сессийн хамт таслагдсан; adapter_model.safetensors 174 MB бүтэн) нь smoke адаптер",
+  "deployed": false,
+  "interruption": "2026-09-10 ~15:40, Claude Code сессийн teardown нь хүү python процессыг таслав; ~88 с/алхам болтол удааширсан (VRAM reserved 8392 > 8192 физик)"
+}

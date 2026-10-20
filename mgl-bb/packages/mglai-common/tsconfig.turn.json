@@ -1,0 +1,9 @@
+{
+  "$comment": "src/turn/** — WinterCG Minimum Common API (AbortSignal, fetch, performance, setTimeout, crypto, TextDecoder, ReadableStream) хэрэглэдэг тул `tsconfig.json`-ийн цэвэр ES2023 lib-д багтахгүй.  TypeScript-д WinterCG lib БАЙХГҮЙ — DOM lib нь түүний дээд олонлог тул `types: []` + DOM lib-ээр шалгана; хөтчийн ЗӨВХӨН глобал (document/window/localStorage/navigator) ба Node-ийн `process`/`node:` импортыг test/turnEngine.test.ts grep-ээр ХОРИГЛОНО.  Хэрэглэгч бүр өөрийн орчноор ДАХИН шалгана: ai/ (Node төрөл), backend (workers-types), frontend (DOM).",
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM"]
+  },
+  "include": ["src/turn/**/*.ts"],
+  "exclude": []
+}

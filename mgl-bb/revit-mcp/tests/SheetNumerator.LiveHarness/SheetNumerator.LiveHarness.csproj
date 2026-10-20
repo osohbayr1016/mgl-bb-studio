@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «Хуудас дугаарлах»-ыг БОДИТ Revit 2027 дотор шалгах harness.  Автомат (CI) БИШ — Revit-ийг хүн асаасан,
+    `MGL_ALLOW_EXEC=1`-тэй (MCP `run_revit_code` нээлттэй) байх ёстой.  Core + Ui + Revit давхаргыг ЭХ КОДООС шууд
+    эмхэтгэнэ (суулгагдсан add-in-д хамаарахгүй) — ижил кодыг add-in ба harness хоёр ачаалахгүй.
+
+    Revit процесс нэг нэртэй assembly-г хоёр дахин ачаалж, задалж чаддаггүй тул build бүрд өөр нэртэй DLL гаргана:
+        dotnet build -c Release -p:Stamp=<n> -p:Platform=x64      →  bin\<n>\SnLive<n>.dll
+    Ачаалах нь `run_revit_code` дотор (жишээ нь `docs/SHEET_NUMERATOR.md` «Revit дотор автоматаар турших»):
+        var asm = System.Reflection.Assembly.LoadFrom(@"…\bin\<n>\SnLive<n>.dll");
+        asm.GetType("SnLive.Runner").GetMethod("Run").Invoke(null, new object[] { UiApp, outDir, templatePath, null });
+
+    ⚠️ Scratch document-ууд л үүсгэнэ/хаана; хэрэглэгчийн нээлттэй document-ийг хөндөхгүй.  `templatePath` нь Revit-д
+    ОДОО нээлттэй БИШ метр загварын хуулбар байх ёстой (нээлттэй файлаар NewProjectDocument хийвэл «Unable to Access the Model» модаль цонх).
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Stamp Condition="'$(Stamp)' == ''">0</Stamp>
+    <AssemblyName>SnLive$(Stamp)</AssemblyName>
+    <RootNamespace>SnLive</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\$(Stamp)\</OutputPath>
+    <NoWarn>$(NoWarn);CS1591;CS0649;NU1510</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="2027.2.0" ExcludeAssets="runtime" />
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="2027.2.0" ExcludeAssets="runtime" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\SheetNumerator\Core\*.cs" />
+    <Compile Include="..\..\addin\SheetNumerator\Ui\*.cs" />
+    <!-- Команд нь add-in-ийн `App`-д (үндсэн цонхны бариул) хандана — Stubs.cs-ийн хуурамч `App` хангана. -->
+    <Compile Include="..\..\addin\SheetNumerator\Revit\*.cs" />
+    <Page Include="..\..\addin\SheetNumerator\Ui\SheetNumeratorWindow.xaml" Link="Ui\SheetNumeratorWindow.xaml" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

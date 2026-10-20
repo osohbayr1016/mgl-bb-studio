@@ -1,0 +1,7 @@
+{
+ "_note": "GOLDEN-EVAL · typed BIM intent.  ХООСОН ШИЛЖИНЭ — Track C хүртэл хэмжих зүйл алга.  ⚠️ Хоосныг АЛГАСАХГҮЙ: `--kind bim` загвар энэ файл дүүрэх хүртэл БЛОКЛОГДОНО (§3.4).",
+ "partition": "bim",
+ "frozen": true,
+ "preprocess_contract": "fold-v1",
+ "rows": []
+}

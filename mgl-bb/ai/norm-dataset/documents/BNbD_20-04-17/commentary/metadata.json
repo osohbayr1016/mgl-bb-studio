@@ -1,0 +1,31 @@
+{
+  "canonical_code": "БД 20-102-21",
+  "doc_id": "BD-20-102-21-2021",
+  "role": "COMMENTARY_SOURCE",
+  "commentary_of": "БНбД 20-04-17",
+  "title_mn": "\"Ачаалал ба үйлчлэл\" БНбД 20-04-17 Барилгын норм ба дүрмийн тайлбар",
+  "title_en": "Loads and actions. Commentary",
+  "document_type": "БД",
+  "status": "ACTIVE",
+  "status_evidence": [
+    "MCIS current-norm register record 16403445357604: «Хүчин төгөлдөр» — «Барилга, хот байгуулалтын Сайдын 2021 оны 227 дугаар тушаалаар батлав.» (checked 2026-09-23, tools/mcis_verify.py \"20-102-21\")",
+    "PDF p.3 (pdf page 3): «Барилга, хот байгуулалтын сайдын 2021 оны 10 дугаар сарын 22-ны өдрийн 227 дугаар тушаалаар батлав.»"
+  ],
+  "approval": { "order_number": "227", "order_date": "2021-10-22", "issuer": "Барилга, хот байгуулалтын сайд" },
+  "normative": false,
+  "normative_note": "БД 20-102-21 нь БНбД 20-04-17-ийн ТАЙЛБАР (барилгын дүрэм).  Норм биш: түүний өгүүлбэр хэзээ ч нормын шаардлага болж үйлчлэхгүй, нормын заалтыг орлохгүй.  Хариултад «Албан тайлбарт … гэж тайлбарласан» гэж ТУСДАА блокоор, өөрийн эшлэлтэйгээр л гарна.",
+  "source_url": "https://mcis.gov.mn/main/single/16403445357604",
+  "source_pdf_url": "https://mcis.gov.mn/storage/uploads/watermarkedPdf/2022051653362125128455.pdf",
+  "source": {
+    "file": "BD_20-102-21_mcis_2022-05.pdf",
+    "sha256": "706049cb1cf9e62f96685154fc4af0fcacce587814f777a0a399dbd6b96a3246",
+    "bytes": 3540332,
+    "pdf_pages": 146,
+    "fetched_at": "2026-09-23",
+    "fetched_from": "https://mcis.gov.mn/storage/uploads/watermarkedPdf/2022051653362125128455.pdf",
+    "text_layer": "Genuine Unicode; two-column layout (left = the norm clause restated, right = commentary); each commentary unit opens with «<clause>.Т.» (e.g. «1.1.Т.», «5.6.в.Т.», «8.2.2.Т.1.»); «Тайлбаргүй» = no commentary for that clause.  Printed page number at the foot of each page.",
+    "layout": { "right_column_min_x": 243, "left_column_max_x": 250, "header_max_y": 55, "footer_min_y": 735, "body_first_pdf_page": 4 }
+  },
+  "verification": { "text_verification_status": "official_pdf_text_layer_auto_extracted", "human_verified_units": 0 },
+  "last_verified": "2026-09-23"
+}

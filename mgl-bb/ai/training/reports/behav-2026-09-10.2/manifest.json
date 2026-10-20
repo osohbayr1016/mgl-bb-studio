@@ -1,0 +1,211 @@
+{
+  "dataset_version": "behav-2026-09-10.2",
+  "kind": "behavioral-sft",
+  "format": "serving-v2 (assembleTurns: system + history + user{norm-decision|tools|evidence|Асуулт} → assistant)",
+  "built_at": "2026-09-10T04:29:26.161Z",
+  "generated_by": "ai/training/build_behavior_sft.mjs",
+  "kernel_snapshot": {
+    "prompt_version": "mglai-sys-4",
+    "tool_schema_version": "mglai-tools-1"
+  },
+  "counts": {
+    "generated": 315,
+    "total": 302,
+    "train": 243,
+    "val": 22,
+    "test": 37,
+    "rejected": 13,
+    "held_out_moved_to_test": 13
+  },
+  "rejected_by_reason": {
+    "exact-duplicate": 2,
+    "near-duplicate": 11
+  },
+  "rejected_samples": [
+    {
+      "id": "beh_0152",
+      "key": "clarification",
+      "why": "exact-duplicate"
+    },
+    {
+      "id": "beh_0157",
+      "key": "clarification",
+      "why": "near-duplicate"
+    },
+    {
+      "id": "beh_0200",
+      "key": "norm-refusal",
+      "why": "near-duplicate"
+    },
+    {
+      "id": "beh_0201",
+      "key": "norm-refusal",
+      "why": "near-duplicate"
+    },
+    {
+      "id": "beh_0230",
+      "key": "tool-failed",
+      "why": "near-duplicate"
+    },
+    {
+      "id": "beh_0231",
+      "key": "tool-timeout",
+      "why": "near-duplicate"
+    },
+    {
+      "id": "beh_0240",
+      "key": "tool-failed",
+      "why": "near-duplicate"
+    },
+    {
+      "id": "beh_0247",
+      "key": "permission-denied",
+      "why": "near-duplicate"
+    },
+    {
+      "id": "beh_0248",
+      "key": "permission-denied",
+      "why": "near-duplicate"
+    },
+    {
+      "id": "beh_0252",
+      "key": "revit-unavailable",
+      "why": "near-duplicate"
+    },
+    {
+      "id": "beh_0260",
+      "key": "revit-unavailable",
+      "why": "near-duplicate"
+    },
+    {
+      "id": "beh_0282",
+      "key": "casual",
+      "why": "exact-duplicate"
+    },
+    {
+      "id": "beh_0283",
+      "key": "casual",
+      "why": "near-duplicate"
+    }
+  ],
+  "contract_invalid_by_key": {},
+  "by_key": {
+    "headcount": 30,
+    "projects": 30,
+    "deadline": 30,
+    "overdue": 15,
+    "mine": 15,
+    "progress": 5,
+    "follow-up": 8,
+    "new-topic": 5,
+    "correction": 5,
+    "reference": 5,
+    "clarification": 8,
+    "norm-classify": 15,
+    "norm-lookup": 15,
+    "norm-needs-review": 5,
+    "norm-refusal": 8,
+    "norm-evidence": 5,
+    "source-conflict": 5,
+    "historical": 5,
+    "multi-intent": 5,
+    "tool-failed": 8,
+    "tool-timeout": 9,
+    "permission-denied": 3,
+    "revit-unavailable": 8,
+    "revit-read": 5,
+    "revit-write-proposal": 5,
+    "revit-write-denied": 5,
+    "meta": 5,
+    "casual": 3,
+    "calculation": 5,
+    "memory-set": 5,
+    "memory-apply": 5,
+    "style-rewrite": 17
+  },
+  "by_contract": {
+    "grounded/medium": 148,
+    "authoritative/high": 45,
+    "free/low": 93,
+    "refusal/high": 8,
+    "free/medium": 8
+  },
+  "by_language": {
+    "mn-Cyrl": 77,
+    "mn-Latn": 60,
+    "en": 59,
+    "mn-Cyrl-typo": 48,
+    "mn-Latn-typo": 58
+  },
+  "coverage": {
+    "language:mn-Cyrl": 77,
+    "conversation:single": 266,
+    "tools:get_active_employees": 35,
+    "grounding:erp-tool": 148,
+    "memory:none": 292,
+    "errors:none": 246,
+    "language:mn-Latn": 60,
+    "language:en": 59,
+    "language:mn-Cyrl-typo": 48,
+    "language:mn-Latn-typo": 58,
+    "tools:list_projects": 52,
+    "tools:get_upcoming_deadlines": 35,
+    "tools:get_overdue_tasks": 15,
+    "tools:get_my_assignments": 18,
+    "tools:get_project_progress": 11,
+    "conversation:follow-up": 8,
+    "tools:analyze_project": 7,
+    "conversation:new-topic": 5,
+    "tools:none": 124,
+    "grounding:norm-decision": 40,
+    "conversation:correction": 5,
+    "conversation:reference": 5,
+    "conversation:clarification": 8,
+    "grounding:none": 46,
+    "errors:needs-human-review": 5,
+    "grounding:no-evidence": 8,
+    "errors:norm-no-match": 8,
+    "grounding:evidence": 5,
+    "grounding:evidence-conflict": 5,
+    "errors:source-conflict": 5,
+    "grounding:evidence-historical": 5,
+    "errors:superseded-source": 5,
+    "conversation:multi-intent": 5,
+    "grounding:erp-tool+norm-decision": 5,
+    "errors:tool-error": 8,
+    "errors:tool-timeout": 9,
+    "errors:permission-denied": 8,
+    "grounding:revit": 23,
+    "errors:revit-unavailable": 8,
+    "tools:revit-proposal": 5,
+    "memory:set-preference": 5,
+    "memory:apply-preference": 5,
+    "grounding:style-pair": 17
+  },
+  "coverage_gaps": [],
+  "coverage_thin": [],
+  "min_per_cell": 5,
+  "per_family_cap": 3,
+  "held_out_questions": 62,
+  "contract_validated": true,
+  "style_lint_clean": true,
+  "warnings": [
+    "follow-up2[2] → CONTINUATION analyze_project",
+    "follow-up[3] → FOLLOW_UP get_project_progress",
+    "memory-set[2] hint алга",
+    "memory-set2[0] hint алга",
+    "memory-set2[1] hint алга",
+    "memory-set2[3] hint алга",
+    "memory-set2[4] hint алга"
+  ],
+  "policy": {
+    "dynamic_facts": "Хэрэгслийн утга, нормын босго, баримтын код БҮГД жишээ тус бүрд seed-тэй санамсаргүй; бодит нормын код ХОРИОТОЙ.",
+    "not_included": "data-train-files/* (нормын мэдлэг — retrieval-first, жинд орохгүй); бодит ERP тоо; бодит ажилтны нэр.",
+    "identity": "Хэрэглэгчийн нэр/албан тушаал ямар ч жишээнд ОРООГҮЙ (userName=null)."
+  },
+  "sha256": {
+    "train": "7406d16d6b62484738de1a6abea53e33a3ed61f5e00f674ef75ee725ce305671",
+    "val": "7bde1f5b9bc3dd2e6a2c9a812dfc975c5d8e00ad4fc26cd0dce71b2810d07451",
+    "test": "eea8a21db97a23baf68095ffae276d15ba858abaa71290004c47f136d8af1180"
+  }
+}

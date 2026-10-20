@@ -1,0 +1,90 @@
+{
+  "query": "Гэрэлтүүлэгтэй холбоотой бүх норм дүрмийг өг.",
+  "detected_topics": [
+    "lighting"
+  ],
+  "count": 3,
+  "results": [
+    {
+      "registry_id": "mn-construction:0915d3ee55d69d034c39",
+      "canonical_code": "БД 30-102-11",
+      "title_mn": "Хот тосгон ба суурин газрын гудамж талбай, зам талбайн гэрэлтүүлгийг төлөвлөх дүрэм",
+      "topics": [
+        "lighting",
+        "urban_planning"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "lighting": [
+          "title_keyword:гэрэлтүүл"
+        ],
+        "urban_planning": [
+          "existing_registry_taxonomy:urban_planning",
+          "title_keyword:хот тосгон"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=34",
+      "official_detail_url": null,
+      "official_pdf_url": null,
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 85,
+      "router_reason": "topic_match:lighting"
+    },
+    {
+      "registry_id": "mn-construction:a4b53a184fe07aa8638e",
+      "canonical_code": "БД 31-110-11",
+      "title_mn": "Орон сууц, олон нийтийн барилгын байгалийн гэрэлтүүлэг",
+      "topics": [
+        "lighting",
+        "residential"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "lighting": [
+          "title_keyword:гэрэлтүүл"
+        ],
+        "residential": [
+          "title_keyword:орон сууц"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=41",
+      "official_detail_url": null,
+      "official_pdf_url": null,
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 85,
+      "router_reason": "topic_match:lighting"
+    },
+    {
+      "registry_id": "mn-construction:61b01920f6a16b70690d",
+      "canonical_code": "БНбД 23-02-08",
+      "title_mn": "Байгалийн ба зохиомол гэрэлтүүлэг",
+      "topics": [
+        "lighting"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "highrise": [
+          "curated_highrise_core_overlay"
+        ],
+        "lighting": [
+          "title_keyword:гэрэлтүүл"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=31",
+      "official_detail_url": null,
+      "official_pdf_url": "https://mcis.gov.mn/storage/uploads/process/202510/file_1760340444978004_161611878330710_stamped.pdf",
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 85,
+      "router_reason": "topic_match:lighting"
+    }
+  ]
+}

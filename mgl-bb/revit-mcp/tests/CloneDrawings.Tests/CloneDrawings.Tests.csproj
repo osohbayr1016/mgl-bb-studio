@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «Зураг клонлох»-ын Revit-гүй цэвэр дүрмийн тест (2026-09-30): сунгалт,
+    тусгай/ерөнхий харагдацын дүрэм, нэр/тэмдэг солих, зорилтын бүлэглэлт.
+
+    ⚠️ Revit/WPF assembly ЭНД ОРОХГҮЙ — `addin/CloneDrawings/Core` дотор
+    `Autodesk.Revit` эсвэл `System.Windows` гарвал энэ төсөл ЭМХЭТГЭГДЭХГҮЙ.
+
+      dotnet run   (revit-mcp/tests/CloneDrawings.Tests хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>CloneDrawings.Tests</AssemblyName>
+    <RootNamespace>RevitMcpAddin.CloneDrawings.Tests</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\CloneDrawings\Core\*.cs" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

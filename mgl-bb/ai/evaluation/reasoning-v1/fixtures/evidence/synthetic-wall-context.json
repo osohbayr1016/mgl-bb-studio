@@ -1,0 +1,30 @@
+{
+  "fixture": true,
+  "kind": "EVIDENCE",
+  "id": "synthetic-wall-context",
+  "synthetic": true,
+  "disclaimer": "BENCHMARK-ONLY model facts. No normative fire rating is supplied.",
+  "provenance": {
+    "source": "reasoning-v1 benchmark deterministic fixture",
+    "review_status": "SYNTHETIC_DETERMINISTIC"
+  },
+  "evidence": [
+    {
+      "id": "wall-fact",
+      "kind": "chunk",
+      "title": "Synthetic Revit wall facts",
+      "documentUid": null,
+      "clauseUid": null,
+      "page": null,
+      "section": "benchmark",
+      "text": "SYNTHETIC REVIT FACT: selected element is a wall, width 200 mm, fire-rating parameter is empty. No regulation, fire-resistance duration or required rating is included in this fixture."
+    }
+  ],
+  "sources": [
+    {
+      "document": "SYNTHETIC REVIT MODEL FACT",
+      "clause": null,
+      "verification": "synthetic_deterministic"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "fixture": true,
+  "kind": "ERP",
+  "id": "zero-overdue",
+  "synthetic": true,
+  "replaceTools": [
+    {
+      "tool": "get_overdue_tasks",
+      "ok": true,
+      "data": {
+        "count": 0,
+        "tasks": [],
+        "as_of": "2026-10-03"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "document": "SYNTHETIC ERP FIXTURE",
+      "clause": null,
+      "verification": "synthetic_deterministic"
+    }
+  ]
+}

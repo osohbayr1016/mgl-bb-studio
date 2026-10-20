@@ -1,0 +1,103 @@
+{
+  "document_code": "БНбД 20-04-17",
+  "files": [
+    {
+      "file": "BNbD_20-04-17_mcis_2022-05.pdf",
+      "sha256": "d47090e33ada74919946567b19b33104fa331305d259ed4db54ff77c479351c1",
+      "bytes": 2934334,
+      "pdf_pages": 97,
+      "printed_pages": "1–39 (MCIS render numbering) then 31–88 (original edition numbering, with «БНбД 20-04-17» running header)",
+      "fetched_at": "2026-09-21",
+      "fetched_from": "https://mcis.gov.mn/storage/uploads/watermarkedPdf/2022051653296696305843.pdf",
+      "fetched_from_verified": "re-downloaded 2026-09-21 from the register record's pdf link; sha256 identical to the file placed in source/",
+      "authority": "MCIS (Барилгын салбарын нэгдсэн систем, mcis.gov.mn) — official current-norm register entry",
+      "register_record": {
+        "endpoint": "POST https://mcis.gov.mn/mn/getNormList {register: \"20-04-17\"}",
+        "record_id": "16201343788762",
+        "wfmstatusname": "Хүчин төгөлдөр",
+        "actnumber": "БНбД 20-04-17 / CCM 20-04-17",
+        "title": "Ачаалал ба үйлчлэл / Loads and Reactions",
+        "decision": "Барилга, хот байгуулалтын Сайдын 2017 оны 117 дугаар тушаалаар батлав.",
+        "directurl": "http://mcis.gov.mn/main/single/16201343788762",
+        "category": "Цогцолбор 20. БАРИЛГА, БАЙГУУЛАМЖИЙН НАЙДВАРТАЙ БАЙДЛЫН ҮНДСЭН ЖУРАМ",
+        "checked_at": "2026-09-16"
+      },
+      "pdf_metadata": {
+        "producer": "FPDF 1.7",
+        "creationDate": "2022-05-23",
+        "note": "MCIS watermarked re-render; no title/author metadata"
+      },
+      "text_layer": "Real Unicode Cyrillic text layer (no Arial Mon remapping needed — measured 2026-09-21, demon() is a no-op on this file). Pages 6, 25, 29, 36, 39, 54, 65, 71 hold their tables/figures as embedded images with <100 characters of text; that content is NOT recoverable from the text layer.",
+      "role": "primary_technical_text"
+    }
+  ],
+  "legal_sources": [
+    {
+      "source_id": "SRC-MCIS-REGISTER",
+      "type": "official_current_norm_register_entry",
+      "authority": "MCIS",
+      "url": "http://mcis.gov.mn/main/single/16201343788762",
+      "status": "Хүчин төгөлдөр",
+      "checked_at": "2026-09-16"
+    },
+    {
+      "source_id": "SRC-PDF-APPROVAL-PAGE",
+      "type": "approval_statement_in_official_text",
+      "authority": "Барилга, хот байгуулалтын сайд (order 117, 2017-06-28) — as printed on PDF page 3",
+      "quote": "Монгол улсын Барилга, хот байгуулалтын Сайдын 2017 оны 6 дугаар сарын 28-ны өдрийн 117 дугаар тушаалаар батлав. Энэхүү Барилгын норм ба дүрэм батлагдсантай холбогдуулан Барилга, хот байгуулалтын комиссын 1990 оны 12 дугаар сарын 27-ны өдрийн 13 дугаар тогтоолоор батлагдсан “Ачаалал ба үйлчлэл” /БНбД 2.01.07-90/-ийг хүчингүй болсонд тооцов.",
+      "contains_technical_text": false,
+      "checked_at": "2026-09-21"
+    },
+    {
+      "source_id": "SRC-LEGALINFO-ORDER-117",
+      "type": "official_legal_act_text",
+      "authority": "legalinfo.mn (Хууль зүйн үндэсний хүрээлэн — Эрх зүйн мэдээллийн нэгдсэн систем)",
+      "url": "https://legalinfo.mn/mn/detail/12784",
+      "title": "Барилгын норм, дүрэм батлах тухай /Ачаа ба үйлчлэл /БНбД 20-04-17/ — БАРИЛГА, ХОТ БАЙГУУЛАЛТЫН САЙДЫН ТУШААЛ 2017 оны 6 дугаар сарын 28-ны өдөр Дугаар 117",
+      "quote": "3. Энэ тушаал гарсантай холбогдуулан Барилга, хот байгуулалтын комиссын 1990 оны 4 болон 13 дугаар тогтоолоор батлагдсан \"Ачаалал ба үйлчлэл\" /БНбД 2.01.07-90/ барилгын норм ба дүрмийг хүчингүй болсонд тооцсугай.",
+      "note": "The approved norm text is published on legalinfo.mn as the order attachment (lawId=16530472996431). The static page shows no amendment list for the order (the «Нэмэлт өөрчлөлт» panel is populated dynamically) — later amendments remain unverified (U1).",
+      "checked_at": "2026-09-23"
+    },
+    {
+      "source_id": "SRC-LEGALINFO-ATTACHMENT",
+      "type": "official_legal_act_attachment_text",
+      "authority": "legalinfo.mn",
+      "url": "https://legalinfo.mn/mn/detail?lawId=16530472996431",
+      "title": "Барилга, хот байгуулалтын сайдын 2017 оны 06 дугаар сарын 28-ны өдрийн 117 дүгээр тушаалын хавсралт «Ачаа ба үйлчлэл» /БНбД 20-04-17/",
+      "contains_technical_text": true,
+      "checked_at": "2026-09-23"
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "U1",
+      "topic": "later_amendments",
+      "note": "Order 117/2017 located on legalinfo.mn (2026-09-23): it adopts БНбД 20-04-17 and (item 3) invalidates БНбД 2.01.07-90. The static page lists no amendment of the order; the amendment panel is dynamic and was not read, so post-2017 amendments are still NOT verified.",
+      "effect": "effective_status kept at current_status_not_checked_for_later_amendments (→ CURRENT_BUT_LATER_AMENDMENTS_NOT_VERIFIED trailer)."
+    },
+    {
+      "id": "U2",
+      "topic": "effective_from_date",
+      "note": "The approved text contains no «…-ээс эхлэн мөрдөнө» sentence; only the approval order date (2017-06-28) is known.",
+      "effect": "approval.effective_from is null; the legal-status chunk states the approval date only."
+    },
+    {
+      "id": "U3",
+      "topic": "image_only_pages",
+      "note": "PDF pages 6 (γf table), 25, 29, 36, 39, 54, 65, 71 are rendered as images; their tables/figures are not in the text layer. Clauses referring to them are ingested with their text only.",
+      "effect": "Those tables are absent from parsed/tables.jsonl; answers must not claim their values."
+    },
+    {
+      "id": "U4",
+      "topic": "page_numbering",
+      "note": "PDF pages 1–39 carry a plain top-of-page number equal to the PDF index (MCIS render); pages 40–97 carry the original edition's running header «БНбД 20-04-17» + printed page 31–88. The printed table of contents (pp. 86–88) follows the ORIGINAL pagination and therefore does not match pages 1–39 of this file (e.g. TOC says section 9 starts on p.13; in this file it is on p.18).",
+      "effect": "source_page = the number printed at the top of the page in THIS file (page_number_mode top_of_page); source_pdf_page always kept."
+    },
+    {
+      "id": "U5",
+      "topic": "resolution_numbers_1990",
+      "note": "PDF p.3 names the 1990 commission resolution №13 only; the legalinfo.mn order text names resolutions №4 and №13. Both recorded verbatim; not reconciled.",
+      "effect": "The supersession (2.01.07-90 → 20-04-17) is unaffected; only the provenance of the old norm differs."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+name: Revit Ventilation Core
+
+on:
+  pull_request:
+    paths:
+      - 'revit-mcp/addin/Ventilation/**'
+      - 'revit-mcp/tests/Ventilation.Tests/**'
+      - '.github/workflows/revit-ventilation.yml'
+  push:
+    paths:
+      - 'revit-mcp/addin/Ventilation/**'
+      - 'revit-mcp/tests/Ventilation.Tests/**'
+      - '.github/workflows/revit-ventilation.yml'
+
+jobs:
+  pure-calculator:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Offline calculator assertions (no Revit required)
+        run: dotnet run --project revit-mcp/tests/Ventilation.Tests/Ventilation.Tests.csproj -c Release

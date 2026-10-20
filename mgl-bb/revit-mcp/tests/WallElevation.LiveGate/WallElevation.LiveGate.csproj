@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «Ханын дэлгээс»-ийн release gate — БОДИТ Revit дотор ажилладаг ТЕСТИЙН add-in (production bundle-д ХЭЗЭЭ Ч орохгүй).
+
+    Зарчим (эзний шийдвэр 2026-10-13): BLACK-BOX — production add-in-ийн internal код руу хандахгүй (InternalsVisibleTo байхгүй).
+    Тест нь хэрэглэгчийн хийдэгтэй ижил: суусан add-in-ийн ribbon командыг PostCommand-оор ажиллуулж, харилцах цонхыг
+    DialogBoxShowing / тусдаа driver (UI Automation) -аар хариулж, үр дүнг Revit API-аар уншина.
+
+    Энэ add-in зөвхөн `MGL_WE_GATE_JOB` орчны хувьсагчтай Revit процесст ИДЭВХЖИНЭ (run-live.ps1 тавина); бусад үед OnStartup юу ч
+    хийхгүй (ribbon, event байхгүй).  Revit-ийн API-г ЭНЭ PC-д СУУСАН хувилбараас авна (NuGet-ийн шинэ minor-оор биш).
+
+      dotnet build -c Release -p:RevitYear=2024     → bin\2024\MglWallElevationLiveGate.dll  (net48)
+      dotnet build -c Release -p:RevitYear=2027     → bin\2027\MglWallElevationLiveGate.dll  (net10.0-windows)
+  -->
+
+  <PropertyGroup>
+    <RevitYear Condition="'$(RevitYear)' == ''">2027</RevitYear>
+    <TargetFramework Condition="'$(RevitYear)' == '2024'">net48</TargetFramework>
+    <TargetFramework Condition="'$(RevitYear)' == '2025' Or '$(RevitYear)' == '2026'">net8.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(RevitYear)' == '2027'">net10.0-windows</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>MglWallElevationLiveGate</AssemblyName>
+    <RootNamespace>MglWeGate</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\$(RevitYear)\</OutputPath>
+    <DefineConstants>$(DefineConstants);REVIT$(RevitYear)</DefineConstants>
+    <NoWarn>$(NoWarn);CS1591;CA1416;CS0618</NoWarn>
+    <RevitDir>$(ProgramFiles)\Autodesk\Revit $(RevitYear)</RevitDir>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="RevitAPI"><HintPath>$(RevitDir)\RevitAPI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="RevitAPIUI"><HintPath>$(RevitDir)\RevitAPIUI.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

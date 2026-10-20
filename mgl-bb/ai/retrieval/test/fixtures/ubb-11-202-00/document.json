@@ -1,0 +1,13 @@
+{
+  "doc_id": "UBB-11-202-00-TEST",
+  "code": "УББ 11-202-00",
+  "title_mn": "[ТЕСТИЙН ФИКСТУР] Хот суурины хөгжлийн ерөнхий төлөвлөгөө боловсруулах заавар",
+  "document_type": "synthetic_test_fixture",
+  "jurisdiction": "Mongolia",
+  "language": "mn-Cyrl",
+  "source_file": "synthetic-fixture.pdf",
+  "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "printed_pages": 12,
+  "legal_status": "synthetic_test_fixture_not_a_source",
+  "notes": ["SYNTHETIC — test-only; never ingest into production knowledge."]
+}

@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «Зураг клонлох»-ын явцын самбарын (CdJobPaneView) Revit-гүй ТҮЦ ШАЛГАЛТ (2026-10-01).
+
+    Самбар нь Revit-ийн төрөл мэддэггүй (CdJobCard + ICdJobCommands гэрээгээр) тул энд хуурамч картуудаар
+    дүүргэж, товчны харагдах байдал, текстийг шалгаад PNG болгон хадгална (SMOKE_OUT хавтас, анхдагч нь
+    %TEMP%\clone-uismoke) — layout-ыг нүдээр шалгахад.
+
+    ⚠️ Revit assembly ЭНД ОРОХГҮЙ: CdJobPaneView.cs-д `Autodesk.Revit` гарвал энэ төсөл ЭМХЭТГЭГДЭХГҮЙ.
+    ⚠️ Интерактив Windows desktop session шаардана (WPF цонх үүсгэнэ).
+
+      dotnet run   (revit-mcp/tests/CloneDrawings.UiSmoke хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>CloneDrawings.UiSmoke</AssemblyName>
+    <RootNamespace>RevitMcpAddin.CloneDrawings.UiSmoke</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\CloneDrawings\CdJobPaneView.cs" />
+    <!-- Дундын сэдэв (Revit-гүй): палитр + загвар ачаалагч.  MglControls.xaml нь add-in-той ИЖИЛ LogicalName-тэй embedded. -->
+    <Compile Include="..\..\addin\Ui\Core\*.cs" />
+    <Compile Include="..\..\addin\TextFold.cs" />
+    <Compile Include="..\..\addin\Ui\MglStyles.cs" />
+    <Compile Include="..\..\addin\Ui\MglTheme.cs" />
+    <Compile Include="..\..\addin\Ui\MglBrushes.cs" />
+    <EmbeddedResource Include="..\..\addin\Ui\Resources\MglControls.xaml" LogicalName="RevitMcpAddin.Ui.MglControls.xaml" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

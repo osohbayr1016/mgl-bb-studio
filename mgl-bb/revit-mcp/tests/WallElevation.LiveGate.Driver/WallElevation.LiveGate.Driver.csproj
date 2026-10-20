@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Release gate-ийн GUI driver — тусдаа процесс (UI Automation + SendInput).  Revit-ийн өөрийн цонх (Unsigned Add-In-ий аюулгүй
+    байдлын асуулт), production add-in-ий WPF preview, PickObjects-ийн click зэргийг ХЭРЭГЛЭГЧ шиг гүйцэтгэнэ.  Зөвхөн run-live.ps1
+    асаасан, PID-ээр нь заасан Revit процессын цонхнуудад хандана.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>MglWeGateDriver</AssemblyName>
+    <RootNamespace>MglWeGateDriver</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+  </PropertyGroup>
+
+</Project>

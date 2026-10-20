@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mglai-reasoning-v1-result/1",
+  "type": "object",
+  "required": [
+    "schema",
+    "benchmark_version",
+    "mode",
+    "identity",
+    "case_set_sha256",
+    "scorer_sha256",
+    "coverage",
+    "scores",
+    "hard_gates",
+    "repairs",
+    "failures_by_stage",
+    "cases"
+  ],
+  "properties": {
+    "schema": {
+      "const": "mglai-reasoning-v1-result/1"
+    },
+    "benchmark_version": {
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG",
+        "ADVERSARIAL_SYSTEM",
+        "STRUCTURAL"
+      ]
+    },
+    "identity": {
+      "type": "object"
+    },
+    "case_set_sha256": {
+      "type": "string"
+    },
+    "scorer_sha256": {
+      "type": "string"
+    },
+    "coverage": {
+      "type": "object",
+      "required": [
+        "core_total",
+        "executed",
+        "blocked"
+      ]
+    },
+    "scores": {
+      "type": "object"
+    },
+    "hard_gates": {
+      "type": "object"
+    },
+    "repairs": {
+      "type": "object"
+    },
+    "failures_by_stage": {
+      "type": "object"
+    },
+    "cases": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

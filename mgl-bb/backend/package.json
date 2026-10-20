@@ -1,0 +1,53 @@
+{
+  "name": "mgl-progress-backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev --config wrangler.toml",
+    "gen:system-catalog": "node scripts/gen-system-catalog.mjs",
+    "deploy": "wrangler deploy --config wrangler.toml",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "media:put-default-avatar": "node scripts/r2.mjs put media default-profile-photo.png --file=scripts/media-seed/default-profile-photo.png --content-type=image/png --remote",
+    "media:put-default-avatar:local": "node scripts/r2.mjs put media default-profile-photo.png --file=scripts/media-seed/default-profile-photo.png --content-type=image/png --local",
+    "db:migrate:all:local": "node scripts/d1.mjs migrations apply --local",
+    "db:bootstrap:local": "node scripts/bootstrap-local-db.mjs",
+    "db:bootstrap:local:reset": "node scripts/bootstrap-local-db.mjs --reset",
+    "db:migrate:local": "node scripts/d1.mjs execute --local --file=./migrations/0001_init.sql",
+    "db:seed:local": "node scripts/d1.mjs execute --local --file=./migrations/0002_seed.sql",
+    "test": "node --test \"src/**/*.test.ts\"",
+    "verify": "tsc --noEmit && node --test \"src/**/*.test.ts\" && node scripts/check-bim-events.mjs",
+    "check:bim-events": "node scripts/check-bim-events.mjs",
+    "check:ingest-e2e": "node scripts/check-ingest-e2e.mjs",
+    "db:migrate:all:remote": "node scripts/d1.mjs migrations apply --remote",
+    "db:export": "node scripts/d1.mjs export --remote --output=d1-backup.sql",
+    "audit:d1": "node scripts/cleanup/audit-d1.mjs",
+    "audit:storage": "node scripts/cleanup/audit-storage.mjs",
+    "audit:r2:fetch": "node scripts/cleanup/fetch-r2-inventory.mjs",
+    "audit:r2:orphans": "node scripts/cleanup/find-orphaned-r2.mjs",
+    "cleanup:preview": "node scripts/cleanup/cleanup-preview.mjs",
+    "cleanup:r2": "node scripts/cleanup/cleanup-r2.mjs",
+    "cleanup:db": "node scripts/cleanup/cleanup-db.mjs"
+  },
+  "dependencies": {
+    "@cloudflare/puppeteer": "^1.1.0",
+    "@cloudflare/workers-oauth-provider": "^0.7.2",
+    "@mgl/mglai-common": "file:../packages/mglai-common",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "agents": "^0.15.0",
+    "bcryptjs": "^2.4.3",
+    "hono": "^4.7.0",
+    "html-to-docx": "^1.8.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260804.1",
+    "@types/bcryptjs": "^2.4.6",
+    "prettier": "^3.8.3",
+    "typescript": "^5.8.0",
+    "wrangler": "^4.121.0"
+  },
+  "overrides": {
+    "@cloudflare/ai-chat": "0.8.0"
+  }
+}

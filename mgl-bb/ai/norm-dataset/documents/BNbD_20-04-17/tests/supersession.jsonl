@@ -1,0 +1,4 @@
+{"test_id": "V20-04-17-001", "kind": "status_is", "code": "БНбД 20-04-17", "expected_status": "ACTIVE", "evidence": "MCIS register record 16201343788762 «Хүчин төгөлдөр» (2026-09-16); approval order 117 (2017-06-28) printed on PDF page 3"}
+{"test_id": "V20-04-17-002", "kind": "supersedes_empty", "code": "БНбД 20-04-17", "expected_supersedes": ["БНбД 2-01-07-90"], "note": "PDF p.3: БНбД 2.01.07-90 «Ачаалал ба үйлчлэл» (1990) declared void by the same approval statement"}
+{"test_id": "V20-04-17-003", "kind": "currentness", "code": "БНбД 20-04-17", "expected_currentness": "CURRENT_BUT_LATER_AMENDMENTS_NOT_VERIFIED", "note": "amendments after 2017 not checked (U1)"}
+{"test_id": "V20-04-17-004", "kind": "retrieval_default_filter", "description": "Default current-answer retrieval must exclude registry rows with status in {SUPERSEDED, DRAFT, HISTORICAL}; БНбД 2-01-07-90 must never be served as the current loads norm"}

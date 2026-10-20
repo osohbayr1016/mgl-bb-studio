@@ -1,0 +1,152 @@
+{
+  "$comment": [
+    "MGL AI · ЗАГВАРЫН БҮРТГЭЛ — ЛОКАЛ ЛАВЛАХ.",
+    "",
+    "⚠️ ЭНЭ ФАЙЛ НЬ ЭРХ ОЛГОДОГГҮЙ.  Продакшны эрх бүхий эх сурвалж нь",
+    "   D1-ийн `ai_model_releases` (миграц 0270) бөгөөд ModelManager нь",
+    "   `/api/mgl-ai/runtime/manifest`-аас Л татна.  Энэ файл нь хүн уншиж",
+    "   ойлгох лавлах + релиз бэлтгэхэд хэрэглэх загвар.",
+    "",
+    "⚠️ ЛИЦЕНЗ ШАЛГАГДСАН (2026-09-08): Apache-2.0, арилжааны хэрэглээ,",
+    "   өөрчлөлт, дахин түгээлт ЗӨВШӨӨРӨГДСӨН.  Бүрэн текст ба SHA-256 нь",
+    "   `licenses/` дотор.  `license_cleared` нь ХЭВЭЭР false — түүнийг",
+    "   ЭЗЭН батламжилж, релиз үүсгэх үед л 1 болно (§5 журам).",
+    "",
+    "⚠️ `artifact_url` нь ХООСОН.  Артефакт нь БИДНИЙ R2-д байрлах ёстой",
+    "   (§37: «Approved model manifests should come from our controlled",
+    "   backend»).  Гуравдагч хостоос шууд татах нь хорлогдсон артефактын",
+    "   хамгийн энгийн зам.",
+    "",
+    "⚠️ 2026-09-10: SERVING СУУРЬ НЬ Qwen3-8B (`employee-8b-q4`).  4B мөрүүд түүхэн",
+    "   лавлах — `discoverLocalModel` нь дискний ХАМГИЙН ТОМ GGUF-ийг сонгодог тул",
+    "   8B суусан машин дээр 8B ажиллана.  Лицензийн гурван түвшин ТУСДАА:",
+    "   `license_detected` (артефактын машин уншигдах метадата), `license_metadata_complete`",
+    "   (репо + хувилбар + хэш + текст бүртгэгдсэн), `license_cleared` (ЭЗНИЙ батламж).",
+    "   Эхний хоёр нь баримт, гурав дахь нь ШИЙДВЭР — нэгийг нөгөөгөөр орлуулахгүй."
+  ],
+  "schema_version": 1,
+  "family": "mgl-ai",
+  "product": "MGL AI",
+  "candidates": [
+    {
+      "runtime_variant": "employee-8b-q4",
+      "version": "1.0.0",
+      "base_model": "Qwen/Qwen3-8B",
+      "base_model_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+      "base_model_url": "https://huggingface.co/Qwen/Qwen3-8B/tree/b968826d9c46dd6066d109eabc6255188de91218",
+      "base_model_license": "Apache-2.0 (ШАЛГАСАН 2026-09-10 — licenses/Qwen3-8B-LICENSE.txt, sha256 832dd9e0…, Copyright 2024 Alibaba Cloud)",
+      "license": {
+        "spdx": "Apache-2.0",
+        "detected_from": [
+          "huggingface tag license:apache-2.0 (Qwen/Qwen3-8B)",
+          "cardData.license = apache-2.0",
+          "LICENSE file at revision b968826d (201 мөр, 11 343 байт)"
+        ],
+        "license_file": "licenses/Qwen3-8B-LICENSE.txt",
+        "license_file_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+        "license_source_url": "https://huggingface.co/Qwen/Qwen3-8B/resolve/b968826d9c46dd6066d109eabc6255188de91218/LICENSE",
+        "verified_at": "2026-09-10",
+        "license_detected": true,
+        "license_metadata_complete": true
+      },
+      "license_cleared": false,
+      "quantization": "Q4_K_M",
+      "quantized_by": "unsloth",
+      "gguf_repo": "unsloth/Qwen3-8B-GGUF",
+      "gguf_repo_revision": "a6adef130ffb23ddaf1a62fec9dced968c9bc482",
+      "gguf_repo_license": "apache-2.0 (HF метадата; base_model:quantized:Qwen/Qwen3-8B)",
+      "gguf_file": "Qwen3-8B-Q4_K_M.gguf",
+      "gguf_header": {
+        "general.name": "Qwen3-8B",
+        "general.quantized_by": "Unsloth",
+        "general.file_type": 15,
+        "qwen3.block_count": 36,
+        "qwen3.embedding_length": 4096,
+        "qwen3.context_length": 40960,
+        "quantize.imatrix.file": "Qwen3-8B-GGUF/imatrix_unsloth.dat"
+      },
+      "runtime": "llama.cpp",
+      "context_tokens": 8192,
+      "artifact_url": "",
+      "artifact_bytes": 5027784512,
+      "artifact_sha256": "120307ba529eb2439d6c430d94104dabd578497bc7bfe7e322b5d9933b449bd4",
+      "artifact_sha256_source": "локал файлыг sha256sum-аар хэмжсэн (2026-09-10) — HF LFS sha256-тай ЯГ ТААРНА",
+      "min_vram_mb": 6144,
+      "min_ram_mb": 16384,
+      "channel": "canary",
+      "notes": [
+        "2026-09-09-өөс SERVING суурь.  Qwen3 суурь загварууд СЭТГЭХ горимтой — `enable_thinking=false` ЗААВАЛ.",
+        "Түүвэрлэлт: Qwen3 албан ёсны сэтгэхгүй горим (0.7/0.8/top_k 20/min_p 0) + presence_penalty 1.0 — `runtime/src/engine/samplingPreset.ts`.",
+        "8 GB VRAM дээр ~5.7 GB эзэлнэ (KV q8_0, ctx 8192); нөөц ~2.5 GB.",
+        "Fine-tune (QLoRA) нь ЭНЭ суурийн эсрэг — `Qwen/Qwen3-8B@b968826d` safetensors; адаптер нь энэ GGUF-тэй хамт llama.cpp `--lora`-оор ачаалагдана."
+      ]
+    },
+    {
+      "runtime_variant": "employee-4b-q4",
+      "version": "1.0.0",
+      "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+      "base_model_license": "Apache-2.0 (ШАЛГАСАН 2026-09-08 — licenses/Qwen3-4B-Instruct-2507-LICENSE.txt, sha256 832dd9e0…)",
+      "license_cleared": false,
+      "quantization": "Q4_K_M",
+      "runtime": "llama.cpp",
+      "context_tokens": 4096,
+      "artifact_url": "",
+      "artifact_bytes": null,
+      "artifact_sha256": "",
+      "min_vram_mb": 0,
+      "min_ram_mb": 8192,
+      "channel": "canary",
+      "notes": [
+        "⚠️ ТҮҮХЭН (2026-09-10): serving суурь нь 8B болсон; энэ мөр лавлахад л үлдэнэ.",
+        "Анхны өгөгдмөл.  8 GB VRAM дээр бүх давхарга GPU-д багтана.",
+        "min_vram_mb = 0 нь ЗОРИУД: GPU-гүй машин CPU дээр ажиллана,",
+        "удаан ч ажиллана.  VRAM-ыг шаардлага болгох нь GPU-гүй ажилтныг",
+        "AI-гүй орхино."
+      ]
+    },
+    {
+      "runtime_variant": "employee-4b-q5",
+      "version": "1.0.0",
+      "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+      "base_model_license": "Apache-2.0 (ШАЛГАСАН 2026-09-08)",
+      "license_cleared": false,
+      "quantization": "Q5_K_M",
+      "runtime": "llama.cpp",
+      "context_tokens": 4096,
+      "artifact_url": "",
+      "artifact_bytes": null,
+      "artifact_sha256": "",
+      "min_vram_mb": 8192,
+      "min_ram_mb": 16384,
+      "channel": "canary",
+      "notes": [
+        "⚠️ ТҮҮХЭН (2026-09-10): serving суурь нь 8B болсон; энэ мөр лавлахад л үлдэнэ.",
+        "Илүү нарийвчлалтай ч 8 GB дээр KV кэшийн зай хумигдана.",
+        "`ai:benchmark`-аар Q4_K_M-тэй ХАРЬЦУУЛСАН ТООГ гаргаж байж",
+        "өгөгдмөл болгоно.  Таамгаар сольж БОЛОХГҮЙ."
+      ]
+    },
+    {
+      "runtime_variant": "client-lite",
+      "version": "1.0.0",
+      "base_model": "TBD — 0.8B–1.7B ангилал",
+      "base_model_license": "UNVERIFIED — see LICENSES.md",
+      "license_cleared": false,
+      "quantization": "Q4_K_M",
+      "runtime": "webgpu",
+      "context_tokens": 2048,
+      "artifact_url": "",
+      "artifact_bytes": null,
+      "artifact_sha256": "",
+      "min_vram_mb": null,
+      "min_ram_mb": 4096,
+      "channel": "canary",
+      "notes": [
+        "⚠️ ЭНЭ НЬ АЖИЛТНЫ 4B-ТЭЙ ИЖИЛ ЖИН БИШ.  UI-д «MGL AI» гэж нэг",
+        "адил харагдана (§12) ч метадата нь бодит биетийг нэрлэнэ.",
+        "«Ижил загвар» гэж хэлэх нь аюулгүй байдлыг золиослох болно.",
+        "P1 — 1.0-д захиалагчийн горим нь хайлт + нийтийн мэдлэгээр."
+      ]
+    }
+  ]
+}

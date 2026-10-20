@@ -1,0 +1,37 @@
+name: MGL AI norm-reference-links isolated tests
+
+on:
+  pull_request:
+    paths:
+      - 'backend/src/lib/mglai/normReferenceLinks.ts'
+      - 'backend/src/lib/mglai/normReferenceLinks.test.ts'
+      - 'backend/src/routes/mglAi.ts'
+      - '.github/workflows/mgl-ai-norm-reference-links.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  norm-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci --legacy-peer-deps
+      - name: Typecheck backend
+        working-directory: backend
+        run: npx tsc --noEmit
+      - name: Source-link fallback unit tests
+        working-directory: backend
+        run: node --test src/lib/mglai/normReferenceLinks.test.ts
+      - name: Offline norm coverage ledger regression
+        working-directory: ai
+        run: |
+          node --test norm-dataset/tools/coverage-report.test.mjs
+          node norm-dataset/tools/coverage-report.mjs --check

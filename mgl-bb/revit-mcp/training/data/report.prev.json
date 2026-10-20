@@ -1,0 +1,86 @@
+{
+  "version": "2026-08-28.1-d2a2dee9",
+  "examples": 2402,
+  "accuracy": 0.9366,
+  "accuracy_std": 0.01,
+  "per_intent": {
+    "help": 0.948,
+    "isolate_sheet": 0.984,
+    "list_sheets": 0.984,
+    "progress_status": 0.936,
+    "reset_view": 0.953,
+    "set_baseline": 0.971,
+    "submit_progress": 0.906,
+    "unknown": 0.852,
+    "whats_changed": 0.929
+  },
+  "folds": 5,
+  "repeats": 5,
+  "frozen_accuracy": 0.9501,
+  "frozen_per_intent": {
+    "help": 0.947,
+    "isolate_sheet": 1.0,
+    "list_sheets": 0.946,
+    "progress_status": 0.975,
+    "reset_view": 0.974,
+    "set_baseline": 0.972,
+    "submit_progress": 0.952,
+    "unknown": 0.877,
+    "whats_changed": 0.944
+  },
+  "frozen_counts": {
+    "help": 38,
+    "isolate_sheet": 37,
+    "list_sheets": 37,
+    "progress_status": 40,
+    "reset_view": 38,
+    "set_baseline": 36,
+    "submit_progress": 42,
+    "unknown": 57,
+    "whats_changed": 36
+  },
+  "frozen_n": 361,
+  "frozen_missing_ids": 0,
+  "dataset_sha256": "84f3d4339c446d4887f0fc2b3654980005d0bd1d20915329367af04cdc035cda",
+  "build_sha256": "d2a2dee9dd2415d88202a753954bbb425d69f3aa982681c0c5a3fcf60e915e8b",
+  "dataset_files": [
+    {
+      "file": "hard-negatives.json",
+      "sha256": "e7a1095837e8571b8d9bca49d659c27b620dbd9b7583d9f72c9b21f0b9a3f8c2",
+      "rows": 46
+    },
+    {
+      "file": "seed.json",
+      "sha256": "755f9bdeabf04e466b6882b06f74c222e81b6542857ff1c7181db65f9cefc947",
+      "rows": 517
+    },
+    {
+      "file": "bootstrap.json",
+      "sha256": "50de5b3f4d5f450a92b6e85c9c6da21563f61c42014c4bb9b3d67ce4f61bcfaa",
+      "rows": 215
+    },
+    {
+      "file": "english.json",
+      "sha256": "2bb15dae9eff177e3b93cde535032432539f0d59353f358d319fb9daf9ef697f",
+      "rows": 463
+    },
+    {
+      "file": "multilang.json",
+      "sha256": "6637f537bde8591d445c02ab84a408fcb05c6539f5fa772ebab5e732cdf23b52",
+      "rows": 1291
+    }
+  ],
+  "row_count": 2402,
+  "source_counts": {
+    "manual": 45,
+    "seed": 2357
+  },
+  "trained_at": "2026-08-28T11:22:01+08:00",
+  "toolchain": {
+    "python": "3.12.10",
+    "scikit_learn": "1.9.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1"
+  },
+  "git_sha": "9fe82a0"
+}

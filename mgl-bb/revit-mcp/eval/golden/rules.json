@@ -1,0 +1,7 @@
+{
+ "_note": "GOLDEN-EVAL · дүрмийн хөдөлгүүр (БНбД хэмжээс).  ХООСОН ШИЛЖИНЭ — revit-mcp/CLAUDE.md:59-116-ийн тоонууд нь өөрсдөө «design-guidance, албан ёсны БНбД-тэй тулгаагүй» тул golden болгож ХӨЛДӨӨЖ БОЛОХГҮЙ (§9-ийн 3-р асуулт).",
+ "partition": "rules",
+ "frozen": true,
+ "preprocess_contract": "fold-v1",
+ "rows": []
+}

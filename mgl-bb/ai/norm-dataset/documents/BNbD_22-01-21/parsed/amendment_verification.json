@@ -1,0 +1,21 @@
+{
+  "tool": "verify_amendment_table/1",
+  "document": "БНбД 22-01-21",
+  "table": "Хавсралт 1",
+  "amendment": {
+    "id": "A-2022-07",
+    "order": "№07 (2022-01-06)",
+    "url": "https://legalinfo.mn/storage/uploads/process/202202/file_1644390647161759_163403209487511.pdf",
+    "sha256": "1bc80390df435e1a75b2d9ff0f191a041039b99d421109f8dd31e8c1a51df1ef",
+    "pages": "2-9"
+  },
+  "normative_source": {
+    "file": "BNbD_22-01-21_mcis_2025-10_stamped.pdf",
+    "sha256": "0c7c81503db6b676ec671532a776f0c648b2b0db7c9e418e0492785d3ea2faea"
+  },
+  "rows_normative": 333,
+  "rows_amendment": 333,
+  "rows_identical": 333,
+  "mismatches": [],
+  "method": "normative = parsed grid (merged aimag carried down); amendment = independent text-layer token stream; matched by printed №, compared as printed"
+}

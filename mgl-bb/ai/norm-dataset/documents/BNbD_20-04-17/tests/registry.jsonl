@@ -1,0 +1,7 @@
+{"test_id": "G001", "query": "БНбД 20-04-17", "kind": "find_by_code", "must_include_code": "БНбД 20-04-17"}
+{"test_id": "G002", "query": "20-04-17", "kind": "find_by_code", "must_include_code": "БНбД 20-04-17"}
+{"test_id": "G003", "query": "Ачаалал ба үйлчлэл", "kind": "find_by_title", "must_include_code": "БНбД 20-04-17"}
+{"test_id": "G004", "query": "цасны ачаалал", "kind": "find_by_topic", "must_include_code": "БНбД 20-04-17"}
+{"test_id": "G005", "query": "Барилгын бүтээцийн ачааллын норм өг", "kind": "lookup_team", "expected_team": "structure", "must_include_code": "БНбД 20-04-17"}
+{"test_id": "G006", "query": "салхины ачаалал", "kind": "find_by_topic", "must_include_code": "БНбД 20-04-17"}
+{"test_id": "G007", "query": "achaalal ba uilchlel", "kind": "find_by_title_latin", "must_include_code": "БНбД 20-04-17"}

@@ -1,0 +1,7 @@
+<Project>
+  <!-- Он бүр өөрийн obj-той (2024 = net48, 2027 = net10) — дараалан build хийхэд restore бие биенээ дарахгүй.  SDK-ээс ӨМНӨ тавигдах ёстой. -->
+  <PropertyGroup>
+    <RevitYear Condition="'$(RevitYear)' == ''">2027</RevitYear>
+    <BaseIntermediateOutputPath>obj\$(RevitYear)\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+</Project>

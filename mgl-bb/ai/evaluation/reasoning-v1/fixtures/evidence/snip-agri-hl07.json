@@ -1,0 +1,38 @@
+{
+  "fixture": true,
+  "kind": "EVIDENCE",
+  "id": "snip-agri-hl07",
+  "provenance": {
+    "source": "ai/training/humanized_review/cases-2026-09-23.json#HL07",
+    "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+  },
+  "evidence": [
+    {
+      "id": "snip-scope",
+      "kind": "document",
+      "title": "СНиП II-97-76* / М-80 хамрах хүрээ",
+      "documentUid": "SNIP-II-97-76-MNG",
+      "clauseUid": null,
+      "page": null,
+      "section": "scope",
+      "text": "Энэ баримт нь хөдөө аж ахуйн үйлдвэрийн ерөнхий төлөвлөгөөний норм. Орон сууц, олон нийтийн барилгад ерөнхий байдлаар хамааруулж болохгүй."
+    },
+    {
+      "id": "snip-status",
+      "kind": "document",
+      "title": "СНиП II-97-76* / М-80 бүртгэлийн төлөв",
+      "documentUid": "SNIP-II-97-76-MNG",
+      "clauseUid": null,
+      "page": null,
+      "section": "currentness",
+      "text": "Репозиторийн тухайн лавлагаанд listed_as_current гэж бүртгэгдсэн боловч мэдлэгийн санд буй 1990 оны оросын нэгтгэсэн эхийг MCIS-ийн албан PDF-тэй тулгаж шалгаагүй; албан шийдвэрт ашиглахаас өмнө эх, хамрах хүрээ, одоогийн төлөвийг шалгах шаардлагатай."
+    }
+  ],
+  "sources": [
+    {
+      "document": "СНиП II-97-76",
+      "clause": null,
+      "verification": "listed_as_current_source_not_fully_crosschecked"
+    }
+  ]
+}

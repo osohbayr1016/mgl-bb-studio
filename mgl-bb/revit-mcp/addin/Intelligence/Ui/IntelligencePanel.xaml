@@ -1,0 +1,330 @@
+<UserControl x:Class="RevitMcpAddin.Intelligence.Ui.IntelligencePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             TextOptions.TextFormattingMode="Display"
+             UseLayoutRounding="True">
+
+    <!--
+      SESSION R — «MGL AI» дэд самбар: Контекст · Даалгавар · Асуудал · Тайлан · AI.
+      Одоо байгаа «MGL туслах» самбар (AssistantPane) ЭНЭ хяналтыг өөрийн
+      `IntelligenceHost` Border дотор ХОСТЛОНО (R-1, strangler) — хоёр дахь
+      dockable pane БАЙХГҮЙ.  Палитр нь AssistantPane.xaml-тэй ижил утгууд;
+      тусдаа зарласан нь нэгтгэгдэх хүртэл StaticResource-ийн хамаарлаас
+      чөлөөтэй байх зорилготой.
+    -->
+    <UserControl.Resources>
+        <!-- ⚠️ Хуучин `I…` палитр (AssistantPane-ийн хуулбар) УСТСАН: токенууд (Bg, BgRaised, BgInput, Line, LineStrong, Fg, FgMuted,
+             Accent, Warn, …) нь `Ui/MglTheme.cs`-ээс (энд `MglTheme.Apply`) — `DynamicResource`, сэдэв солигдоход дагана.
+             TextBox/TabItem-ийн загвар нь `Ui/Resources/MglControls.xaml`-ийн implicit загвар. -->
+        <Style x:Key="IText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <!-- ⚠️ Хоёрдогч бичвэр ≥ 12 DIP (өмнө 11). -->
+        <Style x:Key="IMuted" TargetType="TextBlock" BasedOn="{StaticResource IText}">
+            <Setter Property="Foreground" Value="{DynamicResource FgMuted}" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style x:Key="IHead" TargetType="TextBlock" BasedOn="{StaticResource IText}">
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0,8,0,3" />
+        </Style>
+        <!-- Нягт товч (энэ самбарт олон товч нэг мөрөнд): токен, hover/pressed/focus/disabled. -->
+        <Style x:Key="IBtn" TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource BgRaised}" />
+            <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource LineStrong}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="Margin" Value="0,0,4,0" />
+            <Setter Property="MinHeight" Value="26" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{DynamicResource MglFocusVisual}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="b" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="b" Property="Background" Value="{DynamicResource Hover}" />
+                                <Setter Property="Foreground" Value="{DynamicResource HoverFg}" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="b" Property="BorderBrush" Value="{DynamicResource Accent}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="b" Property="Background" Value="{DynamicResource Pressed}" />
+                                <Setter Property="Foreground" Value="{DynamicResource PressedFg}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="b" Property="Opacity" Value="0.55" />
+                                <Setter Property="Foreground" Value="{DynamicResource FgDisabled}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate x:Key="KvRow">
+            <Grid Margin="0,1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Key}" Style="{StaticResource IMuted}" />
+                <TextBlock Grid.Column="1" Text="{Binding Value}" Style="{StaticResource IText}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ElementCard">
+            <Border Background="{DynamicResource BgRaised}" BorderBrush="{DynamicResource Line}" BorderThickness="1" CornerRadius="4" Padding="7,5" Margin="0,0,0,6">
+                <StackPanel>
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource IText}" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding Sub}" Style="{StaticResource IMuted}" Margin="0,0,0,3" />
+                    <ItemsControl ItemsSource="{Binding Rows}" ItemTemplate="{StaticResource KvRow}" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="IssueRow">
+            <Border Background="{DynamicResource BgRaised}" BorderThickness="3,1,1,1" CornerRadius="3" Padding="7,5" Margin="0,0,0,5">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="BorderBrush" Value="{DynamicResource LineStrong}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ClassKey}" Value="Danger">
+                                <Setter Property="BorderBrush" Value="{DynamicResource Danger}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ClassKey}" Value="Warn">
+                                <Setter Property="BorderBrush" Value="{DynamicResource Warn}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Title}" Style="{StaticResource IText}" FontWeight="SemiBold" />
+                        <TextBlock Grid.Column="1" Text="{Binding Severity}" Style="{StaticResource IMuted}" Margin="6,0,0,0" />
+                    </Grid>
+                    <TextBlock Style="{StaticResource IMuted}">
+                        <Run Text="{Binding ClassLabel, Mode=OneWay}" /><Run Text=" · " /><Run Text="{Binding SourceLabel, Mode=OneWay}" />
+                    </TextBlock>
+                    <TextBlock Text="{Binding Detail}" Style="{StaticResource IText}" Margin="0,2,0,4" />
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Харуулах" Style="{StaticResource IBtn}" Click="IssueShow_Click" Tag="{Binding}" />
+                        <Button Content="Сонгох" Style="{StaticResource IBtn}" Click="IssueSelect_Click" Tag="{Binding}" />
+                        <Button Content="Тайлбар" Style="{StaticResource IBtn}" Click="IssueExplain_Click" Tag="{Binding}" />
+                        <Button Content="Засвар санал" Style="{StaticResource IBtn}" IsEnabled="False" ToolTip="Одоогоор идэвхгүй — засвар санал болгох нь «AI» таб дахь «Санал болгож буй өөрчлөлт» хэсэгт (урьдчилан харж, та баталгаажуулсны дараа л өөрчилнө)." />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Background="{DynamicResource Bg}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="BannerText" Grid.Row="0" Text="{Binding Banner}" Style="{StaticResource IMuted}" Foreground="{DynamicResource Warn}" Margin="4,2" />
+
+        <TabControl Grid.Row="1" Background="{DynamicResource Bg}" BorderBrush="{DynamicResource Line}" BorderThickness="0,1,0,0" Padding="4">
+
+            <!-- ===================== КОНТЕКСТ ===================== -->
+            <TabItem Header="Контекст">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel DataContext="{Binding Context}" Margin="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding State}" Style="{StaticResource IText}" FontWeight="SemiBold" />
+                            <Button Grid.Column="1" Content="↻" Style="{StaticResource IBtn}" Click="RefreshAll_Click" ToolTip="Контекст, даалгавар, runtime-ийг дахин унших" />
+                        </Grid>
+                        <TextBlock Text="{Binding StateDetail}" Style="{StaticResource IMuted}" />
+                        <TextBlock Text="{Binding Timing}" Style="{StaticResource IMuted}" />
+
+                        <TextBlock Text="Баримт" Style="{StaticResource IHead}" />
+                        <ItemsControl ItemsSource="{Binding Document}" ItemTemplate="{StaticResource KvRow}" />
+
+                        <TextBlock Text="Идэвхтэй харагдац" Style="{StaticResource IHead}" />
+                        <ItemsControl ItemsSource="{Binding View}" ItemTemplate="{StaticResource KvRow}" />
+
+                        <TextBlock Text="ERP төсөл" Style="{StaticResource IHead}" />
+                        <TextBlock Text="{Binding LinkText}" Style="{StaticResource IText}" />
+                        <TextBlock Text="{Binding LinkHint}" Style="{StaticResource IMuted}" />
+                        <StackPanel x:Name="LinkSuggestPanel" Margin="0,4,0,0">
+                            <ComboBox x:Name="SuggestCombo" ItemsSource="{Binding Suggestions}" DisplayMemberPath="ProjectName" Margin="0,0,0,4" />
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Баталгаажуулах" Style="{StaticResource IBtn}" Click="ConfirmLink_Click" />
+                            </StackPanel>
+                        </StackPanel>
+                        <Button x:Name="UnlinkBtn" Content="Холбоосыг цуцлах" Style="{StaticResource IBtn}" Click="Unlink_Click" HorizontalAlignment="Left" Margin="0,4,0,0" />
+
+                        <TextBlock Text="Сонголт" Style="{StaticResource IHead}" />
+                        <ItemsControl ItemsSource="{Binding Selection}" ItemTemplate="{StaticResource ElementCard}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ===================== ДААЛГАВАР ===================== -->
+            <TabItem Header="Даалгавар">
+                <Grid DataContext="{Binding Tasks}" Margin="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Status}" Style="{StaticResource IMuted}" Margin="0,0,0,4" />
+                    <ListBox Grid.Row="1" x:Name="TaskList" ItemsSource="{Binding Tasks}" DisplayMemberPath="Label"
+                             Background="{DynamicResource BgInput}" Foreground="{DynamicResource Fg}" BorderBrush="{DynamicResource Line}"
+                             SelectionChanged="TaskList_SelectionChanged" MaxHeight="220" />
+                    <StackPanel Grid.Row="2" Margin="0,6,0,0">
+                        <TextBlock Text="{Binding Interpretation}" Style="{StaticResource IMuted}" />
+                        <TextBlock Text="{Binding Candidates}" Style="{StaticResource IText}" Margin="0,3,0,3" />
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="◀ Өмнөх" Style="{StaticResource IBtn}" Click="TaskPrev_Click" />
+                            <Button Content="Дараах ▶" Style="{StaticResource IBtn}" Click="TaskNext_Click" />
+                            <Button Content="Бүгдийг сонгох" Style="{StaticResource IBtn}" Click="TaskSelectAll_Click" />
+                            <Button Content="Шалгасан ✓" Style="{StaticResource IBtn}" Click="TaskReviewed_Click" ToolTip="Энэ элементийг шалгасан гэж тэмдэглэнэ — таскийн явцын хувь БОЛОХГҮЙ." />
+                        </StackPanel>
+                        <TextBlock Text="{Binding Navigation}" Style="{StaticResource IMuted}" Margin="0,3,0,0" />
+                        <TextBlock Text="Явцын хувийг Revit тооцохгүй — «Миний ажил» хуудасны дэд жагсаалт л хувь өгнө." Style="{StaticResource IMuted}" Margin="0,4,0,0" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- ===================== АСУУДАЛ ===================== -->
+            <TabItem Header="Асуудал">
+                <Grid DataContext="{Binding Issues}" Margin="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Status}" Style="{StaticResource IMuted}" Margin="0,0,0,4" />
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Issues}" ItemTemplate="{StaticResource IssueRow}" />
+                    </ScrollViewer>
+                    <TextBox Grid.Row="2" Text="{Binding Explanation, Mode=OneWay}" TextWrapping="Wrap" IsReadOnly="True" MaxHeight="140" VerticalScrollBarVisibility="Auto" Margin="0,4,0,0" />
+                </Grid>
+            </TabItem>
+
+            <!-- ===================== ТАЙЛАН ===================== -->
+            <TabItem Header="Тайлан">
+                <Grid DataContext="{Binding Reports}" Margin="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,4">
+                        <ComboBox SelectedIndex="{Binding PeriodIndex}" Width="110" Margin="0,0,4,0">
+                            <ComboBoxItem Content="Өнөөдөр" /><ComboBoxItem Content="Энэ сесс" /><ComboBoxItem Content="Даалгавар" />
+                        </ComboBox>
+                        <ComboBox SelectedIndex="{Binding AudienceIndex}" Width="120" Margin="0,0,4,0">
+                            <ComboBoxItem Content="Өөртөө (техник)" /><ComboBoxItem Content="Багийн даалгавар" /><ComboBoxItem Content="Менежерт" />
+                        </ComboBox>
+                        <Button Content="Гаргах" Style="{StaticResource IBtn}" Click="Report_Click" />
+                        <Button Content="ERP руу илгээх" Style="{StaticResource IBtn}" IsEnabled="False" ToolTip="Урьдчилсан харагдац л — илгээх нь дараагийн интеграцаар" />
+                    </StackPanel>
+                    <TextBox Grid.Row="1" Text="{Binding Text, Mode=OneWay}" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" />
+                    <TextBlock Grid.Row="2" Text="{Binding Status}" Style="{StaticResource IMuted}" Margin="0,4,0,0" />
+                </Grid>
+            </TabItem>
+
+            <!-- ===================== AI ===================== -->
+            <TabItem Header="Асуулт">
+                <Grid DataContext="{Binding Ai}" Margin="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Status}" Style="{StaticResource IMuted}" Margin="0,0,0,4" />
+                    <TextBox Grid.Row="1" Text="{Binding Answer, Mode=OneWay}" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" />
+                    <!-- R4.1 CONFIRM_WRITE — «Санал болгож буй өөрчлөлт»: preview → ИЛ баталгаа (Apply) → ✓/✗.  «Auto Fix» гэсэн шошго ХЭЗЭЭ Ч. -->
+                    <Border Grid.Row="2" Margin="0,6,0,0" Padding="6" BorderBrush="{DynamicResource LineStrong}" BorderThickness="1" CornerRadius="3">
+                        <StackPanel>
+                            <TextBlock Text="Санал болгож буй өөрчлөлт — зөвхөн сонгосон элемент; таны баталгаажуулсны дараа л загварыг өөрчилнө" Style="{StaticResource IMuted}" />
+                            <Grid Margin="0,4,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" x:Name="ProposalParam" SelectedIndex="0" Width="110" Margin="0,0,4,0" ToolTip="Үйлдэл: Comments/Mark = SET_PARAMETER · Зөөх = MOVE_ELEMENT (мм) · Төрөл солих = CHANGE_TYPE (төрлийн нэр)">
+                                    <ComboBoxItem Content="Comments" />
+                                    <ComboBoxItem Content="Mark" />
+                                    <ComboBoxItem Content="Зөөх Y (мм)" />
+                                    <ComboBoxItem Content="Зөөх X (мм)" />
+                                    <ComboBoxItem Content="Төрөл солих" />
+                                </ComboBox>
+                                <TextBox Grid.Column="1" x:Name="ProposalValue" Text="{Binding ProposalValue, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" ToolTip="Шинэ утга" />
+                                <Button Grid.Column="2" Content="Урьдчилан харах" Style="{StaticResource IBtn}" Click="ProposalPreview_Click" Margin="4,0,0,0" IsEnabled="{Binding CanPropose}" />
+                            </Grid>
+                            <TextBox Text="{Binding ProposalText, Mode=OneWay}" TextWrapping="Wrap" IsReadOnly="True" AcceptsReturn="True" MinHeight="72" Margin="0,4,0,0" VerticalScrollBarVisibility="Auto" />
+                            <Grid Margin="0,4,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding ProposalResult}" Style="{StaticResource IMuted}" TextWrapping="Wrap" />
+                                <Button Grid.Column="1" Content="Болих" Style="{StaticResource IBtn}" Click="ProposalDiscard_Click" Margin="4,0,0,0" IsEnabled="{Binding HasPreview}" />
+                                <Button Grid.Column="2" Content="Баталгаажуулж өөрчлөх" Style="{StaticResource IBtn}" Click="ProposalApply_Click" Margin="4,0,0,0" IsEnabled="{Binding CanApply}" ToolTip="Хэрэглэгчийн ИЛ баталгаа — энэ товч л бичих үйлдлийг зөвшөөрнө" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                    <Grid Grid.Row="3" Margin="0,4,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" x:Name="AiQuestion" Text="{Binding Question, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" KeyDown="AiQuestion_KeyDown" />
+                        <Button Grid.Column="1" Content="Асуух" Style="{StaticResource IBtn}" Click="Ask_Click" Margin="4,0,0,0" />
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <!-- ===================== DEV / TEST (NON-PRODUCTION) =====================
+                 ⚠️ ӨГӨГДМӨЛӨӨР НУУЦ (Visibility=Collapsed) ба хамгийн ХОЙНО.  Зөвхөн орчны хувьсагч MGL_DEV_MODE=1 үед
+                 IntelligencePanel.xaml.cs-ийн constructor ил болгоно (Intelligence/Core/DevMode.cs).  Энэ нь ЗӨВХӨН UI-ийн ил байдал —
+                 TestModelFixture-ийн хамгаалалт (Gate / IsTestMarked / TEST_*_REFUSED) ХЭВЭЭР. -->
+            <TabItem x:Name="DevTab" Header="DEV" Visibility="Collapsed" ToolTip="DEVELOPMENT / TEST ONLY — синтетик тест загвар">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel DataContext="{Binding Dev}" Margin="2">
+                        <TextBlock Text="DEVELOPMENT / TEST ONLY · NON-PRODUCTION · SYNTHETIC MODEL" Style="{StaticResource IText}" Foreground="{DynamicResource Warn}" FontWeight="SemiBold" />
+                        <TextBlock Text="{Binding Gate}" Style="{StaticResource IMuted}" Margin="0,3,0,6" />
+                        <TextBlock Text="Төсөл нээгээгүй бол доорх товч хоосон метрик тест төсөл үүсгэж нээнэ (эсвэл өөрөө: New → Project → None → Metric)." Style="{StaticResource IText}" Margin="0,0,0,4" />
+                        <Button Content="Тест төсөл үүсгэх (хоосон, метрик)" Style="{StaticResource IBtn}" Click="DevNewProject_Click" HorizontalAlignment="Left" Margin="0,0,0,6" />
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <Button Content="Хаалт шалгах" Style="{StaticResource IBtn}" Click="DevGate_Click" />
+                            <Button Content="Тест загвар үүсгэх" Style="{StaticResource IBtn}" Click="DevCreate_Click" ToolTip="10000×8000 мм, 2 давхар, 6 хана, шал, 3 өрөө, хаалга/цонх (family байвал)" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <Button Content="Тест: ханыг зөөх" Style="{StaticResource IBtn}" Click="DevMove_Click" ToolTip="wall.interior.center +500 мм → ChangeTracker → граф → олдвор" />
+                            <Button Content="Тест: ханыг устгах" Style="{StaticResource IBtn}" Click="DevDelete_Click" ToolTip="wall.interior.center устгана → өрөө redundant → MODEL_QUALITY" />
+                            <Button Content="Тест: хаалга устгах" Style="{StaticResource IBtn}" Click="DevDeleteDoor_Click" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <Button Content="Тест загварыг хадгалах (.rvt)" Style="{StaticResource IBtn}" Click="DevSave_Click" ToolTip="AppData\RevitMcpAddin\intelligence\test-models — дарж бичихгүй" />
+                            <Button Content="Бүгдийг дахин үнэлэх" Style="{StaticResource IBtn}" Click="DevEvaluate_Click" />
+                        </StackPanel>
+                        <TextBox Text="{Binding Status, Mode=OneWay}" TextWrapping="Wrap" IsReadOnly="True" MinHeight="60" MaxHeight="200" VerticalScrollBarVisibility="Auto" Margin="0,4,0,0" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

@@ -1,0 +1,20 @@
+-- 0022_pricing_area_rates.sql
+-- =============================================================
+-- RECONSTRUCTED BODY — intentionally a no-op. See 0021_pricing.sql
+-- for the full explanation of why these four files were empty.
+-- =============================================================
+-- The original body seeded a first pass of `pricing_rates`. Those rows
+-- are unrecoverable, and recovering them would be pointless: the very
+-- next migration, `0023_pricing_table9.sql`, opens with
+--   DELETE FROM pricing_rates;
+-- and replaces the whole table with the official BD 81-16-20 / 2020
+-- Хүснэгт 9 schedule. `0026_pricing_table9_v2.sql` then does it again.
+-- So the end state of a replay is identical whether or not this file
+-- seeds anything.
+--
+-- Left deliberately empty of DDL rather than deleted, because
+-- `d1_migrations` on production already records this filename as
+-- applied and the numbering must stay stable.
+-- =============================================================
+
+-- (no statements)

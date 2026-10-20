@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SESSION R — Revit Intelligence-ийн ЦЭВЭР логикийн тест (R-21).
+
+    ⚠️ Гадаад пакет БАЙХГҮЙ (xunit/NUnit ч биш) — repo-ийн `training/check_*.py`
+    хэв маягтай ижил шалтгаанаар: сүлжээгүй машин дээр ч `dotnet run` ажиллах
+    ёстой (2026-08-31-ний сургамж).  Жижиг өөрийн runner (`TestRunner.cs`).
+
+    ⚠️ Revit-ийн assembly ЭНД ОРОХГҮЙ.  Зөвхөн `Intelligence/Contracts`,
+    `Intelligence/Core` ба тэдний тулгуур болох гурван цэвэр файл
+    (`Units.cs`, `TextFold.cs`, `ChangeSetCoalescer.cs`).  Хэрэв Core-д
+    `Autodesk.Revit` гэсэн мөр орвол ЭНЭ ТӨСӨЛ ЭМХЭТГЭГДЭХГҮЙ — тэр нь
+    зориудын хамгаалалт (§63).
+
+      dotnet run (revit-mcp/tests/Intelligence.Tests хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>Intelligence.Tests</AssemblyName>
+    <RootNamespace>RevitMcpAddin.Intelligence.Tests</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\Intelligence\Contracts\*.cs" />
+    <Compile Include="..\..\addin\Intelligence\Core\*.cs" />
+    <Compile Include="..\..\addin\Intelligence\Ai\*.cs" />
+    <Compile Include="..\..\addin\Units.cs" />
+    <Compile Include="..\..\addin\TextFold.cs" />
+    <Compile Include="..\..\addin\ChangeSetCoalescer.cs" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="fixtures\*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

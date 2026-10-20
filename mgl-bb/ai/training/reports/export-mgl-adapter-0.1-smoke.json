@@ -1,0 +1,55 @@
+{
+  "run_name": "mgl-adapter-0.1-smoke",
+  "exported_at": "2026-09-10T15:51:15",
+  "converter": {
+    "llama_cpp": "f114f91  (grafted, HEAD, tag: b10850)",
+    "script": "convert_lora_to_gguf.py",
+    "outtype": "f16",
+    "seconds": 24
+  },
+  "base": {
+    "model": "Qwen/Qwen3-8B",
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "serving_gguf_sha256": "120307ba529eb2439d6c430d94104dabd578497bc7bfe7e322b5d9933b449bd4"
+  },
+  "adapter_source": {
+    "dir": "C:\\Users\\User\\project\\mgl-e-c\\ai\\models\\adapters\\mgl-adapter-0.1-smoke\\adapter",
+    "r": 16,
+    "alpha": 32,
+    "targets": [
+      "k_proj",
+      "down_proj",
+      "up_proj",
+      "gate_proj",
+      "v_proj",
+      "o_proj",
+      "q_proj"
+    ],
+    "files": {
+      "adapter_config.json": "6a341daa32cff924c30e5aa5adb4a1cd28fc4210641b45cd7962e77c44fed886",
+      "adapter_model.safetensors": "fac478554984b9ac423ce1cb5e21ce956fce3fca5759be13dedbce7405171681",
+      "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "README.md": "85e2b3a3fae33eab459538a9f1ce2d9ad6bd9fb7c6b97f9ee97e07923ad3e57a",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    }
+  },
+  "gguf": {
+    "path": "C:\\Users\\User\\project\\mgl-e-c\\ai\\models\\adapters\\mgl-adapter-0.1-smoke\\mgl-adapter-0.1-smoke.lora.gguf",
+    "bytes": 87328864,
+    "sha256": "ae68be888ad1c41c9a7e1fe0f4cbf9ffb8d8db3e13c299c1a459d2f82984d12f",
+    "header": {
+      "_version": 3,
+      "_tensors": 504,
+      "general.architecture": "qwen3",
+      "general.type": "adapter",
+      "adapter.type": "lora",
+      "general.base_model.0.name": "Qwen3 8B",
+      "general.base_model.0.repo_url": "https://huggingface.co/Qwen/Qwen3-8B",
+      "adapter.lora.alpha": 32.0
+    }
+  },
+  "status": "EXPORTED_NOT_EVALUATED",
+  "deployed": false
+}

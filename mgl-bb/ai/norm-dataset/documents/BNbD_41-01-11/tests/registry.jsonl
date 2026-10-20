@@ -1,0 +1,10 @@
+{"test_id": "G001", "query": "БНбД 41-01-11", "kind": "find_by_code", "must_include_code": "БНбД 41-01-11"}
+{"test_id": "G002", "query": "41-01-11", "kind": "find_by_code", "must_include_code": "БНбД 41-01-11"}
+{"test_id": "G003", "query": "Халаалт, агаар сэлгэлт ба кондиционер", "kind": "find_by_title", "must_include_code": "БНбД 41-01-11"}
+{"test_id": "G004", "query": "халаалтын норм", "kind": "find_by_topic", "must_include_code": "БНбД 41-01-11"}
+{"test_id": "G005", "query": "Агаар сэлгэлт, кондиционерийн системийн норм өг", "kind": "lookup_team", "expected_team": "hvac", "must_include_code": "БНбД 41-01-11"}
+{"test_id": "G006", "query": "Өндөр барилгын халаалт, агаар сэлгэлтийн нормууд", "kind": "lookup_team", "expected_team": "hvac", "must_include_code": "БНбД 41-01-11", "must_include_any": ["БНбД 31-17-10"]}
+{"test_id": "G007", "query": "Галын үеийн утааны эсрэг хамгаалалтын норм", "kind": "lookup_topic", "expected_topics": ["smoke_protection"], "must_include_code": "БНбД 41-01-11"}
+{"test_id": "G008", "query": "khalaalt agaar selgelt konditsioner norm", "kind": "find_by_topic_latin", "must_include_code": "БНбД 41-01-11"}
+{"test_id": "G009", "query": "БНбД 41-01-02", "kind": "find_by_code", "must_include_code": "БНбД 41-01-02", "note": "the repealed predecessor stays findable by code so its status can be answered; it is CANDIDATE_NEEDS_STATUS_CHECK, never ACTIVE"}
+{"test_id": "G010", "query": "Барилгын дулаан хамгаалалтын норм", "kind": "find_by_title", "must_include_code": "БНбД 23-02-09"}

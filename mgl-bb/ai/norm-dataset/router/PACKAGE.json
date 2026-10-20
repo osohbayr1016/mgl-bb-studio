@@ -1,0 +1,59 @@
+{
+  "dataset_id": "MCIS_NORM_REGISTRY_L1_TOPIC_ROUTER_2026-09-18",
+  "parent_dataset_id": "MCIS_NORM_REGISTRY_L0_TRAINING_2026-09-18",
+  "schema_version": "L1-1.0",
+  "capability_level": "L1",
+  "package_status": "TOPIC_ROUTER_READY",
+  "package_created_at": "2026-09-18",
+  "copied_at": "2026-09-18",
+  "package_dir": "ai/data-train-files/MCIS_NORM_REGISTRY_L1_TOPIC_ROUTER_2026-09-18 (gitignored)",
+  "reference_implementation": "router/topic_lookup.py in the package (ported to ai/retrieval/src/topicRouter.ts)",
+  "note": "Copied verbatim; sha256 verified against the package manifest. Files here are the git-tracked source for ai:ingest:registry and the retrieval tests.",
+  "files": {
+    "router/topic_catalog.json": {
+      "package_path": "router/topic_catalog.json",
+      "sha256": "ea11ba329576e1c6051c7d9a12ed809b116e7ac9e882676943d36d7593dd2fa4",
+      "bytes": 13900
+    },
+    "router/topic_aliases.jsonl": {
+      "package_path": "router/topic_aliases.jsonl",
+      "sha256": "e5225af70eeafa9cf56e9e39614a7a094a58827fedd767d658c4cdc87e5bb374",
+      "bytes": 13846
+    },
+    "router/document_topic_assignments.jsonl": {
+      "package_path": "router/document_topic_assignments.jsonl",
+      "sha256": "f22496a9bcb512d2de9d97243f6cd1cb6f90aa37bf4c207232b178c5d9fca976",
+      "bytes": 330680
+    },
+    "router/building_overlays.json": {
+      "package_path": "router/building_overlays.json",
+      "sha256": "39ffbb19697cb09cf15229128221ec3f7b5f5aa664dc04b7ef9259c8b8a62922",
+      "bytes": 1082
+    },
+    "registry/cdc-2025/registry_with_verified_delta.jsonl": {
+      "package_path": "registry/registry_with_verified_delta.jsonl",
+      "sha256": "c9627b064587836780bc5f7a808840ac1d02eea3046b2cdda6372e5fd9723293",
+      "bytes": 1361246
+    },
+    "registry/cdc-2025/delta_events.jsonl": {
+      "package_path": "registry/delta_events.jsonl",
+      "sha256": "ab7e2ff16057a06bede915b463db6d7dc7dcecb623ae88d10b381e15f233a1ac",
+      "bytes": 511
+    },
+    "evals/topic_router/topic_router_cases.jsonl": {
+      "package_path": "eval/topic_router_cases.jsonl",
+      "sha256": "762ace651fa3f883c6df160e866037a4206dedd8a3496829ed80d8935a1026ee",
+      "bytes": 114756
+    },
+    "evals/topic_router/electrical_highrise.json": {
+      "package_path": "examples/electrical_highrise.json",
+      "sha256": "d43dcbb6724011fa900d06b21b190b7951dd9eafb0a9b9adc737e6a054d640a2",
+      "bytes": 11648
+    },
+    "evals/topic_router/lighting.json": {
+      "package_path": "examples/lighting.json",
+      "sha256": "df8c8f893e82c73f40250a4e9980764fabd71e5178a7b2aa3524ceb523282384",
+      "bytes": 3043
+    }
+  }
+}

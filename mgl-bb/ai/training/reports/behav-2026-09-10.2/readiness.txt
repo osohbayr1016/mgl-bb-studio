@@ -1,0 +1,26 @@
+MGL AI · СУРГАЛТЫН БЭЛЭН БАЙДАЛ — NOT READY
+  багц: behav-2026-09-10.2 · 302 жишээ (train 243/val 22/test 37) · serving-v2 (assembleTurns: system + history + user{norm-decision|tools|evidence|Асуулт} → assistant)
+  ✗ D1 нийт жишээ: 302  [шаардлага: ≥ 500] — анхны ноцтой fine-tune-д хамгийн бага хэмжээ
+  ✓ D2 хамралтын цоорхой: 0  [шаардлага: 0]
+  ✓ D3 нимгэн нүд: 0  [шаардлага: 0 (нүд бүр ≥ 5)]
+  ✓ D4 зорилт гэрээнд нийцсэн: true  [шаардлага: true]
+  ✓ D5 хэв маягийн lint цэвэр: true  [шаардлага: true]
+  ✓ D6 динамик баримт хасагдсан: {"dyn":0,"code":0,"name":0}  [шаардлага: 0 үүссэн] — үүсгэгч өөрөө ийм мөр гаргасан бол угсрагчийг засна
+  ✓ D7 алтан асуулт train-д алга: 13 → test (62 алтан мөр)  [шаардлага: train ∩ алтан = ∅]
+  ✓ D8 хэлний тэнцвэр: {"mn-Cyrl":77,"mn-Latn":60,"en":59,"mn-Cyrl-typo":48,"mn-Latn-typo":58}  [шаардлага: хэл бүр ≥ 40]
+  ✓ D9 дарааллын урт (тооцоолол): дундаж ~837 ток · max ~1481 ток  [шаардлага: max ≤ 2048 (QLoRA ctx)] — тэмдэгт/2.6 — ойролцоо; жинхэнэ тоо tokenizer-оос
+  ✓ E1 ярианы бүтэц: 22/22 (conv-e2e-structural-2026-09-10T04-06-31-135Z.json)  [шаардлага: бүгд]
+  ✓ E2 бодит Qwen үүсгэлт: 31/33 (conv-e2e-gen-2026-09-10-reference.json)  [шаардлага: ≥ 90%]
+  ✓ E3 загварын fallback хувь: 0/17  [шаардлага: ≤ 10% template] — загвар өөрөө гэрээнд нийцэж чадахгүй бол SFT-ийн зорилт яг энэ
+  ✗ E4 давталтын гогцоо (эцсийн): 1  [шаардлага: 0]
+  ✓ E5 нормын алтан кейс: алтан 100% · гоожилт 0 · R@5 93.8% (norm-golden-2026-09-10T04-24-19-379Z.json)  [шаардлага: алтан 100%, гоожилт 0]
+  ✓ E6 хайлт lexical R@5: 94.2% · NO_MATCH recall 69%  [шаардлага: ≥ 90%, NO_MATCH recall ≥ 60%]
+  ✓ E7 хэв маягийн хос lint: муу тал баригдсан: 26/27 (96%) · зөв тал дээр худал эерэг: 0  [шаардлага: OK]
+  ✓ H1 GPU: NVIDIA GeForce RTX 3070, 8192 MiB  [шаардлага: ≥ 8 GB (4B QLoRA); 8B QLoRA-д ≥ 12 GB] — 8B суурь (serving) QLoRA-д ЭНЭ GPU хүрэлцэхгүй — 4B-д л болно
+  ✓ H2 Python: Python 3.12.10 (python)  [шаардлага: 3.10+]
+  ✗ H3 torch/transformers/peft/bitsandbytes + CUDA: суулгаагүй (ModuleNotFoundError: No module named 'torch')  [шаардлага: бүгд + CUDA=True] — pip install -r ai/training/requirements.txt
+  ✗ P1 суурь загварын лиценз батламжлагдсан: нэг ч candidate license_cleared=true биш  [шаардлага: ≥ 1] — ЭЗЭН батламжилна — registry/models.json
+  ✗ P2 сургалтын суурь = serving суурь: train_lora.py: Qwen/Qwen3.5-4B-Instruct · serving: Qwen3-8B (serving, 2026-09-10)  [шаардлага: ижил гэр бүл/хэмжээ] — 4B дээр сургасан адаптер 8B-д ажиллахгүй; шийдвэр хэрэгтэй
+  ✓ P3 dataset_lint.py (python) цэвэр: PASS (цэвэр)  [шаардлага: PASS] — угсрагчийн JS lint нь ТҮҮНИЙ орлуулагч БИШ — хоёулаа
+
+  → 5 хаалга унасан: D1 нийт жишээ · E4 давталтын гогцоо (эцсийн) · H3 torch/transformers/peft/bitsandbytes + CUDA · P1 суурь загварын лиценз батламжлагдсан · P2 сургалтын суурь = serving суурь.  СУРГАЛТ ЭХЛҮҮЛЭХГҮЙ.

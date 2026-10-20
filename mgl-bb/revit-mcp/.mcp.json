@@ -1,0 +1,19 @@
+{
+  "$comment": [
+    "revit-mcp-ийг ДАНГААР нь (mgl-e-c-ээс гадуур) нээх үеийн MCP тохиргоо.",
+    "",
+    "Өмнө нь энд C:\\Users\\US\\projects\\revit-mcp\\... гэсэн абсолют зам байсан —",
+    "хэрэглэгчийн нэр нь энэ машиных ч биш (User vs US) тул аль хэдийн эвдэрсэн",
+    "байв.  Одоо репо-д харьцангуй зам + env override.",
+    "",
+    "REVIT_MCP_PYTHON тохируулбал түүнийг, эс бөгөөс server/.venv-ийг хэрэглэнэ."
+  ],
+  "mcpServers": {
+    "revit": {
+      "type": "stdio",
+      "command": "${REVIT_MCP_PYTHON:-server/.venv/Scripts/python.exe}",
+      "args": ["-m", "revit_mcp.server"],
+      "cwd": "server"
+    }
+  }
+}

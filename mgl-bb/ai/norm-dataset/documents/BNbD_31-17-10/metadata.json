@@ -1,0 +1,94 @@
+{
+  "canonical_code": "БНбД 31-17-10",
+  "doc_id": "BNBD-31-17-10-2010",
+  "title_mn": "Өндөр барилгын төлөвлөлт",
+  "title_en": "Planning of high-rise building",
+  "title_variants": [
+    "Өндөр барилга, өндөр цогцолборын төлөвлөлт",
+    "DESIGN OF HIGH-RISE BUILDING"
+  ],
+  "document_type": "BNbD",
+  "jurisdiction": "Mongolia",
+  "status": "ACTIVE",
+  "status_evidence": [
+    "MCIS current-norm register record 16201345052562: «Хүчин төгөлдөр» (checked 2026-09-16)",
+    "legalinfo.mn/mn/detail/7524 — order №429 (2010-12-30) shown as «Хүчинтэй» (checked 2026-09-16)"
+  ],
+  "effective_status": "current_status_not_checked_for_later_amendments",
+  "effective_status_note": "Order 429 is marked «/БХБС-ын 2022 оны 222 дугаар тушаалаар өөрчлөлт орсон/» on legalinfo; the content of order 222/2022 as applied to this norm is UNRESOLVED (source/SOURCE.json U1). A 2023 revision draft «БНбД 31-17-23» exists and is NOT approved as far as the official register shows (U2).",
+  "approval": {
+    "order_number": "429",
+    "order_date": "2010-12-30",
+    "issuer": "Зам, тээвэр, барилга, хот байгуулалтын сайд",
+    "attachment": "нэгдүгээр хавсралт",
+    "effective_from": "2011-01-01",
+    "effective_from_evidence": "PDF p.3 (printed): «2011 оны 01-р сарын 01-ний өдрөөс эхлэн мөрдөнө»"
+  },
+  "aliases": [
+    "БНбД 31-17-10",
+    "BNbD 31-17-10",
+    "CCM 31-17-10",
+    "31-17-10",
+    "Өндөр барилгын төлөвлөлт",
+    "өндөр барилгын норм",
+    "undur barilgiin tuluvlult",
+    "high-rise building planning",
+    "Planning of high-rise building"
+  ],
+  "supersedes": [],
+  "supersedes_note": "Order 429 item 2 repeals only СНиП II1-44-77 (railway/road tunnels — belongs to БНбД 32-07-10, not to this norm). No predecessor of 31-17-10 is named.",
+  "superseded_by": null,
+  "successor_draft": {
+    "code": "БНбД 31-17-23",
+    "status": "DRAFT",
+    "evidence": "MCIS PDF 2022-10 (file_1665976197392091, 156 pages) — approval line blank; MCIS notice 16571223949734 «Боловсруулж байна», feedback until 2022-10-31",
+    "ingest": false
+  },
+  "amendments": [
+    {
+      "order_number": "222",
+      "order_year": "2022",
+      "issuer": "БХБС",
+      "content_verified": false,
+      "note": "Listed on legalinfo as amending order 429; effect on this norm unresolved (U1)."
+    }
+  ],
+  "teams": ["architecture", "structure", "fire", "electrical", "hvac", "plumbing", "project_management", "geotechnical", "accessibility"],
+  "topics": [
+    "high-rise", "planning", "fire", "loads", "wind", "seismic", "foundation",
+    "thermal", "water_supply", "sewerage", "heating", "ventilation", "air_conditioning", "refrigeration",
+    "vertical_transport", "elevator", "waste", "electrical", "lighting", "automation", "communication",
+    "evacuation", "smoke_protection", "sanitary", "security", "acoustics", "facade", "coordination"
+  ],
+  "building_types": ["high-rise", "multifunctional_complex", "residential", "public", "hotel"],
+  "applicability": {
+    "floors_min": 17,
+    "height_m_min": 51,
+    "floors_max": 35,
+    "height_m_max": 150,
+    "evidence": "clause 1.1"
+  },
+  "priority": "P0",
+  "capability_level": "L2",
+  "capability_level_note": "L0 registry + L1 full text + L2 clause/table/appendix structure from the official PDF text layer (auto-extracted). L3 compute: formulas catalogued, none executable yet. See parsed/parse_report.json and tests/.",
+  "deep_ingestion_status": "PARSED",
+  "retrieval_default": true,
+  "source_type": "official",
+  "source_url": "https://mcis.gov.mn/main/single/16201345052562",
+  "source_pdf_url": "https://mcis.gov.mn/storage/uploads/process/202206/file_1654224802226730_161611878330710.pdf",
+  "legal_source_url": "https://legalinfo.mn/mn/detail/7524",
+  "source": {
+    "file": "BNbD_31-17-10_mcis_2022-06.pdf",
+    "sha256": "005f941b814e88a3c1dd707d7bb2958777d4ad73cec2df4b8511af1559ab858f",
+    "printed_page_offset": 2,
+    "body_first_pdf_page": 5,
+    "pdf_pages": 139
+  },
+  "verification": {
+    "text_verification_status": "official_pdf_text_layer_auto_extracted",
+    "human_verified_clauses": 0,
+    "note": "No clause has been verified by a human against the page image yet. Numeric rules therefore stay non-executable (searchable + citable only)."
+  },
+  "last_verified": "2026-09-16",
+  "training_policy": "retrieval_first_do_not_bake_changeable_norms_into_model_weights"
+}

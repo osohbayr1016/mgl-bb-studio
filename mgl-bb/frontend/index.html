@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!--
+      `viewport-fit=cover` нь заавал: үүнгүйгээр iOS дээр CSS-ийн
+      `env(safe-area-inset-*)` бүгд 0 болж, доод navbar болон header-ийн
+      safe-area padding огт ажиллахгүй (notch/home-indicator халхална).
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!--
+      Апп бараан өгөгдмөл. Эхний будалтад цагаан анивчихаас сэргийлнэ.
+      `theme-color`-ийг ThemeContext.applyThemeMode() ажиллах үедээ
+      хэрэглэгчийн бодит сэдвээр дардаг (localStorage.theme нь
+      prefers-color-scheme-ээс давуу тул `media` хос нь зөвхөн эхний
+      будалтад л зөв байдаг).
+    -->
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0d0d11" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <!-- iOS нь manifest-ийн иконыг үл тоомсорлодог тул apple-touch-icon заавал. -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="%VITE_ORG_NAME_SHORT%" />
+    <meta name="application-name" content="%VITE_ORG_NAME_SHORT%" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!--
+      Апп-shell-ийн фонт: 2 гэр бүл / 6 нүүр (өмнө нь 4 гэр бүл / 13 нүүр).
+      Энэ link нь render-блоклогч бөгөөд БҮХ маршрутын критик замд байдаг
+      тул зөвхөн үнэхээр хаа сайгүй хэрэглэгддэг нүүрүүд энд байна.
+
+      · Inter 400/500/600/700 — 700 ШИНЭЭР нэмэгдэв: 129 `font-bold`
+        хэрэглээ бүгд browser-ийн хуурамч тодруулга ашиглаж байсан.
+      · JetBrains Mono 400/700 — Space Grotesk-ийг орлов. Тэр нь кирилл
+        subset нийтэлдэггүй байсан тул монгол текст бүхий `font-mono`
+        span бүр OS-ийн monospace руу дунд өгүүлбэрт унадаг байв.
+      · Cormorant Garamond УСТСАН — бүх аппад ганц `<h2>`-д хэрэглэгдэж
+        байсан (client dashboard-ийн хоосон төлөв).
+      · Manrope ЭНД БАЙХГҮЙ — landing / `/work/:id` маршрутууд
+        `useWebFont(MANROPE_HREF)`-ээр өөрсдөө ачаална.
+    -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>%VITE_ORG_NAME_SHORT%</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/app/main.tsx"></script>
+  </body>
+</html>

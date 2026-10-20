@@ -1,0 +1,45 @@
+# ⚠️ Загварын артефакт нь ГИГАБАЙТ — git-д ХЭЗЭЭ Ч орохгүй.
+models/
+*.gguf
+*.safetensors
+*.bin
+
+# Сургалтын багцын БОДИТ өгөгдөл нь ажилтны бичсэн текст агуулна
+# (0269-ийн `prompt_snapshot`).  Манифест нь орно, өгөгдөл нь ОРОХГҮЙ.
+datasets/*/train.jsonl
+datasets/*/*.jsonl
+
+# Хэмжилтийн үр дүн нь машин тус бүрд өөр — нэгийг нь ч commit хийж
+# болно, гэвч бөөнөөр нь биш.  `# ⚠️ Лавлагааны машины ХЭМЖИЛТ нь commit хийгдэнэ — баримтын тоо түүнээс
+# гардаг.  Бусад машины санамсаргүй хэмжилтийг оруулахгүй.
+evaluation/benchmarks/*.json
+!evaluation/benchmarks/*-reference.json` -г
+# ГАРААР сонгож нэмнэ.
+# ⚠️ Лавлагааны машины ХЭМЖИЛТ нь commit хийгдэнэ — баримтын тоо түүнээс
+# гардаг.  Бусад машины санамсаргүй хэмжилтийг оруулахгүй.
+evaluation/benchmarks/*.json
+!evaluation/benchmarks/*-reference.json
+
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.venv/
+training/out/
+.llama.cpp/
+
+# Арын сургалтын лог/PID — машин тус бүрийнх (training/train.ps1)
+training/runs/
+
+# Сургалтын түүхий өгөгдөл (21 MB) — GitHub-д ОРОХГҮЙ (эзний шийдвэр 2026-09-11)
+data-train-files/
+
+# Бодит ERP/загварын гаралттай кейсийн тайлан (.cases.md) — *.json-той ИЖИЛ бодлого:
+# лавлагаа гэж ГАРААР `-reference` нэрлэснийг л commit хийнэ (эзний шийдвэр 2026-09-14).
+# Өмнө нь tracked болсон файлууд хэвээр tracked (ignore нь tracked файлд нөлөөлөхгүй).
+evaluation/benchmarks/*.cases.md
+!evaluation/benchmarks/*-reference.cases.md
+
+# Нормын ТОМ эх файл (жишээ нь legalinfo-ийн 38 MB тушаалын PDF) — git-д ОРОХГҮЙ; metadata.json/SOURCE.json-д
+# URL + sha256 бичигдэнэ, дахин татаж тулгана (эзний 2026-09-11 бодлого: түүхий том өгөгдөл GitHub-д орохгүй).
+norm-dataset/documents/*/source/_external/

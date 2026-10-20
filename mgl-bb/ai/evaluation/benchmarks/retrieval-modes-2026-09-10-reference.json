@@ -1,0 +1,382 @@
+{
+  "measured_at": "2026-09-10T03:46:34.982Z",
+  "db": "C:\\Users\\User\\AppData\\Local\\MglAi\\knowledge\\knowledge.sqlite",
+  "vector_available": true,
+  "model": "bge-m3-Q8_0",
+  "min_score": 0.45,
+  "vector_role": "rerank",
+  "results": [
+    {
+      "mode": "lexical",
+      "n": 723,
+      "r1": 608,
+      "r3": 666,
+      "r5": 681,
+      "mrr": 638.2833333333333,
+      "wrongDoc": 17,
+      "wrongClause": 95,
+      "noMatchOnPositive": 3,
+      "byLang": {
+        "mn-Cyrl": {
+          "n": 255,
+          "r5": 254,
+          "r1": 236
+        },
+        "mn-Latn": {
+          "n": 230,
+          "r5": 230,
+          "r1": 222
+        },
+        "en": {
+          "n": 238,
+          "r5": 197,
+          "r1": 150
+        }
+      },
+      "ms": 18344,
+      "negatives": [
+        {
+          "q": "Хамгийн хоцорсон таскууд юу байна",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Манай компанид хэдэн ажилтан байна",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Deadline hamgiin oir project ali ve",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Төслийн менежер ажилтнуудын ачааллыг хэрхэн хуваарилах вэ",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "БНбД 21-01-02-ын эвакуацын гарцын хамгийн бага өргөн хэд вэ",
+          "kind": "missing-doc-similar-name",
+          "ok": false,
+          "status": "supported",
+          "cite": "УББ 12-01-01, Хоёр. Захиалагчийн үүрэг, заалт 2.5, хуудас 6"
+        },
+        {
+          "q": "MNS 6541:2015 стандартын шаардлага юу вэ",
+          "kind": "missing-doc",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Лифтний хонгилын хананы галд тэсвэрлэх хугацаа хэдэн цаг байх ёстой вэ",
+          "kind": "missing-topic-fire-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Дулаан тусгаарлагчийн зузаан хэдэн мм байх вэ",
+          "kind": "missing-topic",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Сайн байна уу, чи юу хийж чадах вэ",
+          "kind": "general",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Excel файлыг PDF болгож өгөөч",
+          "kind": "general",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Цалингийн орлогын албан татвар хэдэн хувь вэ",
+          "kind": "other-domain-rule",
+          "ok": false,
+          "status": "uncertain",
+          "cite": "УББ 12-01-01, Хоёр. Захиалагчийн үүрэг, заалт 2.20, хуудас 9"
+        },
+        {
+          "q": "Автомашины улсын дугаар солих журам",
+          "kind": "other-domain-rule",
+          "ok": false,
+          "status": "uncertain",
+          "cite": "УББ 12-01-01, Хоёр. Захиалагчийн үүрэг, заалт 2.21, хуудас 9"
+        },
+        {
+          "q": "Хөдөлмөрийн гэрээний туршилтын хугацаа хэдэн сар вэ",
+          "kind": "other-domain-rule",
+          "ok": false,
+          "status": "supported",
+          "cite": "УББ-11-201-00, Төслийн үндсэн шийдлийн бүлгүүдийн бүтэц, заалт 5.2, хуудас 14"
+        }
+      ],
+      "noMatchPrecision": 0.75,
+      "noMatchRecall": 0.6923076923076923
+    },
+    {
+      "mode": "vector",
+      "n": 723,
+      "r1": 163,
+      "r3": 201,
+      "r5": 214,
+      "mrr": 183.10000000000002,
+      "wrongDoc": 77,
+      "wrongClause": 359,
+      "noMatchOnPositive": 124,
+      "byLang": {
+        "mn-Cyrl": {
+          "n": 255,
+          "r5": 137,
+          "r1": 118
+        },
+        "mn-Latn": {
+          "n": 230,
+          "r5": 67,
+          "r1": 38
+        },
+        "en": {
+          "n": 238,
+          "r5": 10,
+          "r1": 7
+        }
+      },
+      "ms": 37418,
+      "negatives": [
+        {
+          "q": "Хамгийн хоцорсон таскууд юу байна",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Манай компанид хэдэн ажилтан байна",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Deadline hamgiin oir project ali ve",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Төслийн менежер ажилтнуудын ачааллыг хэрхэн хуваарилах вэ",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "БНбД 21-01-02-ын эвакуацын гарцын хамгийн бага өргөн хэд вэ",
+          "kind": "missing-doc-similar-name",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "MNS 6541:2015 стандартын шаардлага юу вэ",
+          "kind": "missing-doc",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Лифтний хонгилын хананы галд тэсвэрлэх хугацаа хэдэн цаг байх ёстой вэ",
+          "kind": "missing-topic-fire-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Дулаан тусгаарлагчийн зузаан хэдэн мм байх вэ",
+          "kind": "missing-topic",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Сайн байна уу, чи юу хийж чадах вэ",
+          "kind": "general",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Excel файлыг PDF болгож өгөөч",
+          "kind": "general",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Цалингийн орлогын албан татвар хэдэн хувь вэ",
+          "kind": "other-domain-rule",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Автомашины улсын дугаар солих журам",
+          "kind": "other-domain-rule",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Хөдөлмөрийн гэрээний туршилтын хугацаа хэдэн сар вэ",
+          "kind": "other-domain-rule",
+          "ok": false,
+          "status": "supported",
+          "cite": "УББ-11-201-00, Төслийн үндсэн шийдлийн бүлгүүдийн бүтэц, заалт 5.2, хуудас 14"
+        }
+      ],
+      "noMatchPrecision": 0.08823529411764706,
+      "noMatchRecall": 0.9230769230769231
+    },
+    {
+      "mode": "hybrid",
+      "n": 723,
+      "r1": 591,
+      "r3": 667,
+      "r5": 684,
+      "mrr": 630.1833333333333,
+      "wrongDoc": 29,
+      "wrongClause": 100,
+      "noMatchOnPositive": 3,
+      "byLang": {
+        "mn-Cyrl": {
+          "n": 255,
+          "r5": 255,
+          "r1": 236
+        },
+        "mn-Latn": {
+          "n": 230,
+          "r5": 230,
+          "r1": 211
+        },
+        "en": {
+          "n": 238,
+          "r5": 199,
+          "r1": 144
+        }
+      },
+      "ms": 48211,
+      "negatives": [
+        {
+          "q": "Хамгийн хоцорсон таскууд юу байна",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Манай компанид хэдэн ажилтан байна",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Deadline hamgiin oir project ali ve",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Төслийн менежер ажилтнуудын ачааллыг хэрхэн хуваарилах вэ",
+          "kind": "erp-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "БНбД 21-01-02-ын эвакуацын гарцын хамгийн бага өргөн хэд вэ",
+          "kind": "missing-doc-similar-name",
+          "ok": false,
+          "status": "supported",
+          "cite": "УББ 12-01-01, Хоёр. Захиалагчийн үүрэг, заалт 2.5, хуудас 6"
+        },
+        {
+          "q": "MNS 6541:2015 стандартын шаардлага юу вэ",
+          "kind": "missing-doc",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Лифтний хонгилын хананы галд тэсвэрлэх хугацаа хэдэн цаг байх ёстой вэ",
+          "kind": "missing-topic-fire-vocab",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Дулаан тусгаарлагчийн зузаан хэдэн мм байх вэ",
+          "kind": "missing-topic",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Сайн байна уу, чи юу хийж чадах вэ",
+          "kind": "general",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Excel файлыг PDF болгож өгөөч",
+          "kind": "general",
+          "ok": true,
+          "status": "insufficient_evidence",
+          "cite": null
+        },
+        {
+          "q": "Цалингийн орлогын албан татвар хэдэн хувь вэ",
+          "kind": "other-domain-rule",
+          "ok": false,
+          "status": "uncertain",
+          "cite": "УББ 12-01-01, Хоёр. Захиалагчийн үүрэг, заалт 2.20, хуудас 9"
+        },
+        {
+          "q": "Автомашины улсын дугаар солих журам",
+          "kind": "other-domain-rule",
+          "ok": false,
+          "status": "uncertain",
+          "cite": "УББ 12-01-01, Хоёр. Захиалагчийн үүрэг, заалт 2.21, хуудас 9"
+        },
+        {
+          "q": "Хөдөлмөрийн гэрээний туршилтын хугацаа хэдэн сар вэ",
+          "kind": "other-domain-rule",
+          "ok": false,
+          "status": "supported",
+          "cite": "УББ-11-201-00, Төслийн үндсэн шийдлийн бүлгүүдийн бүтэц, заалт 5.2, хуудас 14"
+        }
+      ],
+      "noMatchPrecision": 0.75,
+      "noMatchRecall": 0.6923076923076923
+    }
+  ]
+}

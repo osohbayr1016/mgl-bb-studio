@@ -1,0 +1,8 @@
+dist
+node_modules
+patches
+public/_headers
+src/i18n/en.json
+src/i18n/mn.json
+*.min.*
+package-lock.json

@@ -1,0 +1,26 @@
+name: MGL AI quality-cycle tests
+
+on:
+  pull_request:
+    paths:
+      - 'ai/evaluation/quality-cycle/**'
+      - 'ai/evaluation/reasoning-v1.mjs'
+      - 'ai/package.json'
+      - '.github/workflows/mgl-ai-quality-cycle.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality-cycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test 30-50 non-repeating batch selection
+        working-directory: ai
+        run: npm run ai:eval:quality:test

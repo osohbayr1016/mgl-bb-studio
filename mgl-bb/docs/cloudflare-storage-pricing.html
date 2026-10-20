@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cloudflare Storage — Үнэ, Limit, Төлбөр</title>
+  <style>
+    @page { size: A4; margin: 18mm 16mm; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", "Noto Sans", Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.45;
+      color: #1a1a1a;
+      max-width: 100%;
+    }
+    h1 { font-size: 18pt; margin: 0 0 4px; color: #f6821f; }
+    h2 { font-size: 12pt; margin: 18px 0 6px; border-bottom: 2px solid #f6821f; padding-bottom: 3px; }
+    h3 { font-size: 10.5pt; margin: 12px 0 4px; color: #333; }
+    .meta { font-size: 9pt; color: #666; margin-bottom: 16px; }
+    table { width: 100%; border-collapse: collapse; margin: 8px 0 12px; font-size: 9.5pt; }
+    th, td { border: 1px solid #ccc; padding: 5px 7px; text-align: left; vertical-align: top; }
+    th { background: #fff4e8; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .free { color: #0a7; font-weight: 600; }
+    .paid { color: #c40; font-weight: 600; }
+    .note { background: #f5f8ff; border-left: 4px solid #0066cc; padding: 8px 10px; margin: 10px 0; font-size: 9.5pt; }
+    .warn { background: #fff8e6; border-left: 4px solid #f6821f; padding: 8px 10px; margin: 10px 0; font-size: 9.5pt; }
+    ul { margin: 4px 0 8px; padding-left: 18px; }
+    li { margin: 2px 0; }
+    .example { background: #f9f9f9; padding: 8px 10px; border-radius: 4px; margin: 8px 0; font-size: 9.5pt; }
+    footer { margin-top: 20px; font-size: 8.5pt; color: #888; border-top: 1px solid #ddd; padding-top: 8px; }
+    .highlight { background: #ffe8cc; padding: 1px 4px; border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<h1>Cloudflare Storage — Үнэ, Limit, Төлбөр</h1>
+<p class="meta">
+  Бэлтгэсэн: 2026-09-01 &nbsp;|&nbsp;
+  Эх сурвалж: Cloudflare албан ёсны баримт (developers.cloudflare.com) &nbsp;|&nbsp;
+  MGL төсөлд зориулсан тайлбар
+</p>
+
+<div class="note">
+  <strong>Чухал:</strong> «Mongo» гэж бичсэн бол «MongoDB» биш — «<strong>мөнгө нэхэж эхлэх</strong>» гэсэн утгаар ойлгосон.
+  Cloudflare нь MongoDB үйлчилдэггүй. MGL төсөл баримт бичиг, зураг, PDF-ийг <strong>R2</strong> (object storage)-д,
+  өгөгдлийг <strong>D1</strong> (SQLite database)-д хадгалдаг.
+</div>
+
+<h2>1. Товч хураангуй — Хэзээ мөнгө төлөх вэ?</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Үйлчилгээ</th>
+      <th>Үнэгүй хязгаар</th>
+      <th>Хязгаар хэтэрвэл</th>
+      <th>Нэмэлт GB-ийн үнэ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>R2</strong> (баримт, зураг, PDF)</td>
+      <td class="free">10 GB/сар</td>
+      <td class="paid">11 GB-аас эхлэн төлбөр</td>
+      <td><strong>$0.015/GB-сар</strong> (~$15/TB)</td>
+    </tr>
+    <tr>
+      <td><strong>D1</strong> (database)</td>
+      <td class="free">5 GB нийт (Free plan)</td>
+      <td class="paid">5 GB хүрэхэд шинэ өгөгдөл оруулах боломжгүй</td>
+      <td>Paid plan: <strong>$0.75/GB-сар</strong> (эхний 5 GB үнэгүй)</td>
+    </tr>
+    <tr>
+      <td><strong>Workers KV</strong> (OAuth, cache)</td>
+      <td class="free">1 GB</td>
+      <td class="paid">1 GB-аас дээш төлбөр (Paid plan шаардлагатай)</td>
+      <td><strong>$0.50/GB-сар</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Workers Paid</strong> (суурь төлбөр)</td>
+      <td class="free">Free plan байж болно</td>
+      <td class="paid">D1 500MB/db хязгаар, KV 1GB write limit гэх мэт</td>
+      <td><strong>$5/сар</strong> (суурь) + хэрэглээний төлбөр</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>2. R2 Object Storage — Баримт бичиг хадгалах гол сан</h2>
+<p>MGL төсөлд <code>MEDIA_BUCKET</code> (нийтэд нээлттэй) болон <code>MEETING_BUCKET</code> (хувийн) R2 bucket ашиглагдана.</p>
+
+<h3>2.1 Үнэгүй tier (байнга, хугацаагүй)</h3>
+<table>
+  <thead><tr><th>Зүйл</th><th>Үнэгүй хэмжээ/сар</th></tr></thead>
+  <tbody>
+    <tr><td>Storage (Standard)</td><td class="free">10 GB-month</td></tr>
+    <tr><td>Class A (бичих, upload, list)</td><td class="free">1 сая request</td></tr>
+    <tr><td>Class B (унших, download)</td><td class="free">10 сая request</td></tr>
+    <tr><td>Egress (интернэтээр татах)</td><td class="free">Үнэгүй — үргэлж!</td></tr>
+  </tbody>
+</table>
+
+<h3>2.2 Төлбөртэй үнэ (10 GB-аас дээш)</h3>
+<table>
+  <thead><tr><th>Зүйл</th><th>Standard storage</th><th>Infrequent Access</th></tr></thead>
+  <tbody>
+    <tr><td>Storage</td><td><strong>$0.015 / GB-month</strong></td><td>$0.01 / GB-month</td></tr>
+    <tr><td>Class A (write/upload)</td><td>$4.50 / сая request</td><td>$9.00 / сая request</td></tr>
+    <tr><td>Class B (read/download)</td><td>$0.36 / сая request</td><td>$0.90 / сая request</td></tr>
+    <tr><td>Data retrieval</td><td>Үнэгүй</td><td>$0.01 / GB</td></tr>
+    <tr><td>Egress</td><td colspan="2" class="free">Үнэгүй (AWS S3-аас их ялгаатай!)</td></tr>
+  </tbody>
+</table>
+
+<div class="warn">
+  <strong>GB-month гэж юу вэ?</strong> Сарын 30 хоногийн дундаж хадгаламж. Жишээ: 100 GB баримт 1 сар бүхэлдээ хадгалвал = 100 GB-month төлбөр.
+  Cloudflare ашиглалтыг дээш тоймлоно (1.1 GB → 2 GB гэж тооцно).
+</div>
+
+<h3>2.3 Бодит жишээ — Баримт оруулах</h3>
+<div class="example">
+  <strong>Жишээ A:</strong> 500 PDF × 2 MB = ~1 GB нийт → <span class="free">$0/сар</span> (10 GB-ийн дотор)<br/>
+  <strong>Жишээ B:</strong> 5,000 PDF × 2 MB = ~10 GB → <span class="free">$0/сар</span> (яг free tier дотор)<br/>
+  <strong>Жишээ C:</strong> 50 GB баримт (PDF, зураг, Excel) → 40 GB төлбөртэй → 40 × $0.015 = <span class="paid">$0.60/сар</span><br/>
+  <strong>Жишээ D:</strong> 500 GB баримт → 490 GB төлбөртэй → 490 × $0.015 = <span class="paid">$7.35/сар</span><br/>
+  <strong>Жишээ E:</strong> 1 TB (1,000 GB) → 990 GB төлбөртэй → 990 × $0.015 = <span class="paid">$14.85/сар</span> (storage л)<br/>
+  <strong>Жишээ F:</strong> 10 TB → 9,990 GB × $0.015 = <span class="paid">~$149.85/сар</span> (storage л, egress үнэгүй!)
+</div>
+
+<h3>2.4 Хэзээ R2-оос мөнгө нэхэж эхлэх вэ?</h3>
+<ul>
+  <li><strong>Storage:</strong> <span class="highlight">10 GB-аас дээш</span> хадгаламж байвал дараагийн сарын төлбөрт $0.015/GB нэмэгдэнэ.</li>
+  <li><strong>Upload (Class A):</strong> Сар бүр 1 сая upload-аас дээш → $4.50/сая. 10,000 баримт/сар upload хийвэл үнэгүй хэвээр.</li>
+  <li><strong>Download (Class B):</strong> Сар бүр 10 сая download-аас дээш → $0.36/сая. Их хэмжээний уншилт байвал төлбөр нэмэгдэнэ.</li>
+  <li><strong>Egress:</strong> Хэзээ ч төлбөргүй — олон хэрэглэгч PDF татахад нэмэлт bandwidth төлбөр байхгүй.</li>
+</ul>
+
+<h2>3. D1 Database — Өгөгдлийн сан (SQLite)</h2>
+<p>Хэрэглэгч, ирц, төсөл, имэйл metadata зэрэг structured өгөгдөл D1-д байна. <strong>PDF файл D1-д биш, R2-д хадгалагдана.</strong></p>
+
+<h3>3.1 Free plan (Workers Free — $0/сар)</h3>
+<table>
+  <thead><tr><th>Зүйл</th><th>Хязгаар</th></tr></thead>
+  <tbody>
+    <tr><td>Нийт storage (бүх DB нийлбэр)</td><td class="free">5 GB</td></tr>
+    <tr><td>1 database-ийн хамгийн их хэмжээ</td><td>500 MB</td></tr>
+    <tr><td>Database тоо</td><td>10</td></tr>
+    <tr><td>Rows read</td><td>5 сая/өдөр</td></tr>
+    <tr><td>Rows written</td><td>100,000/өдөр</td></tr>
+  </tbody>
+</table>
+
+<h3>3.2 Paid plan (Workers Paid — $5/сар суурь)</h3>
+<table>
+  <thead><tr><th>Зүйл</th><th>Оролттой</th><th>Нэмэлт</th></tr></thead>
+  <tbody>
+    <tr><td>Storage</td><td class="free">Эхний 5 GB үнэгүй</td><td><strong>$0.75/GB-сар</strong></td></tr>
+    <tr><td>1 database max</td><td>10 GB</td><td>—</td></tr>
+    <tr><td>Account max storage</td><td>1 TB</td><td>Хүсэлтээр нэмэгдүүлж болно</td></tr>
+    <tr><td>Rows read</td><td>25 тэрбум/сар</td><td>$0.001/сая row</td></tr>
+    <tr><td>Rows written</td><td>50 сая/сар</td><td>$1.00/сая row</td></tr>
+  </tbody>
+</table>
+
+<div class="warn">
+  <strong>5 GB хүрэхэд юу болох вэ (Free plan)?</strong> Шинэ өгөгдөл оруулах, хүснэгт үүсгэх, index нэмэх боломжгүй болно.
+  Query ажиллахгүй болохгүй — зөвхөн <em>storage limit</em> дүүрнэ. Шийдэл: хуучин өгөгдөл цэвэрлэх эсвэл Workers Paid ($5/сар) руу шилжих.
+</div>
+
+<h3>3.3 D1 төлбөрийн жишээ</h3>
+<div class="example">
+  <strong>3 GB database</strong> (Free) → <span class="free">$0</span><br/>
+  <strong>8 GB database</strong> (Paid) → $5 суурь + (8−5) × $0.75 = $5 + $2.25 = <span class="paid">$7.25/сар</span><br/>
+  <strong>50 GB</strong> (Paid, олон DB) → $5 + (50−5) × $0.75 = $5 + $33.75 = <span class="paid">$38.75/сар</span>
+</div>
+
+<h2>4. Workers KV — Түр cache, OAuth</h2>
+<table>
+  <thead><tr><th>Зүйл</th><th>Free</th><th>Paid ($5/сар)</th></tr></thead>
+  <tbody>
+    <tr><td>Storage</td><td class="free">1 GB</td><td>1 GB + <strong>$0.50/GB-сар</strong></td></tr>
+    <tr><td>Reads</td><td>100,000/өдөр</td><td>10 сая/сар + $0.50/сая</td></tr>
+    <tr><td>Writes</td><td>1,000/өдөр</td><td>1 сая/сар + $5.00/сая</td></tr>
+  </tbody>
+</table>
+<p>KV нь баримт бичиг хадгалах зориулалт биш — их хэмжээний файл R2-д байх ёстой.</p>
+
+<h2>5. MGL төсөлд практик зөвлөмж</h2>
+<table>
+  <thead><tr><th>Сценари</th><th>R2 төлбөр</th><th>D1 төлбөр</th><th>Нийт (ойролцоо)</th></tr></thead>
+  <tbody>
+    <tr><td>Одоогийн хэмжээ (~несколько GB баримт)</td><td class="free">$0</td><td class="free">$0</td><td class="free">$0</td></tr>
+    <tr><td>100 GB баримт (PDF, зураг, Excel)</td><td>$1.35</td><td>$0</td><td>~$1.35/сар</td></tr>
+    <tr><td>500 GB баримт</td><td>$7.35</td><td>$0</td><td>~$7.35/сар</td></tr>
+    <tr><td>1 TB баримт</td><td>$14.85</td><td>$0</td><td>~$14.85/сар</td></tr>
+    <tr><td>5 TB баримт</td><td>$74.85</td><td>$0</td><td>~$75/сар</td></tr>
+    <tr><td>10 TB баримт</td><td>$149.85</td><td>$0–$5</td><td>~$150–155/сар</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <strong>AWS S3-тай харьцуулахад:</strong> S3 storage ~$0.023/GB + egress ~$0.09/GB.
+  R2 storage $0.015/GB + egress <strong>$0</strong>. Олон хүн баримт татдаг бол R2 ихэвчлэн илүү хямд.
+</div>
+
+<h2>6. Төлбөр эхлэх цэг — Нэг хүснэгт</h2>
+<table>
+  <thead>
+    <tr><th>Юу хадгалж байна?</th><th>Хаана?</th><th>Үнэгүй хүрээ</th><th>Төлбөр эхлэх цэг</th><th>GB бүрт</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PDF, зураг, Excel, имэйл хавсралт</td>
+      <td>R2</td>
+      <td>10 GB/сар</td>
+      <td class="paid">11-р GB-аас</td>
+      <td>$0.015/GB-сар</td>
+    </tr>
+    <tr>
+      <td>Хэрэглэгч, ирц, төсөл metadata</td>
+      <td>D1 (Free)</td>
+      <td>5 GB нийт</td>
+      <td class="paid">5 GB дүүрэхэд блок</td>
+      <td>Paid: $0.75/GB-сар</td>
+    </tr>
+    <tr>
+      <td>OAuth token, cache</td>
+      <td>KV</td>
+      <td>1 GB</td>
+      <td class="paid">1 GB-аас</td>
+      <td>$0.50/GB-сар</td>
+    </tr>
+    <tr>
+      <td>Worker API (backend)</td>
+      <td>Workers</td>
+      <td>100K req/өдөр</td>
+      <td>Их traffic</td>
+      <td>$5/сар + хэрэглээ</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>7. Хяналт, анхаарах зүйлс</h2>
+<ul>
+  <li>Cloudflare Dashboard → <strong>R2</strong> → bucket → Metrics: storage хэмжээ харагдана.</li>
+  <li>Dashboard → <strong>D1</strong> → database → Metrics: row/storage usage.</li>
+  <li>R2 free tier <strong>хугацаагүй</strong> — жилийн дараа дуусдаггүй (AWS Free Tier-ээс ялгаатай).</li>
+  <li>Их хэмжээний хуучин баримт → R2 <strong>Infrequent Access</strong> ($0.01/GB) хямд, гэхдээ унших бүрт $0.01/GB retrieval.</li>
+  <li>D1-д PDF/blob хадгалахгүй — 2 MB max row size, 500MB (Free) database limit.</li>
+  <li>Workers Paid ($5/сар) нь D1 10GB/db, 1TB account, KV их write limit нээдэг.</li>
+</ul>
+
+<h2>8. Эх сурвалж</h2>
+<ul>
+  <li>R2 Pricing: https://developers.cloudflare.com/r2/pricing/</li>
+  <li>D1 Pricing: https://developers.cloudflare.com/d1/platform/pricing/</li>
+  <li>D1 Limits: https://developers.cloudflare.com/d1/platform/limits/</li>
+  <li>Workers Pricing: https://developers.cloudflare.com/workers/platform/pricing/</li>
+  <li>R2 Pricing Calculator: https://r2-calculator.cloudflare.com/</li>
+</ul>
+
+<footer>
+  Энэ баримт нь Cloudflare-ийн 2026-08-07 (R2) болон 2026-08-28 (Workers) албан ёсны үнийн мэдээлэлд тулгуурласан.
+  Үнэ өөрчлөгдөж болно — deploy-оос өмнө developers.cloudflare.com-оос шалгана уу.
+</footer>
+
+</body>
+</html>

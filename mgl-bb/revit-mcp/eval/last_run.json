@@ -1,0 +1,53 @@
+{
+ "dataset_version": "2026-08-28.1",
+ "manifest_sha256": "19471561b80e706698286d82fcbf72342fdb75f4023b454867e56b2fcbb8784a",
+ "preprocess_contract": "fold-v1",
+ "kind": "intent",
+ "model_version": "2026-08-28.1-d2a2dee9",
+ "partitions": {
+  "intents": {
+   "rows": 61,
+   "pass": 61,
+   "fail": 0,
+   "acted_wrong": 0
+  },
+  "bim": {
+   "rows": 0,
+   "pass": 0,
+   "fail": 0,
+   "acted_wrong": 0
+  },
+  "rules": {
+   "rows": 0,
+   "pass": 0,
+   "fail": 0,
+   "acted_wrong": 0
+  },
+  "difficult_cases": {
+   "rows": 0,
+   "pass": 0,
+   "fail": 0,
+   "acted_wrong": 0
+  },
+  "regressions": {
+   "rows": 4,
+   "pass": 4,
+   "fail": 0,
+   "acted_wrong": 0
+  },
+  "adversarial": {
+   "rows": 18,
+   "pass": 18,
+   "fail": 0,
+   "acted_wrong": 0
+  }
+ },
+ "required": [
+  "intents",
+  "regressions",
+  "adversarial"
+ ],
+ "blocked": [],
+ "passed": true,
+ "run_at": "2026-08-28T12:55:19+08:00"
+}

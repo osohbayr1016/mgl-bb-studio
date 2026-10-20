@@ -1,0 +1,200 @@
+{
+  "measured_at": "2026-09-10T14:17:55",
+  "base_model": "Qwen/Qwen3-8B",
+  "base_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "rank": 16,
+  "quant": {
+    "load_in_4bit": true,
+    "type": "nf4",
+    "double_quant": true,
+    "compute": "bfloat16"
+  },
+  "optimizer": "paged_adamw_8bit",
+  "gradient_checkpointing": true,
+  "env": {
+    "os": "Windows 11 (10.0.26200)",
+    "python": "3.12.10",
+    "torch": "2.14.0+cu126",
+    "cuda": "12.6",
+    "cudnn": 91002,
+    "transformers": "5.17.0",
+    "peft": "0.20.0",
+    "bitsandbytes": "0.50.2",
+    "gpu": "NVIDIA GeForce RTX 3070",
+    "vram_total_mb": 8191,
+    "vram_free_at_start_mb": 7100,
+    "ram_total_mb": 32581,
+    "nvidia_smi": "NVIDIA GeForce RTX 3070, 8192 MiB, 580 MiB, 560.94"
+  },
+  "load": {
+    "seconds": 15,
+    "allocated_mb": 5806,
+    "peak_mb": 5887
+  },
+  "token_lengths": {
+    "n": 326,
+    "mean": 1240,
+    "median": 1325,
+    "p90": 1860,
+    "p95": 1917,
+    "max": 2319,
+    "over_512": 305,
+    "over_768": 271,
+    "over_1024": 202,
+    "over_1536": 81,
+    "over_2048": 7,
+    "dataset_version": "behav-2026-09-10.3",
+    "tokenizer": "Qwen/Qwen3-8B@b968826d"
+  },
+  "stages": [
+    {
+      "plan": "all",
+      "max_seq": 512,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "sysmem_spill": false,
+      "loss": 1.0337941646575928,
+      "forward_peak_mb": 6260,
+      "backward_peak_mb": 6426,
+      "peak_allocated_mb": 6470,
+      "peak_reserved_mb": 6670,
+      "step_ms": 1274,
+      "step_ms_all": [
+        1885,
+        1270,
+        1274
+      ],
+      "ram_rss_mb": 1493,
+      "degraded": false,
+      "step_ratio_vs_prev": 1.0
+    },
+    {
+      "plan": "all",
+      "max_seq": 768,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "sysmem_spill": false,
+      "loss": 0.9952897429466248,
+      "forward_peak_mb": 6436,
+      "backward_peak_mb": 6605,
+      "peak_allocated_mb": 6605,
+      "peak_reserved_mb": 6914,
+      "step_ms": 1843,
+      "step_ms_all": [
+        1841,
+        1843,
+        1847
+      ],
+      "ram_rss_mb": 1494,
+      "degraded": false,
+      "step_ratio_vs_prev": 0.96
+    },
+    {
+      "plan": "all",
+      "max_seq": 1024,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "sysmem_spill": false,
+      "loss": 1.5473010540008545,
+      "forward_peak_mb": 6571,
+      "backward_peak_mb": 6766,
+      "peak_allocated_mb": 6766,
+      "peak_reserved_mb": 7026,
+      "step_ms": 2364,
+      "step_ms_all": [
+        2376,
+        2349,
+        2364
+      ],
+      "ram_rss_mb": 1494,
+      "degraded": false,
+      "step_ratio_vs_prev": 0.96
+    },
+    {
+      "plan": "all",
+      "max_seq": 1536,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "sysmem_spill": false,
+      "loss": 1.9450404644012451,
+      "forward_peak_mb": 6840,
+      "backward_peak_mb": 7132,
+      "peak_allocated_mb": 7132,
+      "peak_reserved_mb": 7514,
+      "step_ms": 4706,
+      "step_ms_all": [
+        4844,
+        4706,
+        4671
+      ],
+      "ram_rss_mb": 1808,
+      "degraded": false,
+      "step_ratio_vs_prev": 1.33
+    },
+    {
+      "plan": "all",
+      "max_seq": 1792,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "sysmem_spill": false,
+      "loss": 1.9581389427185059,
+      "forward_peak_mb": 6979,
+      "backward_peak_mb": 7317,
+      "peak_allocated_mb": 7317,
+      "peak_reserved_mb": 7774,
+      "step_ms": 13484,
+      "step_ms_all": [
+        13892,
+        13166,
+        13484
+      ],
+      "ram_rss_mb": 2356,
+      "degraded": true,
+      "step_ratio_vs_prev": 2.46
+    },
+    {
+      "plan": "all",
+      "max_seq": 2048,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "sysmem_spill": false,
+      "loss": 1.4680910110473633,
+      "forward_peak_mb": 7115,
+      "backward_peak_mb": 7499,
+      "peak_allocated_mb": 7499,
+      "peak_reserved_mb": 8018,
+      "step_ms": 27822,
+      "step_ms_all": [
+        25864,
+        27822,
+        31050
+      ],
+      "ram_rss_mb": 2513,
+      "degraded": true,
+      "step_ratio_vs_prev": 1.81
+    }
+  ],
+  "verdict": "FITS_STABLY",
+  "recommended_max_seq": 1536,
+  "recommended_targets": "all",
+  "fits_but_degraded": [
+    {
+      "plan": "all",
+      "max_seq": 1792,
+      "step_ms": 13484,
+      "peak_reserved_mb": 7774
+    },
+    {
+      "plan": "all",
+      "max_seq": 2048,
+      "step_ms": 27822,
+      "peak_reserved_mb": 8018
+    }
+  ]
+}

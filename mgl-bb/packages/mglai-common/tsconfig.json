@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": [
+      "ES2023"
+    ],
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "types": [],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "$comment": "src/redaction, normIdentity, index — ЦЭВЭР ES2023 (lib ES2023, types []): Node/Worker/DOM API импортлоход унана (runtime-agnostic нотолгоо).  src/turn/** нь tsconfig.turn.json-оор (WinterCG глобал → DOM lib, types []) — ХОЁУЛАНГ `npm run check` ажиллуулна.  Тестийг ai/integration/tsconfig.json (Node төрөлтэй) шалгана.",
+  "exclude": [
+    "src/turn/**"
+  ]
+}

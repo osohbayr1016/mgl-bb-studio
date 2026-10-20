@@ -1,0 +1,65 @@
+<Window x:Class="RevitMcpAddin.SchedulePickerDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MGL — Түүвэр илгээх: хүснэгт сонгох"
+        Width="560"
+        Height="620"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False"
+        UseLayoutRounding="True">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Юу, хаашаа, сонголт хаана хадгалагдахыг ИЛ хэлнэ. -->
+        <TextBlock x:Name="IntroText" Grid.Row="0" Margin="0,0,0,10" Style="{DynamicResource MglMuted}"
+                   Text="ERP-д илгээх Revit-ийн түүврийн хүснэгтүүдийг (Schedule / Quantities) сонгоно уу. Загвар өөрчлөгдөхгүй. Сонголт энэ компьютерт санагдана." />
+
+        <TextBlock x:Name="SearchLabel" Grid.Row="1" Text="Хайх (категори эсвэл нэр)" Margin="0,0,0,4" />
+        <TextBox x:Name="SearchBox" Grid.Row="2" Margin="0,0,0,8" TextChanged="SearchBox_TextChanged" />
+
+        <DockPanel Grid.Row="3" LastChildFill="True">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8">
+                <Button x:Name="SelectAllBtn" Content="Харагдаж буйг сонгох" Click="SelectAllBtn_Click"
+                        ToolTip="Одоо жагсаалтад харагдаж байгаа (шүүлтэд таарсан) хүснэгтүүдийг сонгоно." />
+                <Button x:Name="ClearBtn" Content="Сонголт цуцлах" Margin="8,0,0,0" Click="ClearBtn_Click"
+                        ToolTip="БҮХ сонголтыг (шүүлтээр нуугдсаныг оролцуулан) цуцална. Хүснэгтийг устгахгүй." />
+                <TextBlock x:Name="CountText" VerticalAlignment="Center" Margin="12,0,0,0" Style="{DynamicResource MglMuted}" />
+            </StackPanel>
+
+            <ListBox x:Name="ScheduleList" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     AutomationProperties.Name="Илгээх хүснэгтүүдийн жагсаалт">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" Margin="0,1">
+                            <TextBlock TextTrimming="CharacterEllipsis">
+                                <Run Text="{Binding Category, Mode=OneWay}" Foreground="{DynamicResource FgMuted}" />
+                                <Run Text=" — " Foreground="{DynamicResource FgMuted}" />
+                                <Run Text="{Binding Name, Mode=OneWay}" />
+                                <Run Text="{Binding RowLabel, Mode=OneWay}" Foreground="{DynamicResource FgMuted}" />
+                            </TextBlock>
+                        </CheckBox>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+
+        <Grid Grid.Row="4" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="ErrorText" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0" TextWrapping="Wrap"
+                       Foreground="{DynamicResource Danger}" Visibility="Collapsed" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button x:Name="OkBtn" Content="ERP-д илгээх" Width="130" IsDefault="True" Click="OkBtn_Click" />
+                <Button x:Name="CancelBtn" Content="Болих" Margin="8,0,0,0" IsCancel="True" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,2153 @@
+{
+  "measured_at": "2026-09-10T07:54:32.969Z",
+  "gen": true,
+  "identity": {
+    "label": "candidate:mgl-adapter-0.1-smoke",
+    "system_prompt_version": "mglai-sys-5",
+    "tool_schema_version": "mglai-tools-1",
+    "retrieval_version": "mglai-rag-1",
+    "product_version": "1.0.0",
+    "runtime": {
+      "runtime_version": "1.0.0",
+      "engine": "llama.cpp",
+      "artifact": "Qwen3-8B-Q4_K_M.gguf",
+      "quantization": "Q4_K_M",
+      "model_version": "dev-local",
+      "adapter_version": "dev-candidate:C:\\Users\\User\\project\\mgl-e-c\\ai\\models\\adapters\\mgl-adapter-0.1-smoke\\mgl-adapter-0.1-smoke.lora.gguf",
+      "context_tokens": 8192
+    }
+  },
+  "checks": [
+    {
+      "name": "A · META, хэрэгсэлгүй",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "A · гэрээ free",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "A · кирилл хариулт",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "A · identity дурдаагүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "B · get_active_employees дуудав",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "B · гэрээ grounded, active_employees заавал",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "B · эцсийн хариултад ЯГ серверийн тоо",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "B · гэрээнд нийцсэн",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "C1 · get_upcoming_deadlines + сэдэв тогтов",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "C1 · persona none",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "C1 · төслийн нэр хариултад",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "C1 · identity дурдаагүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "C2 · FOLLOW_UP, analyze_project(сэдэв)",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "C2 · сэдвийн мөр prompt-д",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "C2 · төслийг заав",
+      "ok": false,
+      "gen": true
+    },
+    {
+      "name": "C2 · identity дурдаагүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "C2 · гэрээнд нийцсэн (тоо зөвхөн хайрцгаас)",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "D · NEW_TOPIC, түүх 0, ERP хэрэгсэлгүй",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "D · prompt-д төслийн нэр БАЙХГҮЙ",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "D · шийдвэр verified В2, гэрээ authoritative/high",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "D · В2 + 1401/2200 хариултад",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "D · төслийн нэр хариултад БАЙХГҮЙ",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "D · гэрээнд нийцсэн",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "G · CORRECTION → сэдэв B, төслийн хэрэгсэл B дээр",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "G · хариултад B-ийн нэр, A-ийн нэр БИШ",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "E · lookup шийдвэр, gerее authoritative",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "E · В2 + 1401–2200, эх сурвалж",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "E · «м²» талбайн зохиомол тоо БАЙХГҮЙ",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "E · гэрээнд нийцсэн",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "F · MULTI_INTENT, list_projects + шийдвэр",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "F · 1)/2) бүтэц",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "F · идэвхтэй тоо = active_count",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "F · В2 муж 1401–2200",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "H · гэрээ refusal, noMatch",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "H · канон татгалзал эхэнд",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "H · зохиомол тоо, эшлэл БАЙХГҮЙ",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "H · гэрээнд нийцсэн",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "I · локал заалт нотолгоо болов",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "I · хуучин баримт бол трейлер гэрээнд бий",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "I · трейлер хариултын төгсгөлд",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "I · identity дурдаагүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "J · ижил өгүүлбэр < 2, ижил догол 0",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "J · залгаа давтагдсан блок алга",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "J · зэргэлдээ хувилбар давталт < 2",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "J · ≥6 үгийн цонх 3-аас олон удаа гараагүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "J · гогцоо суффикс алга",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "K · persona none, get_overdue_tasks",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "K · identity дурдаагүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "K · гэрээнд нийцсэн",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "L · response_language en, list_projects",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "L · англи хариулт, тоо зөв",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "M · REVIT_READ, ERP хэрэгсэлгүй, кирилл хариулт төлөвлөв",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "M · кирилл хариулт",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "M · зохиомол талбайн тоо БАЙХГҮЙ (Revit холбогдоогүй)",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "N · гэрээнд хориотой хэллэг",
+      "ok": true,
+      "gen": false
+    },
+    {
+      "name": "N · «өөрчиллөө/амжилттай» гэж хэлээгүй",
+      "ok": true,
+      "gen": true
+    },
+    {
+      "name": "O · memory_hints: answer_length=short, байнгын",
+      "ok": true,
+      "gen": false
+    }
+  ],
+  "cases": [
+    {
+      "question": "chi ymar asuultand hariulj chadah ve",
+      "turn": "NEW_TOPIC",
+      "intent": "META",
+      "tools": [],
+      "norm": null,
+      "contract": {
+        "mode": "free",
+        "risk": "low",
+        "facts": [],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 23,
+      "contextMs": 8,
+      "raw": "Тийм ч юу ч биш: хамгийн их асуултад тусална. Төсөл, deadline, даалгавар, ажилтны ачаалал, тайлан, Revit төслийн нээлттэй байгаа баримт бичиг, барилгын норм дүрэм, тооцоо зэрэг. Норм дүрмийн асуултад баталгаатай эх сурвалжаас хариулна. Revit холбогдсон үед төсөл, view, сонгосон элементийн мэдээллийг ашиглаж болно.",
+      "final": "Тийм ч юу ч биш: хамгийн их асуултад тусална. Төсөл, deadline, даалгавар, ажилтны ачаалал, тайлан, Revit төслийн нээлттэй байгаа баримт бичиг, барилгын норм дүрэм, тооцоо зэрэг. Норм дүрмийн асуултад баталгаатай эх сурвалжаас хариулна. Revit холбогдсон үед төсөл, view, сонгосон элементийн мэдээллийг ашиглаж болно.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [],
+      "repetition": {
+        "raw": {
+          "sentences": 4,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        },
+        "final": {
+          "sentences": 4,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 128,
+      "genMs": 3440,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 43,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 43,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "manai company heden ajiltantai ve",
+      "turn": "NEW_TOPIC",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "get_active_employees"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "active_employees=57"
+        ],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 20,
+      "contextMs": 8,
+      "raw": "Манайд 57 идэвхтэй ажилтан байна.",
+      "final": "Манайд 57 идэвхтэй ажилтан байна.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        },
+        "final": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 129,
+      "genMs": 551,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 5,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 5,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "ali project hamgiin oir deadline-tei ve",
+      "turn": "NEW_TOPIC",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "list_projects",
+        "get_upcoming_deadlines"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "active_projects=16",
+          "total_projects=24",
+          "overdue_projects=3",
+          "upcoming_count=1",
+          "nearest_project=MGL-260226_MITIC_AZ",
+          "nearest_days=5",
+          "nearest_finish=2026-09-15"
+        ],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 25,
+      "contextMs": 8,
+      "raw": "MGL-260226_MITIC_AZ 2026-09-15-нд дуусна — 5 хоногийн дараа.",
+      "final": "Идэвхтэй төсөл: **16** · Хамгийн ойрхон төсөл: **MGL-260226_MITIC_AZ**\n\nMGL-260226_MITIC_AZ 2026-09-15-нд дуусна — 5 хоногийн дараа.",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "FACT_MISSING"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        },
+        "final": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0.047619047619047616,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 809,
+      "genMs": 1642,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": false,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 7,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 15,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "yagaad udaad bna",
+      "turn": "FOLLOW_UP",
+      "intent": "ERP_ANALYSIS",
+      "tools": [
+        "analyze_project"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "project_name=MGL-260226_MITIC_AZ",
+          "project_progress=8.53",
+          "tasks_overdue=0",
+          "tasks_stale_14d=43",
+          "tasks_unassigned_open=299",
+          "pending_approvals=4"
+        ],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 26,
+      "contextMs": 8,
+      "raw": "Хамгийн сүүний дараа явц 37 хоногийн өмнө, 4 явцын батлагдахаа хүлээж байна.",
+      "final": "Хамгийн сүүний дараа явц 37 хоногийн өмнө, 4 явцын батлагдахаа хүлээж байна.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        },
+        "final": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 524,
+      "genMs": 1461,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 12,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 12,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "g=1800 MJ/m2 bol V2 yu V3 yu",
+      "turn": "NEW_TOPIC",
+      "intent": "NORMATIVE",
+      "tools": [],
+      "norm": {
+        "status": "uncertain",
+        "cite": "БНбД 21-04-05, Хавсралт №14, Хүснэгт 3, мөр 9.2, хуудас 8"
+      },
+      "contract": {
+        "mode": "authoritative",
+        "risk": "high",
+        "facts": [
+          "fire_category=В2",
+          "range_min=1401",
+          "range_max=2200",
+          "g_input=1800",
+          "source=БД 21-101-12"
+        ],
+        "noMatch": false,
+        "requiredCitations": [
+          "БД 21-101-12"
+        ],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 25,
+      "contextMs": 12,
+      "raw": "g = 1800 МДж/м² бол В2 ангилал (муж ≥1401–2200 МДж/м²) — хувийн галын ачаалал g = 1800.",
+      "final": "Ангилал: **В2** · Доод хязгаар: **1401 МДж/м²** · Дээд хязгаар: **2200 МДж/м²** · Эх сурвалж: БД 21-101-12\n\ng = 1800 МДж/м² бол В2 ангилал (муж ≥1401–2200 МДж/м²) — хувийн галын ачаалал g = 1800.",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "CITATION_MISSING"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        },
+        "final": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 237,
+      "genMs": 1394,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": false,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 17,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 34,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "MGL-260226_MITIC_AZ төслийн явц хэд вэ?",
+      "turn": "NEW_TOPIC",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "get_project_progress"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "project_progress=8.5",
+          "project_name=MGL-260226_MITIC_AZ"
+        ],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 27,
+      "contextMs": 8,
+      "raw": "MGL-260226_MITIC_AZ төслин явц 8.5% — 2026-09-15-нд дуусна.",
+      "final": "MGL-260226_MITIC_AZ төслин явц 8.5% — 2026-09-15-нд дуусна.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        },
+        "final": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 311,
+      "genMs": 1146,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 7,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 7,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "үгүй ээ, MGL-260804 Хүй долоон худаг-Стадион-г хэлсэн юм",
+      "turn": "CORRECTION",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "get_project_progress"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "project_progress=0",
+          "project_name=MGL-260804 Хүй долоон худаг-Стадион"
+        ],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 11,
+      "contextMs": 8,
+      "raw": "Тийн. Төслийн ID 57 — MGL-260804 Хүй долоон худаг-Стадион.",
+      "final": "Явц: **0%**\n\nТийн. Төслийн ID 57 — MGL-260804 Хүй долоон худаг-Стадион.",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "FACT_MISSING"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        },
+        "final": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 807,
+      "genMs": 1553,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": false,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 9,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 11,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "V2 galyn achaalal hed ve",
+      "turn": "NEW_TOPIC",
+      "intent": "NORMATIVE",
+      "tools": [],
+      "norm": {
+        "status": "uncertain",
+        "cite": "БНбД 21-04-05, Хавсралт №14, Хүснэгт 3, мөр 9.2, хуудас 8"
+      },
+      "contract": {
+        "mode": "authoritative",
+        "risk": "high",
+        "facts": [
+          "fire_category=В2",
+          "range_min=1401",
+          "range_max=2200",
+          "source=БД 21-101-12"
+        ],
+        "noMatch": false,
+        "requiredCitations": [
+          "БД 21-101-12"
+        ],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 29,
+      "contextMs": 10,
+      "raw": "В2 ангилал: хувийн галын ачаалал g = 1401–2200 МДж/м² (БД 21-101-12, Хүснэгт 4, х.13).",
+      "final": "В2 ангилал: хувийн галын ачаалал g = 1401–2200 МДж/м² (БД 21-101-12, Хүснэгт 4, х.13).",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        },
+        "final": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 201,
+      "genMs": 1431,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 14,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 14,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Манай компанид хэдэн идэвхтэй төсөл байгаа вэ? Бас В2 ангиллын галын ачаалал хэдээс хэд вэ?",
+      "turn": "MULTI_INTENT",
+      "intent": "NORMATIVE",
+      "tools": [
+        "list_projects"
+      ],
+      "norm": {
+        "status": "uncertain",
+        "cite": "БНбД 21-04-05, Хавсралт №14, Хүснэгт 3, мөр 9.2, хуудас 8"
+      },
+      "contract": {
+        "mode": "authoritative",
+        "risk": "high",
+        "facts": [
+          "fire_category=В2",
+          "range_min=1401",
+          "range_max=2200",
+          "source=БД 21-101-12",
+          "active_projects=16",
+          "total_projects=24",
+          "overdue_projects=3"
+        ],
+        "noMatch": false,
+        "requiredCitations": [
+          "БД 21-101-12"
+        ],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 37,
+      "contextMs": 11,
+      "raw": "1) Идэвхтэй төсөл 16 байна.\n2) В2 ангилал: 1401–2200 МДж/м² (БД 21-101-12, Хүснэгт 4, х.13).",
+      "final": "1) Идэвхтэй төсөл 16 байна.\n2) В2 ангилал: 1401–2200 МДж/м² (БД 21-101-12, Хүснэгт 4, х.13).",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        },
+        "final": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 1011,
+      "genMs": 2492,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 15,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 15,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Лифтний хонгилын хананы галд тэсвэрлэх хугацаа хэдэн цаг байх ёстой вэ?",
+      "turn": "NEW_TOPIC",
+      "intent": "NORMATIVE",
+      "tools": [],
+      "norm": {
+        "status": "insufficient_evidence",
+        "cite": null
+      },
+      "contract": {
+        "mode": "refusal",
+        "risk": "high",
+        "facts": [],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": "Энэ шаардлагыг баталгаатай хэлэх эх сурвалж одоогоор олдсонгүй.",
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 26,
+      "contextMs": 8,
+      "raw": "Энэ шаардлагыг баталгаатай хэлэх эх сурвалж одоогоор олдсонгүй.",
+      "final": "Энэ шаардлагыг баталгаатай хэлэх эх сурвалж одоогоор олдсонгүй.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        },
+        "final": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 175,
+      "genMs": 912,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 8,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 8,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Одоо Монгол Улсад нормд тусгагдаагүй шинэ материал ашиглах бол ямар байгууллагаас зөвшөөрөл авах вэ?",
+      "turn": "NEW_TOPIC",
+      "intent": "NORMATIVE",
+      "tools": [],
+      "norm": {
+        "status": "supported",
+        "cite": "УББ-11-201-00, Төслийн үндсэн шийдлийн бүлгүүдийн бүтэц, заалт 5.11, хуудас 17"
+      },
+      "contract": {
+        "mode": "grounded",
+        "risk": "high",
+        "facts": [
+          "source_currentness=NEEDS_HUMAN_REVIEW"
+        ],
+        "noMatch": false,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": "Анхаар: энэ хариулт нь хүчин төгөлдөр байдал нь шалгагдаагүй (хуучин) баримтад тулгуурласан. Одоо мөрдөж буй эрх бүхий байгууллага, журмыг албан ёсны эх сурвалжаас баталгаажуулах шаардлагатай — хүний хяналт хэрэгтэй."
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 33,
+      "contextMs": 11,
+      "raw": "Мөн хариу: [2] УББ-11-201-00, заалт 2.1 дүрийн тойм: Хүн амын нутагшилт, суурьшлын болон бүс нутгийн хөгжлийн төслийг Хот байгуулалтын асуудал эрхэлсэн Төрийн захиргааны төв байгууллагаас зөвшөөрөл авсан мэргэжлийн байгууллага, аж ахуйн нэгж гүйцэтгэнэ. Тиймээс шинэ материал ашиглахыг заавал энэ байгууллагад зөвшөөрөл авна.",
+      "final": "Мөн хариу: [2] УББ-11-201-00, заалт 2.1 дүрийн тойм: Хүн амын нутагшилт, суурьшлын болон бүс нутгийн хөгжлийн төслийг Хот байгуулалтын асуудал эрхэлсэн Төрийн захиргааны төв байгууллагаас зөвшөөрөл авсан мэргэжлийн байгууллага, аж ахуйн нэгж гүйцэтгэнэ. Тиймээс шинэ материал ашиглахыг заавал энэ байгууллагад зөвшөөрөл авна.\n\nАнхаар: энэ хариулт нь хүчин төгөлдөр байдал нь шалгагдаагүй (хуучин) баримтад тулгуурласан. Одоо мөрдөж буй эрх бүхий байгууллага, журмыг албан ёсны эх сурвалжаас баталгаажуулах шаардлагатай — хүний хяналт хэрэгтэй.",
+      "source": "repaired",
+      "attempts": 1,
+      "violations": [
+        [
+          "TRAILER_MISSING"
+        ]
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        },
+        "final": {
+          "sentences": 4,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 897,
+      "genMs": 4835,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": false,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 42,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 71,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Барилгын зураг төслийн ажлын үе шатуудыг эхнээс нь дуустал дэлгэрэнгүй тайлбарлаад өгөөч",
+      "turn": "NEW_TOPIC",
+      "intent": "GENERAL_HELP",
+      "tools": [
+        "query_entities"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "free",
+        "risk": "low",
+        "facts": [],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 13,
+      "contextMs": 8,
+      "raw": "Барилгын зураг төслийн ажлын үе шат — барилгын явцын төрлийн тайлбар (хоёр төрөл). Тэр буюу энэ нь «дараах» болон «тэнцвэрлэл» гэсэн хоёр шат.",
+      "final": "Барилгын зураг төслийн ажлын үе шат — барилгын явцын төрлийн тайлбар (хоёр төрөл). Тэр буюу энэ нь «дараах» болон «тэнцвэрлэл» гэсэн хоёр шат.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [],
+      "repetition": {
+        "raw": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        },
+        "final": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 182,
+      "genMs": 1889,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 23,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 23,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Хамгийн хоцорсон таскууд юу байна?",
+      "turn": "NEW_TOPIC",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "get_overdue_tasks",
+        "query_entities"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "overdue_tasks=0"
+        ],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 20,
+      "contextMs": 8,
+      "raw": "Хамгийн хоцорсон даалгавар 0 байна.",
+      "final": "Хамгийн хоцорсон даалгавар 0 байна.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        },
+        "final": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 581,
+      "genMs": 990,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 5,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 5,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "How many active projects do we have right now?",
+      "turn": "NEW_TOPIC",
+      "intent": "COMPANY_FACT",
+      "tools": [
+        "list_projects"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "grounded",
+        "risk": "medium",
+        "facts": [
+          "active_projects=16",
+          "total_projects=24",
+          "overdue_projects=3"
+        ],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "en",
+      "planMs": 28,
+      "contextMs": 8,
+      "raw": "There are 16 active projects.",
+      "final": "There are 16 active projects.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [
+        []
+      ],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        },
+        "final": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 826,
+      "genMs": 988,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 5,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 5,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Revit deer ene wall-iin area hed ve",
+      "turn": "NEW_TOPIC",
+      "intent": "REVIT_READ",
+      "tools": [],
+      "norm": null,
+      "contract": {
+        "mode": "free",
+        "risk": "low",
+        "facts": [],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 22,
+      "contextMs": 5,
+      "raw": "Таны Revit холбогдоогүй тул сонгосон багцааны талбайг хэлж чадахгүй байна. Revit-ийн дуусахын дараа дахин асуувал талбайг нь өгнө.",
+      "final": "Таны Revit холбогдоогүй тул сонгосон багцааны талбайг хэлж чадахгүй байна. Revit-ийн дуусахын дараа дахин асуувал талбайг нь өгнө.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [],
+      "repetition": {
+        "raw": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        },
+        "final": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 292,
+      "genMs": 1727,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 18,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 18,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "Сонгосон хананы өндрийг 3 метр болгож өөрчил",
+      "turn": "NEW_TOPIC",
+      "intent": "REVIT_ACTION",
+      "tools": [
+        "get_project_progress✗"
+      ],
+      "norm": null,
+      "contract": {
+        "mode": "free",
+        "risk": "medium",
+        "facts": [
+          "tool_failed:get_project_progress=permission_denied"
+        ],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 24,
+      "contextMs": 6,
+      "raw": "Таны Revit эрхэдсэн түвшин нь унших зөрөөтэй тул даалгаврын өөрчлөлтийн явц, хэрэгжсэн байдлыг шалгаж чадахгүй байна. Таны эрхийг санал болгоход ажилтан админтой холбогдоно.",
+      "final": "Таны Revit эрхэдсэн түвшин нь унших зөрөөтэй тул даалгаврын өөрчлөлтийн явц, хэрэгжсэн байдлыг шалгаж чадахгүй байна. Таны эрхийг санал болгоход ажилтан админтой холбогдоно.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [],
+      "repetition": {
+        "raw": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        },
+        "final": {
+          "sentences": 2,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 1,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 370,
+      "genMs": 2344,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 23,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 23,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    },
+    {
+      "question": "цаашид хариултаа богино бичээрэй",
+      "turn": "NEW_TOPIC",
+      "intent": "GENERAL_HELP",
+      "tools": [],
+      "norm": null,
+      "contract": {
+        "mode": "free",
+        "risk": "low",
+        "facts": [],
+        "noMatch": true,
+        "requiredCitations": [],
+        "requiredSentence": null,
+        "trailerText": null
+      },
+      "lang": "mn-Cyrl",
+      "planMs": 28,
+      "contextMs": 8,
+      "raw": "Тийм, таарах боломжтой.",
+      "final": "Тийм, таарах боломжтой.",
+      "source": "model",
+      "attempts": 1,
+      "violations": [],
+      "repetition": {
+        "raw": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        },
+        "final": {
+          "sentences": 1,
+          "exactDuplicateSentenceRate": 0,
+          "duplicateParagraphRate": 0,
+          "repeatedNgramRate": 0,
+          "loopingSuffix": false,
+          "exactRepeatedSentences": 0,
+          "exactRepeatedParagraphs": 0,
+          "contiguousRepeatedBlock": false,
+          "nearDuplicateAdjacent": 0,
+          "longestRepeatedRun": 0,
+          "severe": false
+        }
+      },
+      "firstTokenMs": 142,
+      "genMs": 410,
+      "tokens": null,
+      "stop": "stop",
+      "dedupRemoved": 0,
+      "rawValid": true,
+      "style": {
+        "raw": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 3,
+          "perHundredWords": 0
+        },
+        "final": {
+          "hits": {
+            "literal": 0,
+            "bureaucratic": 0,
+            "preamble": 0,
+            "padding": 0,
+            "identity": 0,
+            "process": 0,
+            "sycophancy": 0,
+            "hedgeAfterRefusal": 0,
+            "tutorial": 0,
+            "boldSpam": 0,
+            "loopClause": 0,
+            "templateLeak": 0,
+            "langmix": 0
+          },
+          "total": 0,
+          "words": 3,
+          "perHundredWords": 0
+        }
+      },
+      "finalValid": true
+    }
+  ]
+}

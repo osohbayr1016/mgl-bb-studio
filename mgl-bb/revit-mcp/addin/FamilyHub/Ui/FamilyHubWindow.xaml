@@ -1,0 +1,212 @@
+<Window x:Class="RevitMcpAddin.FamilyHub.Ui.FamilyHubWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        Title="MGL — Family сан" Width="1100" Height="760" MinWidth="640" MinHeight="480"
+        ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        FontFamily="Segoe UI" FontSize="12" Background="#F7F8FA">
+    <Window.Resources>
+        <Style x:Key="PrimaryBtn" TargetType="Button">
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="MinWidth" Value="110"/>
+            <Setter Property="Background" Value="#4A7FA5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#C9CED6"/>
+                    <Setter Property="Foreground" Value="#5B6470"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="GhostBtn" TargetType="Button" BasedOn="{StaticResource PrimaryBtn}">
+            <Setter Property="Background" Value="#E6EAF0"/>
+            <Setter Property="Foreground" Value="#1F2A37"/>
+        </Style>
+        <Style x:Key="NavBtn" TargetType="Button" BasedOn="{StaticResource GhostBtn}">
+            <Setter Property="MinWidth" Value="34"/>
+            <Setter Property="Padding" Value="6,2"/>
+        </Style>
+        <BooleanToVisibilityConverter x:Key="BoolVis"/>
+    </Window.Resources>
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl x:Name="Tabs" Grid.Row="0" Background="White" BorderBrush="#D8DDE4" SelectionChanged="Tabs_SelectionChanged">
+
+            <!-- ═══════ TAB 1: BIMobject (WebView2) ═══════ -->
+            <TabItem Header="  BIMobject  ">
+                <Grid Margin="6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Хөтчийн мөр -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="◀" Style="{StaticResource NavBtn}" Click="WebBack_Click" ToolTip="Буцах"/>
+                        <Button Grid.Column="1" Content="▶" Style="{StaticResource NavBtn}" Margin="4,0,0,0" Click="WebForward_Click" ToolTip="Урагш"/>
+                        <Button Grid.Column="2" Content="⟳" Style="{StaticResource NavBtn}" Margin="4,0,0,0" Click="WebReload_Click" ToolTip="Дахин ачаалах"/>
+                        <Button Grid.Column="3" Content="⌂" Style="{StaticResource NavBtn}" Margin="4,0,0,0" Click="WebHome_Click" ToolTip="BIMobject нүүр хуудас (bimobject.com)"/>
+                        <TextBox x:Name="WebUrl" Grid.Column="4" Margin="8,0,0,0" Height="28" VerticalContentAlignment="Center" Padding="6,0"
+                                 KeyDown="WebUrl_KeyDown" ToolTip="Enter — тэр хаяг руу очно"/>
+                    </Grid>
+
+                    <!-- Мэдэгдэл: нэвтрэлт таных, татах товч таных -->
+                    <Border Grid.Row="1" x:Name="WebBanner" Background="#EEF4FA" BorderBrush="#B9CFE4" BorderThickness="1" CornerRadius="4"
+                            Padding="8,5" Margin="0,6,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="WebBannerText" TextWrapping="Wrap" Foreground="#1F3A57"
+                                       Text="BIMobject-ийн сайт жинхэнэ хөтчөөр нээгдэнэ. Өөрийн бүртгэлээр нэвтэрч, бүтээгдэхүүний «Download» товчийг дарахад файл шууд Revit руу орно (шалгалт → давхардал → ачаалах → байрлуулах). Downloads хавтсанд юу ч үлдэхгүй."/>
+                            <Button x:Name="WebPlaceBtn" Grid.Column="1" Content="Байрлуулах" Style="{StaticResource PrimaryBtn}" Margin="8,0,0,0"
+                                    Visibility="Collapsed" Click="WebPlace_Click"/>
+                        </Grid>
+                    </Border>
+
+                    <Grid Grid.Row="2" Margin="0,6,0,0">
+                        <wv2:WebView2 x:Name="BimWeb" DefaultBackgroundColor="White"/>
+                        <Border x:Name="WebInitOverlay" Background="#F7F8FA" Visibility="Visible">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock x:Name="WebInitText" Text="Хөтөч эхэлж байна…" FontSize="14" Foreground="#5B6470" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="520"/>
+                                <Button x:Name="WebRetryBtn" Content="Дахин оролдох" Style="{StaticResource GhostBtn}" Margin="0,10,0,0"
+                                        HorizontalAlignment="Center" Visibility="Collapsed" Click="WebRetry_Click"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <!-- ═══════ TAB 2: Нийтийн сан (anonymous providers) ═══════ -->
+            <TabItem Header="  Нийтийн сан  ">
+                <Grid Margin="6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBox x:Name="SearchBox" Height="30" VerticalContentAlignment="Center" Padding="8,0"
+                                     KeyDown="SearchBox_KeyDown" TextChanged="SearchBox_TextChanged"/>
+                            <TextBlock x:Name="SearchHint" Text="Family хайх…" Foreground="#8B94A0" Margin="10,0,0,0"
+                                       VerticalAlignment="Center" IsHitTestVisible="False"/>
+                        </Grid>
+                        <ComboBox x:Name="ProviderBox" Grid.Column="1" Width="180" Height="30" Margin="8,0,0,0"
+                                  VerticalContentAlignment="Center"/>
+                        <Button x:Name="SearchBtn" Grid.Column="2" Content="Хайх" Style="{StaticResource PrimaryBtn}"
+                                Margin="8,0,0,0" Height="30" Click="Search_Click"/>
+                    </Grid>
+
+                    <Border Grid.Row="1" x:Name="NoticeBorder" Background="#FFF6E5" BorderBrush="#E8C98A" BorderThickness="1"
+                            CornerRadius="4" Padding="8,6" Margin="0,8,0,0" Visibility="Collapsed">
+                        <TextBlock x:Name="NoticeText" TextWrapping="Wrap" Foreground="#6B4E00"/>
+                    </Border>
+
+                    <ListBox x:Name="Results" Grid.Row="2" Margin="0,8,0,0" BorderBrush="#D8DDE4" Background="White"
+                             HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Width="56" Height="56" Background="#E6EAF0" CornerRadius="6" Margin="0,0,10,0">
+                                        <Grid>
+                                            <TextBlock Text="{Binding Initial}" FontSize="22" FontWeight="Bold" Foreground="#4A7FA5"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Image Source="{Binding Thumbnail}" Stretch="Uniform"/>
+                                        </Grid>
+                                    </Border>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{Binding Subtitle}" Foreground="#5B6470" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{Binding Meta}" Foreground="#8B94A0" FontSize="11" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{Binding StateText}" Foreground="#2E9E6B" FontSize="11" FontWeight="SemiBold"
+                                                   Visibility="{Binding InProject, Converter={StaticResource BoolVis}}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button Content="{Binding ButtonText}" IsEnabled="{Binding ButtonEnabled}"
+                                                Style="{StaticResource PrimaryBtn}" Margin="6,0,0,0" Click="Add_Click" Tag="{Binding}"
+                                                Visibility="{Binding ShowAdd, Converter={StaticResource BoolVis}}"/>
+                                        <Button Content="Байрлуулах" Style="{StaticResource GhostBtn}" Margin="6,0,0,0" Click="Place_Click" Tag="{Binding}"
+                                                Visibility="{Binding InProject, Converter={StaticResource BoolVis}}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!-- ═══════ Төлөв (хоёр табд нийтлэг) ═══════ -->
+        <Border Grid.Row="1" Background="White" BorderBrush="#D8DDE4" BorderThickness="1" CornerRadius="4" Padding="10,8" Margin="0,8,0,0">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="StatusText" Text="Бэлэн." TextWrapping="Wrap"/>
+                        <ProgressBar x:Name="Progress" Height="6" Margin="0,6,0,0" IsIndeterminate="True" Visibility="Collapsed"/>
+                    </StackPanel>
+                    <Button x:Name="CancelBtn" Grid.Column="1" Content="Цуцлах" Style="{StaticResource GhostBtn}"
+                            Visibility="Collapsed" Click="Cancel_Click" VerticalAlignment="Top"/>
+                </Grid>
+
+                <Border x:Name="ConflictPanel" Background="#FDECEC" BorderBrush="#E5A3A3" BorderThickness="1" CornerRadius="4"
+                        Padding="8" Margin="0,8,0,0" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold" Foreground="#8A1F1F" Text="Нэр ижил боловч ӨӨР Family"/>
+                        <TextBlock x:Name="ConflictText" TextWrapping="Wrap" Margin="0,4,0,6"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Байгаа Family-г ашиглах" Style="{StaticResource PrimaryBtn}" Click="ConflictUseExisting_Click"/>
+                            <Button Content="Цуцлах" Style="{StaticResource GhostBtn}" Margin="8,0,0,0" Click="ConflictCancel_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border x:Name="TypesPanel" Background="#EAF6EF" BorderBrush="#9ED3B4" BorderThickness="1" CornerRadius="4"
+                        Padding="8" Margin="0,8,0,0" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock x:Name="TypesTitle" FontWeight="Bold" Foreground="#1F6B44" Text="Family ачаалагдлаа"/>
+                        <TextBlock Text="Байрлуулах боломжтой төрлүүд (Type):" Margin="0,4,0,2"/>
+                        <ListBox x:Name="TypesList" MaxHeight="110" Background="White"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                            <Button Content="Байрлуулах" Style="{StaticResource PrimaryBtn}" Click="PlaceType_Click"/>
+                            <TextBlock Text="Revit-ийн энгийн байрлуулалт эхэлнэ; Esc-ээр дуусгана." Foreground="#5B6470"
+                                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

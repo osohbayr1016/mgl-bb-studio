@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-09-18",
+  "items": 114,
+  "with_candidate": 114,
+  "verifier_pass": 51,
+  "verifier_fail": 63,
+  "by_strata": {
+    "obligation": 10,
+    "prohibition": 8,
+    "permission": 8,
+    "condition_heavy": 10,
+    "exception_heavy": 8,
+    "scope": 1,
+    "cross_reference_unresolved": 7,
+    "cross_reference": 6,
+    "numeric": 10,
+    "long_multi_sentence": 8,
+    "short": 8,
+    "appendix": 10,
+    "duplicate_number": 8,
+    "unusual_wording": 5,
+    "multiple_requirements": 7
+  },
+  "human_reviewed": 0
+}

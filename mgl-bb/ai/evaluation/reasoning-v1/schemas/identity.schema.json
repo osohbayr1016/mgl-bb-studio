@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mglai-reasoning-benchmark-identity/1",
+  "type": "object",
+  "required": [
+    "schema",
+    "git_sha",
+    "product_version",
+    "system_prompt_version",
+    "tool_schema_version",
+    "retrieval_version",
+    "model",
+    "model_revision",
+    "model_sha256",
+    "quantization",
+    "adapter",
+    "adapter_sha256",
+    "context_tokens",
+    "knowledge_db_hash",
+    "dataset_manifest_hash",
+    "runtime_version",
+    "generated_at",
+    "hardware",
+    "identity_incomplete"
+  ],
+  "properties": {
+    "schema": {
+      "const": "mglai-reasoning-benchmark-identity/1"
+    },
+    "git_sha": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "product_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "system_prompt_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tool_schema_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "retrieval_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_revision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "quantization": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "adapter": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "adapter_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "context_tokens": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "knowledge_db_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dataset_manifest_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "runtime_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "hardware": {
+      "type": "object",
+      "required": [
+        "gpu",
+        "vram_mb",
+        "cpu",
+        "ram_mb"
+      ]
+    },
+    "identity_incomplete": {
+      "type": "boolean"
+    },
+    "documented_model": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "observed_runtime_model": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

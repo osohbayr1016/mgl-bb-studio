@@ -1,0 +1,138 @@
+{
+  "baseline_id": "base-2026-09-10-mglai-sys-6-120307ba",
+  "label": "pre-0.2 baseline (Qwen3-8B Q4_K_M, sys-6 depth line, tfc-1)",
+  "frozen_at": "2026-09-10T09:27:31.712Z",
+  "git_head": "06cf59c",
+  "foundation": {
+    "model": "Qwen/Qwen3-8B",
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "license": "Apache-2.0",
+    "license_file_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "license_cleared_by_owner": false
+  },
+  "serving_artifact": {
+    "repo": "unsloth/Qwen3-8B-GGUF",
+    "repo_revision": "a6adef130ffb23ddaf1a62fec9dced968c9bc482",
+    "file": "Qwen3-8B-Q4_K_M.gguf",
+    "bytes": 5027784512,
+    "sha256": "120307ba529eb2439d6c430d94104dabd578497bc7bfe7e322b5d9933b449bd4",
+    "quantization": "Q4_K_M",
+    "adapter": null,
+    "model_version_tag": "dev-local"
+  },
+  "runtime": {
+    "runtime_version": "1.0.0",
+    "engine": "llama.cpp",
+    "llama_cpp": "version: 0.4.0-dev (build 10850, commit f114f91f9)",
+    "context_tokens": 4096,
+    "perf_profile": "eco",
+    "plan": {
+      "kvCacheType": "q8_0",
+      "gpuLayers": -1,
+      "ubatchSize": 64,
+      "flashAttention": true
+    },
+    "sampling": {
+      "temperature": 0.7,
+      "topP": 0.8,
+      "topK": 20,
+      "minP": 0,
+      "presencePenalty": 1
+    },
+    "enable_thinking": false
+  },
+  "system": {
+    "product_version": "1.0.0",
+    "system_prompt_version": "mglai-sys-6",
+    "tool_schema_version": "mglai-tools-1",
+    "retrieval_version": "mglai-rag-1",
+    "contract_version": "tfc-1",
+    "kernel_files": 32,
+    "kernel_sha256": "8b5764859d1c3ba1d6a82d323b140d8a4916ab38a074ee9e48bb98066ee8232d",
+    "orchestrator": {
+      "sha256": "db28f235ea793b54739e79c6038e1abb8df70ecd550322efb2e4c7647627b5ad",
+      "git": "dc34764 2026-09-10T11:57:05+08:00"
+    },
+    "validator": {
+      "sha256": "a2a33571a7779ec7e94ff1244ade4cc29a21ef356ee851f3bf2fbc884fded8ea",
+      "git": "0b02832 2026-09-10T12:30:22+08:00"
+    },
+    "route": {
+      "sha256": "be80d5947703e2c8a700fa1ea039c84b9c010374eea4be0dbadaf9ac2a27f8c1",
+      "git": "8e0501a 2026-09-10T13:58:19+08:00"
+    }
+  },
+  "knowledge": {
+    "installed": true,
+    "documents": [
+      {
+        "doc_id": "SNIP-II-97-76-MNG",
+        "code": "СНиП II-97-76* / СНиП II-97-76 М-80",
+        "effective_status": "listed_as_current",
+        "ingested_at": "2026-09-10 06:32:01"
+      },
+      {
+        "doc_id": "UBB-11-201-00-2000",
+        "code": "УББ-11-201-00",
+        "effective_status": "current_status_not_checked_for_later_amendments_or_replacement",
+        "ingested_at": "2026-09-10 05:50:25"
+      },
+      {
+        "doc_id": "BNBD-11-03-21-2022",
+        "code": "БНбД 11-03-21",
+        "effective_status": "in_force",
+        "ingested_at": "2026-09-10 05:50:25"
+      },
+      {
+        "doc_id": "BNBD-11-08-23-2023",
+        "code": "БНбД 11-08-23",
+        "effective_status": "in_force",
+        "ingested_at": "2026-09-10 05:50:25"
+      },
+      {
+        "doc_id": "UBB-12-204-01-2002",
+        "code": "УББ 12-204-01",
+        "effective_status": "current_status_not_checked_for_later_amendments",
+        "ingested_at": "2026-09-10 05:50:25"
+      },
+      {
+        "doc_id": "BNBD-21-04-05-ADD-2018-01-18-10",
+        "code": "БНбД 21-04-05",
+        "effective_status": "unknown_requires_legal_verification",
+        "ingested_at": "2026-09-10 05:50:24"
+      },
+      {
+        "doc_id": "UBB-12-01-01-2001",
+        "code": "УББ 12-01-01",
+        "effective_status": "current_status_not_checked_for_later_amendments_or_replacement",
+        "ingested_at": "2026-09-10 05:50:24"
+      }
+    ],
+    "counts": {
+      "chunks": 1237,
+      "rules": 1555,
+      "unverified_rules": 51,
+      "aliases": 4672
+    },
+    "vector": null,
+    "db_sha256": "4e90ea4cf46dca84ce312c5e13188486f683a04a9da4bf21317275861d8dedf6"
+  },
+  "evaluation": {
+    "conversation-e2e.mjs": "bee8985376a60aeb4052297ed780fcec1876f09efdb44e2a5df3899a12f2a3ab",
+    "heldout-gen.mjs": "c891822ffe9062b612949c5e88a6c0edc024d01b1b2dba9a0df5c60ed3731ea2",
+    "heldout-cases.json": "8bb70a118f4bea62e553bc369135e6846319b38436e1f7688a485a88f550e72c",
+    "norm-golden.mjs": "f2df7deece4ae3b620473ffea913da255af37afac2ada54dedecffb6f9fd6ca3",
+    "company-golden.mjs": "1203839f1ac2f30c031732fcdfdb67fdc46a71497a2b81f16bb7cdf897c581eb",
+    "mn-conversation.mjs": "ba100c4cd98f1ed6adcccfe790467cd4b7a0c4ec0f642de45ee25dd12421be36",
+    "style-pairs.mjs": "dc9112621869661794a2ae57be9859ed3be0109b426744360bc329750a6350dd",
+    "mn_style_pairs.jsonl": "9549ee2201534df6f8e822e288f8e75c4043c50ed2a8c7f2a058c22ba4f86745",
+    "lib/repetition.mjs": "ec45eac7c214ba9f0a33b910e307549a867ca24b735dd38343aece6a697d9641",
+    "lib/style.mjs": "5558c8b69b1425efec799b018625a081347828c3280f7f902379ef2b567a6cd3"
+  },
+  "outputs": {
+    "conv_e2e_gen": "conv-e2e-gen-2026-09-10-sys6-base8b-reference.json",
+    "heldout_gen": "heldout-gen-2026-09-10-sys6-base8b-reference.json",
+    "norm_golden": null,
+    "company_golden": null
+  }
+}

@@ -1,0 +1,767 @@
+{
+  "dataset_version": "behav-2026-09-11.5",
+  "split": "train",
+  "max_seq": 1536,
+  "tokenizer": "Qwen/Qwen3-8B@b968826d",
+  "rows": 466,
+  "sections": {
+    "system": {
+      "n": 466,
+      "mean": 814,
+      "median": 870,
+      "p90": 1296,
+      "max": 1456
+    },
+    "history": {
+      "n": 466,
+      "mean": 233,
+      "median": 299,
+      "p90": 299,
+      "max": 390
+    },
+    "user_tools": {
+      "n": 216,
+      "mean": 343,
+      "median": 318,
+      "p90": 602,
+      "max": 734
+    },
+    "user_norm_decision": {
+      "n": 80,
+      "mean": 200,
+      "median": 198,
+      "p90": 222,
+      "max": 224
+    },
+    "user_evidence": {
+      "n": 34,
+      "mean": 211,
+      "median": 164,
+      "p90": 344,
+      "max": 347
+    },
+    "user_question": {
+      "n": 466,
+      "mean": 26,
+      "median": 19,
+      "p90": 42,
+      "max": 265
+    },
+    "prompt": {
+      "n": 466,
+      "mean": 1316,
+      "median": 1401,
+      "p90": 1876,
+      "max": 2480
+    },
+    "target": {
+      "n": 466,
+      "mean": 83,
+      "median": 62,
+      "p90": 197,
+      "max": 551
+    },
+    "total": {
+      "n": 466,
+      "mean": 1399,
+      "median": 1438,
+      "p90": 1999,
+      "max": 2570
+    }
+  },
+  "truncation": {
+    "rows": 204,
+    "pct": 43.8,
+    "critical_rows": 204,
+    "critical_pct": 43.8,
+    "tokens_lost_by_section": {
+      "system": 56346,
+      "history_user": 1674,
+      "history_assistant": 11602,
+      "user_tools": 2065
+    },
+    "critical_sections_hit": {
+      "system": 204,
+      "user_tools": 20
+    },
+    "worst": [
+      {
+        "id": "beh_0238",
+        "key": "multi-intent",
+        "total": 2570,
+        "lost": {
+          "system": 733,
+          "history_user": 26,
+          "history_assistant": 273,
+          "user_tools": 2
+        }
+      },
+      {
+        "id": "beh_0236",
+        "key": "multi-intent",
+        "total": 2544,
+        "lost": {
+          "system": 733,
+          "history_user": 26,
+          "history_assistant": 249
+        }
+      },
+      {
+        "id": "beh_0534",
+        "key": "erp-analysis",
+        "total": 2538,
+        "lost": {
+          "system": 419,
+          "history_user": 26,
+          "history_assistant": 273,
+          "user_tools": 284
+        }
+      },
+      {
+        "id": "beh_0239",
+        "key": "multi-intent",
+        "total": 2536,
+        "lost": {
+          "system": 733,
+          "history_user": 26,
+          "history_assistant": 241
+        }
+      },
+      {
+        "id": "beh_0237",
+        "key": "multi-intent",
+        "total": 2533,
+        "lost": {
+          "system": 733,
+          "history_user": 26,
+          "history_assistant": 238
+        }
+      },
+      {
+        "id": "beh_0132",
+        "key": "follow-up",
+        "total": 2450,
+        "lost": {
+          "system": 455,
+          "history_user": 35,
+          "history_assistant": 329,
+          "user_tools": 95
+        }
+      },
+      {
+        "id": "beh_0127",
+        "key": "follow-up",
+        "total": 2429,
+        "lost": {
+          "system": 403,
+          "history_user": 47,
+          "history_assistant": 329,
+          "user_tools": 114
+        }
+      },
+      {
+        "id": "beh_0533",
+        "key": "erp-analysis",
+        "total": 2395,
+        "lost": {
+          "system": 366,
+          "history_user": 26,
+          "history_assistant": 273,
+          "user_tools": 194
+        }
+      }
+    ]
+  },
+  "target_buckets": {
+    "129–256": 49,
+    "257–512": 32,
+    "33–64": 105,
+    "65–128": 137,
+    ">512": 1,
+    "≤32": 142
+  },
+  "target_by_key": {
+    "calculation": {
+      "n": 3,
+      "mean": 21,
+      "median": 22,
+      "p90": 22,
+      "max": 22
+    },
+    "casual": {
+      "n": 1,
+      "mean": 9,
+      "median": 9,
+      "p90": 9,
+      "max": 9
+    },
+    "category-discipline": {
+      "n": 9,
+      "mean": 66,
+      "median": 66,
+      "p90": 67,
+      "max": 67
+    },
+    "clarification": {
+      "n": 9,
+      "mean": 65,
+      "median": 66,
+      "p90": 111,
+      "max": 111
+    },
+    "concise": {
+      "n": 20,
+      "mean": 43,
+      "median": 47,
+      "p90": 70,
+      "max": 70
+    },
+    "correction": {
+      "n": 6,
+      "mean": 47,
+      "median": 45,
+      "p90": 59,
+      "max": 59
+    },
+    "deadline": {
+      "n": 18,
+      "mean": 59,
+      "median": 63,
+      "p90": 76,
+      "max": 76
+    },
+    "erp-analysis": {
+      "n": 15,
+      "mean": 352,
+      "median": 365,
+      "p90": 399,
+      "max": 486
+    },
+    "explain-detailed": {
+      "n": 11,
+      "mean": 303,
+      "median": 181,
+      "p90": 467,
+      "max": 551
+    },
+    "explain-normal": {
+      "n": 18,
+      "mean": 159,
+      "median": 197,
+      "p90": 220,
+      "max": 233
+    },
+    "explain-short": {
+      "n": 19,
+      "mean": 59,
+      "median": 71,
+      "p90": 88,
+      "max": 93
+    },
+    "follow-up": {
+      "n": 8,
+      "mean": 294,
+      "median": 343,
+      "p90": 430,
+      "max": 430
+    },
+    "headcount": {
+      "n": 18,
+      "mean": 22,
+      "median": 27,
+      "p90": 27,
+      "max": 27
+    },
+    "historical": {
+      "n": 11,
+      "mean": 124,
+      "median": 140,
+      "p90": 179,
+      "max": 181
+    },
+    "lang-override": {
+      "n": 6,
+      "mean": 28,
+      "median": 23,
+      "p90": 76,
+      "max": 76
+    },
+    "memory-apply": {
+      "n": 9,
+      "mean": 23,
+      "median": 18,
+      "p90": 40,
+      "max": 40
+    },
+    "memory-set": {
+      "n": 9,
+      "mean": 13,
+      "median": 13,
+      "p90": 16,
+      "max": 16
+    },
+    "meta": {
+      "n": 4,
+      "mean": 64,
+      "median": 75,
+      "p90": 75,
+      "max": 75
+    },
+    "mine": {
+      "n": 9,
+      "mean": 21,
+      "median": 23,
+      "p90": 32,
+      "max": 32
+    },
+    "multi-intent": {
+      "n": 8,
+      "mean": 84,
+      "median": 89,
+      "p90": 90,
+      "max": 90
+    },
+    "new-topic": {
+      "n": 3,
+      "mean": 65,
+      "median": 65,
+      "p90": 67,
+      "max": 67
+    },
+    "norm-classify": {
+      "n": 15,
+      "mean": 63,
+      "median": 65,
+      "p90": 67,
+      "max": 69
+    },
+    "norm-compare": {
+      "n": 7,
+      "mean": 289,
+      "median": 289,
+      "p90": 292,
+      "max": 292
+    },
+    "norm-evidence": {
+      "n": 11,
+      "mean": 65,
+      "median": 57,
+      "p90": 86,
+      "max": 88
+    },
+    "norm-lookup": {
+      "n": 25,
+      "mean": 66,
+      "median": 66,
+      "p90": 67,
+      "max": 67
+    },
+    "norm-needs-review": {
+      "n": 5,
+      "mean": 92,
+      "median": 92,
+      "p90": 92,
+      "max": 92
+    },
+    "norm-quantity-mismatch": {
+      "n": 15,
+      "mean": 148,
+      "median": 148,
+      "p90": 150,
+      "max": 150
+    },
+    "norm-refusal": {
+      "n": 6,
+      "mean": 48,
+      "median": 41,
+      "p90": 82,
+      "max": 82
+    },
+    "overdue": {
+      "n": 15,
+      "mean": 43,
+      "median": 53,
+      "p90": 68,
+      "max": 68
+    },
+    "permission-denied": {
+      "n": 5,
+      "mean": 43,
+      "median": 26,
+      "p90": 69,
+      "max": 69
+    },
+    "progress": {
+      "n": 3,
+      "mean": 45,
+      "median": 45,
+      "p90": 45,
+      "max": 45
+    },
+    "projects": {
+      "n": 24,
+      "mean": 23,
+      "median": 20,
+      "p90": 34,
+      "max": 34
+    },
+    "reference": {
+      "n": 5,
+      "mean": 39,
+      "median": 41,
+      "p90": 41,
+      "max": 41
+    },
+    "revit-read": {
+      "n": 4,
+      "mean": 33,
+      "median": 37,
+      "p90": 37,
+      "max": 37
+    },
+    "revit-unavailable": {
+      "n": 7,
+      "mean": 53,
+      "median": 67,
+      "p90": 72,
+      "max": 72
+    },
+    "revit-write-denied": {
+      "n": 6,
+      "mean": 85,
+      "median": 100,
+      "p90": 112,
+      "max": 112
+    },
+    "revit-write-proposal": {
+      "n": 6,
+      "mean": 96,
+      "median": 127,
+      "p90": 127,
+      "max": 127
+    },
+    "source-conflict": {
+      "n": 5,
+      "mean": 97,
+      "median": 117,
+      "p90": 118,
+      "max": 118
+    },
+    "structured-long": {
+      "n": 8,
+      "mean": 200,
+      "median": 234,
+      "p90": 240,
+      "max": 240
+    },
+    "style-rewrite": {
+      "n": 21,
+      "mean": 52,
+      "median": 27,
+      "p90": 110,
+      "max": 166
+    },
+    "tool-failed": {
+      "n": 6,
+      "mean": 56,
+      "median": 71,
+      "p90": 71,
+      "max": 71
+    },
+    "tool-timeout": {
+      "n": 6,
+      "mean": 51,
+      "median": 63,
+      "p90": 63,
+      "max": 63
+    },
+    "trusted-contradiction": {
+      "n": 25,
+      "mean": 28,
+      "median": 31,
+      "p90": 33,
+      "max": 34
+    },
+    "trusted-count": {
+      "n": 22,
+      "mean": 33,
+      "median": 20,
+      "p90": 50,
+      "max": 51
+    }
+  },
+  "target_by_intent": {
+    "CALCULATION": {
+      "n": 11,
+      "mean": 106,
+      "median": 70,
+      "p90": 208,
+      "max": 448
+    },
+    "CASUAL": {
+      "n": 1,
+      "mean": 9,
+      "median": 9,
+      "p90": 9,
+      "max": 9
+    },
+    "COMPANY_FACT": {
+      "n": 192,
+      "mean": 48,
+      "median": 33,
+      "p90": 81,
+      "max": 379
+    },
+    "DOCUMENT_ANALYSIS": {
+      "n": 2,
+      "mean": 68,
+      "median": 110,
+      "p90": 110,
+      "max": 110
+    },
+    "ERP_ANALYSIS": {
+      "n": 18,
+      "mean": 332,
+      "median": 343,
+      "p90": 430,
+      "max": 486
+    },
+    "GENERAL_HELP": {
+      "n": 98,
+      "mean": 91,
+      "median": 50,
+      "p90": 233,
+      "max": 551
+    },
+    "META": {
+      "n": 4,
+      "mean": 64,
+      "median": 75,
+      "p90": 75,
+      "max": 75
+    },
+    "NORMATIVE": {
+      "n": 105,
+      "mean": 98,
+      "median": 67,
+      "p90": 150,
+      "max": 292
+    },
+    "REVIT_ACTION": {
+      "n": 7,
+      "mean": 63,
+      "median": 49,
+      "p90": 127,
+      "max": 127
+    },
+    "REVIT_READ": {
+      "n": 28,
+      "mean": 85,
+      "median": 67,
+      "p90": 173,
+      "max": 451
+    }
+  },
+  "target_by_turn": {
+    "CONTINUATION": {
+      "n": 5,
+      "mean": 40,
+      "median": 31,
+      "p90": 67,
+      "max": 67
+    },
+    "CORRECTION": {
+      "n": 6,
+      "mean": 47,
+      "median": 45,
+      "p90": 59,
+      "max": 59
+    },
+    "FOLLOW_UP": {
+      "n": 19,
+      "mean": 157,
+      "median": 66,
+      "p90": 361,
+      "max": 430
+    },
+    "MULTI_INTENT": {
+      "n": 8,
+      "mean": 84,
+      "median": 89,
+      "p90": 90,
+      "max": 90
+    },
+    "NEW_TOPIC": {
+      "n": 428,
+      "mean": 81,
+      "median": 56,
+      "p90": 181,
+      "max": 551
+    }
+  },
+  "target_by_grounding": {
+    "erp-tool": {
+      "n": 185,
+      "mean": 71,
+      "median": 33,
+      "p90": 268,
+      "max": 486
+    },
+    "erp-tool+norm-decision": {
+      "n": 8,
+      "mean": 84,
+      "median": 89,
+      "p90": 90,
+      "max": 90
+    },
+    "evidence": {
+      "n": 18,
+      "mean": 152,
+      "median": 86,
+      "p90": 292,
+      "max": 292
+    },
+    "evidence-conflict": {
+      "n": 5,
+      "mean": 97,
+      "median": 117,
+      "p90": 118,
+      "max": 118
+    },
+    "evidence-historical": {
+      "n": 11,
+      "mean": 124,
+      "median": 140,
+      "p90": 179,
+      "max": 181
+    },
+    "no-evidence": {
+      "n": 6,
+      "mean": 48,
+      "median": 41,
+      "p90": 82,
+      "max": 82
+    },
+    "none": {
+      "n": 117,
+      "mean": 98,
+      "median": 66,
+      "p90": 221,
+      "max": 551
+    },
+    "norm-decision": {
+      "n": 72,
+      "mean": 84,
+      "median": 66,
+      "p90": 148,
+      "max": 150
+    },
+    "revit": {
+      "n": 23,
+      "mean": 69,
+      "median": 67,
+      "p90": 127,
+      "max": 127
+    },
+    "style-pair": {
+      "n": 21,
+      "mean": 52,
+      "median": 27,
+      "p90": 110,
+      "max": 166
+    }
+  },
+  "target_by_tools": {
+    "analyze_project": {
+      "n": 20,
+      "mean": 341,
+      "median": 364,
+      "p90": 430,
+      "max": 486
+    },
+    "get_active_employees": {
+      "n": 44,
+      "mean": 29,
+      "median": 27,
+      "p90": 48,
+      "max": 87
+    },
+    "get_my_assignments": {
+      "n": 14,
+      "mean": 29,
+      "median": 26,
+      "p90": 69,
+      "max": 69
+    },
+    "get_overdue_tasks": {
+      "n": 35,
+      "mean": 38,
+      "median": 40,
+      "p90": 54,
+      "max": 68
+    },
+    "get_project_progress": {
+      "n": 6,
+      "mean": 47,
+      "median": 45,
+      "p90": 59,
+      "max": 59
+    },
+    "get_upcoming_deadlines": {
+      "n": 29,
+      "mean": 57,
+      "median": 62,
+      "p90": 76,
+      "max": 111
+    },
+    "list_projects": {
+      "n": 62,
+      "mean": 46,
+      "median": 31,
+      "p90": 89,
+      "max": 268
+    },
+    "none": {
+      "n": 250,
+      "mean": 95,
+      "median": 67,
+      "p90": 206,
+      "max": 551
+    },
+    "revit-proposal": {
+      "n": 6,
+      "mean": 96,
+      "median": 127,
+      "p90": 127,
+      "max": 127
+    }
+  },
+  "target_by_depth": {
+    "detailed": {
+      "n": 49,
+      "mean": 290,
+      "median": 292,
+      "p90": 450,
+      "max": 551
+    },
+    "normal": {
+      "n": 232,
+      "mean": 67,
+      "median": 65,
+      "p90": 147,
+      "max": 240
+    },
+    "short": {
+      "n": 185,
+      "mean": 49,
+      "median": 40,
+      "p90": 88,
+      "max": 181
+    }
+  },
+  "long_targets": {
+    "≥128": 82,
+    "≥256": 33,
+    "≥512": 1
+  }
+}

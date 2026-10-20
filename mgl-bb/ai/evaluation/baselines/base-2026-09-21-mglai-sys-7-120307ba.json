@@ -1,0 +1,168 @@
+{
+  "baseline_id": "base-2026-09-21-mglai-sys-7-120307ba",
+  "label": "current model = Qwen3-8B Q4_K_M + mgl-adapter-0.4, sys-7/tfc-2",
+  "frozen_at": "2026-09-21T06:39:35.046Z",
+  "git_head": "ad33ba68",
+  "foundation": {
+    "model": "Qwen/Qwen3-8B",
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "license": "Apache-2.0",
+    "license_file_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "license_cleared_by_owner": false
+  },
+  "serving_artifact": {
+    "repo": "unsloth/Qwen3-8B-GGUF",
+    "repo_revision": "a6adef130ffb23ddaf1a62fec9dced968c9bc482",
+    "file": "Qwen3-8B-Q4_K_M.gguf",
+    "bytes": 5027784512,
+    "sha256": "120307ba529eb2439d6c430d94104dabd578497bc7bfe7e322b5d9933b449bd4",
+    "quantization": "Q4_K_M",
+    "adapter": "mgl-adapter-0.4",
+    "model_version_tag": "dev-local"
+  },
+  "runtime": {
+    "runtime_version": "1.0.1",
+    "engine": "llama.cpp",
+    "llama_cpp": "version: 0.4.0-dev (build 10850, commit f114f91f9)",
+    "context_tokens": 8192,
+    "perf_profile": "balanced",
+    "plan": {
+      "kvCacheType": "q8_0",
+      "gpuLayers": -1,
+      "ubatchSize": 128,
+      "flashAttention": true
+    },
+    "sampling": {
+      "temperature": 0.7,
+      "topP": 0.8,
+      "topK": 20,
+      "minP": 0,
+      "presencePenalty": 1
+    },
+    "enable_thinking": false
+  },
+  "system": {
+    "product_version": "1.0.0",
+    "system_prompt_version": "mglai-sys-7",
+    "tool_schema_version": "mglai-tools-1",
+    "retrieval_version": "mglai-rag-1",
+    "contract_version": "tfc-2",
+    "kernel_files": 38,
+    "kernel_sha256": "b1d7e6a420f703f80a5e545de0400d6c349b82db2e5e5f9c8042112eb3373f89",
+    "orchestrator": {
+      "sha256": null,
+      "git": "9f2953b2 2026-09-14T17:08:03+08:00"
+    },
+    "validator": {
+      "sha256": null,
+      "git": "9f2953b2 2026-09-14T17:08:03+08:00"
+    },
+    "route": {
+      "sha256": "f46dd209fcb740a1632e103f1ce4af5a47971d4b1d7508bab56ea79eb8d90e76",
+      "git": "332ad0d1 2026-09-18T16:12:11+08:00"
+    }
+  },
+  "knowledge": {
+    "installed": true,
+    "documents": [
+      {
+        "doc_id": "BNBD-31-17-10-2010",
+        "code": "БНбД 31-17-10",
+        "effective_status": "current_status_not_checked_for_later_amendments",
+        "ingested_at": "2026-09-18 04:06:56"
+      },
+      {
+        "doc_id": "BNBD-31-23-12-2012",
+        "code": "БНбД 31-23-12",
+        "effective_status": "current_code_verified_renumbered",
+        "ingested_at": "2026-09-14 02:20:42"
+      },
+      {
+        "doc_id": "BNBD-31-24-22-2022",
+        "code": "БНбД 31-24-22",
+        "effective_status": "current_registered_verified",
+        "ingested_at": "2026-09-14 02:20:42"
+      },
+      {
+        "doc_id": "UBB-11-201-00-2000",
+        "code": "УББ-11-201-00",
+        "effective_status": "current_status_not_checked_for_later_amendments_or_replacement",
+        "ingested_at": "2026-09-14 01:04:12"
+      },
+      {
+        "doc_id": "UBB-12-01-01-2001",
+        "code": "УББ 12-01-01",
+        "effective_status": "current_status_not_checked_for_later_amendments_or_replacement",
+        "ingested_at": "2026-09-14 01:04:12"
+      },
+      {
+        "doc_id": "UBB-12-204-01-2002",
+        "code": "УББ 12-204-01",
+        "effective_status": "current_status_not_checked_for_later_amendments",
+        "ingested_at": "2026-09-14 01:04:12"
+      },
+      {
+        "doc_id": "BNBD-21-04-05-ADD-2018-01-18-10",
+        "code": "БНбД 21-04-05",
+        "effective_status": "unknown_requires_legal_verification",
+        "ingested_at": "2026-09-14 01:04:11"
+      },
+      {
+        "doc_id": "BNBD-31-25-22-2022-AMENDED-2024",
+        "code": "БНбД 31-25-22",
+        "effective_status": "current_amended_verified",
+        "ingested_at": "2026-09-14 01:04:11"
+      },
+      {
+        "doc_id": "SNIP-II-97-76-MNG",
+        "code": "СНиП II-97-76* / СНиП II-97-76 М-80",
+        "effective_status": "listed_as_current",
+        "ingested_at": "2026-09-14 01:04:11"
+      },
+      {
+        "doc_id": "BD-21-101-12-2012",
+        "code": "БД 21-101-12",
+        "effective_status": "current_status_not_checked_for_later_amendments",
+        "ingested_at": "2026-09-14 01:04:10"
+      },
+      {
+        "doc_id": "BNBD-11-03-21-2022",
+        "code": "БНбД 11-03-21",
+        "effective_status": "in_force",
+        "ingested_at": "2026-09-14 01:04:10"
+      },
+      {
+        "doc_id": "BNBD-11-08-23-2023",
+        "code": "БНбД 11-08-23",
+        "effective_status": "in_force",
+        "ingested_at": "2026-09-14 01:04:10"
+      }
+    ],
+    "counts": {
+      "chunks": 2556,
+      "rules": 2544,
+      "unverified_rules": 175,
+      "aliases": 5141
+    },
+    "vector": null,
+    "db_sha256": "f062c62deb9caad5456bff169574a6f9ae9874d24dbaf52702a1a4fd25ba00b5"
+  },
+  "evaluation": {
+    "conversation-e2e.mjs": "a1f1e890db46a2bf0346b9123cd4ec26d977f8515c6eee8ab3f68ea2ad610dba",
+    "heldout-gen.mjs": "48de40a0beec1011a3de9eba29c870c43224354a32a7c1365b67bc1d4f97063e",
+    "heldout-cases.json": "814331fa93c5e1f02b7d726b8a2a11898f192a802b0ebba24b9dbb5cd8142c4a",
+    "norm-golden.mjs": "db24297df93784ffc6ee47e87ed6ac367db1f5b7b148921a07fada2f6f941e73",
+    "company-golden.mjs": "27651945c0c95d7ca97469ebbacf73ae08afe87f7ac26d80d8c7ddeff12bb5d9",
+    "mn-conversation.mjs": "09c37d78aed5e6c18a786a294b2cafa8a1189052db8b6889b002ca0783abb34e",
+    "style-pairs.mjs": "770807cdd6ff3ca9d0c57f7e46c5377b050d149866800dcdc97335f36d19ec5a",
+    "mn_style_pairs.jsonl": "01f5451898a5a599233c94ddfbad5801de6b644a37b44710da1cb4765d84fcab",
+    "lib/repetition.mjs": "6371a98b3382bce05c047214fabb610742e3792f54e8b91ca3d9e38981fe0688",
+    "lib/style.mjs": "a25a622d03569dafecdc68ec43d692d8e72d1399c3d84a10275f28222070f158"
+  },
+  "outputs": {
+    "conv_e2e_gen": "conv-e2e-gen-2026-09-21T06-37-05-917Z.json",
+    "heldout_gen": "heldout-gen-baseline_mgl-adapter-0.4-sys7-2026-09-21T06-39-10-168Z.json",
+    "norm_golden": null,
+    "company_golden": null
+  }
+}

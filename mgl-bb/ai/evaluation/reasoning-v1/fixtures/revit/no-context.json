@@ -1,0 +1,14 @@
+{
+  "fixture": true,
+  "kind": "REVIT",
+  "id": "no-context",
+  "synthetic": true,
+  "revit_context": null,
+  "sources": [
+    {
+      "document": "SYNTHETIC REVIT FIXTURE",
+      "clause": null,
+      "verification": "synthetic_deterministic"
+    }
+  ]
+}

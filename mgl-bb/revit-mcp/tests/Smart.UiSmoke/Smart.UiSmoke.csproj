@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «MGL Smart»-ын WPF цонхнуудын Revit-гүй ТҮЦ ШАЛГАЛТ (smoke).
+
+    Цонх бүр Revit-ийн төрлийг мэддэггүй (`IPublishSession`, `IClashSession`... гэрээгээр) тул энд
+    хуурамч (fake) session-оор нээж, товчийг бодитоор дарж (RaiseEvent), төлөвийг уншиж, PNG зураг
+    болгон хадгална (`SMOKE_OUT` хавтас) — layout-ыг нүдээр шалгахад.
+
+    ⚠️ Revit assembly ЭНД ОРОХГҮЙ: `*/Ui/*.cs` дотор `Autodesk.Revit` гарвал энэ төсөл ЭМХЭТГЭГДЭХГҮЙ.
+    ⚠️ Интерактив Windows desktop session шаардана (WPF цонх үүсгэнэ).
+
+      dotnet run   (revit-mcp/tests/Smart.UiSmoke хавтаснаас; SMOKE_OUT=<хавтас> зураг хадгалах)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>Smart.UiSmoke</AssemblyName>
+    <RootNamespace>RevitMcpAddin.Smart.UiSmoke</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\Smart\Core\*.cs" />
+    <Compile Include="..\..\addin\Smart\Ui\*.cs" />
+    <Compile Include="..\..\addin\SmartPublish\Core\*.cs" />
+    <Compile Include="..\..\addin\SmartPublish\Ui\*.cs" />
+    <Compile Include="..\..\addin\SmartCount\Core\*.cs" />
+    <Compile Include="..\..\addin\SmartCount\Ui\*.cs" />
+    <Compile Include="..\..\addin\ClashCheck\Core\*.cs" />
+    <Compile Include="..\..\addin\ClashCheck\Ui\*.cs" />
+    <Compile Include="..\..\addin\ChangeImpact\Core\*.cs" />
+    <Compile Include="..\..\addin\ChangeImpact\Ui\*.cs" />
+    <!-- Дундын сэдэв/цонхны байрлал (Revit-гүй; MglWindow нь App-д хамаарахгүй — OwnerHandleProvider). -->
+    <Compile Include="..\..\addin\Ui\Core\*.cs" />
+    <Compile Include="..\..\addin\TextFold.cs" />
+    <Compile Include="..\..\addin\Ui\MglStyles.cs" />
+    <Compile Include="..\..\addin\Ui\MglTheme.cs" />
+    <Compile Include="..\..\addin\Ui\MglBrushes.cs" />
+    <Compile Include="..\..\addin\Ui\MglWindow.cs" />
+    <Compile Include="..\..\addin\Ui\MglUiPrefs.cs" />
+    <Compile Include="..\..\addin\Ui\MglNative.cs" />
+    <Compile Include="..\..\addin\Ui\MglPrompt.cs" />
+    <Compile Include="..\..\addin\Ui\MglUi.cs" />
+    <Compile Include="..\..\addin\Ui\MglAuto.cs" />
+    <EmbeddedResource Include="..\..\addin\Ui\Resources\MglControls.xaml" LogicalName="RevitMcpAddin.Ui.MglControls.xaml" />
+    <Compile Include="..\Smart.Tests\Fakes.cs" Link="Fakes.cs" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

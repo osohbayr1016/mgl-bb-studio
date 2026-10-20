@@ -1,0 +1,125 @@
+{
+  "document_code": "БНбД 22-01-21",
+  "files": [
+    {
+      "file": "BNbD_22-01-21_mcis_2025-10_stamped.pdf",
+      "sha256": "0c7c81503db6b676ec671532a776f0c648b2b0db7c9e418e0492785d3ea2faea",
+      "bytes": 4872650,
+      "pdf_pages": 143,
+      "printed_pages": "PDF p.5–110 = printed 3–108 (running-header number, offset 2); PDF p.111–143 = annex 2 map sheets (their own map labels are ignored)",
+      "fetched_at": "2026-09-23",
+      "fetched_from": "https://mcis.gov.mn/storage/uploads/process/202510/file_1760323453830431_161611878330710_stamped.pdf",
+      "authority": "MCIS (Барилгын салбарын нэгдсэн систем, mcis.gov.mn) — official current-norm register entry",
+      "register_record": {
+        "endpoint": "POST https://mcis.gov.mn/mn/getNormList {register: \"22-01-21\"}",
+        "record_id": "17110817013146",
+        "wfmstatusname": "Хүчин төгөлдөр",
+        "actnumber": "БНбД 22-01-21* / CCM 22-01-21*",
+        "title": "ГАЗАР ХӨДЛӨЛТИЙН БҮС НУТАГТ БАРИЛГА ТӨЛӨВЛӨХ / SEISMIC BUILDING DESING CODE",
+        "decision": "БХБС-ын 2021 оны 117 дугаар тушаал /БНбД 22-01-21/",
+        "directurl": "http://mcis.gov.mn/main/single/17110817013146",
+        "category": "Цогцолбор 22.Геофизикийн аюултай нөлөөллөөс хамгаалах",
+        "checked_at": "2026-09-23"
+      },
+      "pdf_metadata": {
+        "producer": "iLovePDF; modified using iText 5.5.13.1",
+        "modDate": "2025-10-13",
+        "note": "MCIS stamped re-render of the «Албан ёсны 3 дах хэвлэл» (cover year 2023); no title/author metadata"
+      },
+      "text_layer": "Real Unicode Cyrillic text layer (no Arial Mon remapping). Three glyph problems, all measured 2026-09-23: (1) chapter 5 equations are typeset with the Adobe Symbol font, whose glyphs land in the Private Use Area (U+F0A3 «≤», U+F062 «β», U+F0B3 «≥», U+F0D7 «·», …) — decoded only when an explanation is RENDERED, never in parsed text; (2) chapter 7–8 equations use Cambria Math with every glyph duplicated («𝛼𝛼𝑝𝑝») and sub/superscripts flattened; (3) equations (5)–(9) come out as stacked single-letter tokens. Every such formula is flagged FORMULA_IMAGE_REVIEW_REQUIRED (parsed/formulas.jsonl) and never rebuilt. Annex 2 (PDF p.111–143) is 30 map IMAGES — no value is read from a map.",
+      "role": "primary_technical_text"
+    },
+    {
+      "file": "_external/legalinfo_order-07_2022-01-06.pdf",
+      "in_git": false,
+      "sha256": "1bc80390df435e1a75b2d9ff0f191a041039b99d421109f8dd31e8c1a51df1ef",
+      "bytes": 37873945,
+      "pdf_pages": 40,
+      "fetched_at": "2026-09-23",
+      "fetched_from": "https://legalinfo.mn/storage/uploads/process/202202/file_1644390647161759_163403209487511.pdf",
+      "authority": "legalinfo.mn (Эрх зүйн мэдээллийн нэгдсэн систем) — official text of order 07 of 2022-01-06 with its two annexes",
+      "pdf_metadata": {
+        "producer": "Soda PDF Online",
+        "creationDate": "2022-02-09"
+      },
+      "text_layer": "Pages 2–9 carry annex 1 as text (the settlement table); the ruled grids are incomplete on some pages, so tools/verify_amendment_table.py reads the rows as a token stream. The map annex is image-only.",
+      "role": "amendment_official_text",
+      "note": "NOT committed (38 MB, owner policy 2026-09-11: large raw sources stay out of git). Re-download from fetched_from; the sha256 must match before tools/verify_amendment_table.py runs."
+    }
+  ],
+  "legal_sources": [
+    {
+      "source_id": "SRC-MCIS-REGISTER",
+      "type": "official_current_norm_register_entry",
+      "authority": "MCIS",
+      "url": "http://mcis.gov.mn/main/single/17110817013146",
+      "status": "Хүчин төгөлдөр",
+      "printed_code": "БНбД 22-01-21*",
+      "checked_at": "2026-09-23",
+      "note": "First checked 2026-09-16 (tools/mcis_verify.py), re-checked 2026-09-23. The register prints the code with «*» — the asterisk marks the amended edition; the canonical code on the norm's own title page and in approval order 117 is «БНбД 22-01-21»."
+    },
+    {
+      "source_id": "SRC-PDF-APPROVAL-PAGE",
+      "type": "approval_statement_in_official_text",
+      "authority": "Барилга, хот байгуулалтын сайд — as printed on PDF page 4 (front matter of the 3rd edition)",
+      "quote": "1. Барилга, хот байгуулалтын сайдын 2021 оны 5 дугаар сарын 21-ний өдрийн 117 дугаар тушаалын 1 дүгээр хавсралтаар батлав. Барилга, хот байгуулалтын сайдын 2022 оны 1 дүгээр сарын 6-ны өдрийн 07 дугаар тушаалын хавсралтаар шинэчлэн батлав. 2. Энэ тушаал гарсантай холбогдуулан Барилга, хот байгуулалтын сайдын 2006 оны 7 дугаар сарын 24-ний өдрийн 120 дугаар тушаалаар батлагдсан “Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-01*/2006/ барилгын норм ба дүрмийг, мөн 2013 оны 5 дугаар сарын 28-ны өдрийн 106 дугаар тушаалаар батлагдсан нэмэлт өөрчлөлтийг тус тус хүчингүй болсонд тооцсугай.",
+      "contains_technical_text": false,
+      "checked_at": "2026-09-23"
+    },
+    {
+      "source_id": "SRC-MCUD-ORDER-117",
+      "type": "ministry_order_listing",
+      "authority": "Барилга, хот байгуулалтын яам (mcud.gov.mn, «Сайдын тушаал»)",
+      "url": "https://mcud.gov.mn/ld/318",
+      "quote": "БАРИЛГА БАЙГУУЛАМЖИЙН НОРМ, НОРМАТИВЫН БАРИМТ БИЧИГ БАТЛАХ ТУХАЙ - ГАЗАР ХӨДЛӨЛТИЙН БҮС НУТАГТ БАРИЛГА ТӨЛӨВЛӨХ /БНбД 22-01-21/ БАРИЛГЫН НОРМ, ДҮРЭМ | 2021-05-21 | Дугаар: 117",
+      "checked_at": "2026-09-23"
+    },
+    {
+      "source_id": "SRC-LEGALINFO-ORDER-07",
+      "type": "official_legal_act_text",
+      "authority": "legalinfo.mn",
+      "url": "https://legalinfo.mn/mn/detail?lawId=16390164225891",
+      "pdf_url": "https://legalinfo.mn/storage/uploads/process/202202/file_1644390647161759_163403209487511.pdf",
+      "title": "Тушаалын хавсралтыг шинэчлэн батлах тухай — Барилга, хот байгуулалтын сайдын тушаал, 2022 оны 1 дүгээр сарын 6, дугаар 07",
+      "effect": "Re-approves annex 1 (renamed «Монгол орны хот, суурингуудын хувьд тооцоолсон 500 жил, 2500 жилийн давтагдах хугацааны хөрсний оргил хурдатгал болон MSK64 шаталбарын баллын утгууд») and annex 2 («Монгол орны газар хөдлөлтийн ерөнхий мужлалын зураг (500 жилийн давтагдах хугацаа)»); item 2 declares item 2 of order 117/2021 void.",
+      "checked_at": "2026-09-23"
+    },
+    {
+      "source_id": "SRC-LEGALINFO-9586",
+      "type": "official_legal_act_page",
+      "authority": "legalinfo.mn",
+      "url": "https://legalinfo.mn/mn/detail/9586",
+      "quote": "Order №120 of 2006-07-24 (approved БНбД 22.01.01/2006) — page title ends «… - БХБС-ын 2021 оны 117 дугаар тушаалаар хүчингүй болсон.»",
+      "checked_at": "2026-09-23"
+    },
+    {
+      "source_id": "SRC-BARILGA-GOV-EFFECTIVE",
+      "type": "official_agency_announcement",
+      "authority": "Барилгын хөгжлийн төв (barilga.gov.mn)",
+      "url": "https://barilga.gov.mn/page_data/63ae74a681c78810e014cbe6",
+      "quote": "“Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-21/ барилгын норм ба дүрэм 2021 онд БХБ-ын сайд шинэчлэн баталсан бөгөөд тус нормыг 2021.12.01 өдрөөс мөрдөж эхэлсэн билээ.",
+      "evidence_level": "official_agency_announcement (not the order text)",
+      "checked_at": "2026-09-23"
+    },
+    {
+      "source_id": "SRC-REGISTER-2025",
+      "type": "construction_norm_register_2025",
+      "authority": "Газар зохион байгуулалт, геодези, зураг зүйн газар (gazar.gov.mn) — 2025 register, via registry/cdc-2025",
+      "url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=29",
+      "quote": "БНбД 22-01-21*/22 — «БХБСайдын 2021 оны 117 дугаар тушаал, БХБСайдын 2022 оны 7 дугаар тушаал»; хүчингүй болсон хэсэг: «БХБСайдын 2021 оны 117 дугаар тушаалын хавсралт 1, 2»",
+      "note": "No later amending order is listed.",
+      "checked_at": "2026-09-18"
+    }
+  ],
+  "unresolved": [
+    {"id": "U1", "topic": "later_amendments", "note": "No amendment after order 07/2022 appears in the MCIS record, the 2025 register or the ministry listing. The legalinfo.mn amendment panel of order 117/2021 renders dynamically and was NOT read.", "effect": "Answers carry the «later amendments not verified» note (effective_status current_amended_verified → CURRENT_BUT_LATER_AMENDMENTS_NOT_VERIFIED)."},
+    {"id": "U2", "topic": "order_117_text", "note": "The text of order 117/2021 itself was not retrieved (legalinfo.mn/mn/detail/16647 loads its body dynamically; pdfExport returned an empty page). Its content is known from PDF p.4, the ministry listing and order 07/2022 — not from the order.", "effect": "The content of item 2 of order 117 (voided by order 07) is unknown and never stated."},
+    {"id": "U3", "topic": "effective_from_date", "note": "2021-12-01 comes from an official agency announcement (SRC-BARILGA-GOV-EFFECTIVE); neither the norm text nor order 07 prints it.", "effect": "approval.effective_from carries effective_from_evidence_level = official_agency_announcement; answers name the source of the date."},
+    {"id": "U4", "topic": "original_2021_annexes", "note": "The 2021 texts of annex 1 («Монгол орны газар хөдлөлтийн ерөнхий мужлал (500 болон 2500 жил)») and annex 2 are not contained in any retrieved source.", "effect": "They are recorded as superseded versions with text_available = false; every annex answer is from the 2022 version (A-2022-07)."},
+    {"id": "U5", "topic": "annex_2_maps", "note": "Annex 2 is 30 map images (general zoning 500/2500 years, aimag-centre and Ulaanbaatar microzoning). No map value is read.", "effect": "A location that is not a row of annex 1 (e.g. an Ulaanbaatar district) is answered with uncertainty and a pointer to the map sheet, never with a value."},
+    {"id": "U6", "topic": "formulas", "note": "Of 35 numbered formulas only (10), (11), (12) have a clean text layer; (3) and (4) were checked against the page image and are wrong in the text layer (metadata.formula_review); the rest are stacked/duplicated glyphs.", "effect": "No formula is transcribed or executable; explanations name the formula and its clause and point to the page."},
+    {"id": "U7", "topic": "commentary", "note": "No official commentary and no professional-council interpretation of БНбД 22-01-21 was located (2026-09-23). БД 22-101-07 is the commentary of the superseded БНбД 22.01.01/2006.", "effect": "No «Албан тайлбар» / «Мэргэжлийн зөвлөлийн тайлбар» block is ever produced for this norm."},
+    {"id": "U8", "topic": "unregistered_reference", "note": "Section 2 cites «БНбД 2.01.07-16 Ачаалал ба үйлчлэл». That code is in no register; the current norm with the same title is БНбД 20-04-17 (which replaced БНбД 2.01.07-90).", "effect": "Kept as printed; linked to БНбД 20-04-17 only as a TITLE match with that caveat, never as a resolved code."},
+    {"id": "U9", "topic": "page_numbering", "note": "PDF p.5–110 print their number in the running header (printed = PDF − 2); from PDF p.111 the header order flips and map sheets carry their own labels.", "effect": "metadata.source.page_number_mode = top_of_page, printed_page_offset = 2; map pages are cited by PDF page."}
+  ]
+}

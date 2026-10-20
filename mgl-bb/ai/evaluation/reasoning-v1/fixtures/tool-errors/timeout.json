@@ -1,0 +1,21 @@
+{
+  "fixture": true,
+  "kind": "TOOL_ERROR",
+  "id": "tool-timeout",
+  "synthetic": true,
+  "syntheticTools": [
+    {
+      "tool": "get_project_progress",
+      "ok": false,
+      "data": null,
+      "error": "SYNTHETIC_TOOL_TIMEOUT"
+    }
+  ],
+  "sources": [
+    {
+      "document": "SYNTHETIC TOOL ERROR FIXTURE",
+      "clause": null,
+      "verification": "synthetic_deterministic"
+    }
+  ]
+}

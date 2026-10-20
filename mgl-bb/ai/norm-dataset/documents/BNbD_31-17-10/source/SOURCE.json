@@ -1,0 +1,81 @@
+{
+  "document_code": "БНбД 31-17-10",
+  "files": [
+    {
+      "file": "BNbD_31-17-10_mcis_2022-06.pdf",
+      "sha256": "005f941b814e88a3c1dd707d7bb2958777d4ad73cec2df4b8511af1559ab858f",
+      "bytes": 1356687,
+      "pdf_pages": 139,
+      "printed_pages": 137,
+      "fetched_at": "2026-09-16",
+      "fetched_from": "https://mcis.gov.mn/storage/uploads/process/202206/file_1654224802226730_161611878330710.pdf",
+      "authority": "MCIS (Барилгын салбарын нэгдсэн систем, mcis.gov.mn) — official current-norm register entry",
+      "register_record": {
+        "endpoint": "POST https://mcis.gov.mn/mn/getNormList {id: 1617072150704202, register: \"31-17\"}",
+        "record_id": "16201345052562",
+        "wfmstatusname": "Хүчин төгөлдөр",
+        "actnumber": "БНбД 31-17-10 / CCM 31-17-10",
+        "title": "Өндөр барилгын төлөвлөлт / Planning of high-rise building",
+        "decision": "ЗТБХБСайдын 2010 оны 429 дүгээр тушаал",
+        "directurl": "http://mcis.gov.mn/main/single/16201345052562",
+        "category": "3. Хот байгуулалт, барилга байгууламжийн норматив баримт бичиг › Цогцолбор 31. Орон сууц, олон нийтийн болон үйлдвэрийн барилга байгууламж",
+        "createddate": "2021-05-25 08:59:35",
+        "checked_at": "2026-09-16"
+      },
+      "pdf_metadata": {
+        "title": "TOM-1",
+        "creator": "Microsoft Word 2013",
+        "creationDate": "2018-05-11",
+        "modDate": "2022-06-03"
+      },
+      "text_layer": "Mixed encoding: real Unicode Cyrillic plus legacy «Arial Mon» glyph mapping (Latin-1 0xC0–0xFF ⇒ cp1251, є/Є/ї/Ї ⇒ ө/Ө/ү/Ү). Decoded by tools/parse_pdf.py; 0 undecoded Latin-1 characters remain (measured 2026-09-16).",
+      "role": "primary_technical_text"
+    }
+  ],
+  "legal_sources": [
+    {
+      "source_id": "SRC-LEGALINFO-ORDER-429",
+      "type": "official_approval_order",
+      "authority": "Legalinfo (legalinfo.mn)",
+      "url": "https://legalinfo.mn/mn/detail/7524",
+      "title": "БАРИЛГЫН НОРМ БА ДҮРЭМ БАТЛАХ ТУХАЙ — Өндөр барилгын төлөвлөлт, Модон материалын агуулах галын аюулгүйн норм, Төмөрзам ба автозамын нүхэн байгууламж",
+      "order_number": "429",
+      "order_date": "2010-12-30",
+      "issuer": "Зам, тээвэр, барилга, хот байгуулалтын сайд (Х.Баттулга)",
+      "status_on_page": "Хүчинтэй",
+      "item_1_quote": "Барилгын зураг төсөл боловсруулах барилгын норм ба дүрэм 'Өндөр барилгын төлөвлөлт' /БНбД 31-17-10/-ийг нэгдүгээр хавсралтаар … тус тус баталж барилгын зураг төслийн ажилд мөрдүүлсүгэй.",
+      "item_2_repeal_quote": "Энэхүү тушаал гарсантай холбогдуулан УБХ-ны 1988 оны 70 дугаар тогтоолоор батлагдсан 'Тоннели железнодорожные и автодорожные' /СНиП II1-44-77/ барилгын норм ба дүрмийг хүчингүй болсонд тооцсугай.",
+      "amendment_note_quote": "/БХБС-ын 2022 оны 222 дугаар тушаалаар өөрчлөлт орсон/",
+      "contains_technical_text": false,
+      "checked_at": "2026-09-16"
+    },
+    {
+      "source_id": "SRC-MCIS-REGISTER",
+      "type": "official_current_norm_register_entry",
+      "authority": "MCIS",
+      "url": "http://mcis.gov.mn/main/single/16201345052562",
+      "status": "Хүчин төгөлдөр",
+      "checked_at": "2026-09-16"
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "U1",
+      "topic": "amendment_222_2022",
+      "note": "Legalinfo marks order 429 as amended by БХБС order №222 (2022). The content of that amendment as it applies to БНбД 31-17-10 was NOT retrieved/verified. The same order appears on many other norm orders as a registry housekeeping order («УНБ-с хассан»). Effect on the technical text unknown; MCIS PDF modDate 2022-06-03 may or may not reflect it.",
+      "effect": "effective_status kept at current_status_not_checked_for_later_amendments (→ CURRENT_BUT_LATER_AMENDMENTS_NOT_VERIFIED)."
+    },
+    {
+      "id": "U2",
+      "topic": "successor_draft_31-17-23",
+      "note": "MCIS published (2022-10) a revision draft titled «БНбД 31-17-23 Өндөр барилгын төлөвлөлт» (156 pages, approval line blank: «2022 оны ... дүгээр сарын ....-ны өдрийн .... дугаар тушаалаар батлав»); MCIS page 16571223949734 announced the revision as «Боловсруулж байна» with feedback deadline 2022-10-31; macd.org.mn reports section discussions in November (year unstated). No approval order for 31-17-23 was found on legalinfo or in the MCIS current-norm register (register still lists 31-17-10 as Хүчин төгөлдөр, checked 2026-09-16).",
+      "effect": "31-17-23 recorded in the registry as DRAFT and is NOT ingested. It must never be served as current unless an approval order is found.",
+      "draft_url": "https://mcis.gov.mn/storage/uploads/process/202210/file_1665976197392091_162364495749810.pdf"
+    },
+    {
+      "id": "U3",
+      "topic": "toc_vs_body_numbering",
+      "note": "The printed table of contents (p.134–137) lists 20 body sections, while the body text numbers only 17 top-level headings (TOC sections 15 «Зарлан мэдээлэх…», 16 «Аврах…», 17 «Техник зохион байгуулалтын…» appear as sub-headings inside section 14 in the body; body 15 = TOC 18, body 16 = TOC 19, body 17 = TOC 20). Clause locators follow the BODY numbering (the citable printed numbers)."
+    }
+  ]
+}

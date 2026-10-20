@@ -1,0 +1,22 @@
+-- 0025_complexity_rename_reorder.sql
+-- =============================================================
+-- RECONSTRUCTED BODY — intentionally a no-op. See 0021_pricing.sql
+-- for why these four files were empty.
+-- =============================================================
+-- From the filename, the original renamed / reordered the rows in
+-- `pricing_complexity_classes`. The exact labels and ordering are not
+-- recoverable — the table no longer exists in production, because
+-- `0045_project_complexity.sql` drops it along with the rest of the
+-- pricing feature, and nothing in `backend/src/` has read it since.
+--
+-- Cosmetic label changes to a table that is dropped 20 migrations later
+-- and never queried have no observable effect on a replay, so inventing
+-- them would add fiction without adding fidelity. Left as a no-op on
+-- purpose.
+--
+-- Kept as a file (rather than deleted) because production's
+-- `d1_migrations` already records this filename as applied and the
+-- numbering must stay stable.
+-- =============================================================
+
+-- (no statements)

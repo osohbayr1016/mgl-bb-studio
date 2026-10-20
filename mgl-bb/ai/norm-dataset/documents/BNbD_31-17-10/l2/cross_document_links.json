@@ -1,0 +1,23 @@
+{
+  "type": "cross_document_links",
+  "schema_version": "l2-links/1",
+  "norm_code": "БНбД 31-17-10",
+  "document_id": "BNBD-31-17-10-2010",
+  "incoming": [
+    {
+      "from_code": "БНбД 31-17-23",
+      "from_clause": null,
+      "from_locator": null,
+      "original_reference_code": "БНбД 31-17-10",
+      "resolved_current_code": "БНбД 31-17-10",
+      "resolution": "direct",
+      "relationship": "draft_revision_of",
+      "context": null,
+      "source_page": null
+    }
+  ],
+  "supersedes": [],
+  "commentaries": [],
+  "note": "Холбоос бүр бүртгэлийн ирмэг (registry/references.jsonl) эсвэл албан залгамжийн нотолгооноос; сэдвийн ижил төстэй байдлаар ХОЛБООС ЗОХИОГДООГҮЙ.",
+  "generated_at": "2026-09-23"
+}

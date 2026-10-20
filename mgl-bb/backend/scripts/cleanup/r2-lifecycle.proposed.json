@@ -1,0 +1,46 @@
+{
+  "_comment": "САНАЛ БОЛГОСОН R2 lifecycle дүрэм — ХАРААХАН ХЭРЭГЖҮҮЛЭЭГҮЙ.  Хэрэгжүүлэх: cd backend && npx wrangler r2 bucket lifecycle set mgl-meeting-audio --file=scripts/cleanup/r2-lifecycle.meeting.json  (энэ файлыг bucket тус бүрээр хуваана).  Байнгын хэрэглэгчийн файлд (email/, <sub>-<ms>-… upload, client/) дүрэм ЗОРИУДААР БАЙХГҮЙ.",
+  "buckets": {
+    "mgl-meeting-audio": {
+      "rules": [
+        {
+          "id": "expire-docpreview-cache",
+          "enabled": true,
+          "conditions": { "prefix": "docpreview/" },
+          "deleteObjectsTransition": { "condition": { "type": "Age", "maxAge": 604800 } },
+          "_why": "Google Docs урьдчилан харах PDF кэш (lib/documentGoogle.ts).  Объект байхгүй бол код дахин рендерлэдэг (previewPdf: cached null → renderPreviewPdf) тул 7 хоногийн дараа устгах нь аюулгүй.  document_google_files.preview_key нь дангаараа зөв өгөгдөл биш — түүнийг cleanup-db.mjs (docpreview-closed) тэглэнэ."
+        },
+        {
+          "id": "abort-stale-multipart",
+          "enabled": true,
+          "conditions": { "prefix": "" },
+          "abortMultipartUploadsTransition": { "condition": { "type": "Age", "maxAge": 259200 } },
+          "_why": "routes/upload.ts-ийн multipart upload (meeting/client bucket) хагас дутуу үлдвэл (хөтөч хаагдсан) хэсгүүд нь төлбөртэй storage хэвээр — 3 хоногийн дараа цуцлана."
+        }
+      ]
+    },
+    "mgl-progress-media": {
+      "rules": [
+        {
+          "id": "expire-mcp-client-report-pdfs",
+          "enabled": true,
+          "conditions": { "prefix": "client-reports/" },
+          "deleteObjectsTransition": { "condition": { "type": "Age", "maxAge": 2592000 } },
+          "_why": "mcp/tools/generateReport.ts нь PDF-ийг R2-д тавиад /media/client-reports/… URL буцаадаг — тэр URL нь ҮРГЭЛЖ 404 (routes/media.ts нэг сегмент л зөвшөөрдөг, CLAUDE.md).  D1-д ямар ч ишлэл байхгүй.  30 хоног хадгалаад устгана."
+        },
+        {
+          "id": "abort-stale-multipart",
+          "enabled": true,
+          "conditions": { "prefix": "" },
+          "abortMultipartUploadsTransition": { "condition": { "type": "Age", "maxAge": 259200 } },
+          "_why": "IFC/том файлын multipart upload хагас дутуу үлдвэл 3 хоногийн дараа цуцлана."
+        }
+      ]
+    }
+  },
+  "_not_proposed": [
+    "email/  — Gmail бие/хавсралт: D1-ийн email_messages/email_attachments ишилдэг; хадгалах хугацаа нь бизнесийн шийдвэр (санал: 24 сар, D1 мөртэй нь ХАМТ — cleanup-db + cleanup-r2 хосоор, lifecycle-аар БИШ, эс бөгөөс мөр нь үлдээд R2 404 болно).",
+    "<sub>-<ms>-…  — хэрэглэгчийн байршуулсан бүх файл (avatar, ASR зураг, баримт): зөвхөн орфан манифестаар.",
+    "client/  — захиалагчийн порталын файл: гэрээний материал, хэзээ ч автоматаар устгахгүй."
+  ]
+}

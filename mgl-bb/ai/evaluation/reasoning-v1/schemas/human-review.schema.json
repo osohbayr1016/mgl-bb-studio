@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mglai-reasoning-v1-human-review/1",
+  "type": "object",
+  "required": [
+    "schema",
+    "benchmark_version",
+    "mode",
+    "items"
+  ],
+  "properties": {
+    "schema": {
+      "const": "mglai-reasoning-v1-human-review/1"
+    },
+    "benchmark_version": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "case_id",
+          "question",
+          "answer",
+          "automatic_result",
+          "human_review"
+        ],
+        "properties": {
+          "case_id": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          },
+          "automatic_result": {
+            "type": "object"
+          },
+          "human_review": {
+            "type": "object",
+            "required": [
+              "natural_mongolian",
+              "professional",
+              "clear",
+              "concise",
+              "notes"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

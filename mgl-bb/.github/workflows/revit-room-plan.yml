@@ -1,0 +1,121 @@
+name: Revit Room Plan Geometry
+on:
+  push:
+    branches:
+      - "feat/revit-room-plan-generator-*"
+      - "feat/revit-room-plan-python-batch-*"
+    paths:
+      - "revit-mcp/addin/RoomPlan/**"
+      - "revit-mcp/addin/Ui/**"
+      - "revit-mcp/addin/RevitMcpAddin.csproj"
+      - "revit-mcp/tests/RoomPlan.Tests/**"
+      - "revit-mcp/tests/RoomPlan.PythonTests/**"
+      - "revit-mcp/addin/RoomPlan/Python/**"
+      - ".github/workflows/revit-room-plan.yml"
+  pull_request:
+    paths:
+      - "revit-mcp/addin/RoomPlan/**"
+      - "revit-mcp/tests/RoomPlan.Tests/**"
+      - "revit-mcp/tests/RoomPlan.PythonTests/**"
+      - "revit-mcp/addin/Ui/**"
+      - "revit-mcp/addin/RevitMcpAddin.csproj"
+      - ".github/workflows/revit-room-plan.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Нэг commit push + pull_request хоёр run асааж, commit бүр өмнөхийгөө дуустал
+# хүлээдэг байсан (2026-10-13: 1.5 цагт ~100 run, 4 Windows compile job тус бүр
+# 2× минут) — Actions-ийн зардлын хязгаар шавхагдаж бүх workflow «job was not
+# started» болсон.  Ижил салааны шинэ run нь хуучныг цуцална.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  python-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Python offline batch and feedback tests (no pip)
+        # Windows-ын redirect pipe (cp1252) нөхцлийг Linux дээр дуурайна: CLI
+        # stdout-оо өөрөө UTF-8 болгохгүй бол кирилл гаралт 'charmap'-аар унана.
+        env:
+          PYTHONIOENCODING: cp1252
+        run: python -m unittest discover -s revit-mcp/tests/RoomPlan.PythonTests -p "test*.py" -v
+
+  geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Offline room-plan geometry assertions
+        run: dotnet run --project revit-mcp/tests/RoomPlan.Tests/RoomPlan.Tests.csproj --configuration Release
+
+  revit-compile:
+    runs-on: windows-latest
+    timeout-minutes: 18
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: ["Release R24", "Release R25", "Release R26", "Release R27"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+      - name: Compile Revit add-in (no deployment / no live Revit)
+        run: dotnet build revit-mcp/addin/RevitMcpAddin.csproj -c "${{ matrix.configuration }}" -p:Platform=x64 -p:DeployToRevit=false --nologo
+
+  room-plan-qa-bundle:
+    # PR #82 merge хийгдсэн; QA bundle-ийг одоо Actions → Run workflow-оор гараар.
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: [python-batch, geometry, revit-compile]
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Freeze offline Python worker (build-only tool)
+        shell: pwsh
+        run: |
+          python -m pip install --disable-pip-version-check pyinstaller==6.15.0
+          python -m PyInstaller --onefile --console --clean --noconfirm --name roomplan_cli --distpath revit-mcp/addin/RoomPlan/Python revit-mcp/addin/RoomPlan/Python/roomplan_cli.py
+          if (-not (Test-Path revit-mcp/addin/RoomPlan/Python/roomplan_cli.exe)) { throw 'offline worker build failed' }
+          '{"command":"health"}' | & revit-mcp/addin/RoomPlan/Python/roomplan_cli.exe | Out-Host
+          if ($LASTEXITCODE -ne 0) { throw 'offline worker smoke test failed' }
+      - name: Build four-year isolated QA installer bundle
+        shell: pwsh
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File revit-mcp/installer/build-bundle.ps1 -Build -Isolated -Force -Channel qa
+          if ($LASTEXITCODE -ne 0) { throw 'MGL QA bundle build failed' }
+      - name: Verify all payload hashes, native commands and Python worker
+        shell: pwsh
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File revit-mcp/installer/verify-bundle.ps1
+          if ($LASTEXITCODE -ne 0) { throw 'MGL QA bundle verification failed' }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MGL-RoomPlan-QA-${{ github.sha }}
+          if-no-files-found: error
+          retention-days: 7
+          path: |
+            revit-mcp/dist/*/MGL-Revit-Addin-*.zip
+            revit-mcp/dist/*/MGL-Revit-Addin-*.json

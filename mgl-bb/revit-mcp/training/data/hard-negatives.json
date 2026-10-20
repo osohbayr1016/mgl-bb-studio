@@ -1,0 +1,235 @@
+{
+ "_note": "ХАТУУ СӨРӨГ ба ирмэгийн жишээ — 2026-08-25-нд БОДИТ ХЭМЖИЛТЭЭР нэмэв.\n\n1) «ирцээ бүртгүүлье» → submit_progress 0.58 гэж БУРУУ таамаглаж, босго\n   давсан тул ҮЙЛДЭЛ хийх гэж байсан.  Шалтгаан: «бүртгүүл» нь\n   submit_progress-д 13 мөрд, «ирц» нь ердөө 1 мөрд байв — n-gram дийлсэн.\n   Ирц бол ТУСДАА систем; буруу илгээх нь БИЧИХ үйлдэл тул аюултай.\n   Иймд MGL-ийн бусад модультай мөргөлддөг үйл үгсийг («илгээ», «бүртгүүл»)\n   зориудаар unknown тал руу тэнцвэржүүлэв.\n\n2) «ЦБУ-05 ыг 70 хувь болголоо» → 0.19 итгэлцэлтэй, өөрөөр хэлбэл\n   загвар мэдэхгүй байв.  Тоо + мэдэгдэл = илгээх гэсэн дүрэм өгөгдөлд\n   зөвхөн «илгээе» үйл үгтэй хамт байсан.  Үйл үггүй хэлбэрийг нэмэв.\n\n⚠️ progress_status-аас ялгах цорын ганц шинж нь АСУУЛТЫН БӨӨМ\n   («уу/үү/вэ/бэ»).  Мэдэгдэл = илгээх, асуулт = байдал шалгах.\n\n2026-08-25 (2-р ээлж): «хэдэн … байна/вэ» гэсэн АЖИЛТАЙ ХОЛБООГҮЙ асуултууд.\nАнгли бэхжүүлэлт «how much / how many percent» мөрүүдийг олноор нэмсний дараа\n`check_behavior.py` нь «өнөөдөр хэдэн градус байна» → progress_status (0.41) гэж\nБАРЬСАН.  Босгоос доогуур тул үйлдэл хийхгүй байсан ч шошго нь буруу байв.\n⚠️ Хэмжилтийн хэв маяг: шинэ өгөгдөл нэмэх бүрд ХИЛ бүдгэрч болно.  Тиймээс\n`pull_and_retrain.py` нь шалгалт давсан үед л нийтэлдэг.\n\n2026-08-25 (3-р ээлж): ХАРАГДАЦ (view) ≠ ХУУДАС (sheet) ≠ ТУСГААРЛАЛТ ЦУЦЛАХ.\nТэмдэгтийн n-gram-ийг 3-5-аас 2-6 болгосны дараа «бүх ... харагдац» нь\nreset_view-ийн «бүх элементийг харуул»-тай давхцаж, `check_behavior` нь\n«бүх 3d харагдацыг жагсаа» → reset_view (0.38) гэж БАРЬСАН.\n⚠️ Хэв маяг: онцлогийн бүтэц өөрчлөгдөх бүрд ХИЛ шинээр бүдгэрч болно.\nТиймээс шалгалтууд нь загварын өөрчлөлт бүрийн дараа ажиллах ёстой.",
+ "rows": [
+  {
+   "text": "ирц бүртгүүлэх",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өнөөдрийн ирцээ тэмдэглүүлье",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ажилдаа ирснээ бүртгүүлье",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ирцийн мэдээллээ илгээе",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "цагийн бүртгэлээ хийе",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "irtsee burtguulye",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "unuudriin irts burtguulye",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "ирц",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "чөлөөний хүсэлтээ илгээе",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "илүү цагаа бүртгүүлье",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хурлын тэмдэглэлээ илгээе",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "үнийн саналаа илгээе",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "имэйл илгээх үү",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ЦБУ-05 ыг 70 хувь болголоо",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "БА-07 ыг 40 хувь болгосон",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "энэ хуудас 90% боллоо",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ХАС-02 55 хувьтай боллоо",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "65 хувь болголоо",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ББ-11 ийг дуусгачихлаа",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "BA-03 iig 50 huv bolgoloo",
+   "intent": "submit_progress",
+   "style": "latin"
+  },
+  {
+   "text": "yavts 75% bollo",
+   "intent": "submit_progress",
+   "style": "latin"
+  },
+  {
+   "text": "ЦАХ-04 ийг 85% болголоо",
+   "intent": "submit_progress",
+   "style": "codeswitch"
+  },
+  {
+   "text": "ЦБУ-05 хэдэн хувь болсон бэ",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "БА-07 40 хувьтай юу",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "гадаа хэдэн градус байна",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "одоо хэдэн цаг болж байна",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хурал хэдэн цагт эхлэх вэ",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өнөөдөр хэдэн хүн ирсэн бэ",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "энэ сарын цалин хэд вэ",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өдрийн хоол хэдэн цагт вэ",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "hedhen gradus baina",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "odoo heden tsag bolj baina",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "what is the temperature outside",
+   "intent": "unknown",
+   "style": "en"
+  },
+  {
+   "text": "how many people came to work today",
+   "intent": "unknown",
+   "style": "en"
+  },
+  {
+   "text": "what time does the meeting start",
+   "intent": "unknown",
+   "style": "en"
+  },
+  {
+   "text": "how much is the salary this month",
+   "intent": "unknown",
+   "style": "en"
+  },
+  {
+   "text": "харагдацын жагсаалт гаргаж өгөөч",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "plan харагдацуудаа харуул",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "зүсэлтийн харагдацуудыг жагсаа",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "бүх харагдацаа нээ",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "haragdatsuudiin jagsaalt",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "3d haragdats uudaa haruul",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "list all the views in this project",
+   "intent": "unknown",
+   "style": "en"
+  },
+  {
+   "text": "show every 3d view",
+   "intent": "unknown",
+   "style": "en"
+  },
+  {
+   "text": "how many views are there",
+   "intent": "unknown",
+   "style": "en"
+  },
+  {
+   "text": "open the view list",
+   "intent": "unknown",
+   "style": "en"
+  }
+ ]
+}

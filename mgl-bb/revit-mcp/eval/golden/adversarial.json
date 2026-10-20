@@ -1,0 +1,152 @@
+{
+ "_note": "GOLDEN-EVAL · «хийж болохгүйгээ мэдэж байна уу».  PROBES-ийн `unknown` хүлээлттэй 18 мөр.  `intents`-тэй давхцах нь ЗӨВ — тусдаа оноо (§3.2).",
+ "partition": "adversarial",
+ "frozen": true,
+ "preprocess_contract": "fold-v1",
+ "rows": [
+  {
+   "row_id": "2c62e85c0bed9b89",
+   "text": "өнөөдрийн ирцээ хаанаас бүртгүүлэх вэ",
+   "intent": "unknown",
+   "group": "сөрөг·ирц",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "2dfc035657db2d2a",
+   "text": "mark my attendance for today",
+   "intent": "unknown",
+   "group": "сөрөг·ирц",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "7c7360251b67b630",
+   "text": "чөлөө авъя",
+   "intent": "unknown",
+   "group": "сөрөг·чөлөө",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "32d58df7592bfa1a",
+   "text": "i want to request annual leave",
+   "intent": "unknown",
+   "group": "сөрөг·чөлөө",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "3d8ec046f7e6167c",
+   "text": "email the drawings to the client",
+   "intent": "unknown",
+   "group": "сөрөг·имэйл",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "81381d01ff83bc94",
+   "text": "миний даалгаврын жагсаалтыг нээ",
+   "intent": "unknown",
+   "group": "сөрөг·даалгавар",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "86a313d31988f13d",
+   "text": "export the monthly performance report",
+   "intent": "unknown",
+   "group": "сөрөг·тайлан",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "f4f2f2d9af6061ad",
+   "text": "илүү цагийн хүсэлт гаргая",
+   "intent": "unknown",
+   "group": "сөрөг·илүү цаг",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "80cb331025302b27",
+   "text": "надад шинэ sheet үүсгэж өгөөч",
+   "intent": "unknown",
+   "group": "сөрөг·үүсгэх",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "e2bf7dd02400a206",
+   "text": "model a wall on grid A",
+   "intent": "unknown",
+   "group": "сөрөг·зурах",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "b9654476972097bd",
+   "text": "дээвэр загварчилж өгөөч",
+   "intent": "unknown",
+   "group": "сөрөг·зурах",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "1d94e96d2e41466d",
+   "text": "бүх 3d харагдацыг жагсаа",
+   "intent": "unknown",
+   "group": "сөрөг·view",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "02f382aa4cfcfafc",
+   "text": "sync to central",
+   "intent": "unknown",
+   "group": "сөрөг·sync",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "c7f26261d46cb873",
+   "text": "print this sheet to pdf",
+   "intent": "unknown",
+   "group": "сөрөг·хэвлэх",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "4f1a4061dc22a3bb",
+   "text": "asdfgh",
+   "intent": "unknown",
+   "group": "утгагүй",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "0926e40e1c8e032d",
+   "text": "аан тийм үү",
+   "intent": "unknown",
+   "group": "утгагүй",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "3922176467dd9bd4",
+   "text": "өнөөдөр хэдэн градус байна",
+   "intent": "unknown",
+   "group": "яриа",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  },
+  {
+   "row_id": "1b7234a3ceaa4d52",
+   "text": "thanks a lot",
+   "intent": "unknown",
+   "group": "яриа",
+   "added": "2026-08-25",
+   "author": "check_behavior.py"
+  }
+ ]
+}

@@ -1,0 +1,319 @@
+{
+ "policy": "Printed cross-references are version-sensitive; resolve the current successor in registry/norms.jsonl before any cross-norm compliance conclusion.",
+ "references": [
+  {
+   "reference_id": "БНбД 20-04-17#REF:appА:1",
+   "from": "БНбД 20-04-17",
+   "from_clause": null,
+   "from_locator": "А-р хавсралт, 1",
+   "to_document": "БНбД 20-01-11",
+   "to_documents": [
+    "БНбД 20-01-11"
+   ],
+   "to_document_key": "БНбД 20-01-11",
+   "relationship": "normative_reference_list",
+   "context": "БНбД 20-01-11 “Барилгын бүтээц ба буурийн найдваршил. Ерөнхий шаардлага”",
+   "source_page": 36,
+   "source_pdf_page": 45,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:appА:2",
+   "from": "БНбД 20-04-17",
+   "from_clause": null,
+   "from_locator": "А-р хавсралт, 2",
+   "to_document": "БНбД 23-01-09",
+   "to_documents": [
+    "БНбД 23-01-09"
+   ],
+   "to_document_key": "БНбД 23-01-09",
+   "relationship": "normative_reference_list",
+   "context": "БНбД 23-01-09 “Барилгад хэрэглэх уур амьсгал, геофизикийн үзүүлэлт”",
+   "source_page": 36,
+   "source_pdf_page": 45,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:appА:3",
+   "from": "БНбД 20-04-17",
+   "from_clause": null,
+   "from_locator": "А-р хавсралт, 3",
+   "to_document": "БНбД 31-01-10",
+   "to_documents": [
+    "БНбД 31-01-10"
+   ],
+   "to_document_key": "БНбД 31-01-10",
+   "relationship": "normative_reference_list",
+   "context": "БНбД 31-01-10 “Орон сууцны барилгын зураг төсөл төлөвлөлт”",
+   "source_page": 36,
+   "source_pdf_page": 45,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:appА:4",
+   "from": "БНбД 20-04-17",
+   "from_clause": null,
+   "from_locator": "А-р хавсралт, 4",
+   "to_document": "БНбД 31-03-03",
+   "to_documents": [
+    "БНбД 31-03-03"
+   ],
+   "to_document_key": "БНбД 31-03-03",
+   "relationship": "normative_reference_list",
+   "context": "БНбД 31-03-03 “Олон нийт иргэний барилга”",
+   "source_page": 36,
+   "source_pdf_page": 45,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:appА:5",
+   "from": "БНбД 20-04-17",
+   "from_clause": null,
+   "from_locator": "А-р хавсралт, 5",
+   "to_document": "MNS 4990",
+   "to_documents": [
+    "MNS 4990"
+   ],
+   "to_document_key": "MNS 4990",
+   "relationship": "normative_reference_list",
+   "context": "MNS 4990 - 2015 “Хөдөлмөрийн аюулгүй байдал, эрүүл мэнд. Хөдөлмөрийн эрүүл ахуй. Ажлын байрны орчин. Эрүүл ахуйн шаардлага”",
+   "source_page": 36,
+   "source_pdf_page": 45,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:appА:6",
+   "from": "БНбД 20-04-17",
+   "from_clause": null,
+   "from_locator": "А-р хавсралт, 6",
+   "to_document": "MNS 4994",
+   "to_documents": [
+    "MNS 4994"
+   ],
+   "to_document_key": "MNS 4994",
+   "relationship": "normative_reference_list",
+   "context": "MNS 4994 -2000 “Хөдөлмөрийн аюулгүй ажиллагаа, эрүүл ахуй. Доргионы норм, аюулгүй ажиллагааны ерөнхий шаардлага”",
+   "source_page": 36,
+   "source_pdf_page": 45,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:appА:7",
+   "from": "БНбД 20-04-17",
+   "from_clause": null,
+   "from_locator": "А-р хавсралт, 7",
+   "to_document": null,
+   "to_documents": [],
+   "to_document_key": null,
+   "relationship": "normative_reference_list",
+   "context": "MNS ISO 2374:2009 “Ачаа өргөх кран. Үндсэн загварын хамгийн их даацын эрэмбэ”",
+   "source_page": 36,
+   "source_pdf_page": 45,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:appА:8",
+   "from": "БНбД 20-04-17",
+   "from_clause": null,
+   "from_locator": "А-р хавсралт, 8",
+   "to_document": null,
+   "to_documents": [],
+   "to_document_key": null,
+   "relationship": "normative_reference_list",
+   "context": "MNS ISO 4301-2:2009 “Ачаа өргөх тоног төхөөрөмж-Ангилал. 2-р хэсэг: Өөрөө явагч кран”",
+   "source_page": 36,
+   "source_pdf_page": 45,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:appА:9",
+   "from": "БНбД 20-04-17",
+   "from_clause": null,
+   "from_locator": "А-р хавсралт, 9",
+   "to_document": "ГОСТ 25546-82*",
+   "to_documents": [
+    "ГОСТ 25546-82*"
+   ],
+   "to_document_key": "ГОСТ 25546-82*",
+   "relationship": "normative_reference_list",
+   "context": "ГОСТ 25546-82* “Краны грузоподъемные. Режимы работы”",
+   "source_page": 36,
+   "source_pdf_page": 45,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:appА:10",
+   "from": "БНбД 20-04-17",
+   "from_clause": null,
+   "from_locator": "А-р хавсралт, 10",
+   "to_document": null,
+   "to_documents": [],
+   "to_document_key": null,
+   "relationship": "normative_reference_list",
+   "context": "ISO 10137 Bases for design of structures - Serviceability of buildings and walkways against vibrations",
+   "source_page": 36,
+   "source_pdf_page": 45,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:9.1:ГОСТ 25546",
+   "from": "БНбД 20-04-17",
+   "from_clause": "9.1",
+   "from_locator": "заалт 9.1",
+   "to_document": "ГОСТ 25546",
+   "to_documents": [
+    "ГОСТ 25546"
+   ],
+   "to_document_key": "ГОСТ 25546",
+   "relationship": "normative_reference",
+   "context": "эргээс хамааруулан тодорхойлно. Энд дурдсан стандартуудаар тодорхойлох боломжгүй бол ГОСТ 25546 стандартыг хэрэглэж болно. Янз бүрийн бүлгийн ажлын горимтой гүүрэн ба дүүжин өргүүр",
+   "source_page": 18,
+   "source_pdf_page": 18,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:10.2:БНбД 23-01-09",
+   "from": "БНбД 20-04-17",
+   "from_clause": "10.2",
+   "from_locator": "заалт 10.2",
+   "to_document": "БНбД 23-01-09",
+   "to_documents": [
+    "БНбД 23-01-09"
+   ],
+   "to_document_key": "БНбД 23-01-09",
+   "relationship": "normative_reference",
+   "context": "ан бүрхүүлийн жин Sg норм ба дүрмийн 4.15 болон 30-р зурагт зааснаар тодорхойлно. –г БНбД 23-01-09 Уулын ба бага судлагдсан бүс нутагт далайн төвшнөөс 1500 м-ээс ихгүй өндөр цэгт,",
+   "source_page": 21,
+   "source_pdf_page": 21,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:10.6:БНбД 23-01-09",
+   "from": "БНбД 20-04-17",
+   "from_clause": "10.6",
+   "from_locator": "заалт 10.6",
+   "to_document": "БНбД 23-01-09",
+   "to_documents": [
+    "БНбД 23-01-09"
+   ],
+   "to_document_key": "БНбД 23-01-09",
+   "relationship": "normative_reference",
+   "context": "тодорхойлно. сe=0,85. (10.3) Хамгийн хүйтэн гурван сарын салхины дундаж хурд V -ийг БНбД 23-01-09-ийн 2.3. зүйлийн дагуу авна.",
+   "source_page": 22,
+   "source_pdf_page": 22,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:10.9:БНбД 23-01-09",
+   "from": "БНбД 20-04-17",
+   "from_clause": "10.9",
+   "from_locator": "заалт 10.9",
+   "to_document": "БНбД 23-01-09",
+   "to_documents": [
+    "БНбД 23-01-09"
+   ],
+   "to_document_key": "БНбД 23-01-09",
+   "relationship": "normative_reference",
+   "context": "гаарын дундаж температур хасах 5С -аас дээш бүс дэх барилгын дээвэр дээрх ачаалалд (БНбД 23-01-09-ийн 2.1 зүйлийг үз); б) 10h1-ээс багагүй зайд алслагдсан илүү өндөр барилгуудаар",
+   "source_page": 22,
+   "source_pdf_page": 22,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:11.1.4:БНбД 23-01-09",
+   "from": "БНбД 20-04-17",
+   "from_clause": "11.1.4",
+   "from_locator": "заалт 11.1.4",
+   "to_document": "БНбД 23-01-09",
+   "to_documents": [
+    "БНбД 23-01-09"
+   ],
+   "to_document_key": "БНбД 23-01-09",
+   "relationship": "normative_reference",
+   "context": "Салхины ачааллын нормын утга w0 -ийг салхины бүс болон давтагдалтаас хамааруулан БНбД 23-01-09-ийн 37-р зургаас авна. Салхины даралтын нормын утгыг тухайн орчны ус цаг уур орчн",
+   "source_page": 24,
+   "source_pdf_page": 24,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:11.4:БНбД 23-01-09",
+   "from": "БНбД 20-04-17",
+   "from_clause": "11.4",
+   "from_locator": "заалт 11.4",
+   "to_document": "БНбД 23-01-09",
+   "to_documents": [
+    "БНбД 23-01-09"
+   ],
+   "to_document_key": "БНбД 23-01-09",
+   "relationship": "normative_reference",
+   "context": "аасан салхины даралтын утгыг “Барилгад хэрэглэх уур амьсгал ба геофизикийн үзүүлэлт” БНбД 23-01-09-ийн С хүснэгтэд заасан салхины тооцооны хурдад үндэслэн тооцож гаргана. Мөн тооцо",
+   "source_page": 33,
+   "source_pdf_page": 33,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:12.2:БНбД 23-01-09",
+   "from": "БНбД 20-04-17",
+   "from_clause": "12.2",
+   "from_locator": "заалт 12.2",
+   "to_document": "БНбД 23-01-09",
+   "to_documents": [
+    "БНбД 23-01-09"
+   ],
+   "to_document_key": "БНбД 23-01-09",
+   "relationship": "normative_reference",
+   "context": "ах дугуй огтлолтой элементэд “Барилгад хэрэглэх уур амьсгал ба геофизикийн үзүүлэлт” БНбД 23-01-09-ийн 4.10. зүйл болон 15-р зурагт зааснаар, 200 метр ба түүнээс дээш өндөрт байрла",
+   "source_page": 34,
+   "source_pdf_page": 34,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:13.4:БНбД 23-01-09",
+   "from": "БНбД 20-04-17",
+   "from_clause": "13.4",
+   "from_locator": "заалт 13.4",
+   "to_document": "БНбД 23-01-09",
+   "to_documents": [
+    "БНбД 23-01-09"
+   ],
+   "to_document_key": "БНбД 23-01-09",
+   "relationship": "normative_reference",
+   "context": "I, (13.4) tI, tVII – нэг ба долоодугаар сарын агаарын олон жилийн дундаж температур, БНбД 23-01-09-ийн 1-р хүснэгтийн дагуу авна; I, VII - сарын дундаж температураас хоногийн дун",
+   "source_page": 38,
+   "source_pdf_page": 38,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:13.5:БНбД 23-01-09",
+   "from": "БНбД 20-04-17",
+   "from_clause": "13.5",
+   "from_locator": "заалт 13.5",
+   "to_document": "БНбД 23-01-09",
+   "to_documents": [
+    "БНбД 23-01-09"
+   ],
+   "to_document_key": "БНбД 23-01-09",
+   "relationship": "normative_reference",
+   "context": "луун, сарнисан ба ойсон цацрагийн хамгийн их нийлбэр утга, Вт ц/м2, хэвтээ гадаргууд БНбД 23-01-09-ийн 11, 12 ба 14 дүгээр хүснэгтээр тооцож гаргасан ба 13.4-р хүснэгтээс авсан утг",
+   "source_page": 38,
+   "source_pdf_page": 38,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  },
+  {
+   "reference_id": "БНбД 20-04-17#REF:Д.1.4:MNS 4994",
+   "from": "БНбД 20-04-17",
+   "from_clause": "Д.1.4",
+   "from_locator": "заалт Д.1.4",
+   "to_document": "MNS 4994",
+   "to_documents": [
+    "MNS 4994"
+   ],
+   "to_document_key": "MNS 4994",
+   "relationship": "normative_reference",
+   "context": "бүтээцэд хэлбэлзэл үүсгэсэн үед доргионы хурд, хурдатгал, шилжилтийн утгын хязгаарыг MNS 4994 “Хөдөлмөрийн аюулгүй ажиллагаа, эрүүл ахуй. Доргионы норм, аюулгүй ажиллагааны ерөнхи",
+   "source_page": 77,
+   "source_pdf_page": 86,
+   "verification_status": "official_pdf_text_layer_auto_extracted"
+  }
+ ]
+}

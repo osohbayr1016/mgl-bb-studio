@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Гүйцэтгэлийн тайлан — загвар</title>
+<style>
+  /* ============================================================
+     ГҮЙЦЭТГЭЛИЙН ТАЙЛАН — faithful copy of the MGL E&C report
+     layout, made reusable. Edit reportData at the bottom and
+     reload. Export: Ctrl/Cmd+P → Save as PDF → A4 → Margins: None.
+     No external dependencies (donut chart is inline SVG).
+     ============================================================ */
+  :root{
+    --navy:#1c3a5e;          /* table labels, cover, rules */
+    --navy-d:#16304f;
+    --ink:#1a1a1a;
+    --muted:#6b7280;
+    --rule:#1c3a5e;
+    --page-w:210mm;
+    --page-h:297mm;
+    --mt:16mm; --mb:16mm; --mx:18mm;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:"Segoe UI", Arial, "Noto Sans", sans-serif;
+    color:var(--ink); background:#5a6270; font-size:11px; line-height:1.45;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .page{
+    position:relative; width:var(--page-w); min-height:var(--page-h);
+    background:#fff; margin:9mm auto; padding:var(--mt) var(--mx) var(--mb);
+    box-shadow:0 2px 14px rgba(0,0,0,.35); overflow:hidden;
+  }
+
+  /* ---------- running header ---------- */
+  .rhead{ display:flex; justify-content:space-between; align-items:flex-start;
+    border-bottom:1.5px solid var(--rule); padding-bottom:6px; margin-bottom:14px; }
+  .rhead .h-l{ font-size:10px; color:#333; }
+  .rhead .h-l b{ font-size:12px; color:#000; }
+  .rhead .h-l .sub{ color:var(--muted); font-size:9px; line-height:1.5; margin-top:2px; }
+  .logo{ display:flex; align-items:center; gap:6px; }
+  .logo .mk{ width:54px; height:34px; }
+  .logo .lt{ font-weight:800; color:var(--navy); font-size:11px; letter-spacing:.5px; line-height:1; }
+  .logo .lt small{ display:block; font-weight:600; font-size:7px; letter-spacing:2px; color:#c4962b; }
+
+  /* ---------- running footer ---------- */
+  .rfoot{ position:absolute; left:var(--mx); right:var(--mx); bottom:10mm;
+    display:flex; justify-content:space-between; align-items:flex-end;
+    border-top:1px solid #c9d2dd; padding-top:6px; }
+  .foot-logo{ font-weight:800; color:#3a4250; letter-spacing:3px; font-size:13px; line-height:1.15; }
+  .foot-logo small{ display:block; font-size:11px; letter-spacing:3px; }
+  .pgno{ font-size:11px; color:#333; }
+
+  /* ---------- headings ---------- */
+  .sec1{ margin:6px 0 12px; }
+  .sec1 .en{ font-weight:800; text-decoration:underline; font-size:12px; letter-spacing:.3px; }
+  .sec1 .mn{ font-style:italic; font-weight:700; color:#222; font-size:10px; margin-left:18px; }
+  .sec1 .no{ font-weight:800; margin-right:10px; }
+  .sec2{ font-weight:800; font-size:13px; margin:22px 0 12px; }
+  .sec2 .no{ margin-right:8px; color:var(--navy); }
+
+  /* ---------- info table ---------- */
+  table.info{ width:100%; border-collapse:collapse; }
+  table.info td{ border:1px solid #9aa7b5; padding:6px 9px; vertical-align:middle; font-size:10.5px; }
+  table.info td.k{ background:var(--navy); color:#fff; width:23%; }
+  table.info td.k .en{ font-style:italic; color:#cdd8e6; font-size:8.5px; display:block; }
+  .disc{ display:flex; }
+  .disc .d{ flex:1; border-right:1px solid #9aa7b5; padding:4px 6px; font-size:9.5px; white-space:nowrap; }
+  .disc .d:last-child{ border-right:0; }
+  .disc .box{ display:inline-block; width:9px; height:9px; border:1px solid #333; margin-right:4px; vertical-align:-1px; }
+  .disc .box.on{ background:var(--navy); border-color:var(--navy); box-shadow:inset 0 0 0 2px #fff; }
+
+  /* ---------- summary metrics ---------- */
+  .metrics{ display:grid; grid-template-columns:repeat(4,1fr); margin:14px 0 26px; text-align:center; }
+  .metric .l{ font-size:9px; font-weight:700; letter-spacing:.5px; color:#333; text-transform:uppercase; }
+  .metric .v{ font-size:30px; font-weight:800; color:#000; margin-top:6px; }
+
+  /* ---------- donut + legend ---------- */
+  .pie-row{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:10px; align-items:center; margin-top:6px; }
+  .pie-row svg{ display:block; margin:0 auto; }
+  .leg-h{ font-weight:800; font-size:10.5px; margin-bottom:10px; }
+  .leg .row{ display:flex; align-items:center; gap:8px; font-size:10.5px; color:#333; padding:3px 0; }
+  .leg .sw{ width:8px; height:8px; flex:none; }
+
+  /* ---------- numbered render index ---------- */
+  ol.idx{ margin:6px 0; padding-left:22px; }
+  ol.idx>li{ margin:8px 0 4px; font-weight:700; }
+  ol.idx ul{ list-style:none; margin:4px 0; padding:0; font-weight:400; }
+  ol.idx ul li{ display:flex; align-items:baseline; gap:5px; padding:2px 0; }
+  ol.idx ul li::before{ content:"•"; color:#444; }
+  .lead-dots{ flex:1; border-bottom:1px dotted #999; transform:translateY(-3px); }
+  .pp{ white-space:nowrap; }
+  .idx-total{ display:flex; align-items:baseline; gap:5px; font-weight:800; margin-top:14px; padding-top:4px; }
+
+  /* ---------- section 4 narrative ---------- */
+  .lbl-line{ margin:10px 0 4px; }
+  .lbl-line .k{ font-weight:700; }
+  ol.zones{ margin:4px 0 10px; padding-left:40px; }
+  ol.zones li{ margin:3px 0; }
+  p{ margin:0 0 8px; text-align:justify; }
+  .zone{ margin-top:14px; break-inside:avoid; }
+  .zone .zt{ font-weight:800; color:var(--navy); margin-bottom:4px; }
+  .facet{ margin:6px 0; }
+  .facet .fl{ font-weight:700; }
+  .facet ul{ margin:3px 0; padding-left:18px; }
+  .facet li{ margin-bottom:4px; text-align:justify; }
+  [contenteditable]:focus{ outline:none; background:#fffceb; }
+
+  .note{ max-width:var(--page-w); margin:6mm auto; color:#eef; font-size:11px;
+    background:rgba(0,0,0,.28); padding:8px 14px; border-radius:6px; }
+  .note code{ background:rgba(255,255,255,.16); padding:1px 5px; border-radius:3px; }
+
+  /* ---------- cover ---------- */
+  .cover{ background:var(--navy-d); color:#eaf0f7; padding:0; }
+  .cover .inner{ position:relative; width:100%; height:var(--page-h); padding:22mm var(--mx); display:flex; flex-direction:column; }
+  .cover .title{ margin-top:43%; text-align:right; }
+  .cover .title h1{ font-weight:400; font-size:34px; letter-spacing:.5px; margin:0; color:#fff; }
+  .cover .title .date{ font-size:12px; color:#c7d2e0; margin-top:4px; }
+  .cover .cfoot{ margin-top:auto; text-align:right; font-style:italic; font-size:11px; color:#c7d2e0; line-height:1.5; }
+
+  @media print{
+    body{ background:#fff; }
+    .note{ display:none; }
+    .page{ margin:0; box-shadow:none; width:auto; min-height:auto; page-break-after:always; }
+    .page:last-child{ page-break-after:auto; }
+    .cover{ padding:0; }
+  }
+  @page{ size:A4; margin:0; }
+</style>
+</head>
+<body>
+
+<div class="note">
+  Загвар — <b>reportData</b>-г засаад дахин ачаална. PDF: <code>Ctrl/Cmd+P → Save as PDF → A4 → Margins: None</code>.
+  Текстийг шууд энд дээр нь засаж болно.
+</div>
+
+<div id="report"></div>
+
+<script>
+/* ============================================================
+   DATA — edit to regenerate. (Pre-filled with the real report.)
+   ============================================================ */
+const reportData = {
+  docNo:"TOYOTA_SERVICE_CENTER_IZ_PR",
+  date:"2026.06.10",
+  reportTitle:"Гүйцэтгэлийн тайлан",
+  clientLogoTop:"ТАВАН БОГД",
+  coverTitle:"Гүйцэтгэлийн Тайлан",
+  coverSubtitle:"“Таван богд” ХХК-ний оффис, үйлчилгээний барилгын интерьерийн зураг төсөл",
+  footerLogo:["MGL","E&C"],
+
+  passport:{
+    titleMn:"“ТАВАН БОГД” ХХК-ИЙН ОФФИС, ҮЙЛЧИЛГЭЭНИЙ БАРИЛГЫН ИНТЕРЬЕРИЙН АЖЛЫН ЗУРАГ",
+    client:"“ТАВАН БОГД” ХХК",
+    drawingNo:"MEC24/08",
+    scope:"“Таван богд” ххк-ийн оффис, үйлчилгээний барилгын интерьерийн ажлын зураг",
+    location:"Улаанбаатар хот, Сүхбаатар дүүрэг, 1-р хороо",
+    director:"“ТАВАН БОГД” ХХК-ИЙН Гүйцэтгэх захирал Б.Энхсайхан",
+    pm:"Албаны дарга Э.Цогтбат",
+    disciplines:["БА","ББ","ХАС","ЦБУ","ЦАХ","ХД","АУ","ИЗ"],
+    activeDiscipline:"ИЗ"
+  },
+
+  summary:{ totalTasks:415, workSets:32, sections:4, progressPct:100 },
+
+  // donut + legend. shades = monochrome blue per original
+  zones:[
+    { name:"Toyota хэсэг",          count:127, pct:30.6, color:"#3f6694" },
+    { name:"Lexus хэсэг",           count:92,  pct:22.2, color:"#5e80aa" },
+    { name:"Оффис лобби-1,2",       count:107, pct:25.8, color:"#7d9ac0" },
+    { name:"Спорт заал, фитнесс",   count:89,  pct:21.4, color:"#a8bdd6" }
+  ],
+
+  renderIndex:[
+    { floor:"1-р давхар", items:[
+      ["Оффис үндсэн орц-1,2",14],["Ажилчдын хэсэг",12],
+      ["Үйлчилгээний танхим",10],["Үзэсгэлэнгийн хэсэг",46] ]},
+    { floor:"1.5-р давхар", items:[
+      ["LEXUS-тансаг зэрэглэлийн лоунж",23],["Ажилчдын хэсэг /Хувцас солих, Шүршүүр/",21] ]},
+    { floor:"2-р давхар", items:[ ["Хүүхдийн цэцэрлэгийн хэсэг",95] ]},
+    { floor:"3, 4, 5-р давхар", items:[
+      ["Ариун цэврийн өрөө /эрэгтэй, эмэгтэй/",11],["Оффис",37] ]},
+    { floor:"6-р давхар Оффис/хувилбар-1/", items:[ ["Оффис/Хувилбар-2/",40] ], firstPg:150 },
+    { floor:"7-р давхар", items:[ ["Спорт лоунж",52],["Спорт заал",6] ]},
+    { floor:"8-р давхар Фитнесс", items:[], firstPg:17 }
+  ],
+  renderTotal:534,
+
+  // section 4 intro (the "Тайлбар" block)
+  intro:{
+    lead:"Төлөвлөж буй барилгын интерьерийн ажлын зураг нь 4 үндсэн хэсэгтэй. Үүнд:",
+    zones:[
+      "1,3,4,5-р давхрын лобби, нийтийн эзэмшил",
+      "1, 1.5-р давхрын тоёота, засвар үйлчилгээний төв",
+      "1, 1.5-р давхрын LEXUS үйлчилгээний танхим, лоунж",
+      "7,8-р давхрын амралт, спорт хэсэг"
+    ],
+    body:[
+      "Энэхүү хэсгүүдийн интерьерийн төлөвлөлт, өнгөлгөөний материал, хана, шал, тааз, гэрэлтүүлэг, цахилгааны тоног төхөөрөмж, холбоо дохиолол, тавилгын зохион байгуулалтын шийдлийг тусгасан зургийн бүрдлээс бүрдэнэ."
+    ]
+  },
+
+  // detailed narrative per zone (editable in page)
+  narrative:[
+    { code:"4.1", name:"1,3,4,5-р давхрын лобби, нийтийн эзэмшилийн хэсэгт", facets:[
+      { label:"Хана", points:[
+        "Лобби хэсгийн дотор ханын үндсэн өнгөлгөөнд гоёлын цагаан шаргал плита /травертин/, захиалгаар хийгдэх бор хавтан /GOLDEA/, хар шил, металл оруулга, далд туузан гэрэл ашиглан өндөр ачаалалтай орчинд эдэлгээ даах нөхцөлийг бүрдүүлсэн.",
+        "3–5 давхрын коридор хананд модон хавтан /GOLDEA PVC/, цайвар шаргал болон бор хүрэн металл хавтан /GOLDEA PET/ — ус чийгэнд тэсвэртэй, дуу шингээдэг, хөнгөн бүтэцтэй, хурдан угсрагддаг." ]},
+      { label:"Шал", points:[
+        "Лобби хэсгийн шалинд цайвар шаргал плита, бор саарал плита /ROMANTIC/ хослуулсан — ус чийгэнд тэсвэртэй, удаан эдэлгээтэй.",
+        "Коридор хэсэгт дуу шингээх дрож, лифтний талбайд цайвар шаргал плита төлөвлөсөн." ]},
+      { label:"Тоноглол", points:[
+        "АЦӨ-ны бүх тоноглолыг “TOTO” брэндээс сонгож, угаалтуурын тавилгад гар хатаагч суурилуулсан." ]}
+    ]},
+    { code:"4.2", name:"1, 1.5-р давхрын тоёота, засвар үйлчилгээний төв", facets:[
+      { label:"Хана", points:[
+        "1 давхрын үйлчилгээний танхимд захиалгаар бор хавтан /GOLDEA/, модон хавтан; коридор болон ажилчдын хэсэгт даавуун хавтан, даавуун обой, ДСП хавтан.",
+        "1.5 давхрын хүлээлгийн хэсэгт даавуун хавтан /GOLDEA/, амрах хэсэгт чулуун өнгөлгөө, арк хэлбэрийн хананд уян чулуу." ]},
+      { label:"Тавилга", points:[
+        "Хүлээлгийн хэсэгт тухтай буйдан, ширээ сандал; борлуулах хэсэгт оффис ширээ сандал, ханын шүүгээ.",
+        "Хувцас солих хэсэгт гутал, хувцасны шүүгээ, сэнстэй угаалтуурын тавилга." ]}
+    ]},
+    { code:"4.3", name:"1, 1.5-р давхрын LEXUS үйлчилгээний танхим, лоунж", facets:[
+      { label:"Хаалга", points:[
+        "Ариун цэврийн болон үйлчилгээний өрөөнүүдэд чийгэнд тэсвэртэй хаалга; галын аюулгүй байдлын хэсэгт гал тэсвэрлэлтийн зэрэгтэй металл хаалга." ]},
+      { label:"Тавилгын байгуулалт", points:[
+        "1.5-р давхрын лоунжид эргэдэг дугуй ширээ, “LEXUS” логотой зүсэлттэй ширээ, дугуй буйдан, массажны сандал.",
+        "Ажилчдын хэсэгт оффис ширээ сандал, буйдан, хувцасны шүүгээ." ]}
+    ]},
+    { code:"4.4", name:"7, 8-р давхрын амралт, спорт хэсэгт", facets:[
+      { label:"Ерөнхий шийдэл", points:[
+        "Энэ хэсгийн материал, тавилгын шийдлийг бөглөнө үү." ]}
+    ]}
+  ]
+};
+
+/* ============================================================
+   RENDERER
+   ============================================================ */
+const esc = s => String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function mountainLogo(){
+  return `<svg class="mk" viewBox="0 0 90 56">
+    <ellipse cx="45" cy="28" rx="44" ry="26" fill="#1c4fa0"/>
+    <path d="M14 38 L34 18 L44 30 L56 14 L78 38 Z" fill="#fff"/>
+    <text x="45" y="50" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Arial">ТАВАН БОГД</text>
+  </svg>`;
+}
+
+function pieSVG(zones,r=80){
+  const total=zones.reduce((a,z)=>a+z.count,0);
+  const cx=r+6, cy=r+6, hole=r*0.55; let a0=-Math.PI/2, out="";
+  zones.forEach(z=>{
+    const f=z.count/total, a1=a0+f*2*Math.PI;
+    const x0=cx+r*Math.cos(a0), y0=cy+r*Math.sin(a0);
+    const x1=cx+r*Math.cos(a1), y1=cy+r*Math.sin(a1);
+    const lg=f>0.5?1:0;
+    out+=`<path d="M${cx},${cy} L${x0.toFixed(2)},${y0.toFixed(2)} A${r},${r} 0 ${lg} 1 ${x1.toFixed(2)},${y1.toFixed(2)} Z" fill="${z.color}"/>`;
+    const am=(a0+a1)/2, lr=(r+hole)/2;
+    out+=`<text x="${(cx+lr*Math.cos(am)).toFixed(1)}" y="${(cy+lr*Math.sin(am)+3).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Arial">${Math.round(f*100)}%</text>`;
+    a0=a1;
+  });
+  out+=`<circle cx="${cx}" cy="${cy}" r="${hole}" fill="#fff"/>`;
+  return `<svg width="${2*(r+6)}" height="${2*(r+6)}" viewBox="0 0 ${2*(r+6)} ${2*(r+6)}">${out}</svg>`;
+}
+
+function head(d){
+  return `<div class="rhead">
+    <div class="h-l"><b>${esc(d.reportTitle)}</b>
+      <div class="sub">Doc. No.: ${esc(d.docNo)}<br>${esc(d.date)}</div></div>
+    <div class="logo">${mountainLogo()}</div>
+  </div>`;
+}
+function foot(d,n){
+  return `<div class="rfoot">
+    <div class="foot-logo">${esc(d.footerLogo[0])}<small>${esc(d.footerLogo[1])}</small></div>
+    <div class="pgno">${n}</div>
+  </div>`;
+}
+
+function render(d){
+  const Z=d.zones; let h="";
+
+  /* COVER */
+  h+=`<section class="page cover"><div class="inner">
+      <div class="title"><h1>${esc(d.coverTitle)}</h1><div class="date">${esc(d.date)}</div></div>
+      <div class="cfoot">${esc(d.coverSubtitle)}</div>
+  </div></section>`;
+
+  /* TOC */
+  h+=`<section class="page">${head(d)}
+    <div class="sec2"><span class="no"></span>Агуулга</div>
+    <ol class="idx">
+      <li>Төслийн ерөнхий мэдээлэл</li>
+      <li>Төслийн гүйцэтгэлийн тойм мэдээлэл</li>
+      <li>Интерьерийн 3D-рендер зургийн бүрдэл</li>
+      <li>Интерьерийн ажлын зургийн гүйцэтгэлийн тайлан
+        <ul>${d.narrative.map(z=>`<li><span>${esc(z.code)} ${esc(z.name)}</span><span class="lead-dots"></span></li>`).join('')}</ul>
+      </li>
+    </ol>${foot(d,2)}</section>`;
+
+  /* SECTION 1 + 2 */
+  const p=d.passport;
+  h+=`<section class="page">${head(d)}
+    <div class="sec1"><span class="no">1.</span><span class="en">GENERAL INFORMATION</span>
+      <div class="mn">(Төслийн ерөнхий мэдээлэл)</div></div>
+    <table class="info">
+      <tr><td class="k">Project title:<span class="en">(Төслийн нэр)</span></td><td colspan="3" style="text-align:center">${esc(p.titleMn)}</td></tr>
+      <tr><td class="k">Client:<span class="en">(Захиалагч)</span></td><td>${esc(p.client)}</td>
+          <td class="k">Drawing No.:<span class="en">(Зургийн шифр)</span></td><td>${esc(p.drawingNo)}</td></tr>
+      <tr><td class="k">Scope of work:<span class="en">(Ажлын цар хүрээ)</span></td><td colspan="3">${esc(p.scope)}</td></tr>
+      <tr><td class="k">Location:<span class="en">(Байршил)</span></td><td colspan="3">${esc(p.location)}</td></tr>
+      <tr><td class="k">Director:<span class="en">(Захирал)</span></td><td>${esc(p.director)}</td>
+          <td class="k">Client Project manager:<span class="en">(Төслийн менежер)</span></td><td>${esc(p.pm)}</td></tr>
+      <tr><td class="k">Discipline:<span class="en">(Ажлын хэсэг)</span></td><td colspan="3" style="padding:0">
+        <div class="disc">${p.disciplines.map(x=>`<span class="d"><span class="box ${x===p.activeDiscipline?'on':''}"></span>${esc(x)}</span>`).join('')}</div>
+      </td></tr>
+    </table>
+
+    <div class="sec2"><span class="no">2.</span>Төслийн гүйцэтгэлийн тойм мэдээлэл</div>
+    <div class="metrics">
+      <div class="metric"><div class="l">НИЙТ АЖЛЫН ТОО</div><div class="v">${d.summary.totalTasks}</div></div>
+      <div class="metric"><div class="l">АЖЛЫН БҮРДЭЛ</div><div class="v">${d.summary.workSets}</div></div>
+      <div class="metric"><div class="l">АНГИЛСАН ХЭСЭГ</div><div class="v">${d.summary.sections}</div></div>
+      <div class="metric"><div class="l">ГҮЙЦЭТГЭЛ</div><div class="v">${d.summary.progressPct}%</div></div>
+    </div>
+    <div class="pie-row">
+      <div>${pieSVG(Z)}</div>
+      <div>
+        <div class="leg-h">АНГИЛСАН ${Z.length} ХЭСЭГ - АЖЛЫН ТОО</div>
+        <div class="leg">${Z.map(z=>`<div class="row"><span class="sw" style="background:${z.color}"></span><span>${esc(z.name)} — ${z.count} (${z.pct}%)</span></div>`).join('')}</div>
+      </div>
+    </div>
+    ${foot(d,3)}</section>`;
+
+  /* SECTION 3 + intro of 4 */
+  h+=`<section class="page">${head(d)}
+    <div class="sec2"><span class="no">3.</span>Интерьерийн 3D-рендер зургийн бүрдэл</div>
+    <ol class="idx">
+      ${d.renderIndex.map(b=>`<li>${esc(b.floor)}${b.firstPg?`<span class="lead-dots"></span><span class="pp">${b.firstPg} хуудас</span>`:''}
+        ${b.items.length?`<ul>${b.items.map(([nm,n])=>`<li><span>${esc(nm)}</span><span class="lead-dots"></span><span class="pp">${n} хуудас</span></li>`).join('')}</ul>`:''}
+      </li>`).join('')}
+    </ol>
+    <div class="idx-total"><span>Нийт</span><span class="lead-dots"></span><span class="pp">${d.renderTotal} хуудас</span></div>
+
+    <div class="sec2"><span class="no">4.</span>Интерьерийн ажлын зургийн гүйцэтгэлийн тайлан</div>
+    <div class="lbl-line"><span class="k">Тайлбар:</span> ${esc(d.intro.lead)}</div>
+    <ol class="zones">${d.intro.zones.map(z=>`<li>${esc(z)}</li>`).join('')}</ol>
+    ${d.intro.body.map(t=>`<p>${esc(t)}</p>`).join('')}
+    ${foot(d,4)}</section>`;
+
+  /* SECTION 4 detail */
+  h+=`<section class="page">${head(d)}
+    ${d.narrative.map(z=>`
+      <div class="zone">
+        <div class="zt" contenteditable="true">${esc(z.code)} ${esc(z.name)}:</div>
+        ${z.facets.map(f=>`<div class="facet"><div class="fl">${esc(f.label)}:</div>
+          <ul>${f.points.map(pt=>`<li contenteditable="true">${esc(pt)}</li>`).join('')}</ul></div>`).join('')}
+      </div>`).join('')}
+    ${foot(d,5)}</section>`;
+
+  document.getElementById('report').innerHTML=h;
+}
+render(reportData);
+</script>
+</body>
+</html>

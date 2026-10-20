@@ -1,0 +1,142 @@
+<Window x:Class="RevitMcpAddin.BatchSheetDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MGL — Хуудас үүсгэх"
+        Width="660"
+        Height="760"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False"
+        UseLayoutRounding="True">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />   <!-- 0 тайлбар -->
+            <RowDefinition Height="Auto" />   <!-- 1 параметрийн толгой -->
+            <RowDefinition Height="*" />      <!-- 2 параметрийн жагсаалт -->
+            <RowDefinition Height="Auto" />   <!-- 3 дугаарын тохиргоо -->
+            <RowDefinition Height="Auto" />   <!-- 4 гарчгийн хүснэгт -->
+            <RowDefinition Height="Auto" />   <!-- 5 нэрийн загвар -->
+            <RowDefinition Height="Auto" />   <!-- 6 урьдчилан харах толгой -->
+            <RowDefinition Height="Auto" />   <!-- 7 урьдчилан харах -->
+            <RowDefinition Height="Auto" />   <!-- 8 товчнууд -->
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="IntroText" Grid.Row="0" Margin="0,0,0,10" Style="{DynamicResource MglMuted}"
+                   Text="Хуудасны параметрийн утгыг сонгоод эхлэх дугаар, тоо ширхгээ өгнө үү. «Дугаарт» гэж чагталсан параметрүүд хуудасны дугаарт угсарна (параметр + тусгаарлагч + тоо). Загварт ЗӨВХӨН «Үүсгэх» дарсны дараа хуудас нэмэгдэнэ; Ctrl+Z-ээр бүгдийг нэг дор буцаана." />
+
+        <!-- 1: параметрийн толгой -->
+        <Grid Grid.Row="1" Margin="0,0,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Дугаарт" Style="{DynamicResource MglMuted}" Margin="6,0,8,0" />
+            <TextBlock Grid.Column="1" Text="Хуудасны параметр" Style="{DynamicResource MglMuted}" />
+            <TextBlock Grid.Column="2" Text="Утга" Style="{DynamicResource MglMuted}" />
+        </Grid>
+
+        <!-- 2: параметрийн жагсаалт -->
+        <Border Grid.Row="2" BorderThickness="1" MinHeight="110" BorderBrush="{DynamicResource LineStrong}" Background="{DynamicResource BgInput}">
+            <Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="ParamsList" Margin="4">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="200" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" VerticalAlignment="Center"
+                                              Margin="6,0,14,0"
+                                              IsChecked="{Binding IncludeInNumber, Mode=TwoWay}"
+                                              AutomationProperties.Name="{Binding IncludeAutomationName}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Name}"
+                                               VerticalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"
+                                               ToolTip="{Binding Name}" Margin="0,0,8,0" />
+                                    <ComboBox Grid.Column="2" IsEditable="True"
+                                              ItemsSource="{Binding Suggestions}"
+                                              Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              AutomationProperties.Name="{Binding ValueAutomationName}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <TextBlock x:Name="EmptyParamsNote" Visibility="Collapsed"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Style="{DynamicResource MglMuted}" TextAlignment="Center"
+                           Margin="16"
+                           Text="Хуудасны текст параметр олдсонгүй. Зөвхөн дугаараар хуудас үүсгэж болно." />
+            </Grid>
+        </Border>
+
+        <!-- 3: дугаарын тохиргоо (алдаа нь талбарын ДООР шууд) -->
+        <Grid Grid.Row="3" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="SepLabel" Grid.Row="0" Grid.Column="0" Text="Тусгаарлагч" Style="{DynamicResource MglMuted}" />
+            <TextBlock x:Name="StartLabel" Grid.Row="0" Grid.Column="1" Text="Эхлэх дугаар" Style="{DynamicResource MglMuted}" />
+            <TextBlock x:Name="CountLabel" Grid.Row="0" Grid.Column="2" Text="Тоо ширхэг (1–500)" Style="{DynamicResource MglMuted}" />
+            <TextBlock x:Name="PadLabel" Grid.Row="0" Grid.Column="3" Text="Тооны урт (0 = нөхөхгүй)" Style="{DynamicResource MglMuted}" />
+
+            <TextBox x:Name="SepBox" Grid.Row="1" Grid.Column="0" Margin="0,2,8,0" TextChanged="OnInputChanged" />
+            <TextBox x:Name="StartBox" Grid.Row="1" Grid.Column="1" Margin="0,2,8,0" TextChanged="OnInputChanged" />
+            <TextBox x:Name="CountBox" Grid.Row="1" Grid.Column="2" Margin="0,2,8,0" TextChanged="OnInputChanged" />
+            <TextBox x:Name="PadBox" Grid.Row="1" Grid.Column="3" Margin="0,2,0,0" TextChanged="OnInputChanged"
+                     ToolTip="Тоог хэдэн оронтой болтол урд нь 0-ээр нөхөх: 3 бол 7 → 007. 0 бол нөхөхгүй." />
+
+            <TextBlock x:Name="StartError" Grid.Row="2" Grid.Column="1" Style="{DynamicResource MglMuted}" Foreground="{DynamicResource Danger}" Visibility="Collapsed" Margin="0,2,8,0" />
+            <TextBlock x:Name="CountError" Grid.Row="2" Grid.Column="2" Style="{DynamicResource MglMuted}" Foreground="{DynamicResource Danger}" Visibility="Collapsed" Margin="0,2,8,0" />
+            <TextBlock x:Name="PadError" Grid.Row="2" Grid.Column="3" Style="{DynamicResource MglMuted}" Foreground="{DynamicResource Danger}" Visibility="Collapsed" Margin="0,2,0,0" />
+        </Grid>
+
+        <!-- 4: гарчгийн хүснэгт -->
+        <StackPanel Grid.Row="4" Margin="0,12,0,0">
+            <TextBlock x:Name="TitleBlockCaption" Text="Гарчгийн хүснэгт (рамк, штамп)" Style="{DynamicResource MglMuted}" />
+            <ComboBox x:Name="TitleBlockCombo" Margin="0,2,0,0" SelectionChanged="OnTitleBlockChanged" />
+            <TextBlock x:Name="TitleBlockWarning" Style="{DynamicResource MglMuted}" Foreground="{DynamicResource Warn}" Visibility="Collapsed" Margin="0,4,0,0" />
+        </StackPanel>
+
+        <!-- 5: нэрийн загвар -->
+        <StackPanel Grid.Row="5" Margin="0,12,0,0">
+            <TextBlock x:Name="NameLabel" Text="Хуудасны нэр (&lt;n&gt; = нөхсөн тоо)" Style="{DynamicResource MglMuted}" />
+            <TextBox x:Name="NameBox" Margin="0,2,0,0" TextChanged="OnInputChanged" />
+            <TextBlock x:Name="NameHelp" Style="{DynamicResource MglMuted}" Margin="0,2,0,0" />
+        </StackPanel>
+
+        <!-- 6–7: урьдчилан харах -->
+        <TextBlock x:Name="PreviewHeader" Grid.Row="6" Style="{DynamicResource MglBody}" FontWeight="SemiBold" Margin="0,12,0,2" />
+        <Border Grid.Row="7" BorderThickness="1" Height="120" BorderBrush="{DynamicResource LineStrong}" Background="{DynamicResource BgInput}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="8,6" HorizontalScrollBarVisibility="Auto">
+                <TextBlock x:Name="PreviewText" FontFamily="Consolas" TextWrapping="NoWrap" />
+            </ScrollViewer>
+        </Border>
+
+        <!-- 8: товчнууд + «яагаад дарагдахгүй» -->
+        <Grid Grid.Row="8" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="BlockText" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0" TextWrapping="Wrap"
+                       Foreground="{DynamicResource Warn}" Visibility="Collapsed" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button x:Name="CreateBtn" Content="Үүсгэх" Width="120" IsDefault="True" Click="CreateBtn_Click" />
+                <Button x:Name="CancelBtn" Content="Болих" Width="100" Margin="8,0,0,0" IsCancel="True" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

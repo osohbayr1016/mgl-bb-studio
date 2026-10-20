@@ -1,0 +1,43 @@
+{
+  "fixture": true,
+  "kind": "EVIDENCE",
+  "id": "foreman-stop-hl01",
+  "provenance": {
+    "source": "ai/training/humanized_review/cases-2026-09-23.json#HL01",
+    "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+  },
+  "evidence": [
+    {
+      "id": "stop-4.3",
+      "kind": "clause",
+      "title": "Бүх үйлдвэрлэлийг зогсоох нөхцөл",
+      "documentUid": "UBB-12-204-01",
+      "clauseUid": "4.3",
+      "page": 9,
+      "section": "4",
+      "text": "УББ 12-204-01-ийн 4.3-т ноцтой зөрчилтэй үед, захиалагчид сарын дотор 2-оос доошгүй удаа албан ёсоор санал тавьсан боловч шийдвэрлээгүй бол үйлдвэрлэлийг бүхэлд нь зогсоох нөхцөл заасан. Заалт энэ шаардлагын шалтгааныг тайлбарлаагүй."
+    },
+    {
+      "id": "stop-4.4",
+      "kind": "clause",
+      "title": "Тодорхой ажлыг зогсоох",
+      "documentUid": "UBB-12-204-01",
+      "clauseUid": "4.4",
+      "page": 9,
+      "section": "4",
+      "text": "УББ 12-204-01-ийн 4.4-т батлагдсан зураг төсөл, техникийн нөхцөл, стандартын шаардлага хангаагүй тухайн ажлыг зогсоож, засуулах эрхийг заасан."
+    }
+  ],
+  "sources": [
+    {
+      "document": "УББ 12-204-01",
+      "clause": "4.3",
+      "verification": "ported_verified_reference"
+    },
+    {
+      "document": "УББ 12-204-01",
+      "clause": "4.4",
+      "verification": "ported_verified_reference"
+    }
+  ]
+}

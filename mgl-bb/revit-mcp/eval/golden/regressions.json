@@ -1,0 +1,52 @@
+{
+ "_note": "GOLDEN-REGRESSION · түүхэн уналт БҮР, ҮҮРД.  ⚠️ ХЭЗЭЭ Ч МӨР ХАСАХГҮЙ.  Мөр бүр `hard-negatives.json`-ы ЗАСВАРЫН АХ ДҮҮ хэллэг байх ёстой — хуулбар биш, эс тэгвээс тест нь цээжилсэн эсэхийг хэмжинэ (§3.2).  Нэмэх журам: `freeze.py add-regression`.",
+ "partition": "regressions",
+ "frozen": true,
+ "preprocess_contract": "fold-v1",
+ "rows": [
+  {
+   "row_id": "2e2807def9dd9c1a",
+   "text": "ирцээ тэмдэглэх хуудас хаана байдаг вэ",
+   "intent": "unknown",
+   "incident": "HN-1",
+   "first_seen": "2026-08-25",
+   "was": "submit_progress@0.58",
+   "why": "«бүртгүүл» нь submit_progress-ийн n-gram-д дийлдэг; ирц бол ТУСДАА систем — буруу илгээх нь БИЧИХ үйлдэл",
+   "added": "2026-08-28",
+   "author": "1B-5"
+  },
+  {
+   "row_id": "341f4e9b74bc1399",
+   "text": "ХАС-12 ыг 40 хувь болгов",
+   "intent": "submit_progress",
+   "incident": "HN-2",
+   "first_seen": "2026-08-25",
+   "was": "unknown@0.19",
+   "why": "үйл үггүй МЭДЭГДЛИЙН хэлбэр өгөгдөлд байгаагүй",
+   "added": "2026-08-28",
+   "author": "1B-5"
+  },
+  {
+   "row_id": "eb7bf88397aea24d",
+   "text": "маргааш цас орох уу",
+   "intent": "unknown",
+   "incident": "HN-3",
+   "first_seen": "2026-08-25",
+   "was": "progress_status@0.41",
+   "why": "«хэдэн … вэ» асуултын хэв маяг progress_status руу татагдана — англи бэхжүүлэлтийн хажуугийн үр дагавар",
+   "added": "2026-08-28",
+   "author": "1B-5"
+  },
+  {
+   "row_id": "2a5f4e258c890e7b",
+   "text": "бүх зүсэлтийн харагдацыг нээ",
+   "intent": "unknown",
+   "incident": "HN-4",
+   "first_seen": "2026-08-25",
+   "was": "reset_view@0.38",
+   "why": "ХАРАГДАЦ ≠ ТУСГААРЛАЛТ ЦУЦЛАХ; n-gram 3-5 → 2-6 болсны дараа хил бүдгэрсэн",
+   "added": "2026-08-28",
+   "author": "1B-5"
+  }
+ ]
+}

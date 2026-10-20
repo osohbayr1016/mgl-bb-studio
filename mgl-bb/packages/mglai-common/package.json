@@ -1,0 +1,24 @@
+{
+  "name": "@mgl/mglai-common",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MGL AI — runtime-agnostic цэвэр TypeScript туслахууд, Worker (backend) · ажилтны PC (ai/) · хөтөч гурвуулаа ИЖИЛ хэрэгжүүлэлтийг импортлоно.  Node/Cloudflare/DOM хамааралгүй.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./redaction": "./src/redaction.ts",
+    "./normIdentity": "./src/normIdentity.ts",
+    "./normIntel": "./src/normIntel.ts",
+    "./turn": "./src/turn/index.ts",
+    "./turn/transports": "./src/turn/transports.ts",
+    "./turn/*": "./src/turn/*.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "node --test \"test/**/*.test.ts\"",
+    "check": "tsc --noEmit -p . && tsc --noEmit -p tsconfig.turn.json && node --test \"test/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p tsconfig.turn.json"
+  }
+}

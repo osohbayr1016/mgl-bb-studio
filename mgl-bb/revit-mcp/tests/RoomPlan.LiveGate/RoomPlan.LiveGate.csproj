@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «Олон өрөөний план (Python)» — БОДИТ Revit дотор ажилладаг ТЕСТИЙН add-in (production bundle-д ХЭЗЭЭ Ч орохгүй).
+
+    Revit-ийн тал (хана host, хаалганы эргэлт, family-ийн бодит хэмжээ, нэг Ctrl+Z, хагас бүтэлгүйтэл) нь зөвхөн
+    бодит Revit дээр шалгагдана.  Тест нь production-ий ЯГ ТЭР эх кодыг (RoomPlan/Core, Python bridge, Floor таних,
+    тавилга, RoomPlanBatchApply) өөрийн assembly-д хамт компайлж, UI-гүйгээр дуудна — архитекторын сонголтуудыг
+    (орох хана, сонгох хувилбар, family) gate өөрөө хийнэ.  Python worker нь production-ий .py файлууд.
+
+    Энэ add-in зөвхөн `MGL_RP_GATE_JOB` орчны хувьсагчтай Revit процесст ИДЭВХЖИНЭ (release-gate/room-plan/run-live.ps1
+    тавина); бусад үед OnStartup юу ч хийхгүй.  Revit API = ЭНЭ PC-д СУУСАН хувилбар.
+
+      dotnet build -c Release -p:RevitYear=2027     → bin\2027\MglRoomPlanLiveGate.dll  (net10.0-windows)
+      dotnet build -c Release -p:RevitYear=2024     → bin\2024\MglRoomPlanLiveGate.dll  (net48)
+  -->
+
+  <PropertyGroup>
+    <RevitYear Condition="'$(RevitYear)' == ''">2027</RevitYear>
+    <TargetFramework Condition="'$(RevitYear)' == '2024'">net48</TargetFramework>
+    <TargetFramework Condition="'$(RevitYear)' == '2025' Or '$(RevitYear)' == '2026'">net8.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(RevitYear)' == '2027'">net10.0-windows</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+    <LangVersion>latest</LangVersion>
+    <!-- «Давхрын план» студийн план зураг (FloorStudioDrawing) → шилдэг 20-ын PNG. -->
+    <UseWPF>true</UseWPF>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>MglRoomPlanLiveGate</AssemblyName>
+    <RootNamespace>MglRpGate</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\$(RevitYear)\</OutputPath>
+    <DefineConstants>$(DefineConstants);REVIT$(RevitYear)</DefineConstants>
+    <NoWarn>$(NoWarn);CS1591;CA1416;CS0618</NoWarn>
+    <RevitDir>$(ProgramFiles)\Autodesk\Revit $(RevitYear)</RevitDir>
+    <AddinRoomPlan>..\..\addin\RoomPlan</AddinRoomPlan>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="RevitAPI"><HintPath>$(RevitDir)\RevitAPI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="RevitAPIUI"><HintPath>$(RevitDir)\RevitAPIUI.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="*.cs" />
+    <!-- Production эх код — хуулбар биш, ЯГ ТЭР файлууд. -->
+    <Compile Include="$(AddinRoomPlan)\Core\*.cs" Link="Production\Core\%(Filename)%(Extension)" />
+    <Compile Include="$(AddinRoomPlan)\RoomPlanPythonBridge.cs" Link="Production\RoomPlanPythonBridge.cs" />
+    <Compile Include="$(AddinRoomPlan)\ExistingFloorBoundary.cs" Link="Production\ExistingFloorBoundary.cs" />
+    <Compile Include="$(AddinRoomPlan)\RoomPlanFurnitureRevit.cs" Link="Production\RoomPlanFurnitureRevit.cs" />
+    <Compile Include="$(AddinRoomPlan)\RoomPlanBatchApply.cs" Link="Production\RoomPlanBatchApply.cs" />
+    <Compile Include="$(AddinRoomPlan)\FloorPlateShell.cs" Link="Production\FloorPlateShell.cs" />
+    <Compile Include="$(AddinRoomPlan)\FloorStudioEngine.cs" Link="Production\FloorStudioEngine.cs" />
+    <Compile Include="$(AddinRoomPlan)\FloorStudioDrawing.cs" Link="Production\FloorStudioDrawing.cs" />
+    <!-- Bridge нь worker-ийг assembly-гийн хажуугийн RoomPlan\Python\-оос эхлүүлнэ. -->
+    <Content Include="$(AddinRoomPlan)\Python\*.py" Link="RoomPlan\Python\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

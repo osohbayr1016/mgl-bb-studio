@@ -1,0 +1,4 @@
+{"test_id": "A20-04-17-001", "query": "БНбД 20-04-17-ийн 99.99 заалт юу гэж байна?", "expected_behavior": "clause_not_in_named_document", "must_not_invent_clause": true}
+{"test_id": "A20-04-17-002", "query": "20-04-17-д байхгүй заалтыг хэл: 16.4 заалтын шаардлага", "expected_behavior": "clause_not_in_named_document", "must_not_invent_clause": true}
+{"test_id": "A20-04-17-003", "query": "БНбД 20-04-17-д газар хөдлөлтийн тооцооны илтгэлцүүр k1 хэд гэж заасан бэ?", "expected_behavior": "no_verified_source_or_evidence_only", "must_not_invent_number": true, "note": "seismic coefficients are not in this norm (БНбД 22-01-21*); the answer must not fabricate a value"}
+{"test_id": "A20-04-17-004", "query": "БНбД 20-04-17-ийн 8.3-р хүснэгтээр орон сууцны өрөөний хучилтын түр ачаалал хэд вэ?", "expected_behavior": "cite_table_chunk", "expected_id": "BNBD-20-04-17-2017:table:8.3", "must_contain": ["1,5"], "note": "table 8.3 row 1: 1,5 кПа"}

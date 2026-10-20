@@ -1,0 +1,116 @@
+{
+  "canonical_code": "БНбД 41-01-11",
+  "doc_id": "BNBD-41-01-11-2011",
+  "title_mn": "Халаалт, агаар сэлгэлт ба кондиционер",
+  "title_en": "Heating, ventilation and conditioning",
+  "title_variants": [
+    "Халаалт,агаар сэлгэлт ба кондиционер",
+    "Heating, ventilation and air conditioning"
+  ],
+  "document_type": "BNbD",
+  "jurisdiction": "Mongolia",
+  "status": "ACTIVE",
+  "status_evidence": [
+    "MCIS current-norm register record 16170734300662: «Хүчин төгөлдөр» — Монгол Улсын зам тээвэр, барилга хот байгуулалтын сайдын 2011 оны 84 дүгээр тушаал (checked 2026-09-16, re-checked 2026-09-21)",
+    "PDF p.3: «1. Зам, тээвэр, барилга, хот байгуулалтын сайдын 2011 оны 3 дугаар сарын 21-ны өдрийн 84 дүгээр тушаалын хавсралтаар батлав.»"
+  ],
+  "effective_status": "current_status_not_checked_for_later_amendments",
+  "effective_status_note": "The MCIS register lists the norm as «Хүчин төгөлдөр» (2026-09-21) and its PDF is the «Албан ёсны 2 дах хэвлэл» (second official printing, cover year 2022) of the 2011 norm, stamped by MCIS on 2025-10-27. No legalinfo.mn page for order №84/2011 was located (source/SOURCE.json U1), so later amendments have NOT been checked; the PDF prints no amendment note and no «мөрдөх огноо» (effective-from date).",
+  "approval": {
+    "order_number": "84",
+    "order_date": "2011-03-21",
+    "issuer": "Зам, тээвэр, барилга, хот байгуулалтын сайд",
+    "attachment": "тушаалын хавсралт",
+    "effective_from": null,
+    "effective_from_evidence": "Not printed in the PDF (p.3 names only the approval order 84 of 2011-03-21); not guessed."
+  },
+  "edition": {
+    "label": "Албан ёсны 2 дах хэвлэл",
+    "cover_year": "2022",
+    "evidence": "PDF p.1–2 cover: «Албан ёсны 2 дах хэвлэл … Улаанбаатар хот 2022 он»; PDF metadata created 2022-11-19 (Word 2013), stamped by MCIS (iText) 2025-10-27. The technical text is that of the 2011 norm as reprinted; whether the reprint carries any amendment is NOT verifiable from the document (U1)."
+  },
+  "aliases": [
+    "БНбД 41-01-11",
+    "BNbD 41-01-11",
+    "CCM 41-01-11",
+    "41-01-11",
+    "Халаалт, агаар сэлгэлт ба кондиционер",
+    "халаалт агаар сэлгэлтийн норм",
+    "khalaalt agaar selgelt ba konditsioner",
+    "heating ventilation and conditioning",
+    "HVAC norm"
+  ],
+  "supersedes": [
+    "БНбД 41-01-02"
+  ],
+  "supersedes_note": "PDF p.3: «2. Энэхүү тушаал гарсантай холбогдуулан Дэд Бүтцийн Сайдын 2003 оны 360 дугаар тушаалаар бтлагдсан “Халаалт, агаар сэлгэлт ба кондиционер” /БНбД 41-01-02/ -ыг хүчингүй болсонд тооцсугай.» — the repeal is printed in the approval text of THIS document; БНбД 41-01-02 is not in the MCIS current-norm register (tools/mcis_verify.py, 2026-09-21).",
+  "superseded_by": null,
+  "successor_draft": null,
+  "amendments": [],
+  "teams": [
+    "hvac",
+    "fire",
+    "architecture",
+    "thermal"
+  ],
+  "topics": [
+    "heating",
+    "ventilation",
+    "air_conditioning",
+    "smoke_protection",
+    "refrigeration",
+    "climate",
+    "thermal",
+    "fire"
+  ],
+  "building_types": [
+    "residential",
+    "public",
+    "industrial",
+    "school",
+    "kindergarten"
+  ],
+  "applicability": {
+    "evidence": "section 1 — барилга байгууламжийн өрөө, тасалгааны дулаан хангамж, халаалт, агаар сэлгэлт, кондиционерийн системийг төлөвлөхөд мөрдөнө; exclusions listed in the same section (a–…)"
+  },
+  "priority": "P0",
+  "capability_level": "L2",
+  "capability_level_note": "L0 registry + L1 full text + L2 clause/table/appendix structure from the official PDF text layer (auto-extracted; measured 2026-09-21: 355 clauses, 40 tables, 50 definitions, 40 references, 77 numeric candidates). L3 compute: 4 numbered formulas catalogued («(1)–(3)» in §5.6, «(Л.12)»), none executable. The MCIS stamp draws a page border that pymupdf reads as a full-page grid — the parser re-detects tables inside it; several appendix tables are therefore partial (Ж.1 lost its first header column, Б.1/И.1/Р.4 are caption_only). The l2/ explanation layer is NOT built (build-l2 fallback check fails on 7.11.13 — LOST_NUMBER 150). See parsed/parse_report.json and tests/.",
+  "deep_ingestion_status": "PARSED",
+  "retrieval_default": true,
+  "source_type": "official",
+  "source_url": "https://mcis.gov.mn/main/single/16170734300662",
+  "source_pdf_url": "https://mcis.gov.mn/storage/uploads/process/202510/file_1761555455516339_161611878330710_stamped.pdf",
+  "legal_source_url": null,
+  "source": {
+    "file": "BNbD_41-01-11_mcis_2025-10_stamped.pdf",
+    "sha256": "a5c6d459ba65ecc7c0dd46746f89ade5f83a9c5c641189f69ba7ca6b2cb5d6ce",
+    "printed_page_offset": 0,
+    "page_number_mode": "none",
+    "page_numbering_note": "The document prints NO page numbers (measured 2026-09-21: text layer carries only the running header «БНбД 41-01-11»; rendered pages 10 and 72 show no folio; the printed contents page has no page column). Citations therefore use the PDF page index (offset 0) — the number a PDF viewer shows.",
+    "body_first_pdf_page": 4,
+    "pdf_pages": 111
+  },
+  "verification": {
+    "text_verification_status": "official_pdf_text_layer_auto_extracted",
+    "human_verified_clauses": 0,
+    "note": "No clause has been verified by a human against the page image yet. Numeric rules therefore stay non-executable (searchable + citable only)."
+  },
+  "last_verified": "2026-09-21",
+  "training_policy": "retrieval_first_do_not_bake_changeable_norms_into_model_weights",
+  "layout_observed": {
+    "section_heading_case": "upper",
+    "appendix_numbering": "letter",
+    "appendix_header_form": "ХАВСРАЛТ <letter>",
+    "definitions": {
+      "kind": "appendix",
+      "id": "А",
+      "pattern": "term_dash_definition"
+    },
+    "reference_list": {
+      "kind": "section",
+      "id": "2"
+    },
+    "_note": "observed layout, for the human verifier; tools/parse_pdf.py detects every one of these from the text and reads nothing here"
+  }
+}

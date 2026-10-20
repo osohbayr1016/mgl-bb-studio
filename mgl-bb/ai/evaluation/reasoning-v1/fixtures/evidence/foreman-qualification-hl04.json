@@ -1,0 +1,58 @@
+{
+  "fixture": true,
+  "kind": "EVIDENCE",
+  "id": "foreman-qualification-hl04",
+  "provenance": {
+    "source": "ai/training/humanized_review/cases-2026-09-23.json#HL04",
+    "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+  },
+  "evidence": [
+    {
+      "id": "foreman-2.2.1",
+      "kind": "clause",
+      "title": "Талбайн даамлын мэргэжлийн шаардлага",
+      "documentUid": "UBB-12-204-01",
+      "clauseUid": "2.2.1",
+      "page": 5,
+      "section": "2",
+      "text": "УББ 12-204-01-ийн 2.2.1-д талбайн даамал нь мэргэжлээрээ барилгын үйлдвэрлэл дээр 3-аас доошгүй жил ажилласан байх, мөн тухайн заалтад дурдсан боловсрол, мэргэшлийн шаардлагыг хангасан байхыг шаардсан."
+    },
+    {
+      "id": "foreman-2.2.2",
+      "kind": "clause",
+      "title": "Талбайн даамлын сургалтын гэрчилгээ",
+      "documentUid": "UBB-12-204-01",
+      "clauseUid": "2.2.2",
+      "page": 5,
+      "section": "2",
+      "text": "УББ 12-204-01-ийн 2.2.2-т талбайн даамлын мэргэшүүлэх сургалт төгссөн гэрчилгээтэй байх шаардлага тавьсан."
+    },
+    {
+      "id": "foreman-2.3",
+      "kind": "clause",
+      "title": "Талбайн даамлыг томилох",
+      "documentUid": "UBB-12-204-01",
+      "clauseUid": "2.3",
+      "page": 5,
+      "section": "2",
+      "text": "УББ 12-204-01-ийн 2.3-т шаардлагыг хангасан хүнийг гүйцэтгэгч байгууллага барилгын нэрийг зааж томилж, хөдөлмөрийн гэрээ байгуулна."
+    }
+  ],
+  "sources": [
+    {
+      "document": "УББ 12-204-01",
+      "clause": "2.2.1",
+      "verification": "ported_verified_reference"
+    },
+    {
+      "document": "УББ 12-204-01",
+      "clause": "2.2.2",
+      "verification": "ported_verified_reference"
+    },
+    {
+      "document": "УББ 12-204-01",
+      "clause": "2.3",
+      "verification": "ported_verified_reference"
+    }
+  ]
+}

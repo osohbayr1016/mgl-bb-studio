@@ -1,0 +1,33 @@
+{
+  "schema": "norm-dataset.training_ready/1",
+  "built_at": "2026-09-23",
+  "status": "REVIEW_REQUIRED — not used for training",
+  "files": {
+    "registry_router.jsonl": {
+      "rows": 21,
+      "sha256": "8d92543fb077909472f5c3d9c3540a457accb473fdf4ec89a22d7f025a0a9af0"
+    },
+    "grounded_qa.jsonl": {
+      "rows": 92,
+      "sha256": "66cc50eb7c815e55942c886b73273a51947077b9d227f5e1640066aff8c4676d"
+    },
+    "citation_behavior.jsonl": {
+      "rows": 92,
+      "sha256": "3ced945930e17e755e0585a6268317207e8d97dfde22ca29d3e0bb6a303a7653"
+    },
+    "tool_routing.jsonl": {
+      "rows": 17,
+      "sha256": "b37f8495e22917862fcfe99210f2cb78d98b3216cfa5d84117b437c3d1e9c313"
+    },
+    "compute_examples.jsonl": {
+      "rows": 21,
+      "sha256": "5a5c2ae9b8b42dea62712809bcd4107cb3c704144ed104cd4687243df610b207"
+    }
+  },
+  "policy": [
+    "facts stay in retrieval; regenerate after any registry/clause change",
+    "grounded answers are verbatim clause text with a citation line",
+    "no example contains a number that is not in the cited clause",
+    "dataset_lint.py + training-lint must pass before any run"
+  ]
+}

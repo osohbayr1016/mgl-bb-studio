@@ -1,0 +1,97 @@
+{
+  "document": "БНбД 41-01-11",
+  "verdict": "GOLD_CANDIDATE_PENDING_HUMAN_VERIFICATION",
+  "checked_at": "2026-09-21",
+  "items": [
+    {
+      "name": "SOURCE FOUND",
+      "status": "PASS",
+      "detail": "BNbD_41-01-11_mcis_2025-10_stamped.pdf ← https://mcis.gov.mn/storage/uploads/process/202510/file_1761555455516339_161611878330710_stamped.pdf",
+      "required": true
+    },
+    {
+      "name": "SOURCE HASHED",
+      "status": "PASS",
+      "detail": "sha256 a5c6d459ba65ecc7… = metadata",
+      "required": true
+    },
+    {
+      "name": "STATUS VERIFIED",
+      "status": "PASS",
+      "detail": "ACTIVE (2 evidence) · registry=ACTIVE · successor draft —=— · effective_status=current_status_not_checked_for_later_amendments",
+      "required": true
+    },
+    {
+      "name": "METADATA VALID",
+      "status": "PASS",
+      "detail": "4 teams · 8 topics · https source_url",
+      "required": true
+    },
+    {
+      "name": "CLAUSES PARSED",
+      "status": "PASS",
+      "detail": "355 clauses (324 body / 31 appendix), unique ids, 0 without page/url, 41 parser anomalies",
+      "required": true
+    },
+    {
+      "name": "TABLES PARSED",
+      "status": "PASS",
+      "detail": "40 tables (36 ruled grids, 9 uncaptioned, 4 caption-only)",
+      "required": true
+    },
+    {
+      "name": "FORMULAS PARSED/CLASSIFIED",
+      "status": "PASS",
+      "detail": "4 catalogued (4 clean text, 0 garbled equation objects) · executable 0 → FORMULAS_CATALOGUED_NOT_EXECUTABLE",
+      "required": true
+    },
+    {
+      "name": "NUMERIC REQUIREMENTS EXTRACTED",
+      "status": "PASS",
+      "detail": "77 candidates, every one with clause + page + quote · human-verified/executable 0 → searchable & citable, NOT executed as authoritative",
+      "required": true
+    },
+    {
+      "name": "CROSS REFERENCES EXTRACTED",
+      "status": "PASS",
+      "detail": "40 edges (22 from appendix 2) · registry graph 35 edges, 18 resolve to registry rows (51.4%)",
+      "required": true
+    },
+    {
+      "name": "DB INGESTION PASS",
+      "status": "PASS",
+      "detail": "profile clause_document · 481 chunks · 0 rules · 36 tests · unknown verification statuses: 0",
+      "required": true
+    },
+    {
+      "name": "RETRIEVAL TESTS PASS",
+      "status": "PASS",
+      "detail": "Recall@5 36/36 (100%) single-document DB",
+      "required": true
+    },
+    {
+      "name": "CITATION TESTS PASS",
+      "status": "PASS",
+      "detail": "page match 35/36 (97.2%) · https source URL on 36/36 citations",
+      "required": true
+    },
+    {
+      "name": "NO-HALLUCINATION TESTS PASS",
+      "status": "PASS",
+      "detail": "adversarial 6/6 · supersession/version 6/6 · registry 10/10",
+      "required": true
+    },
+    {
+      "name": "RUNTIME RETRIEVAL PASS",
+      "status": "SKIPPED",
+      "detail": "pass --runtime http://127.0.0.1:<port> --secret <x> (start an isolated runtime first)",
+      "required": false
+    },
+    {
+      "name": "TEXT HUMAN-VERIFIED",
+      "status": "PENDING",
+      "detail": "0/355 clauses compared with the page image · text status official_pdf_text_layer_auto_extracted (non_executable)",
+      "required": false
+    }
+  ]
+}

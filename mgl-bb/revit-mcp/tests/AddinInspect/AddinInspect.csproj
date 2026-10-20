@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Тараах RevitMcpAddin.dll-ийг АЧААЛАХГҮЙГЭЭР (System.Reflection.Metadata) шалгана — release gate-ийн «build validation».
+      dotnet run (args: DLL, year, optional json output path)
+    Шалгах: target runtime (2024 = net48, 2025/26 = net8, 2027 = net10), RevitAPI/RevitAPIUI-ийн assembly хувилбарын major (24/25/26/27),
+    WallElevationCommand public + IExternalCommand, InternalsVisibleTo байхгүй, тест/harness төрөл байхгүй, FileVersion, sha256.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+  </PropertyGroup>
+
+</Project>

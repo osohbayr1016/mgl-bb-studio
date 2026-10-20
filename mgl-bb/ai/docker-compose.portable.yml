@@ -1,0 +1,14 @@
+services:
+  mgl-ai:
+    build:
+      context: ..
+      dockerfile: ai/Dockerfile.portable
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - mgl-ai-data:/data
+    environment:
+      MGLAI_DATA_DIR: /data
+
+volumes:
+  mgl-ai-data:

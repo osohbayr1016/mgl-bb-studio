@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «Ханын дэлгээс»-ийн Revit-гүй ЦЭВЭР логикийн тест (2026-10-06): ханын координат (шулуун, урвуу, эргүүлсэн),
+    өрөөний аль тал, хүрээ/гүн, нэгж, нэршил, давхардал, дахин ажиллуулахад (хэвээр / шинэчлэх / үүсгэх),
+    урт/өндөр өөрчлөгдөх, эх нь устсан, муруй/налуу хана, хуудасны байрлал, тохиргоо, үүсгэсний дараах шалгалт.
+
+    ⚠️ Revit/WPF assembly ЭНД ОРОХГҮЙ — `addin/WallElevation/Core` дотор `Autodesk.Revit` эсвэл
+    `System.Windows` гарвал энэ төсөл ЭМХЭТГЭГДЭХГҮЙ.
+
+      dotnet run   (revit-mcp/tests/WallElevation.Tests хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>WallElevation.Tests</AssemblyName>
+    <RootNamespace>RevitMcpAddin.WallElevation.Tests</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\WallElevation\Core\*.cs" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

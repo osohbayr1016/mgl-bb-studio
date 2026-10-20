@@ -1,0 +1,31 @@
+-- 0211_user_tokens_valid_from.sql — ТОКЕНЫ ЦУЦЛАЛТЫН ЦЭГ (1A-3)
+--
+-- Энэ огнооноос ӨМНӨ олгогдсон (JWT-ийн `iat`) токеныг бүхэлд нь хүчингүй
+-- болгоно.  NULL = «хэзээ ч цуцлаагүй» -> ямар ч токен цуцлагдахгүй, өөрөөр
+-- хэлбэл ЭНЭ МИГРАЦИ ДАНГААРАА ЗАН ТӨЛӨВИЙГ ОГТ ӨӨРЧЛӨХГҮЙ.
+--
+-- ⚠️ ЭНЭ БАГАНЫГ УНШИХ КОД (`src/lib/tokenValidity.ts`) нь ХОЁР ДАХЬ deploy-д
+--    гарна.  Багана нь өөрийг нь уншдаг кодоос ХАТУУ ӨМНӨ deploy хийгдэх ЁСТОЙ
+--    -- эс тэгвэл шинэ Worker-ийн эхний хүсэлт «no such column:
+--    tokens_valid_from» шидэж, authMiddleware унаж, БҮХ ажилтан БҮХ API-аас
+--    гарах эрсдэлтэй.  (Хамгаалалт давхарласан: `checkTokenValidity` нь SELECT-ээ
+--    try/catch-д ороож, алдаа гарвал ЦУЦЛАХГҮЙ -- fail-open.  Гэсэн ч дарааллыг
+--    БҮҮ эргүүл: fail-open нь сүүлчийн шат, төлөвлөгөө биш.)
+--
+-- ⚠️ `users`-ыг REBUILD ХИЙХГҮЙ.  `users(id)`-д ~25 ON DELETE CASCADE хүүхэд
+--    байгаа бөгөөд `wrangler d1 migrations apply` доторх транзакцад cascade
+--    АЖИЛЛАДАГ (D1 нь runtime дээр FK мөрддөггүй ч энэ нь тэр тохиолдол БИШ).
+--    Цэвэр ADD COLUMN -- прецедент: 0058, 0090, 0091, 0092, 0097, 0132, 0173, 0191.
+--
+-- Утгын хэлбэр: ISO-8601 UTC («2026-08-27T09:15:00Z») эсвэл NULL.  Харьцуулалт
+-- нь JWT-ийн `iat` (Unix секунд) -тай хийгдэнэ.  Кодын тал ISO-г секунд рүү
+-- хөрвүүлнэ (backend/src/lib/tokenValidity.ts).
+--
+-- Индекс ХЭРЭГГҮЙ -- хайлт нь үргэлж `WHERE id = ?` (PK).
+--
+-- Гараар цуцлах (deploy ШААРДЛАГАГҮЙ):
+--   UPDATE users SET tokens_valid_from = strftime('%Y-%m-%dT%H:%M:%SZ','now') WHERE id = ?
+-- Буцаах:
+--   UPDATE users SET tokens_valid_from = NULL WHERE id = ?
+
+ALTER TABLE users ADD COLUMN tokens_valid_from TEXT;

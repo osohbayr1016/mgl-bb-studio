@@ -1,0 +1,2783 @@
+{
+ "_note": "АНГЛИ ХЭЛНИЙ БЭХЖҮҮЛЭЛТ — ХЭМЖСЭН сул цэг рүү чиглэсэн багц.\n\n1918 мөр дээр англи 87.3% байсан нь бусад хэлнээс (латин-монгол 97.0%, кирилл 94.2%) мэдэгдэхүйц сул байв.  Оношилгоо:\n\n    submit_progress → progress_status   6\n    progress_status → submit_progress   5\n    help            → unknown           4\n\n⚠️ ШАЛТГААН: монголд асуултын БӨӨМ («уу/вэ/бэ») нь «илгээх» ба «шалгах»-ыг цэвэр ялгадаг.  Англид тийм бөөм БАЙХГҮЙ — зөвхөн ҮЙЛ ҮГ ялгана (send/submit/log/record vs check/see/show/tell).  Гэтэл хоёуланд нь «progress» гэдэг үг байдаг тул загвар түүнийг дагаж андуурдаг.\n\nТиймээс энэ багц нь ЭСРЭГ ХОСУУДААР бүтсэн: ганцхан үйл үг ялгаатай, бусад нь ижил.  Тоо агуулсан хос олон — тоо нь өөрөө хоёр талд ч гардаг тул ялгах шинж БОЛОХГҮЙ гэдгийг загвар сурах ёстой.\n\nАудит: 19 мөр ХАСАЖ, 52 мөр НЭМСЭН.  Аудитлагч бодит `fold_text` + тэмдэгтийн 3-5 n-gram косинусаар хөндлөн хөршүүдийг хэмжсэн.\n⚠️ Нэг мөр СУРГАЛТЫГ БҮРЭН ЗОГСООХ байсан: «?» → help нь seed.json-ы «?» → unknown-тэй зөрчилдөж, `train_intent.py` SystemExit хийх байв.\n\nТайлан: english-audit.md",
+ "rows": [
+  {
+   "text": "send the progress for BA-06",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "check the progress for BA-06",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "log 60% on HAS-02",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "is HAS-02 at 60% yet",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "push BB-04 to 80 percent",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "is BB-04 on 80 percent already",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "record my work for today",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show me my work for today",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "submit A-201 at 35 percent",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "how much is A-201, is it 35 percent",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "please send the progress of my sheets",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "please show the progress of my sheets",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "register CAH-05 as done",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "tell me if CAH-05 is done",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "A-101 finished today",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "done with the sections",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "BA-03 is complete",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "finished the plan sheets",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "how many plan sheets are finished",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "put 75% into the system for TsBU-05",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "report today progress to MGL",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "check today progress in MGL",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i want submit my percent now",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "i want know my percent now",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "save 90 percent on HAS-07",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "is 90 percent saved on HAS-07",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "mark BB-09 as 100%",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "is BB-09 at 100%",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "update the system with my progress",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "check the system for my progress",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "send it, BA-12 is finished",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "did BA-12 finish or not",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "plz send my progres for HAS-11",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "plz chek my progres for HAS-11",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "sumbit 55 % for BA-08",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "chek 55 % for BA-08",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "can you submit 25 percent for CAH-09?",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "can you tell me if CAH-09 reached 25 percent?",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "i finished 3 sheets today, please send them to the system",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "i finished 3 sheets today, how many percent is that in the system",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "log 40% on the detail drawings",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "how much percent on the detail drawings",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "before i go home please submit my progress",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "before i go home please show my progress",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "BA-02 100 percent send",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "BA-02 100 percent or not",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "write my progress into MGL",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "look at my progress in MGL",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "send 65 percent for the section sheets",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "are the section sheets on 65 percent",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "close BB-07 at 100 and push it",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "is BB-07 closed at 100 already",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "today i completed the interior sheets, record it in the system",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "today i completed the interior sheets, how much percent is it now",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "add my progress to the web app",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "find my progress on the web app",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "give the progress to MGL system",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "get the progress from MGL system",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "should i send the percent of A-102 now?",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "do you know the percent of A-102 now?",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "enter 30% for KH-06",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "did KH-06 pass 30%",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "my drawings are finished, submit please",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "my drawings are finished or not, tell me please",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "note down 85 percent on BA-10",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "is it already 85 percent on BA-10",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "send progress of all my sheets to the office system",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "show progress of all my sheets from the office system",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "i did 2 more sheets, register that",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i did 2 more sheets, what is my total percent",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "the facade sheet is done, log it",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "the facade sheet, is it done",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "put HAS-14 on 20 percent",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "how far is HAS-14, 20 percent?",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "docs",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "options",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "help me",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "how to use",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "readme",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "tutorial",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "user guide",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "help menu",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "info",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "menu",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "quick guide",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "i need help",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "halp",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "halp me",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "guid",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "manul",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "commnads",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "usege",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "optios",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "wat i can do here",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "how i use ths thing",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "documentaton",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "wht commands u have",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "what are my options",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what commands are available",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "where is the documentation",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "is there a guide for this",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "can i get a manual",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what else can i ask you",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what am i supposed to type",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "do you have a tutorial",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how does this assistant work",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what are the available commands",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what things you can do for me",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "any short guide for this",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "is there a command reference",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "show commands",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "give me the manual",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "open the guide",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "explain the commands to me",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "teach me the commands",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show me what i can type",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "explain your functions",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "give me a short usage example",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "please show me the commands",
+   "intent": "help",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "could you explain my options please",
+   "intent": "help",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "sorry, where can i find the manual",
+   "intent": "help",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "i am new here and i do not know what to write, can you explain the commands one by one",
+   "intent": "help",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "our team installed this add-in today and nobody explained it to me, please tell me what i can do with it",
+   "intent": "help",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "help me draw a wall",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "halp me with the door famly",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "who is the project manager",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "call support",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "open the user account page",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "help me find the client contact number",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "can you help me install revit on my new laptop",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "who do i contact for the license problem",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "help me write an email to the client",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "give me the phone number of the IT guy",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "what is the office wifi password",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "help me choose the beam size for this span",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "open the hr manual for vacation days",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i need help with my salary calculation, who should i ask about it",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "undo isolate for A-101",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "undo the isolation on BA-05",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "remove the isolation from sheet M-02",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "remove isolate mode from the view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "turn off isolation",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "turn off the isolation for HAS-12",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "cancel the isolate",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "cancel the isolation on BB-21",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "revert the view back to normal state",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "revert the isolated view please",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "reset the view for sheet A-201",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "please undo isolate on TSAH-07",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "could you turn off the isolation for me?",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "can you bring back all hidden elements?",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how to remove isolate from the view?",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "why the model is still isolated, please reset it",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "i checked A-101 already so please cancel the isolation and show the whole model",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "isolation is still on from yesterday, remove it and bring the model back",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "after checking BA-03 please restore all elements in the view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "undo isolat for BB-04",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "remov isolation from view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "turn of isolatoin plz",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "cancle the isolation",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "reset viewe to normal",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "unisolate the model",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "isolation off",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "view back to normal",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "all elements back",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "reset the whole model view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "bring back everything in the 3d view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show me the full model again, not only this sheet",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "stop the isolation and show every element",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "clear isolate on S-03",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "restore the view of the entire building",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "please show all the hidden elements again",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "i want the normal view back",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "take off the isolation from this view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "is the isolation still on? please reset the view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "quit isolation mode and show all elements",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "isolate sheet A-104",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show only sheet BA-07 elements",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "hide everything except sheet M-03",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "focus on BB-12 only",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "just this sheet, hide the rest",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "leave only A-401 on screen",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "isolate the elements of HAS-05",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "please isolate sheet TSBU-05 for me",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "could you isolate S-02 in the 3d view?",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "can you show only the elements of sheet E-07?",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "i need to check BA-11 alone so isolate that sheet elements",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "when you have time please isolate sheet IZ-06 and hide other things",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "isolat A-203",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "isolate shett BB-08",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "show onlyy sheet A-101",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "isolte the current sheet",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "only BA-04",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sheet ET-03 only please",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "only the current sheet",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "isolate the sheet i opened now",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "keep sheet A-105 visible and hide everything else",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "display only the elements belonging to sheet TSAH-09",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "isolate the sheet elements in 3d for A-302",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "make me see only M-04 elements",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "put only sheet BB-15 on the screen",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "isolate sheet A-101 again please",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "show elements of S-05 and hide others",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i am checking BA-02 now, isolate it",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "hide other sheets, show only IZ-02",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "remember the current state of the model",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "use this as the comparison base",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "reset the baseline",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "set the starting point",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "start tracking the changes from now",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "keep this version as the base for comparing",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "lock this state as the reference",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "snapshot the model before i continue",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "store the model state now",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "count the changes starting from this moment",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "put a marker here so we can compare later",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "make this the point zero of the model",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "write down the current condition of the model",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "please remember the current state, i will compare later",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "please use the current model as the comparison base",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "could you please reset the baseline to now",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "please set the starting point before i touch anything",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "please keep this as the reference state",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "can you remember the current state of the model?",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "could we set the starting point here?",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "is it possible to reset the baseline now?",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "should i snapshot the model before starting?",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "can you use this as the comparison base?",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "reset baseline",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "set start point",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "remember this state",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "snapshot now",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "track from here",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "mark this state",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "remeber the currnt state",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "reset the baselin",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "use this as comparsion base",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "set start poit pls",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "snapshott the model",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "start trackng from now on",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "i am about to start editing the structural sheets so please remember the current state and use it as the base",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "before the team joins the file tomorrow morning set the starting point now so we can measure who added what",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "the old baseline is from last week and too old already, please reset the baseline to the current model state",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "list the new elements",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show the diff",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "compare the model with the baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show me what i added since this morning",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "list the sheets i touched today",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "tell me what got deleted",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "give me the list of removed elements",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show which views were touched after the baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "list everything that is different from the base",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "please show the diff since the baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "could you list the new elements for me",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "please tell me what got deleted from the model",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "can you compare with the baseline please",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "please show which sheets i touched today",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "what did i add since this morning",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "which sheets did i touch",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "anything changed?",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what got deleted?",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how many elements changed since the baseline?",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "did the linked model change since morning?",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "new elements list",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "touched sheets",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "compare with baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "any change in the model",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "waht did i add since morning",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "lst the new elemnts",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "which sheet did i touchd",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "compre with baselin",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "my colleague was in this file after lunch so compare with the baseline and tell me which sheets he touched",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "i worked the whole morning on the interior sheets, please list the new elements i added since the baseline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "sheet numbers please",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "how many sheets are there",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "give me all drawing numbers",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "index of sheets",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sheet index",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "what drawings are in this file",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "show the drawing list",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i need the sheet numbers of this model",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "can you count the sheets in this project",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "please write out every sheet number and name",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "which drawing numbers exist here",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "list of drawings please",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "drawing numbers",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sheet register",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "show me the sheet index of this model",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "list all sheets with their names",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "what is inside this file, sheets i mean",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "i want the full list of sheets before i choose one",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "tell me the sheets",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "are there any structure sheets in this file",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "give the sheet list of the linked model",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "how many drawings do we have in total",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "print the sheet index",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "please list the sheets one by one with numbers",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "sheets list",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "the sheet numbers of this project, please",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "what are all the drawings in this model",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "i cannot remember the sheet numbers, show them",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "open sheet index",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show every sheet number",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "sheet list of current file",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "before submitting i want to see the sheet list of this file, print it out for me",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "show me what sheets you have",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "can you give me the drawing index of this project please",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "what sheets can i choose from",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "snd progress plz",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "SUBMIT PROGRES NOW",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "sendprogress",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "pls sumbit BA-01 at 90%",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "i finshed A-101 pls snd",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "recrod my progres today",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "how mch percent i have",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "whats my progres now",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "howmanypercent",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "chek progres of BA-01",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "shwo all sheets",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "pls show sheets",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "wat sheets",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "sheetlist",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "LIST ALL SHETS",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "hepl",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "HELP ME PLS",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "manul pls",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "wat shud i write here",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "instructon pls",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "isolat ba-01",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "isolatethissheet",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "ISOLATE A-101 PLS",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "hid everything exept BA-02",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "reste the view",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "unisolat all",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "RESET VIEW PLS",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "shwo all elemnts back",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "waht changed",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "wat chnged since basline",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "shwo the diff plz",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "set baselin frm here",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "save baselin b4 i start",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "submit my timesheet for this week",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "send the attendance report to HR",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "what is my attendance percent this month",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "i forgot to clock in this morning, can you fix it in the system please",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "chek my working hours for yestrday",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "how many days i was late this month",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "record my vacation from 5 to 10 september",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i need one day off on friday, please put the request for me",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "log my hours for the training day",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "can you cancel my leave request for tomorrow, i will come to work",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "check my remaining vacation days",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "sik leave today, i am not comming to office",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "start tracking my overtime from today",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "how much overtime i have this month",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "push my overtime hours to the system",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "when is the design meeting with the client",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "save the meeting minutes to the system",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "add action items from todays meeting to my tasks",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "send this letter to the client",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "what has changed in my inbox since morning",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "forward the last email from the contractor to me",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "set the deadline of this task to next friday",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "reply to that mail and tell them we will finish the drawings by friday",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "plz snd the official letter to the city office",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "make a quote for 3000 square meter office building",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "what is the price for the interior design",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "show me the last quote we sent to the client",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "assign the facade drawings to Bold",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "close this task in my task list",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "who is number one on the leaderboard this month",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "open my growth plan and add a new goal",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i want to see my assessment result please",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "download the monthly report as excel",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "print the client report for the meeting",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "export the leaderboard to pdf",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "download the company progress report as pdf",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "generate the team report for august",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "can you help me fill the timesheet for last week",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "draw the parapet on the roof",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "model the stair core for me",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "place windows on the north facade",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "chagne the door width to 1200",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "make a sheet set for the tender package",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "make a callout view of the toilet",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "duplicate this view and rename it",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "put the plan on sheet BA-05",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "print BA-01 to BA-12 as pdf",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "export all sheets to dwg for the contractor",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "can you make pdf from these sheets please",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "export ifc for the mep guys",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "sync to central now",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "save the model and sync please",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "did anybody sync in the last hour",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "relaod the latest from central",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "select every window on level 2",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "tag all the rooms on this plan",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "put dimensions on the grid lines",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "filtr only the structral walls",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "how many dors are in this modle",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "list all the floor plans in this project",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "show me all 3d views",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "which sections are in the browser",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "list the levels of this building",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "hi, are you there",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "thank you very much for the fast answer",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "is it going to rain tomorrow",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what is for lunch today",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "ok bye see you monday",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "are you a robot or a real person",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "reset my password for the system",
+   "intent": "unknown",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "put my 45 percent for A-108 into MGL",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "A-301 is ready now",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "i completed BB-11",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "the sections are ready, send them",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "yes send it to the system",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "ok push it now",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "please record the progress of the elevation sheets",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "i drew the roof details, put it in the system",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "snd 70% for KH-03 plz",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "regster A-402 at 50 percent",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "i am leaving now, save my work percent to MGL",
+   "intent": "submit_progress",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "check if A-101 is finished",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "check if BA-03 is complete",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "tell me the status of the section sheets",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "let me see my percent for BA-05",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i want to see the percent of the facade sheets",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "view my progress in MGL",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "how far did i get on HAS-03",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "how far are the interior sheets",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "BA-07 how many percent done",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "what percent is HAS-09 right now",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "did my sheets reach 100 percent",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "see the percent of TsBU-05 in the system",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "please tell me the progress of the elevation sheets",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "hw far am i on A-203",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "wat percnt is BB-06",
+   "intent": "progress_status",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "which commands do you know",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "what words do you understand",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "i dont know what to type here",
+   "intent": "help",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "explain this panel to me",
+   "intent": "help",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "first time user, explain please",
+   "intent": "help",
+   "lang": "en",
+   "style": "terse"
+  },
+  {
+   "text": "how do i talk to you",
+   "intent": "help",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "explan the comands plz",
+   "intent": "help",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "i finished checking S-04, unisolate the model",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "stop showing only BB-02, give me the whole model",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "A-105 checking is over, show all elements again",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "the isolation on M-01 is not needed, cancel it",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "brng back the hiden elemnts",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "put all elements back on the screen",
+   "intent": "reset_view",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "save the model condition before i begin",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "note how the model looks now, i will compare after lunch",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "verbose"
+  },
+  {
+   "text": "keep this morning state for comparing later",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "before i touch anything save the model state",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "save the modl state b4 i strt",
+   "intent": "set_baseline",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "leave only sheet KH-02 in the view",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "i want only A-206 elements on the screen",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "polite"
+  },
+  {
+   "text": "hide the other sheets and keep S-06",
+   "intent": "isolate_sheet",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "what is new in the model since morning",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "question"
+  },
+  {
+   "text": "tell me which elements my colleague added",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "wht chnged in the modl after lunch",
+   "intent": "whats_changed",
+   "lang": "en",
+   "style": "typo"
+  },
+  {
+   "text": "write out the sheet numbers of the linked file",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  },
+  {
+   "text": "print out all the drawing names",
+   "intent": "list_sheets",
+   "lang": "en",
+   "style": "imperative"
+  }
+ ]
+}

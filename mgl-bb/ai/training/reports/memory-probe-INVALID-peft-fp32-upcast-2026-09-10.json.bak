@@ -1,0 +1,146 @@
+{
+  "measured_at": "2026-09-10T13:59:52",
+  "base_model": "Qwen/Qwen3-8B",
+  "base_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "rank": 16,
+  "quant": {
+    "load_in_4bit": true,
+    "type": "nf4",
+    "double_quant": true,
+    "compute": "bfloat16"
+  },
+  "optimizer": "paged_adamw_8bit",
+  "gradient_checkpointing": true,
+  "env": {
+    "os": "Windows 11 (10.0.26200)",
+    "python": "3.12.10",
+    "torch": "2.14.0+cu126",
+    "cuda": "12.6",
+    "cudnn": 91002,
+    "transformers": "5.17.0",
+    "peft": "0.20.0",
+    "bitsandbytes": "0.50.2",
+    "gpu": "NVIDIA GeForce RTX 3070",
+    "vram_total_mb": 8191,
+    "vram_free_at_start_mb": 7100,
+    "ram_total_mb": 32581,
+    "nvidia_smi": "NVIDIA GeForce RTX 3070, 8192 MiB, 1043 MiB, 560.94"
+  },
+  "load": {
+    "seconds": 17,
+    "allocated_mb": 5806,
+    "peak_mb": 5887
+  },
+  "token_lengths": {
+    "n": 326,
+    "mean": 1240,
+    "median": 1325,
+    "p90": 1860,
+    "p95": 1917,
+    "max": 2319,
+    "over_512": 305,
+    "over_768": 271,
+    "over_1024": 202,
+    "dataset_version": "behav-2026-09-10.3",
+    "tokenizer": "Qwen/Qwen3-8B@b968826d"
+  },
+  "stages": [
+    {
+      "plan": "all",
+      "max_seq": 512,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "loss": 1.8325204849243164,
+      "forward_peak_mb": 16474,
+      "backward_peak_mb": 17060,
+      "peak_allocated_mb": 17108,
+      "peak_reserved_mb": 17420,
+      "step_ms": 40608,
+      "step_ms_all": [
+        43013,
+        40608,
+        39383
+      ],
+      "ram_rss_mb": 12096
+    },
+    {
+      "plan": "all",
+      "max_seq": 768,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "loss": 1.266598105430603,
+      "forward_peak_mb": 20890,
+      "backward_peak_mb": 21457,
+      "peak_allocated_mb": 21457,
+      "peak_reserved_mb": 22116,
+      "step_ms": 63169,
+      "step_ms_all": [
+        63169,
+        61576,
+        69098
+      ],
+      "ram_rss_mb": 16249
+    },
+    {
+      "plan": "all",
+      "max_seq": 1024,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": false,
+      "error": "CUDA OOM",
+      "peak_reserved_mb": 22876
+    },
+    {
+      "plan": "attn",
+      "max_seq": 512,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "loss": 0.6116199493408203,
+      "forward_peak_mb": 17012,
+      "backward_peak_mb": 17070,
+      "peak_allocated_mb": 17104,
+      "peak_reserved_mb": 17654,
+      "step_ms": 40000,
+      "step_ms_all": [
+        36439,
+        40000,
+        43661
+      ],
+      "ram_rss_mb": 12046
+    },
+    {
+      "plan": "attn",
+      "max_seq": 768,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "loss": 0.35417667031288147,
+      "forward_peak_mb": 20889,
+      "backward_peak_mb": 21457,
+      "peak_allocated_mb": 21457,
+      "peak_reserved_mb": 22116,
+      "step_ms": 72965,
+      "step_ms_all": [
+        81312,
+        71971,
+        72965
+      ],
+      "ram_rss_mb": 16294
+    },
+    {
+      "plan": "attn",
+      "max_seq": 1024,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": false,
+      "error": "CUDA OOM",
+      "peak_reserved_mb": 22882
+    }
+  ],
+  "verdict": "FITS_WITH_OFFLOAD_OR_REDUCED_SEQ",
+  "recommended_max_seq": 768,
+  "recommended_targets": "all"
+}

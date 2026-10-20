@@ -1,0 +1,295 @@
+{
+  "cases": [
+    {
+      "id": "CL-001",
+      "version": 1,
+      "category": "clarification",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE"
+      ],
+      "question": "20 давхар, 75 м өндөр барилгын шатны даралтат агаарын тооцоог гарга.",
+      "evidence_fixture": "evidence/synthetic-engineering-requirements.json",
+      "expected": {
+        "decision": {
+          "value": "INSUFFICIENT_INFORMATION",
+          "accept": [
+            "мэдээлэл.*дутуу|тооцоолж.*болохгүй|тодруул"
+          ],
+          "reject": [
+            "эцсийн.*тооцоо.*="
+          ]
+        },
+        "missing_inputs": [
+          {
+            "id": "geometry",
+            "any": [
+              "геометр|шат.*хэмжээ|zone|бүс"
+            ]
+          },
+          {
+            "id": "leakage",
+            "any": [
+              "алдагдал|leak|нээлхий|хаалга"
+            ]
+          },
+          {
+            "id": "pressure",
+            "any": [
+              "даралт.*шалгуур|target pressure"
+            ]
+          }
+        ],
+        "allowed_numbers": [
+          20,
+          75
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "synthetic engineering input schema",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "CL-001-P1",
+          "kind": "paraphrase",
+          "question": "75 м өндөр, 20 давхар барилгын шатны даралтат агаарын зарцуулалтыг одоо тооцоход ямар өгөгдөл дутуу вэ?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "CL-002",
+      "version": 1,
+      "category": "clarification",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE"
+      ],
+      "question": "Sprinkler системийн тооцоо хий. Давхрын талбай 1200 м².",
+      "evidence_fixture": "evidence/synthetic-engineering-requirements.json",
+      "expected": {
+        "decision": {
+          "value": "INSUFFICIENT_INFORMATION",
+          "accept": [
+            "мэдээлэл.*дутуу|тооцоолж.*болохгүй|тодруул"
+          ],
+          "reject": [
+            "эцсийн.*зарцуулалт"
+          ]
+        },
+        "missing_inputs": [
+          {
+            "id": "hazard",
+            "any": [
+              "hazard|эрсдэл|ангилал|design basis"
+            ]
+          },
+          {
+            "id": "network",
+            "any": [
+              "шугам|pipe|хоолойн.*урт|диаметр"
+            ]
+          },
+          {
+            "id": "supply",
+            "any": [
+              "усны эх үүсвэр|supply|даралт"
+            ]
+          }
+        ],
+        "allowed_numbers": [
+          1200
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "synthetic engineering input schema",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "CL-002-P1",
+          "kind": "paraphrase",
+          "question": "1200 м² давхрын талбайг л мэдэж байхад sprinkler-ийн тооцоог бүрэн гаргаж болох уу?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "CL-003",
+      "version": 1,
+      "category": "clarification",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE"
+      ],
+      "question": "Цэвэр усны гидравлик сүлжээний даралтын алдагдлыг бод. Диаметрүүд байгаа, гэхдээ хоолойн уртууд одоохондоо алга.",
+      "evidence_fixture": "evidence/synthetic-engineering-requirements.json",
+      "expected": {
+        "decision": {
+          "value": "INSUFFICIENT_INFORMATION",
+          "accept": [
+            "урт.*хэрэгтэй|урт.*дутуу|тооцоолж.*болохгүй"
+          ],
+          "reject": [
+            "эцсийн.*алдагдал"
+          ]
+        },
+        "missing_inputs": [
+          {
+            "id": "lengths",
+            "any": [
+              "хоолойн.*урт|уртууд|pipe lengths"
+            ]
+          }
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "synthetic engineering input schema",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "CL-003-P1",
+          "kind": "paraphrase",
+          "question": "Хоолойн диаметрүүд байгаа ч урт нь байхгүй. Усны сүлжээний даралтын алдагдлыг бодоход юу шаардагдах вэ?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "CL-004",
+      "version": 1,
+      "category": "clarification",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE"
+      ],
+      "question": "5000 м² барилгын галын усны зарцуулалтыг шууд гарга.",
+      "evidence_fixture": "evidence/synthetic-engineering-requirements.json",
+      "expected": {
+        "decision": {
+          "value": "INSUFFICIENT_INFORMATION",
+          "accept": [
+            "мэдээлэл.*дутуу|тооцоолж.*болохгүй|тодруул"
+          ],
+          "reject": [
+            "л/с|L/s"
+          ]
+        },
+        "missing_inputs": [
+          {
+            "id": "occupancy",
+            "any": [
+              "зориулалт|occupancy|ашиглалт"
+            ]
+          },
+          {
+            "id": "hazard",
+            "any": [
+              "hazard|эрсдэл|ангилал"
+            ]
+          }
+        ],
+        "allowed_numbers": [
+          5000
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "synthetic engineering input schema",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "CL-004-P1",
+          "kind": "paraphrase",
+          "question": "5000 м² талбайтай барилгын галын усны зарцуулалтыг зөвхөн талбайгаар нь тогтоож болох уу?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "CL-005",
+      "version": 1,
+      "category": "clarification",
+      "difficulty": "hard",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "g=1.800 МДж/м² бол аль ангилал вэ?",
+      "evidence_fixture": "evidence/fire-load-bd-21-101-12.json",
+      "expected": {
+        "decision": {
+          "value": "CLARIFY_AMBIGUOUS_NUMBER",
+          "accept": [
+            "тодруул|хоёрдмол|1\\.800.*(1800|1[.,]8)"
+          ],
+          "reject": [
+            "шууд.*В[1-4]"
+          ]
+        },
+        "missing_inputs": [
+          {
+            "id": "number-meaning",
+            "any": [
+              "1800|1[.,]8|мянгат|аравтын"
+            ]
+          }
+        ],
+        "allowed_numbers": [
+          1.8,
+          1800
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "backend normEntities GAP-022 ambiguity contract + verified fire-load fixture",
+        "review_status": "REFERENCE_VERIFIED"
+      },
+      "variants": [
+        {
+          "id": "CL-005-P1",
+          "kind": "paraphrase",
+          "question": "Хувийн галын ачааллыг 1.800 МДж/м² гэж бичсэн байна. Үүнийг ангилахын өмнө юуг тодруулах вэ?",
+          "same_semantics": true
+        }
+      ]
+    }
+  ]
+}

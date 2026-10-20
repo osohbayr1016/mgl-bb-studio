@@ -1,0 +1,17 @@
+-- =============================================
+-- Project category — no-op recovery
+-- =============================================
+-- Originally added:
+--
+--   ALTER TABLE projects ADD COLUMN category TEXT
+--     CHECK(category IN ('AZ','ZA','ET','EZ','IZ'));
+--   CREATE INDEX IF NOT EXISTS idx_projects_category ON projects(category);
+--
+-- Both the column and the index are already present in production
+-- (verified via PRAGMA table_info / sqlite_master on 2026-05-21) —
+-- previously applied out-of-band without being recorded in
+-- d1_migrations.  Same drift pattern as 0077.
+--
+-- Rewriting as a no-op so the tracker registers 0079 as applied
+-- without re-attempting the duplicate ALTER.  Schema is unchanged.
+SELECT 1;

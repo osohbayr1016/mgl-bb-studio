@@ -1,0 +1,30 @@
+# Dedicated Worker that runs the Stirling-PDF container. Deployed on its own
+# (NOT part of the MGL backend deploy) so MGL's CI and DO-migration list are
+# untouched. Requires the Workers Paid plan, and Docker running wherever you
+# run `wrangler deploy` (Wrangler builds + pushes the image).
+name = "mgl-stirling"
+main = "src/index.ts"
+compatibility_date = "2025-05-01"
+# Must be the SAME account as the MGL backend Worker, or the STIRLING_SVC
+# service binding from MGL will not resolve (bindings are account-scoped).
+account_id = "a01b2b194850c45387e7035eb9ebaca6"
+
+# The container image + instance size. standard-1 = 4 GiB / 0.5 vCPU, comfortable
+# for the full image. For pdfbox-only ops you can drop to "basic" (1 GiB) with
+# the ultra-lite image (see Dockerfile). Containers scale to zero when idle, so
+# you only pay for active seconds.
+[[containers]]
+class_name = "StirlingContainer"
+image = "./Dockerfile"
+instance_type = "standard-1"
+max_instances = 3
+
+# Each container instance is fronted by a Durable Object (the Container class).
+[[durable_objects.bindings]]
+name = "STIRLING"
+class_name = "StirlingContainer"
+
+# Container-backed DOs must use new_sqlite_classes (append-only history).
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["StirlingContainer"]

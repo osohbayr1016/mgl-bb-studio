@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    MGL — LIRA 10.12-ийн бүтээцийн тооцооны тайлангийн нэмэлт (DLL).
+    LIRA нь .NET Framework 4.5 (x64) процесс тул net48 / x64.
+    LiraAPI.dll, FEModel.dll нь LIRA-ийн өөрийн bin64-оос ачаалагдана — хуулахгүй (Private=false).
+    Засварлагч нь LIRA-гүйгээр ч ажиллана: app\MglReportEditor.csproj энэ DLL-ийг ашиглана.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <AssemblyName>MglLiraReport</AssemblyName>
+    <Version>0.3.0</Version>
+    <RootNamespace>MglLiraReport</RootNamespace>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <LiraBin Condition="'$(LiraBin)' == ''">C:\Program Files\Lira Soft\Lira10.12\bin64</LiraBin>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="app\**;dist\**;package\**;tests\**" />
+    <None Remove="app\**;dist\**;package\**;tests\**" />
+    <EmbeddedResource Include="src\Assets\mgl-logo.jpg" LogicalName="MglLiraReport.Assets.mgl-logo.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="LiraAPI">
+      <HintPath>$(LiraBin)\LiraAPI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="FEModel">
+      <HintPath>$(LiraBin)\FEModel.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+</Project>

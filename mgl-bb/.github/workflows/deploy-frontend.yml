@@ -1,0 +1,82 @@
+# Deploy the mgl-progress-frontend Cloudflare Pages site. Runs on
+# ⚠️ ЭНЭ WORKFLOW ОДООГООР АЖИЛЛАХГҮЙ.  Deploy нь локал wrangler CLI-ээр
+#    хийгддэг (CLAUDE.md → "Deploying").  Энд үлдээсэн шалтгаан нь ирээдүйд
+#    CI-г сэргээхэд суурь болгох.  Сэргээхийн өмнө репогийн Settings →
+#    Secrets/Variables дотор доорхыг тохируулна:
+#      secrets.CLOUDFLARE_API_TOKEN     — deploy эрхтэй токен
+#      secrets.CLOUDFLARE_ACCOUNT_ID    — account id (ӨМНӨ НЬ ЭНД ШУУД
+#                                         БИЧИГДСЭН БАЙСАН — устгасан)
+
+# GitHub-hosted ubuntu runners, so the asset upload hits Cloudflare's
+# API from a US/EU egress IP — useful when local wrangler runs from
+# certain regional edges (e.g. Ulaanbaatar) hit transient 502s on
+# POST /pages/assets/upload.
+#
+# REQUIRED REPOSITORY SECRETS:
+#   - CLOUDFLARE_API_TOKEN     API token with permissions:
+#                                * Cloudflare Pages: Edit
+#                                * (Account) User Details: Read
+#                              The existing backend token may not have
+#                              the Pages scope — add it (or mint a new
+#                              token) before the first run.
+#   - CLOUDFLARE_ACCOUNT_ID    Cloudflare account id (repo secret, БҮҮ hardcode)
+#                              (same as backend; pinned in wrangler.toml
+#                              but wrangler reads the env var when set).
+#
+# Triggers: pushes to main that touch the frontend, or manual dispatch.
+
+name: Deploy frontend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/deploy-frontend.yml'
+  workflow_dispatch:
+
+# Newer pushes wait for the current run so we don't stomp on each other.
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend deps
+        run: npm ci
+
+      # `tsc -b && vite build` — fails the run if there's a type error
+      # so we never deploy a broken bundle. Never pass a loopback VITE_API_HOST
+      # into production builds (local .env.local must not leak via CI secrets).
+      - name: Build
+        env:
+          VITE_API_HOST: ''
+        run: npm run build
+
+      # `--branch=main` forces a production deployment regardless of the
+      # git branch wrangler infers (the workflow only runs on main but
+      # this makes the intent explicit). `--commit-dirty=true` silences
+      # the "uncommitted changes" warning if the build step touched files.
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx wrangler pages deploy dist \
+            --project-name=${{ vars.CF_PAGES_PROJECT || 'mgl-progress-frontend' }} \
+            --branch=main \
+            --commit-dirty=true

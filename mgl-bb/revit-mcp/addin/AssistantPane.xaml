@@ -1,0 +1,878 @@
+<UserControl x:Class="RevitMcpAddin.AssistantPane"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             MinWidth="300"
+             TextOptions.TextFormattingMode="Display"
+             UseLayoutRounding="True">
+
+    <!--
+      Revit 2027-ийн харанхуй сэдэвт таарсан палитр.  Урьд нь ямар ч стиль
+      байгаагүй тул WPF-ийн анхдагч ЦАГААН дэвсгэр Revit дээр тод цайрч
+      харагддаг байв.  Өнгө бүрийг ЭНД нэг удаа тодорхойлж, доор түлхүүрээр
+      нь лавлана — Revit сэдвээ өөрчилвөл энэ блокийг л засна.
+    -->
+    <UserControl.Resources>
+        <!-- ⚠️ ӨНГӨ ЭНД БАЙХГҮЙ: токенууд (Bg, BgRaised, BgInput, Line, LineStrong, Fg, FgMuted, Accent, …) нь `Ui/MglTheme.cs`-ээс
+             ирнэ (constructor-т `MglTheme.Apply(this, 12)`), ТЭД `DynamicResource` — Revit-ийн Light/Dark/өндөр контраст солигдоход
+             самбар шууд дахин будагдана.  Хуучин 4 самбарын хуулбарласан харанхуй палитр (AssistantPane = WorkPane,
+             IntelligencePanel `I…`, CdJobPaneView) нэг эх сурвалж болсон.  Товч/талбар/combo/expander-ийн загвар нь
+             `Ui/Resources/MglControls.xaml`-ийн implicit загвар. -->
+
+        <!-- Товч: хавтгай, токен.  Hover/Pressed/Focus/Disabled бүгд токеноос; фокус харагдана. -->
+        <Style x:Key="FlatButton" TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource BgRaised}" />
+            <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource LineStrong}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="MinHeight" Value="28" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="FocusVisualStyle" Value="{DynamicResource MglFocusVisual}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="b"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="b" Property="Background" Value="{DynamicResource Hover}" />
+                                <Setter Property="Foreground" Value="{DynamicResource HoverFg}" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="b" Property="BorderBrush" Value="{DynamicResource Accent}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="b" Property="Background" Value="{DynamicResource Pressed}" />
+                                <Setter Property="Foreground" Value="{DynamicResource PressedFg}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="b" Property="Opacity" Value="0.55" />
+                                <Setter Property="Foreground" Value="{DynamicResource FgDisabled}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Гол үйлдлийн товч (Accent дэвсгэр; `BasedOn` БИШ — hover нь саарал болж accent-ийг дарахгүйн тулд өөрийн template). -->
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource Accent}" />
+            <Setter Property="Foreground" Value="{DynamicResource AccentFg}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Accent}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="MinHeight" Value="28" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="FocusVisualStyle" Value="{DynamicResource MglFocusVisual}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="b"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="b" Property="Opacity" Value="0.88" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="b" Property="BorderBrush" Value="{DynamicResource Fg}" />
+                                <Setter TargetName="b" Property="BorderThickness" Value="2" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="b" Property="Opacity" Value="0.7" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="b" Property="Background" Value="{DynamicResource Bg}" />
+                                <Setter TargetName="b" Property="BorderBrush" Value="{DynamicResource Line}" />
+                                <Setter Property="Foreground" Value="{DynamicResource FgDisabled}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DarkText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+        <!-- ⚠️ Хоёрдогч бичвэр ≥ 12 DIP (өмнө нь 11; самбарт 24 газар 10–11 DIP байсан). -->
+        <Style x:Key="MutedText" TargetType="TextBlock" BasedOn="{StaticResource DarkText}">
+            <Setter Property="Foreground" Value="{DynamicResource FgMuted}" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <!--
+          Яриа хэлцлийн НЭГ мөр.  Хэлбэрийг (баруун/зүүн, дэвсгэр, өнгө) C#
+          талын `ChatMessage` тооцоолж өгдөг — ингэснээр converter, олон
+          DataTemplate, DataTemplateSelector огт хэрэггүй болж, XAML энгийн
+          хэвээр үлдэнэ.
+        -->
+        <DataTemplate x:Key="MessageTemplate">
+            <Grid Margin="0,3">
+                <Border HorizontalAlignment="{Binding Align}"
+                        MaxWidth="{Binding MaxWidth}"
+                        BorderThickness="{Binding EdgeThickness}"
+                        CornerRadius="8"
+                        Padding="9,6">
+                    <!-- Өнгө нь `Kind`-аас (C# талд brush ТООЦООЛОХГҮЙ) — DynamicResource тул сэдэв солигдоход дагана.
+                         Алдаа/Хэрэгсэл нь өнгөөс гадна ХҮРЭЭ + тэмдэглэгээгээр ялгарна. -->
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="{DynamicResource BgRaised}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource Line}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Kind}" Value="User">
+                                    <Setter Property="Background" Value="{DynamicResource AccentSoft}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Kind}" Value="Tool">
+                                    <Setter Property="Background" Value="{DynamicResource Bg}" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource LineStrong}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Kind}" Value="Error">
+                                    <Setter Property="Background" Value="{DynamicResource DangerBg}" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource Danger}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Kind}" Value="System">
+                                    <Setter Property="Background" Value="Transparent" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Header}"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,3"
+                                   Visibility="{Binding HeaderVisibility}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource FgMuted}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Kind}" Value="Error">
+                                            <Setter Property="Foreground" Value="{DynamicResource Danger}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Text="{Binding Text}"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   LineHeight="17">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Kind}" Value="Tool">
+                                            <Setter Property="Foreground" Value="{DynamicResource FgMuted}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Kind}" Value="System">
+                                            <Setter Property="Foreground" Value="{DynamicResource FgMuted}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+        <!--
+          Өөрчлөлтийн НЭГ МӨР.
+
+          ⚠️ Товч болгосон нь САНААТАЙ: мөр бүр дарагдах ёстой (дарвал тэр
+          элемент рүү үсэрнэ) бөгөөд Button нь гар/дэлгэц уншигчийн хандалтыг
+          үнэгүй өгдөг.  Border + MouseDown хийвэл Tab-аар явж болохгүй болно.
+        -->
+        <Style x:Key="ChangeRowButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="5,3" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="rb"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="Transparent" BorderThickness="0"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Stretch" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="rb" Property="Background" Value="{DynamicResource Hover}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="rb" Property="Background" Value="{DynamicResource Pressed}" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="rb" Property="BorderBrush" Value="{DynamicResource Accent}" />
+                                <Setter TargetName="rb" Property="BorderThickness" Value="2" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--
+          ДҮГНЭЛТИЙН НЭГ МӨР.
+
+          ⚠️ `ChangeRowTemplate`-ийн хэв маягийг ЗОРИУД давтав: мөр өөрөө
+          товч (дарвал элемент рүү үсэрнэ), дотор нь хоёр жижиг товч.  Өнгө,
+          бичээс, харагдац БҮГД C#-д тооцоологдоно — converter ба
+          `DataTemplateSelector` ЭНЭ ФАЙЛД ХЭЗЭЭ Ч ОРОХГҮЙ.
+
+          ⚠️ ДОТООД ТОВЧНЫ УРХИ: `Click` нь БӨМБӨЛӨГДӨЖ дээшилдэг тул
+          «Ойлголоо» дарахад ГАДНА мөрийн `FindingRow_Click` БАС дуудагдана
+          (`e.OriginalSource` нь дотоод товч).  Хандлагчид `e.Handled = true`
+          гэж тавьсан нь ҮҮНИЙГ зогсоох ЦОРЫН ГАНЦ зүйл — арилгавал хүн
+          «Ойлголоо» дарах бүрдээ харагдац солигдоно.
+        -->
+        <DataTemplate x:Key="FindingRowTemplate">
+            <Button Style="{StaticResource ChangeRowButton}"
+                    Tag="{Binding}"
+                    ToolTip="{Binding Hint}"
+                    Click="FindingRow_Click">
+                <Grid Margin="{Binding Indent}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="{Binding Title}" FontSize="12" TextWrapping="Wrap"
+                                   FontWeight="{Binding TitleWeight}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding FgClass}" Value="Critical">
+                                            <Setter Property="Foreground" Value="{DynamicResource Danger}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding FgClass}" Value="Warn">
+                                            <Setter Property="Foreground" Value="{DynamicResource Warn}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding FgClass}" Value="Muted">
+                                            <Setter Property="Foreground" Value="{DynamicResource FgMuted}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Text="{Binding Sub}"
+                                   Foreground="{DynamicResource FgMuted}"
+                                   FontSize="12" TextWrapping="Wrap"
+                                   Visibility="{Binding SubVisibility}" />
+                        <TextBlock Text="{Binding Extra}"
+                                   Foreground="{DynamicResource FgMuted}"
+                                   FontSize="12" TextWrapping="Wrap"
+                                   FontStyle="Italic"
+                                   Visibility="{Binding ExtraVisibility}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                VerticalAlignment="Top" Margin="6,0,0,0"
+                                Visibility="{Binding ActionsVisibility}">
+                        <Button Style="{StaticResource FlatButton}"
+                                Padding="6,1" FontSize="12"
+                                Content="{Binding AckLabel}"
+                                Tag="{Binding}"
+                                Click="FindingAck_Click" />
+                        <Button Style="{StaticResource FlatButton}"
+                                Padding="6,1" FontSize="12" Margin="4,0,0,0"
+                                Content="{Binding OverrideLabel}"
+                                Visibility="{Binding OverrideVisibility}"
+                                Tag="{Binding}"
+                                Click="FindingOverride_Click" />
+                    </StackPanel>
+                </Grid>
+            </Button>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ChangeRowTemplate">
+            <Button Style="{StaticResource ChangeRowButton}"
+                    Visibility="{Binding RowVisibility}"
+                    Tag="{Binding}"
+                    ToolTip="{Binding Hint}"
+                    Click="ChangeRow_Click">
+                <Grid Margin="{Binding Indent}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="{Binding Title}" FontSize="12" TextTrimming="CharacterEllipsis"
+                                   FontWeight="{Binding TitleWeight}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource Fg}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding FgClass}" Value="Header">
+                                            <Setter Property="Foreground" Value="{DynamicResource Accent}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding FgClass}" Value="Muted">
+                                            <Setter Property="Foreground" Value="{DynamicResource FgMuted}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Text="{Binding Sub}"
+                                   Foreground="{DynamicResource FgMuted}"
+                                   FontSize="12"
+                                   TextTrimming="CharacterEllipsis"
+                                   Visibility="{Binding SubVisibility}" />
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Text="{Binding Right}"
+                               Foreground="{DynamicResource FgMuted}"
+                               FontSize="12" VerticalAlignment="Center"
+                               Margin="6,0,0,0" />
+                </Grid>
+            </Button>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border Background="{DynamicResource Bg}">
+        <Grid Margin="9,8,9,9">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <!-- толгой -->
+                <RowDefinition Height="Auto" MaxHeight="300" />
+                <!-- ажлын контекст (≤ 300 DIP, дотроо гүйлгэнэ) -->
+                <RowDefinition Height="*" MinHeight="110" />
+                <!-- яриа (≥ 110 DIP) -->
+                <RowDefinition Height="Auto" />
+                <!-- ноорог -->
+                <RowDefinition Height="Auto" />
+                <!-- сонголт (ойлгосонгүй үед) -->
+                <RowDefinition Height="Auto" />
+                <!-- санал хүсэлт -->
+                <RowDefinition Height="Auto" />
+                <!-- төлөв -->
+                <RowDefinition Height="Auto" />
+                <!-- оролт -->
+            </Grid.RowDefinitions>
+
+            <!-- ============ Толгой ============ -->
+            <Grid Grid.Row="0" Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Ellipse x:Name="StatusDot" Grid.Column="0"
+                         Width="8" Height="8" Margin="1,0,7,0"
+                         VerticalAlignment="Center"
+                         Fill="{DynamicResource FgMuted}" />
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock x:Name="HeaderText" Text="MGL туслах"
+                               Style="{StaticResource DarkText}"
+                               FontWeight="SemiBold" FontSize="12"
+                               TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                    <TextBlock x:Name="SubHeaderText" Text="Холбогдоогүй"
+                               Style="{StaticResource MutedText}"
+                               TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                </StackPanel>
+
+                <Button x:Name="RefreshBtn" Grid.Column="2"
+                        Style="{StaticResource FlatButton}"
+                        Content="⟳ Шинэчлэх" Padding="8,2"
+                        ToolTip="Таскуудыг вэбээс дахин унших"
+                        AutomationProperties.Name="Таскуудыг вэбээс дахин унших"
+                        Click="RefreshBtn_Click" />
+            </Grid>
+
+            <!-- ============ Ажлын контекст (эвхэгддэг) ============ -->
+            <Border Grid.Row="1" Background="{DynamicResource BgRaised}"
+                    BorderBrush="{DynamicResource Line}" BorderThickness="1"
+                    CornerRadius="5" Padding="8,6" Margin="0,0,0,8">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
+                <StackPanel>
+                    <!-- Ажил сонгох (нэг мөр) — доор нь ТОВЧЛОГДСОН «chip» toggle-ууд.  Өмнө нь ▾ Δ AI гэсэн
+                         нэргүй тэмдэгтүүд байв (AI гэсэн үг 3 өөр зүйлийг заадаг, ▾ нь юу нээхийг хэлдэггүй).
+                         ⚠️ Нэг л хэсэг НЭЭЛТТЭЙ байна (код-behind `CollapseOthers`): олон хэсэг зэрэг задарвал 300–420 DIP
+                         самбарт оролтын мөр доош түлхэгдэж харагдахаа болино. -->
+                    <ComboBox x:Name="TaskCombo"
+                              DisplayMemberPath="Label"
+                              AutomationProperties.Name="Ажил (таск) сонгох"
+                              SelectionChanged="TaskCombo_SelectionChanged" />
+                    <WrapPanel Margin="0,6,0,0">
+                        <ToggleButton x:Name="ChecklistToggle"
+                                      Style="{DynamicResource MglChipToggle}"
+                                      Margin="0,0,6,4"
+                                      Content="Дэд жагсаалт ▾"
+                                      ToolTip="Сонгосон ажлын дэд жагсаалтыг харах, тэмдэглэх"
+                                      Checked="ChecklistToggle_Changed"
+                                      Unchecked="ChecklistToggle_Changed" />
+                        <ToggleButton x:Name="ChangesToggle"
+                                      Style="{DynamicResource MglChipToggle}"
+                                      Margin="0,0,6,4"
+                                      Content="Өөрчлөлт"
+                                      ToolTip="Өнөөдөр юуг нэмсэн, зассан, устгасныг харах — мөр дээр дарвал тэр элемент рүү очно"
+                                      Checked="ChangesToggle_Changed"
+                                      Unchecked="ChangesToggle_Changed" />
+                        <!--
+                          SESSION R — «MGL AI» (Контекст · Даалгавар · Асуудал · Тайлан · Асуулт).
+                          Strangler (R-1): хоёр дахь dockable pane БИШ, энэ самбар дотор
+                          эвхэгддэг хост.  Агуулга нь код-behind-д `#if MGL_INTELLIGENCE`-ээр
+                          үүснэ (net48/Revit 2024-д Intelligence байхгүй тул XAML энд
+                          төрлийг нь лавладаггүй).
+                        -->
+                        <ToggleButton x:Name="IntelToggle"
+                                      Style="{DynamicResource MglChipToggle}"
+                                      Margin="0,0,0,4"
+                                      Content="Revit шинжилгээ"
+                                      ToolTip="MGL AI — Revit контекст, даалгавар, асуудал, тайлан (Revit 2025+)"
+                                      Checked="IntelToggle_Changed"
+                                      Unchecked="IntelToggle_Changed" />
+                    </WrapPanel>
+
+                    <!--
+                      Төлөв + БАГИЙН CHIP.
+
+                      ⚠️ ГРИД, гүйдэг мөр БИШ.  `StatusText` нь `MutedText`-ээс
+                      `TextWrapping="Wrap"` өвлөдөг; хэрэв энэ хоёрыг хэвтээ
+                      `StackPanel`-д хийвэл өргөн нь ХЯЗГААРГҮЙ болж, урт
+                      төлөвийн мөр самбараас халина.  `*` + `Auto` нь
+                      боолтыг хэвээр үлдээж, chip-ийг баруун тийш түлхэнэ.
+
+                      ⚠️ Chip нь АНХНААСАА `Collapsed` — `SetTeamChip` л
+                      харуулна.  Хоосон chip нь «add-in ажиллахгүй байна»
+                      гэж уншигдана.
+                    -->
+                    <Grid Margin="1,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="StatusText" Grid.Column="0"
+                                   Style="{StaticResource MutedText}"
+                                   VerticalAlignment="Center" />
+                        <Border x:Name="TeamChip" Grid.Column="1" Visibility="Collapsed"
+                                Margin="8,0,0,0" Padding="6,1" CornerRadius="8"
+                                VerticalAlignment="Center"
+                                Background="{DynamicResource BgInput}"
+                                BorderBrush="{DynamicResource Line}" BorderThickness="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="TeamChipText"
+                                           Style="{StaticResource MutedText}"
+                                           TextWrapping="NoWrap"
+                                           VerticalAlignment="Center" />
+                                <Button x:Name="TeamChipFix" AutomationProperties.Name="Багийг залруулах" Content="…"
+                                        Margin="4,0,0,0" Padding="4,0"
+                                        Background="Transparent" BorderThickness="0"
+                                        Foreground="{DynamicResource FgMuted}"
+                                        FontSize="12"
+                                        ToolTip="Багийг залруулах"
+                                        Visibility="Collapsed"
+                                        Click="TeamChipFix_Click" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!--
+                      БАГИЙН СОНГОГЧ — самбар доторх МӨР, модаль диалог БИШ
+                      (§71-R2-ийн зөвшөөрөгдсөн «verification» харилцан үйлдэл).
+                      Жагсаалт нь серверийн АМЬД ростероос ирнэ; энд ямар ч
+                      багийн код хатуу бичигдээгүй (⛔ хориг 11).
+                    -->
+                    <Border x:Name="TeamPickHost" Visibility="Collapsed"
+                            Margin="0,6,0,0" Padding="7,6"
+                            Background="{DynamicResource BgInput}"
+                            BorderBrush="{DynamicResource Line}" BorderThickness="1"
+                            CornerRadius="4">
+                        <StackPanel>
+                            <TextBlock x:Name="TeamPickTitle"
+                                       Text="Аль багийн ажил вэ?"
+                                       Style="{StaticResource MutedText}"
+                                       Margin="0,0,0,4" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox x:Name="TeamPickCombo" AutomationProperties.Name="Аль багийн ажил вэ" Grid.Column="0"
+                                          DisplayMemberPath="Label" />
+                                <Button x:Name="TeamPickApply" Grid.Column="1"
+                                        Content="Батлах" Margin="6,0,0,0"
+                                        Style="{StaticResource PrimaryButton}"
+                                        Padding="9,3"
+                                        Click="TeamPickApply_Click" />
+                                <Button x:Name="TeamPickCancel" AutomationProperties.Name="Багийн сонголтыг хаах" Grid.Column="2"
+                                        Content="✕" Margin="4,0,0,0"
+                                        Style="{StaticResource FlatButton}"
+                                        Padding="7,3"
+                                        ToolTip="Хаах"
+                                        Click="TeamPickCancel_Click" />
+                            </Grid>
+                            <CheckBox x:Name="TeamPickSticky" Margin="1,6,0,0"
+                                      Foreground="{DynamicResource FgMuted}"
+                                      FontSize="12"
+                                      Content="Энэ файлд байнга хадгалах" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border x:Name="ChecklistHost" Visibility="Collapsed"
+                            Margin="0,6,0,0" MaxHeight="190"
+                            Background="{DynamicResource BgInput}"
+                            BorderBrush="{DynamicResource Line}" BorderThickness="1"
+                            CornerRadius="4">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl x:Name="ChecklistBox" Margin="6,4">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsDone, Mode=TwoWay}"
+                                                  Margin="0,2"
+                                                  Foreground="{DynamicResource Fg}"
+                                                  Click="Item_Toggled">
+                                            <TextBlock Text="{Binding Text}" TextWrapping="Wrap"
+                                                       Foreground="{DynamicResource Fg}" FontSize="12" />
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Border>
+
+                    <!-- ============ MGL AI (Session R, хост) ============ -->
+                    <Border x:Name="IntelligenceHost" Visibility="Collapsed"
+                            Margin="0,6,0,0" MinHeight="260" MaxHeight="560"
+                            BorderBrush="{DynamicResource Line}" BorderThickness="1"
+                            CornerRadius="4" />
+
+                    <!-- ============ Өөрчлөлтүүд ============ -->
+                    <Border x:Name="ChangesHost" Visibility="Collapsed"
+                            Margin="0,6,0,0"
+                            Background="{DynamicResource BgInput}"
+                            BorderBrush="{DynamicResource Line}" BorderThickness="1"
+                            CornerRadius="4">
+                        <StackPanel>
+                            <Grid Margin="7,5,5,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="ChangesSummary" Grid.Column="0"
+                                           Style="{StaticResource MutedText}"
+                                           VerticalAlignment="Center" />
+                                <Button x:Name="ChangesRefreshBtn" Grid.Column="1"
+                                        Style="{StaticResource FlatButton}"
+                                        Padding="7,2" FontSize="12"
+                                        Content="Шинэчлэх"
+                                        Click="ChangesRefresh_Click" />
+                            </Grid>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="230">
+                                <ItemsControl x:Name="ChangesBox" Margin="4,0,4,5"
+                                              ItemTemplate="{StaticResource ChangeRowTemplate}" />
+                            </ScrollViewer>
+                        </StackPanel>
+                    </Border>
+
+                    <!--
+                      ============ НОРМ ШАЛГАЛТ (дүгнэлтийн урсгал) ============
+
+                      ⚠️ АНХДАГЧААР ХУМИГДСАН, ба ЭНЭ НЬ ГЭРЭЭ.  Дүгнэлт
+                      гарахад самбар өөрөө нээгдэхгүй, энэ хэсэг өөрөө
+                      задрахгүй, фокус хөдлөхгүй, курсор солигдохгүй.
+                      Add-in дахь самбар нээх ЦОРЫН ГАНЦ дуудлага нь
+                      хэрэглэгчийн ribbon товч (`AssistantPaneProvider.cs:54`)
+                      — файл нээх бүрд 300 px ба фокус булаах нь эзний R7-ийн
+                      хамгийн магадлалтай эвдрэл.
+
+                      ⚠️ `MaxHeight="230"` + `ScrollViewer` нь `ChangesBox`
+                      -ийн хэв маягийг БАЙТ БАЙТААР давтав: `ItemsControl` нь
+                      виртуалжуулаагүй тул мөрийн тоог ДЭЭД урсгалд
+                      (`FindingFeed.MaxVisible`) хязгаарлана.
+                    -->
+                    <Expander x:Name="FindingsExpander" IsExpanded="False"
+                              Margin="0,6,0,0"
+                              Expanded="FindingsExpander_Changed"
+                              Collapsed="FindingsExpander_Changed">
+                        <Expander.Header>
+                            <TextBlock x:Name="FindingsHeaderText"
+                                       Text="Норм шалгалт"
+                                       Style="{StaticResource MutedText}"
+                                       TextWrapping="NoWrap"
+                                       TextTrimming="CharacterEllipsis" />
+                        </Expander.Header>
+
+                        <Border Background="{DynamicResource BgInput}"
+                                BorderBrush="{DynamicResource Line}" BorderThickness="1"
+                                CornerRadius="4" Margin="0,4,0,0">
+                            <StackPanel>
+                                <!--
+                                  ⚠️ ХАМРАХ ХҮРЭЭНИЙ МӨР — ХООСОН ЖАГСААЛТЫГ
+                                  ТАЙЛБАРЛАХ ЦОРЫН ГАНЦ ГАЗАР.  «Дүрмийн багц
+                                  байхгүй тул ШАЛГААГҮЙ» ба «шалгаад цэвэр
+                                  гарсан» хоёрыг ХЭЗЭЭ Ч хольж болохгүй; эзэн
+                                  дүрмийн бүртгэлийг ХООСОН шипэхээр шийдсэн
+                                  тул эхнийх нь ЕРДИЙН төлөв.
+                                -->
+                                <TextBlock x:Name="FindingsScopeText"
+                                           Style="{StaticResource MutedText}"
+                                           Margin="7,6,7,3" />
+
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="230">
+                                    <ItemsControl x:Name="FindingsBox" Margin="4,0,4,5"
+                                                  ItemTemplate="{StaticResource FindingRowTemplate}" />
+                                </ScrollViewer>
+
+                                <!--
+                                  ХҮЧИНГҮЙ БОЛГОХ — самбар доторх МӨР, модаль
+                                  диалог БИШ (багийн сонгогчийн жиших).  Модаль
+                                  цонх нь Revit-ийн үндсэн урсгалыг товч дарах
+                                  хүртэл блоклоно.
+                                -->
+                                <Border x:Name="FindingOverrideHost" Visibility="Collapsed"
+                                        Margin="5,0,5,6" Padding="7,6"
+                                        Background="{DynamicResource BgRaised}"
+                                        BorderBrush="{DynamicResource Line}" BorderThickness="1"
+                                        CornerRadius="4">
+                                    <StackPanel>
+                                        <TextBlock x:Name="FindingOverrideTitle"
+                                                   Style="{StaticResource MutedText}"
+                                                   Margin="0,0,0,5" />
+                                        <ComboBox x:Name="FindingOverrideKind" AutomationProperties.Name="Хүчингүй болгох шалтгааны төрөл"
+                                                  DisplayMemberPath="Label" />
+                                        <TextBox x:Name="FindingOverrideReason" AutomationProperties.Name="Хүчингүй болгох шалтгаан"
+                                                 Height="54" Margin="0,5,0,0"
+                                                 FontSize="12" TextWrapping="Wrap"
+                                                 AcceptsReturn="True"
+                                                 VerticalScrollBarVisibility="Auto"
+                                                 TextChanged="FindingOverrideReason_Changed" />
+                                        <TextBlock x:Name="FindingOverrideHint"
+                                                   Style="{StaticResource MutedText}"
+                                                   Margin="1,4,0,0" />
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Right" Margin="0,7,0,0">
+                                            <Button x:Name="FindingOverrideCancel"
+                                                    Style="{StaticResource FlatButton}"
+                                                    Padding="9,3" FontSize="12"
+                                                    Content="Болих"
+                                                    Click="FindingOverrideCancel_Click" />
+                                            <Button x:Name="FindingOverrideApply"
+                                                    Style="{StaticResource PrimaryButton}"
+                                                    Padding="9,3" FontSize="12" Margin="6,0,0,0"
+                                                    IsEnabled="False"
+                                                    Content="Хаах"
+                                                    Click="FindingOverrideApply_Click" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- ============ Яриа ============ -->
+            <Border Grid.Row="2" Background="{DynamicResource BgInput}"
+                    BorderBrush="{DynamicResource Line}" BorderThickness="1"
+                    CornerRadius="5">
+                <ScrollViewer x:Name="ChatScroll"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
+                              Padding="8,7">
+                    <ItemsControl x:Name="ChatList"
+                                  ItemTemplate="{StaticResource MessageTemplate}" />
+                </ScrollViewer>
+            </Border>
+
+            <!-- ============ Ноорог ============ -->
+            <Border x:Name="DraftPanel" Grid.Row="3" Visibility="Collapsed"
+                    Background="{DynamicResource BgRaised}"
+                    BorderBrush="{DynamicResource Accent}" BorderThickness="1"
+                    CornerRadius="5" Padding="9,8" Margin="0,8,0,0">
+                <StackPanel>
+                    <TextBlock Text="ИЛГЭЭХ НООРОГ" Style="{StaticResource MutedText}"
+                               FontWeight="SemiBold" Margin="0,0,0,6" />
+
+                    <Grid Margin="0,0,0,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Явц" Style="{StaticResource DarkText}"
+                                   VerticalAlignment="Center" Margin="0,0,7,0" FontSize="12" />
+                        <TextBox x:Name="PercentBox" AutomationProperties.Name="Гүйцэтгэлийн хувь" Grid.Column="1" Width="52"
+                                 HorizontalContentAlignment="Center" FontSize="13"
+                                 FontWeight="SemiBold" />
+                        <TextBlock x:Name="BasisText" Grid.Column="2"
+                                   Style="{StaticResource MutedText}"
+                                   VerticalAlignment="Center" Margin="8,0,0,0"
+                                   TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                    </Grid>
+
+                    <TextBox x:Name="NoteBox" AutomationProperties.Name="Өнөөдрийн тайлангийн тэмдэглэл" Height="86"
+                             TextWrapping="Wrap" AcceptsReturn="True" FontSize="12"
+                             VerticalScrollBarVisibility="Auto" />
+
+                    <TextBlock x:Name="AiHint" Style="{StaticResource MutedText}"
+                               Margin="1,5,0,0" />
+
+                    <CheckBox x:Name="ConfirmBox" Margin="0,8,0,0"
+                              Foreground="{DynamicResource Fg}"
+                              Checked="ConfirmBox_Changed" Unchecked="ConfirmBox_Changed">
+                        <TextBlock TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource Fg}"
+                                   Text="Би энэ тайланг уншиж, зөв гэдгийг баталж байна" />
+                    </CheckBox>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                Margin="0,9,0,0">
+                        <Button x:Name="DiscardBtn" Style="{StaticResource FlatButton}"
+                                Content="Болих" Click="DiscardBtn_Click" />
+                        <Button x:Name="SubmitBtn" Style="{StaticResource PrimaryButton}"
+                                Content="Илгээх" Margin="6,0,0,0" IsEnabled="False"
+                                Click="SubmitBtn_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ============ Сонголт (ойлгосонгүй үед) ============ -->
+            <!--
+              ⚠️ Энэ бол АЛДААНЫ ЗАМ БИШ, СУРГАЛТЫН гол эх сурвалж.
+              Хэрэглэгч энд дарах бүрд бид «энэ текст → ЭНЭ санаа» гэсэн ЯГ
+              ЗӨВ шошготой мөр авдаг.  Тиймээс хурдан, хялбар байх ёстой.
+            -->
+            <Border x:Name="SuggestPanel" Grid.Row="4" Visibility="Collapsed"
+                    Background="{DynamicResource BgRaised}"
+                    BorderBrush="{DynamicResource Line}" BorderThickness="1"
+                    CornerRadius="5" Padding="9,8" Margin="0,8,0,0">
+                <StackPanel>
+                    <TextBlock Text="Аль нь вэ?" Style="{StaticResource MutedText}"
+                               FontWeight="SemiBold" Margin="0,0,0,6" />
+                    <ItemsControl x:Name="SuggestList">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource FlatButton}"
+                                        Content="{Binding Label}"
+                                        Tag="{Binding Intent}"
+                                        FontSize="12" Margin="0,0,5,5"
+                                        Click="Suggest_Click" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Button x:Name="SuggestMoreBtn" Style="{StaticResource FlatButton}"
+                            Content="Бусад…" FontSize="12" HorizontalAlignment="Left"
+                            Margin="0,2,0,0" Click="SuggestMore_Click" />
+                </StackPanel>
+            </Border>
+
+            <!-- ============ Санал хүсэлт ============ -->
+            <StackPanel x:Name="FeedbackPanel" Grid.Row="5"
+                        Visibility="Collapsed" Margin="2,7,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Зөв ойлгов уу?" Style="{StaticResource MutedText}"
+                               VerticalAlignment="Center" Margin="0,0,7,0" />
+                    <Button x:Name="ThumbUpBtn" AutomationProperties.Name="Зөв ойлгов" Style="{StaticResource FlatButton}"
+                            Content="👍" FontSize="13" Padding="8,2" ToolTip="Зөв ойлгов" Click="ThumbUp_Click" />
+                    <Button x:Name="ThumbDownBtn" AutomationProperties.Name="Буруу ойлгов" Style="{StaticResource FlatButton}"
+                            Content="👎" FontSize="13" Padding="8,2" Margin="5,0,0,0" ToolTip="Буруу ойлгов"
+                            Click="ThumbDown_Click" />
+                </StackPanel>
+
+                <!--
+                  👎 дарсны ДАРАА гарна.  ЗААВАЛ БИШ: «Алгасах» дарвал 👎 нь
+                  хадгалагдсан хэвээр, зөвхөн тайлбар нь дутуу үлдэнэ.
+
+                  ⚠️ Яагаад чөлөөт бичвэр хэрэгтэй вэ: доорх сонголтын
+                  жагсаалт нь «зөв нь аль санаа байсан» гэдэгт л хариулна.
+                  «Хариулт нь хэт урт байсан», «энэ хуудсыг ойлгосонгүй» гэх
+                  мэт зүйлийг хаалттай багцаар илэрхийлэх БОЛОМЖГҮЙ.
+                -->
+                <StackPanel x:Name="FeedbackNoteRow" Visibility="Collapsed" Margin="0,7,0,0">
+                    <TextBlock Text="Юу нь буруу байсан бэ?  (заавал биш)"
+                               Style="{StaticResource MutedText}" Margin="1,0,0,3" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="FeedbackNoteBox" AutomationProperties.Name="Юу нь буруу байсан" Grid.Column="0"
+                                 MaxLength="500" FontSize="12"
+                                 KeyDown="FeedbackNote_KeyDown" />
+                        <Button x:Name="FeedbackNoteSendBtn" Grid.Column="1"
+                                Style="{StaticResource PrimaryButton}"
+                                Content="Илгээх" FontSize="12" Padding="9,3"
+                                Margin="5,0,0,0" Click="FeedbackNoteSend_Click" />
+                        <Button x:Name="FeedbackNoteSkipBtn" Grid.Column="2"
+                                Style="{StaticResource FlatButton}"
+                                Content="Алгасах" FontSize="12" Padding="9,3"
+                                Margin="4,0,0,0" Click="FeedbackNoteSkip_Click" />
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- ============ Төлөв ============ -->
+            <TextBlock x:Name="BusyText" Grid.Row="6"
+                       Style="{StaticResource MutedText}"
+                       Margin="2,7,0,0" Visibility="Collapsed" />
+
+            <!-- ============ Оролт ============ -->
+            <Grid Grid.Row="7" Margin="0,8,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="InputBox" AutomationProperties.Name="Асуулт эсвэл мессеж бичих" Grid.Column="0"
+                         FontSize="12" MinHeight="30" MaxHeight="88"
+                         TextWrapping="Wrap" AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         PreviewKeyDown="InputBox_KeyDown"
+                         TextChanged="InputBox_TextChanged" />
+
+                <!-- ⚠️ Дуугаар бичих нь ХАРААХАН БЭЛЭН БИШ (код-behind-д зөвхөн «бэлтгэгдэж байна» мессеж).  Идэвхтэй мэт
+                     харагдаж, дарахад юу ч хийхгүй байсныг зогсоов: идэвхгүй + шалтгааныг ил tooltip-ээр хэлнэ. -->
+                <Button x:Name="MicBtn" Grid.Column="1"
+                        AutomationProperties.Name="Дуугаар бичих — хараахан бэлэн болоогүй"
+                        Style="{StaticResource FlatButton}"
+                        Content="🎤" FontSize="14" Margin="6,0,0,0" Padding="8,4"
+                        IsEnabled="False"
+                        ToolTipService.ShowOnDisabled="True"
+                        ToolTip="Дуугаар бичих — хараахан бэлэн болоогүй. Одоохондоо бичээд илгээнэ үү."
+                        PreviewMouseLeftButtonDown="MicBtn_Down"
+                        PreviewMouseLeftButtonUp="MicBtn_Up" />
+
+                <Button x:Name="SendBtn" AutomationProperties.Name="Мессеж илгээх" Grid.Column="2"
+                        Style="{StaticResource PrimaryButton}"
+                        Content="➤" FontSize="14" Margin="6,0,0,0" Padding="10,4"
+                        ToolTip="Мессеж илгээх"
+                        Click="SendBtn_Click" />
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «Зургийн хуудас дугаарлах»-ын Revit-гүй ЦЭВЭР логикийн тест (2026-10-01): дугаарын формат, тоон хэсэг
+    (өсгөх/бууруулах), энгийн + нарийвчилсан дугаарлалт, зөөхөд дугаар дагах, «Сонгосон хуудаснаас эхлэх»,
+    давхардал (БҮХ хуудастай), үл үзэгдэх Unicode тэмдэг, бүлгийн түлхүүр, параметрийн хөрвүүлэлт,
+    хуучирсан байдал, тохиргооны шилжилт.
+
+    ⚠️ Revit/WPF assembly ЭНД ОРОХГҮЙ — `addin/SheetNumerator/Core` дотор `Autodesk.Revit` эсвэл
+    `System.Windows` гарвал энэ төсөл ЭМХЭТГЭГДЭХГҮЙ.
+
+      dotnet run   (revit-mcp/tests/SheetNumerator.Tests хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>SheetNumerator.Tests</AssemblyName>
+    <RootNamespace>RevitMcpAddin.SheetNumerator.Tests</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\SheetNumerator\Core\*.cs" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

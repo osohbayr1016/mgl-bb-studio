@@ -1,0 +1,225 @@
+{"alias": "Өндөр барилга", "topic_id": "highrise"}
+{"alias": "өндөр барилга", "topic_id": "highrise"}
+{"alias": "өндөр барилгын", "topic_id": "highrise"}
+{"alias": "өндөр барилга байгууламж", "topic_id": "highrise"}
+{"alias": "high rise", "topic_id": "highrise"}
+{"alias": "high-rise", "topic_id": "highrise"}
+{"alias": "highrise", "topic_id": "highrise"}
+{"alias": "tower building", "topic_id": "highrise"}
+{"alias": "Цахилгаан", "topic_id": "electrical"}
+{"alias": "цахилгаан", "topic_id": "electrical"}
+{"alias": "цахилгаантай", "topic_id": "electrical"}
+{"alias": "цахилгааны", "topic_id": "electrical"}
+{"alias": "цахилгаан хангамж", "topic_id": "electrical"}
+{"alias": "цахилгаан тоног төхөөрөмж", "topic_id": "electrical"}
+{"alias": "electrical", "topic_id": "electrical"}
+{"alias": "electric", "topic_id": "electrical"}
+{"alias": "power supply", "topic_id": "electrical"}
+{"alias": "Гэрэлтүүлэг", "topic_id": "lighting"}
+{"alias": "гэрэлтүүлэг", "topic_id": "lighting"}
+{"alias": "гэрэл", "topic_id": "lighting"}
+{"alias": "гэрэлтүүлгийн", "topic_id": "lighting"}
+{"alias": "байгалийн гэрэлтүүлэг", "topic_id": "lighting"}
+{"alias": "зохиомол гэрэлтүүлэг", "topic_id": "lighting"}
+{"alias": "lighting", "topic_id": "lighting"}
+{"alias": "daylight", "topic_id": "lighting"}
+{"alias": "daylighting", "topic_id": "lighting"}
+{"alias": "artificial lighting", "topic_id": "lighting"}
+{"alias": "Цахилгааны аюулгүй байдал", "topic_id": "electrical_safety"}
+{"alias": "цахилгааны аюулгүй байдал", "topic_id": "electrical_safety"}
+{"alias": "цахилгаан аюулгүй байдал", "topic_id": "electrical_safety"}
+{"alias": "electrical safety", "topic_id": "electrical_safety"}
+{"alias": "Газардуулга", "topic_id": "grounding"}
+{"alias": "газардуулга", "topic_id": "grounding"}
+{"alias": "газардуулгын", "topic_id": "grounding"}
+{"alias": "grounding", "topic_id": "grounding"}
+{"alias": "earthing", "topic_id": "grounding"}
+{"alias": "Аянга хамгаалалт", "topic_id": "lightning_protection"}
+{"alias": "аянга хамгаалалт", "topic_id": "lightning_protection"}
+{"alias": "аянга зайлуулагч", "topic_id": "lightning_protection"}
+{"alias": "lightning protection", "topic_id": "lightning_protection"}
+{"alias": "Холбоо, дохиолол", "topic_id": "telecom_signal"}
+{"alias": "дохиолол", "topic_id": "telecom_signal"}
+{"alias": "харилцаа холбоо", "topic_id": "telecom_signal"}
+{"alias": "холбоо дохиолол", "topic_id": "telecom_signal"}
+{"alias": "холбооны систем", "topic_id": "telecom_signal"}
+{"alias": "бага гүйдэл", "topic_id": "telecom_signal"}
+{"alias": "low voltage", "topic_id": "telecom_signal"}
+{"alias": "telecom", "topic_id": "telecom_signal"}
+{"alias": "signal", "topic_id": "telecom_signal"}
+{"alias": "communication", "topic_id": "telecom_signal"}
+{"alias": "Галын аюулгүй байдал", "topic_id": "fire_safety"}
+{"alias": "галын аюулгүй байдал", "topic_id": "fire_safety"}
+{"alias": "гал хамгаалалт", "topic_id": "fire_safety"}
+{"alias": "fire safety", "topic_id": "fire_safety"}
+{"alias": "fire protection", "topic_id": "fire_safety"}
+{"alias": "Галын дохиолол ба автомат гал унтраалт", "topic_id": "fire_alarm"}
+{"alias": "галын дохиолол", "topic_id": "fire_alarm"}
+{"alias": "гал унтраах автомат", "topic_id": "fire_alarm"}
+{"alias": "автомат гал унтраах", "topic_id": "fire_alarm"}
+{"alias": "fire alarm", "topic_id": "fire_alarm"}
+{"alias": "sprinkler", "topic_id": "fire_alarm"}
+{"alias": "fire suppression", "topic_id": "fire_alarm"}
+{"alias": "Гал, тэсрэх аюулын ангилал", "topic_id": "fire_hazard_classification"}
+{"alias": "галын аюулын ангилал", "topic_id": "fire_hazard_classification"}
+{"alias": "тэсрэх аюул", "topic_id": "fire_hazard_classification"}
+{"alias": "fire hazard classification", "topic_id": "fire_hazard_classification"}
+{"alias": "explosion hazard", "topic_id": "fire_hazard_classification"}
+{"alias": "Халаалт, агаар сэлгэлт, кондиционер", "topic_id": "hvac"}
+{"alias": "халаалт", "topic_id": "hvac"}
+{"alias": "агаар сэлгэлт", "topic_id": "hvac"}
+{"alias": "агааржуулалт", "topic_id": "hvac"}
+{"alias": "кондиционер", "topic_id": "hvac"}
+{"alias": "hvac", "topic_id": "hvac"}
+{"alias": "ventilation", "topic_id": "hvac"}
+{"alias": "heating", "topic_id": "hvac"}
+{"alias": "air conditioning", "topic_id": "hvac"}
+{"alias": "Ус хангамж", "topic_id": "water_supply"}
+{"alias": "ус хангамж", "topic_id": "water_supply"}
+{"alias": "усны хангамж", "topic_id": "water_supply"}
+{"alias": "water supply", "topic_id": "water_supply"}
+{"alias": "Ариутгах татуурга", "topic_id": "sewerage"}
+{"alias": "ариутгах татуурга", "topic_id": "sewerage"}
+{"alias": "бохир ус", "topic_id": "sewerage"}
+{"alias": "sewerage", "topic_id": "sewerage"}
+{"alias": "wastewater", "topic_id": "sewerage"}
+{"alias": "Хийн хангамж", "topic_id": "gas_supply"}
+{"alias": "хийн хангамж", "topic_id": "gas_supply"}
+{"alias": "gas supply", "topic_id": "gas_supply"}
+{"alias": "gas system", "topic_id": "gas_supply"}
+{"alias": "Барилгын бүтээц", "topic_id": "structural"}
+{"alias": "бүтээц", "topic_id": "structural"}
+{"alias": "даацын бүтээц", "topic_id": "structural"}
+{"alias": "structural", "topic_id": "structural"}
+{"alias": "structure", "topic_id": "structural"}
+{"alias": "Ачаалал ба үйлчлэл", "topic_id": "loads"}
+{"alias": "ачаалал", "topic_id": "loads"}
+{"alias": "үйлчлэл", "topic_id": "loads"}
+{"alias": "салхины ачаалал", "topic_id": "loads"}
+{"alias": "цасны ачаалал", "topic_id": "loads"}
+{"alias": "loads", "topic_id": "loads"}
+{"alias": "wind load", "topic_id": "loads"}
+{"alias": "snow load", "topic_id": "loads"}
+{"alias": "Газар хөдлөлт", "topic_id": "seismic"}
+{"alias": "газар хөдлөлт", "topic_id": "seismic"}
+{"alias": "сейсмик", "topic_id": "seismic"}
+{"alias": "earthquake", "topic_id": "seismic"}
+{"alias": "seismic", "topic_id": "seismic"}
+{"alias": "Инженер геологи, геотехник", "topic_id": "geotechnical"}
+{"alias": "геотехник", "topic_id": "geotechnical"}
+{"alias": "инженер геологи", "topic_id": "geotechnical"}
+{"alias": "хөрсний судалгаа", "topic_id": "geotechnical"}
+{"alias": "geotechnical", "topic_id": "geotechnical"}
+{"alias": "engineering geology", "topic_id": "geotechnical"}
+{"alias": "Буурь, суурь", "topic_id": "foundation"}
+{"alias": "суурь", "topic_id": "foundation"}
+{"alias": "буурь", "topic_id": "foundation"}
+{"alias": "foundation", "topic_id": "foundation"}
+{"alias": "Хүртээмж", "topic_id": "accessibility"}
+{"alias": "хүртээмж", "topic_id": "accessibility"}
+{"alias": "хөгжлийн бэрхшээлтэй", "topic_id": "accessibility"}
+{"alias": "accessibility", "topic_id": "accessibility"}
+{"alias": "disabled access", "topic_id": "accessibility"}
+{"alias": "Эрчим хүчний хэмнэлт, дулаан хамгаалалт", "topic_id": "energy_efficiency"}
+{"alias": "эрчим хүчний хэмнэлт", "topic_id": "energy_efficiency"}
+{"alias": "дулаан хамгаалалт", "topic_id": "energy_efficiency"}
+{"alias": "energy efficiency", "topic_id": "energy_efficiency"}
+{"alias": "thermal protection", "topic_id": "energy_efficiency"}
+{"alias": "Дуу чимээ, акустик", "topic_id": "acoustics"}
+{"alias": "дуу чимээ", "topic_id": "acoustics"}
+{"alias": "акустик", "topic_id": "acoustics"}
+{"alias": "noise", "topic_id": "acoustics"}
+{"alias": "acoustics", "topic_id": "acoustics"}
+{"alias": "sound insulation", "topic_id": "acoustics"}
+{"alias": "Уур амьсгал", "topic_id": "climate"}
+{"alias": "уур амьсгал", "topic_id": "climate"}
+{"alias": "геофизик", "topic_id": "climate"}
+{"alias": "climate", "topic_id": "climate"}
+{"alias": "Хот төлөвлөлт", "topic_id": "urban_planning"}
+{"alias": "хот төлөвлөлт", "topic_id": "urban_planning"}
+{"alias": "хот байгуулалт", "topic_id": "urban_planning"}
+{"alias": "urban planning", "topic_id": "urban_planning"}
+{"alias": "master plan", "topic_id": "urban_planning"}
+{"alias": "Орон сууц", "topic_id": "residential"}
+{"alias": "орон сууц", "topic_id": "residential"}
+{"alias": "residential", "topic_id": "residential"}
+{"alias": "apartment", "topic_id": "residential"}
+{"alias": "Олон нийтийн барилга", "topic_id": "public_building"}
+{"alias": "олон нийтийн барилга", "topic_id": "public_building"}
+{"alias": "public building", "topic_id": "public_building"}
+{"alias": "civic building", "topic_id": "public_building"}
+{"alias": "Захиргааны барилга", "topic_id": "administrative_building"}
+{"alias": "захиргааны барилга", "topic_id": "administrative_building"}
+{"alias": "оффис", "topic_id": "administrative_building"}
+{"alias": "office", "topic_id": "administrative_building"}
+{"alias": "administrative building", "topic_id": "administrative_building"}
+{"alias": "Сургуулийн өмнөх боловсролын барилга", "topic_id": "preschool"}
+{"alias": "цэцэрлэг", "topic_id": "preschool"}
+{"alias": "сургуулийн өмнөх", "topic_id": "preschool"}
+{"alias": "preschool", "topic_id": "preschool"}
+{"alias": "kindergarten", "topic_id": "preschool"}
+{"alias": "Сургууль", "topic_id": "school"}
+{"alias": "сургууль", "topic_id": "school"}
+{"alias": "school", "topic_id": "school"}
+{"alias": "education building", "topic_id": "school"}
+{"alias": "Эмнэлэг, эрүүл мэндийн барилга", "topic_id": "healthcare"}
+{"alias": "эмнэлэг", "topic_id": "healthcare"}
+{"alias": "эрүүл мэнд", "topic_id": "healthcare"}
+{"alias": "hospital", "topic_id": "healthcare"}
+{"alias": "healthcare", "topic_id": "healthcare"}
+{"alias": "Авто зогсоол", "topic_id": "parking"}
+{"alias": "авто зогсоол", "topic_id": "parking"}
+{"alias": "зогсоол", "topic_id": "parking"}
+{"alias": "parking", "topic_id": "parking"}
+{"alias": "garage", "topic_id": "parking"}
+{"alias": "Лифт, өргөх байгууламж", "topic_id": "elevator"}
+{"alias": "лифт", "topic_id": "elevator"}
+{"alias": "өргүүр", "topic_id": "elevator"}
+{"alias": "elevator", "topic_id": "elevator"}
+{"alias": "lift", "topic_id": "elevator"}
+{"alias": "Барилга угсралт, гүйцэтгэл", "topic_id": "construction_execution"}
+{"alias": "барилга угсралт", "topic_id": "construction_execution"}
+{"alias": "угсралт", "topic_id": "construction_execution"}
+{"alias": "гүйцэтгэл", "topic_id": "construction_execution"}
+{"alias": "construction execution", "topic_id": "construction_execution"}
+{"alias": "installation work", "topic_id": "construction_execution"}
+{"alias": "Төсөв, үнэ бүрдэл", "topic_id": "cost_estimation"}
+{"alias": "төсөв", "topic_id": "cost_estimation"}
+{"alias": "төсвийн норм", "topic_id": "cost_estimation"}
+{"alias": "өртөг", "topic_id": "cost_estimation"}
+{"alias": "үнэ бүрдэл", "topic_id": "cost_estimation"}
+{"alias": "cost estimate", "topic_id": "cost_estimation"}
+{"alias": "cost estimation", "topic_id": "cost_estimation"}
+{"alias": "Хөдөлмөр зарцуулалт", "topic_id": "labour"}
+{"alias": "хөдөлмөр зарцуулалт", "topic_id": "labour"}
+{"alias": "нэгж хугацаа", "topic_id": "labour"}
+{"alias": "labor norm", "topic_id": "labour"}
+{"alias": "labour norm", "topic_id": "labour"}
+{"alias": "Геодези, зураглал", "topic_id": "survey_geodesy"}
+{"alias": "геодези", "topic_id": "survey_geodesy"}
+{"alias": "геодезийн", "topic_id": "survey_geodesy"}
+{"alias": "байр зүйн зураглал", "topic_id": "survey_geodesy"}
+{"alias": "survey", "topic_id": "survey_geodesy"}
+{"alias": "geodesy", "topic_id": "survey_geodesy"}
+{"alias": "topographic", "topic_id": "survey_geodesy"}
+{"alias": "Бетон, төмөр бетон", "topic_id": "concrete"}
+{"alias": "бетон", "topic_id": "concrete"}
+{"alias": "төмөр бетон", "topic_id": "concrete"}
+{"alias": "concrete", "topic_id": "concrete"}
+{"alias": "reinforced concrete", "topic_id": "concrete"}
+{"alias": "Ган бүтээц", "topic_id": "steel"}
+{"alias": "ган бүтээц", "topic_id": "steel"}
+{"alias": "steel structure", "topic_id": "steel"}
+{"alias": "steel", "topic_id": "steel"}
+{"alias": "Өрөгт бүтээц", "topic_id": "masonry"}
+{"alias": "өрөг", "topic_id": "masonry"}
+{"alias": "тоосгон", "topic_id": "masonry"}
+{"alias": "masonry", "topic_id": "masonry"}
+{"alias": "Модон бүтээц", "topic_id": "timber"}
+{"alias": "модон бүтээц", "topic_id": "timber"}
+{"alias": "timber", "topic_id": "timber"}
+{"alias": "wood structure", "topic_id": "timber"}
+{"alias": "Барилгын материал", "topic_id": "materials"}
+{"alias": "барилгын материал", "topic_id": "materials"}
+{"alias": "material", "topic_id": "materials"}
+{"alias": "materials", "topic_id": "materials"}

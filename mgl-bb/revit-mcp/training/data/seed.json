@@ -1,0 +1,2679 @@
+{
+ "_note": "Үр өгөгдөл — 9 санаа, 7 хэв маяг (кирилл/латин/холимог/богино/эелдэг/алдаатай/асуулт).  517 мөр.  Аудитаар 53 мөр ХАСАГДАЖ, 51 мөр НЭМЭГДСЭН (давхцал ба хөндлөн мөргөлдөөн).  Аудитын бүтэн тайлан: seed-audit.md.  ⚠️ Мөр нэмэхээсээ өмнө `python train_intent.py` ажиллуулж зөрчил (ижил текст → өөр санаа) гарахгүй эсэхийг шалга.",
+ "rows": [
+  {
+   "text": "хийснээ илгээе",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өнөөдрийн явцаа бүртгүүлье",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "MGL рүү явцаа өгье",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "нүүр талуудын явцыг илгээе",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "Статик тооцоо+Хөрс дээрх ажлаа бүртгүүлье",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "явцаа орууллаа гэж тэмдэглээд илгээ",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "тайлангаа явуулъя",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хийсэн ажлаа систем рүү дамжуулъя",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "БА-01 хуудасны явцыг илгээе",
+   "intent": "submit_progress",
+   "style": "cyrillic",
+   "slot": "БА-01"
+  },
+  {
+   "text": "Цонхны түүвэр дуусгасан, бүртгүүлье",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өнөөдрийн ажлаа хаагаад илгээ",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "1F-Шалны материал дээр хийсэн ажлаа өгье",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "MGL-260226_MITIC_AZ төсөл дээрх явцаа бүртгүүлье",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "БА-01 ийг 60% болголоо, илгээе",
+   "intent": "submit_progress",
+   "style": "cyrillic",
+   "slot": "БА-01"
+  },
+  {
+   "text": "80% боллоо гэж бүртгүүлээд өг",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "энэ хуудсыг 100% болголоо, хаачихъя",
+   "intent": "submit_progress",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ЦАХ-07 ыг 30% болгож тэмдэглээд илгээ",
+   "intent": "submit_progress",
+   "style": "cyrillic",
+   "slot": "ЦАХ-07"
+  },
+  {
+   "text": "hiisnee ilgee",
+   "intent": "submit_progress",
+   "style": "latin"
+  },
+  {
+   "text": "yavtsaa ilgeeye",
+   "intent": "submit_progress",
+   "style": "latin"
+  },
+  {
+   "text": "unuudriin ajlaa burtguulye",
+   "intent": "submit_progress",
+   "style": "latin"
+  },
+  {
+   "text": "tailangaa yavuulya",
+   "intent": "submit_progress",
+   "style": "latin"
+  },
+  {
+   "text": "yavtsaa MGL ruu damjuulya",
+   "intent": "submit_progress",
+   "style": "latin"
+  },
+  {
+   "text": "BA-01 huudasnii yavtsiig ilgeeye",
+   "intent": "submit_progress",
+   "style": "latin",
+   "slot": "БА-01"
+  },
+  {
+   "text": "yavtsaa 70% gej burtguul",
+   "intent": "submit_progress",
+   "style": "latin"
+  },
+  {
+   "text": "yaaj ilgeeh ve",
+   "intent": "submit_progress",
+   "style": "latin"
+  },
+  {
+   "text": "өнөөдрийн progress ийг илгээе",
+   "intent": "submit_progress",
+   "style": "codeswitch"
+  },
+  {
+   "text": "sheet үүд дээрх явцаа submit хийе",
+   "intent": "submit_progress",
+   "style": "codeswitch"
+  },
+  {
+   "text": "БА-01 ийн progress ыг push хий",
+   "intent": "submit_progress",
+   "style": "codeswitch",
+   "slot": "БА-01"
+  },
+  {
+   "text": "daily report оо MGL руу илгээе",
+   "intent": "submit_progress",
+   "style": "codeswitch"
+  },
+  {
+   "text": "HAS-02 ын явцыг update хийе",
+   "intent": "submit_progress",
+   "style": "codeswitch",
+   "slot": "ХАС-02"
+  },
+  {
+   "text": "HAS-09 ыг 45% гэж явуулаач",
+   "intent": "submit_progress",
+   "style": "codeswitch",
+   "slot": "ХАС-09"
+  },
+  {
+   "text": "checklist ээс 3 нь болсон, ингээд илгээе",
+   "intent": "submit_progress",
+   "style": "codeswitch"
+  },
+  {
+   "text": "илгээ",
+   "intent": "submit_progress",
+   "style": "terse"
+  },
+  {
+   "text": "явц илгээ",
+   "intent": "submit_progress",
+   "style": "terse"
+  },
+  {
+   "text": "push хий",
+   "intent": "submit_progress",
+   "style": "terse"
+  },
+  {
+   "text": "бүртгүүл",
+   "intent": "submit_progress",
+   "style": "terse"
+  },
+  {
+   "text": "submit",
+   "intent": "submit_progress",
+   "style": "terse"
+  },
+  {
+   "text": "дууслаа, 100% гэж илгээ",
+   "intent": "submit_progress",
+   "style": "terse"
+  },
+  {
+   "text": "БА-04 явцаа илгээ",
+   "intent": "submit_progress",
+   "style": "terse",
+   "slot": "БА-04"
+  },
+  {
+   "text": "Өнөөдрийн хийсэн ажлаа бүртгүүлэхийг хүсэж байна",
+   "intent": "submit_progress",
+   "style": "polite"
+  },
+  {
+   "text": "Явцаа системд илгээж өгөөч",
+   "intent": "submit_progress",
+   "style": "polite"
+  },
+  {
+   "text": "Ажлын тайлангаа явуулахад тусалж өгөөч",
+   "intent": "submit_progress",
+   "style": "polite"
+  },
+  {
+   "text": "Өнөөдөр хийсэн ажлын явцыг MGL сайт руу дамжуулж өгнө үү",
+   "intent": "submit_progress",
+   "style": "polite"
+  },
+  {
+   "text": "Боломжтой бол явцаа одоо бүртгүүлээд өгөөч",
+   "intent": "submit_progress",
+   "style": "polite"
+  },
+  {
+   "text": "хийснээ илгэээ",
+   "intent": "submit_progress",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа бүртгүлье",
+   "intent": "submit_progress",
+   "style": "typo"
+  },
+  {
+   "text": "yavtsaa ilgeye",
+   "intent": "submit_progress",
+   "style": "typo"
+  },
+  {
+   "text": "ажлаа тайлганмаар байнаа",
+   "intent": "submit_progress",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа илгэод өгөөч",
+   "intent": "submit_progress",
+   "style": "typo"
+  },
+  {
+   "text": "hiisen ajlaa burtguuly",
+   "intent": "submit_progress",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа бүтгүүлээд илгэ",
+   "intent": "submit_progress",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа илгээж болох уу?",
+   "intent": "submit_progress",
+   "style": "question"
+  },
+  {
+   "text": "өнөөдрийнхөө ажлыг бүртгүүлж болох уу?",
+   "intent": "submit_progress",
+   "style": "question"
+  },
+  {
+   "text": "progress оо одоо push хийж болох уу?",
+   "intent": "submit_progress",
+   "style": "question"
+  },
+  {
+   "text": "явцаа яаж бүртгүүлэх вэ",
+   "intent": "submit_progress",
+   "style": "question"
+  },
+  {
+   "text": "хуудсуудаа харуул",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "бүх хуудсаа жагсаа",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "энэ файлд ямар хуудсууд байна",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хуудасны жагсаалт гаргаж өгөөч",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хуудсуудыг үзүүлээч",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "модельд байгаа бүх хуудсаа харъя",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ямар ямар хуудас байгааг харуул",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хуудсуудаа дугаараар нь жагсаа",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "БА-гийн хуудсууд хэд байна харуулаач",
+   "intent": "list_sheets",
+   "style": "cyrillic",
+   "slot": "БА-*"
+  },
+  {
+   "text": "одоо нээлттэй байгаа файлын хуудсуудыг харуул",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хуудсууд нь юу юу байна",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хуудасны нэрсийг нь харуулаач",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "байгаа бүх хуудсаа жагсаачхаач",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "Барилга архитектурын хуудсуудаа харуул",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ЦАХ ын хуудсууд орсон уу, бүх хуудсаа харуул",
+   "intent": "list_sheets",
+   "style": "cyrillic",
+   "slot": "ЦАХ-*"
+  },
+  {
+   "text": "шифрүүдээ харуулаач",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "зургуудынхаа жагсаалтыг харуул",
+   "intent": "list_sheets",
+   "style": "cyrillic"
+  },
+  {
+   "text": "huudsuudaa haruul",
+   "intent": "list_sheets",
+   "style": "latin"
+  },
+  {
+   "text": "bugd huudsaa jagsaa",
+   "intent": "list_sheets",
+   "style": "latin"
+  },
+  {
+   "text": "yamar huudsuud baina",
+   "intent": "list_sheets",
+   "style": "latin"
+  },
+  {
+   "text": "huudasnii jagsaalt garga",
+   "intent": "list_sheets",
+   "style": "latin"
+  },
+  {
+   "text": "huudsuudaa uzuuleech",
+   "intent": "list_sheets",
+   "style": "latin"
+  },
+  {
+   "text": "huudsuudaa neg haruulaach",
+   "intent": "list_sheets",
+   "style": "latin"
+  },
+  {
+   "text": "model deer baigaa huudsuudaa garga",
+   "intent": "list_sheets",
+   "style": "latin"
+  },
+  {
+   "text": "huudsuudaa jagsaagaad ugooch",
+   "intent": "list_sheets",
+   "style": "latin"
+  },
+  {
+   "text": "sheet үүдээ харуул",
+   "intent": "list_sheets",
+   "style": "codeswitch"
+  },
+  {
+   "text": "sheet list ээ гаргаад өгөөч",
+   "intent": "list_sheets",
+   "style": "codeswitch"
+  },
+  {
+   "text": "бүх sheet үүдийг жагсаа",
+   "intent": "list_sheets",
+   "style": "codeswitch"
+  },
+  {
+   "text": "list sheets хийгээд өгөөч",
+   "intent": "list_sheets",
+   "style": "codeswitch"
+  },
+  {
+   "text": "документын sheet үүд хэд вэ",
+   "intent": "list_sheets",
+   "style": "codeswitch"
+  },
+  {
+   "text": "project дээрх sheet үүдээ харъя",
+   "intent": "list_sheets",
+   "style": "codeswitch"
+  },
+  {
+   "text": "sheet name уудыг нь харуул",
+   "intent": "list_sheets",
+   "style": "codeswitch"
+  },
+  {
+   "text": "одоогийн model ийн sheet үүдээ жагсаа",
+   "intent": "list_sheets",
+   "style": "codeswitch"
+  },
+  {
+   "text": "sheet number ууд юу вэ",
+   "intent": "list_sheets",
+   "style": "codeswitch"
+  },
+  {
+   "text": "хуудсууд",
+   "intent": "list_sheets",
+   "style": "terse"
+  },
+  {
+   "text": "жагсаа",
+   "intent": "list_sheets",
+   "style": "terse"
+  },
+  {
+   "text": "хуудасны жагсаалт",
+   "intent": "list_sheets",
+   "style": "terse"
+  },
+  {
+   "text": "sheet list",
+   "intent": "list_sheets",
+   "style": "terse"
+  },
+  {
+   "text": "бүх хуудас",
+   "intent": "list_sheets",
+   "style": "terse"
+  },
+  {
+   "text": "ямар шифр байна",
+   "intent": "list_sheets",
+   "style": "terse"
+  },
+  {
+   "text": "Сайн байна уу, файлын бүх хуудсыг жагсаагаад өгнө үү",
+   "intent": "list_sheets",
+   "style": "polite"
+  },
+  {
+   "text": "Боломжтой бол одоо нээлттэй байгаа файлын хуудсуудыг жагсаагаад үзүүлээч",
+   "intent": "list_sheets",
+   "style": "polite"
+  },
+  {
+   "text": "Хуудсуудын жагсаалтыг нь гаргаад өгөөч",
+   "intent": "list_sheets",
+   "style": "polite"
+  },
+  {
+   "text": "Энэ модельд хэдэн хуудас байгаа вэ",
+   "intent": "list_sheets",
+   "style": "polite"
+  },
+  {
+   "text": "Ажлын зургийн хуудсуудыг бүгдийг нь харуулж туслаач",
+   "intent": "list_sheets",
+   "style": "polite"
+  },
+  {
+   "text": "хуудсуудаа хруул",
+   "intent": "list_sheets",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсууда жагсаа",
+   "intent": "list_sheets",
+   "style": "typo"
+  },
+  {
+   "text": "huudsudaa haruul",
+   "intent": "list_sheets",
+   "style": "typo"
+  },
+  {
+   "text": "ямар хуудсууд байдаг ве",
+   "intent": "list_sheets",
+   "style": "typo"
+  },
+  {
+   "text": "хуудсуудаа харууд",
+   "intent": "list_sheets",
+   "style": "typo"
+  },
+  {
+   "text": "huudasnii jagsaalt gagra",
+   "intent": "list_sheets",
+   "style": "typo"
+  },
+  {
+   "text": "бүх хуудсаа жгасаа",
+   "intent": "list_sheets",
+   "style": "typo"
+  },
+  {
+   "text": "хуудас хэд байна вэ?",
+   "intent": "list_sheets",
+   "style": "question"
+  },
+  {
+   "text": "энэ файлд ямар хуудсууд байдаг вэ?",
+   "intent": "list_sheets",
+   "style": "question"
+  },
+  {
+   "text": "sheet хэд байгаа вэ?",
+   "intent": "list_sheets",
+   "style": "question"
+  },
+  {
+   "text": "хуудсууд нь бүгд жагсаагдах уу?",
+   "intent": "list_sheets",
+   "style": "question"
+  },
+  {
+   "text": "БА-01 ийг харуул",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "БА-01"
+  },
+  {
+   "text": "ХАС-12 тусгаарла",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "ХАС-12"
+  },
+  {
+   "text": "энэ хуудсыг ялгаж үзүүлээч",
+   "intent": "isolate_sheet",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ЦБУ-05 ийн элементүүдийг ялгаад өгөөч",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "ЦБУ-05"
+  },
+  {
+   "text": "ББ-21 хуудсанд байгаа юмыг л үлдээ",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "ББ-21"
+  },
+  {
+   "text": "ЦАХ-07 ыг 3д дээр ялгаад өгөөч",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "ЦАХ-07"
+  },
+  {
+   "text": "одоо ажиллаж байгаа хуудсаа ялгаж харуул",
+   "intent": "isolate_sheet",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ЦБУ-02 ийг ганцаарх нь харуулаач",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "ЦБУ-02"
+  },
+  {
+   "text": "ББ-04 хуудасны элементүүдийг харъя",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "ББ-04"
+  },
+  {
+   "text": "ЦАХ-06 ыг тусгаарла даа",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "ЦАХ-06"
+  },
+  {
+   "text": "ХАС-02 хуудсыг л үлдээгээд бусдыг нь нуу",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "ХАС-02"
+  },
+  {
+   "text": "ХАС-08 г ялгаад бусдыг нь нуучих",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "ХАС-08"
+  },
+  {
+   "text": "ЦБУ-03 хуудасны юмыг л харуулаач",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "ЦБУ-03"
+  },
+  {
+   "text": "энэ хуудасны элементүүдийг тусгаарлаад өгөөч",
+   "intent": "isolate_sheet",
+   "style": "cyrillic"
+  },
+  {
+   "text": "БА-02 ийг загвар дээр ялгаж харуулъя",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "БА-02"
+  },
+  {
+   "text": "БА-01 болон БА-09 ийг ялга",
+   "intent": "isolate_sheet",
+   "style": "cyrillic",
+   "slot": "БА-01|БА-09"
+  },
+  {
+   "text": "сүүлд нээсэн хуудсаа тусгаарла",
+   "intent": "isolate_sheet",
+   "style": "cyrillic"
+  },
+  {
+   "text": "BA-01 iig haruul",
+   "intent": "isolate_sheet",
+   "style": "latin",
+   "slot": "БА-01"
+  },
+  {
+   "text": "HAS-12 tusgaarla",
+   "intent": "isolate_sheet",
+   "style": "latin",
+   "slot": "ХАС-12"
+  },
+  {
+   "text": "ene huudsiig yalgaj haruul",
+   "intent": "isolate_sheet",
+   "style": "latin"
+  },
+  {
+   "text": "TSBU-05 ig 3d deer yalgaad ugooch",
+   "intent": "isolate_sheet",
+   "style": "latin",
+   "slot": "ЦБУ-05"
+  },
+  {
+   "text": "BB-21 huudasnii elementuudiig tusgaarla",
+   "intent": "isolate_sheet",
+   "style": "latin",
+   "slot": "ББ-21"
+  },
+  {
+   "text": "TSAH-07 iig gantsaarang ni haruulaach",
+   "intent": "isolate_sheet",
+   "style": "latin",
+   "slot": "ЦАХ-07"
+  },
+  {
+   "text": "BB-04 huudsiig yalgaj uzey",
+   "intent": "isolate_sheet",
+   "style": "latin",
+   "slot": "ББ-04"
+  },
+  {
+   "text": "TSAH-06 g tusgaarlaad busdiig ni nuu",
+   "intent": "isolate_sheet",
+   "style": "latin",
+   "slot": "ЦАХ-06"
+  },
+  {
+   "text": "BA-01 aas BA-05 hurtel tusgaarla",
+   "intent": "isolate_sheet",
+   "style": "latin",
+   "slot": "БА-01|БА-05"
+  },
+  {
+   "text": "БА-01 ийг isolate хий",
+   "intent": "isolate_sheet",
+   "style": "codeswitch",
+   "slot": "БА-01"
+  },
+  {
+   "text": "HAS-12 sheet ийг isolate хийгээд өгөөч",
+   "intent": "isolate_sheet",
+   "style": "codeswitch",
+   "slot": "ХАС-12"
+  },
+  {
+   "text": "энэ sheet ийн element үүдийг ялгаж харуул",
+   "intent": "isolate_sheet",
+   "style": "codeswitch"
+  },
+  {
+   "text": "BB-05 ыг 3D view дээр isolate хийе",
+   "intent": "isolate_sheet",
+   "style": "codeswitch",
+   "slot": "ББ-05"
+  },
+  {
+   "text": "TSAH-07 sheet ийг л үлдээгээд бусдыг hide хийчих",
+   "intent": "isolate_sheet",
+   "style": "codeswitch",
+   "slot": "ЦАХ-07"
+  },
+  {
+   "text": "ЦБУ-03 ийг isolate горимд оруулаач",
+   "intent": "isolate_sheet",
+   "style": "codeswitch",
+   "slot": "ЦБУ-03"
+  },
+  {
+   "text": "HAS-02 sheet ийг isolate хийж үзүүлээч",
+   "intent": "isolate_sheet",
+   "style": "codeswitch",
+   "slot": "ХАС-02"
+  },
+  {
+   "text": "BB-04 ийн element үүдийг л үлдээгээд isolate хийгээч",
+   "intent": "isolate_sheet",
+   "style": "codeswitch",
+   "slot": "ББ-04"
+  },
+  {
+   "text": "БА-01 ялга",
+   "intent": "isolate_sheet",
+   "style": "terse",
+   "slot": "БА-01"
+  },
+  {
+   "text": "isolate BA-03",
+   "intent": "isolate_sheet",
+   "style": "terse",
+   "slot": "БА-03"
+  },
+  {
+   "text": "хуудас тусгаарла",
+   "intent": "isolate_sheet",
+   "style": "terse"
+  },
+  {
+   "text": "ХАС-17 ганцаар",
+   "intent": "isolate_sheet",
+   "style": "terse",
+   "slot": "ХАС-17"
+  },
+  {
+   "text": "ЦАХ-07 л үлдээ",
+   "intent": "isolate_sheet",
+   "style": "terse",
+   "slot": "ЦАХ-07"
+  },
+  {
+   "text": "БА-3 ийг ялгачих",
+   "intent": "isolate_sheet",
+   "style": "terse",
+   "slot": "БА-3"
+  },
+  {
+   "text": "БА-01 хуудасны элементүүдийг 3D дээр тусгаарлаж харуулна уу",
+   "intent": "isolate_sheet",
+   "style": "polite",
+   "slot": "БА-01"
+  },
+  {
+   "text": "ХАС-04 хуудсыг ялгаж үзүүлэхийг хүсэж байна",
+   "intent": "isolate_sheet",
+   "style": "polite",
+   "slot": "ХАС-04"
+  },
+  {
+   "text": "Боломжтой бол ЦБУ-05 хуудсанд хамаарах элементүүдийг тусгаарлаж өгөөч",
+   "intent": "isolate_sheet",
+   "style": "polite",
+   "slot": "ЦБУ-05"
+  },
+  {
+   "text": "Энэ хуудсанд ямар элемент орсныг тусгаарлан үзүүлж туслаач",
+   "intent": "isolate_sheet",
+   "style": "polite"
+  },
+  {
+   "text": "ББ-05 ийн бүтээцүүдийг ялгаад өгөөч, харах хэрэгтэй байна",
+   "intent": "isolate_sheet",
+   "style": "polite",
+   "slot": "ББ-05"
+  },
+  {
+   "text": "БА-01 ийг ялгаж хруул",
+   "intent": "isolate_sheet",
+   "style": "typo",
+   "slot": "БА-01"
+  },
+  {
+   "text": "ХАС-12 тусгарла",
+   "intent": "isolate_sheet",
+   "style": "typo",
+   "slot": "ХАС-12"
+  },
+  {
+   "text": "BB-21 ig isoalte hii",
+   "intent": "isolate_sheet",
+   "style": "typo",
+   "slot": "ББ-21"
+  },
+  {
+   "text": "ЦАХ-07 ыг ялгжа харуул",
+   "intent": "isolate_sheet",
+   "style": "typo",
+   "slot": "ЦАХ-07"
+  },
+  {
+   "text": "БА-09 ийг тусгаарлад өгөөч",
+   "intent": "isolate_sheet",
+   "style": "typo",
+   "slot": "БА-09"
+  },
+  {
+   "text": "HAS-04 ig tusgarlaad ug",
+   "intent": "isolate_sheet",
+   "style": "typo",
+   "slot": "ХАС-04"
+  },
+  {
+   "text": "ЦБУ-03 ыг ялгад бусдыг нуу",
+   "intent": "isolate_sheet",
+   "style": "typo",
+   "slot": "ЦБУ-03"
+  },
+  {
+   "text": "БА-01 ийг тусгаарлаж болох уу?",
+   "intent": "isolate_sheet",
+   "style": "question",
+   "slot": "БА-01"
+  },
+  {
+   "text": "энэ хуудсыг 3д дээр ялгаж харуулж чадах уу?",
+   "intent": "isolate_sheet",
+   "style": "question"
+  },
+  {
+   "text": "ХАС-12 ийн элементүүдийг л харуулж болох уу?",
+   "intent": "isolate_sheet",
+   "style": "question",
+   "slot": "ХАС-12"
+  },
+  {
+   "text": "TSBU-05 ig isolate hiij bolh uu?",
+   "intent": "isolate_sheet",
+   "style": "question",
+   "slot": "ЦБУ-05"
+  },
+  {
+   "text": "тусгаарлалтыг цуцал",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "буцаагаад бүх элементийг нь харуулчих",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "харагдацыг хэвэнд нь оруулаад өгчих",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "болиулчих, бүх элементээ харъя",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "загвараа хэвэндээ буцаа",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "бүх элементийг эргүүлж харуул",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "тусгаарласныг нь цуцлаад бүтэн загварыг харуул",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "болих юмаа, бүх элементийг буцааж харуул",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "БА-01 ийн тусгаарлалтыг цуцал",
+   "intent": "reset_view",
+   "style": "cyrillic",
+   "slot": "БА-01"
+  },
+  {
+   "text": "одоо тусгаарлалтаа авчих, дараагийн хуудас руу орно",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "нүүр талуудын элементийг тусгаарлаж байснаа буцаа",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "тусгаарлалт хэрэггүй боллоо цуцлаарай",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ХАС-05 ийг тусгаарласнаа болиул",
+   "intent": "reset_view",
+   "style": "cyrillic",
+   "slot": "ХАС-05"
+  },
+  {
+   "text": "цонхны түүврийг үзчихлээ, харагдацаа хэвэнд нь оруул",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "тусгаарлалтаа цуцлаад бүтэн барилгыг харуул",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "1F-Таазны байгуулалт дээр тусгаарлаж байснаа болиул",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "нуусан юмаа сэргээ",
+   "intent": "reset_view",
+   "style": "cyrillic"
+  },
+  {
+   "text": "tusgaarlaltaa tsutsal",
+   "intent": "reset_view",
+   "style": "latin"
+  },
+  {
+   "text": "haragdatsaa hevendee oruul",
+   "intent": "reset_view",
+   "style": "latin"
+  },
+  {
+   "text": "buh elementee haruul",
+   "intent": "reset_view",
+   "style": "latin"
+  },
+  {
+   "text": "butsaa, buh elementee haruulchih",
+   "intent": "reset_view",
+   "style": "latin"
+  },
+  {
+   "text": "BA-01 iin tusgaarlaltaa avchih",
+   "intent": "reset_view",
+   "style": "latin",
+   "slot": "БА-01"
+  },
+  {
+   "text": "boliul odoo, buten modeloo harya",
+   "intent": "reset_view",
+   "style": "latin"
+  },
+  {
+   "text": "yamar ch tusgaarlalt hereggui, hevendee oruul",
+   "intent": "reset_view",
+   "style": "latin"
+  },
+  {
+   "text": "nuusan elementuudee butsaagaad garga",
+   "intent": "reset_view",
+   "style": "latin"
+  },
+  {
+   "text": "isolate ийг цуцал",
+   "intent": "reset_view",
+   "style": "codeswitch"
+  },
+  {
+   "text": "view ийг reset хий",
+   "intent": "reset_view",
+   "style": "codeswitch"
+  },
+  {
+   "text": "БА-01 ийн isolate аа болиул",
+   "intent": "reset_view",
+   "style": "codeswitch",
+   "slot": "БА-01"
+  },
+  {
+   "text": "reset isolation хийгээд өгчих",
+   "intent": "reset_view",
+   "style": "codeswitch"
+  },
+  {
+   "text": "isolation оо аваад бүх element ийг харуул",
+   "intent": "reset_view",
+   "style": "codeswitch"
+  },
+  {
+   "text": "unhide бүгдийг нь хийчих",
+   "intent": "reset_view",
+   "style": "codeswitch"
+  },
+  {
+   "text": "sheet ийн isolate ыг болиод бүтэн model руу буц",
+   "intent": "reset_view",
+   "style": "codeswitch"
+  },
+  {
+   "text": "hide хийснээ буцаа",
+   "intent": "reset_view",
+   "style": "codeswitch"
+  },
+  {
+   "text": "цуцал",
+   "intent": "reset_view",
+   "style": "terse"
+  },
+  {
+   "text": "буцаа",
+   "intent": "reset_view",
+   "style": "terse"
+  },
+  {
+   "text": "reset",
+   "intent": "reset_view",
+   "style": "terse"
+  },
+  {
+   "text": "тусгаарлалт болиул",
+   "intent": "reset_view",
+   "style": "terse"
+  },
+  {
+   "text": "бүх элементийг харуул",
+   "intent": "reset_view",
+   "style": "terse"
+  },
+  {
+   "text": "isolate off",
+   "intent": "reset_view",
+   "style": "terse"
+  },
+  {
+   "text": "БА-01 тусгаарлалт цуцал",
+   "intent": "reset_view",
+   "style": "terse",
+   "slot": "БА-01"
+  },
+  {
+   "text": "Тусгаарлалтыг цуцалж өгнө үү",
+   "intent": "reset_view",
+   "style": "polite"
+  },
+  {
+   "text": "Харагдацыг хэвэнд нь буцаана уу",
+   "intent": "reset_view",
+   "style": "polite"
+  },
+  {
+   "text": "Одоо тусгаарлалтаа авч бүх элементийг харуулж өгөөч",
+   "intent": "reset_view",
+   "style": "polite"
+  },
+  {
+   "text": "Загварыг эх байдалд нь оруулахыг хүсэж байна",
+   "intent": "reset_view",
+   "style": "polite"
+  },
+  {
+   "text": "Ажлаа дуусгалаа, БА-01 ийн тусгаарлалтыг цуцалж өгөхийг хүсье",
+   "intent": "reset_view",
+   "style": "polite",
+   "slot": "БА-01"
+  },
+  {
+   "text": "тусгаарлалтыг цуцлаад бүх элементийг харул",
+   "intent": "reset_view",
+   "style": "typo"
+  },
+  {
+   "text": "харагдацаа хэвндээ оруулчих",
+   "intent": "reset_view",
+   "style": "typo"
+  },
+  {
+   "text": "tusgaarlaltaa tsutsal hiichi",
+   "intent": "reset_view",
+   "style": "typo"
+  },
+  {
+   "text": "тусгаарлалтаа буцаачих одо",
+   "intent": "reset_view",
+   "style": "typo"
+  },
+  {
+   "text": "isolate ыг цуцлад өгөөч",
+   "intent": "reset_view",
+   "style": "typo"
+  },
+  {
+   "text": "tusgaarlaltaa tsutlaad ug",
+   "intent": "reset_view",
+   "style": "typo"
+  },
+  {
+   "text": "загвараа хэвэнд н оруул",
+   "intent": "reset_view",
+   "style": "typo"
+  },
+  {
+   "text": "тусгаарлалтыг яаж цуцлах вэ?",
+   "intent": "reset_view",
+   "style": "question"
+  },
+  {
+   "text": "харагдацаа хэвэндээ буцаах уу?",
+   "intent": "reset_view",
+   "style": "question"
+  },
+  {
+   "text": "энэ isolate ыг болиулж болох уу?",
+   "intent": "reset_view",
+   "style": "question"
+  },
+  {
+   "text": "тусгаарлалтыг цуцалбал бүх элемент буцаад харагдах уу?",
+   "intent": "reset_view",
+   "style": "question"
+  },
+  {
+   "text": "өнөөдөр юу өөрчлөгдсөн",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "суурьтай харьцуулаад өөрчлөлтийг харуул",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өчигдрөөс хойш ямар хуудас засагдсан",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "юу нэмэгдсэнийг харъя",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хамгийн сүүлд суурь авснаас хойш юу болсон бэ",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өнөөдрийн засваруудыг жагсаа",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өөрчлөгдсөн хуудсуудыг үзүүлээч",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "БА хуудсуудад өөрчлөлт орсон уу",
+   "intent": "whats_changed",
+   "style": "cyrillic",
+   "slot": "БА-*"
+  },
+  {
+   "text": "миний өөрчилсөн юмыг харуул",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "A блокт юу өөрчлөгдсөн бэ",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "суурь авснаас хойшхи ялгааг гарга",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ЦАХ хуудсуудын өөрчлөлтийг шалга",
+   "intent": "whats_changed",
+   "style": "cyrillic",
+   "slot": "ЦАХ-*"
+  },
+  {
+   "text": "өглөөнөөс хойш юу засагдав",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "MGL-260501_44 давхар орон сууц дээр юу өөрчлөгдсөн",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "1F-Шалны материал дээр өөрчлөлт орсон эсэхийг шалга",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өчигдөр авсан суурьтай тулгаад үзүүлээч",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хэдэн элемент нэмэгдэж, хэд нь устсан бэ",
+   "intent": "whats_changed",
+   "style": "cyrillic"
+  },
+  {
+   "text": "uurchlultiig haruul",
+   "intent": "whats_changed",
+   "style": "latin"
+  },
+  {
+   "text": "ochigduruus hoish yamar huudas zasagdsan",
+   "intent": "whats_changed",
+   "style": "latin"
+  },
+  {
+   "text": "suuritai tulgaad uzuuleech",
+   "intent": "whats_changed",
+   "style": "latin"
+  },
+  {
+   "text": "diff haruulaach",
+   "intent": "whats_changed",
+   "style": "latin"
+  },
+  {
+   "text": "BA huudsuudad uurchlult orson uu",
+   "intent": "whats_changed",
+   "style": "latin",
+   "slot": "БА-*"
+  },
+  {
+   "text": "unuudriin zasvariig jagsaad ug",
+   "intent": "whats_changed",
+   "style": "latin"
+  },
+  {
+   "text": "yu uurchlugdsun be",
+   "intent": "whats_changed",
+   "style": "latin"
+  },
+  {
+   "text": "unuudur yu ustgagdsan be",
+   "intent": "whats_changed",
+   "style": "latin"
+  },
+  {
+   "text": "baseline тэй харьцуулаад diff гаргаад өгөөч",
+   "intent": "whats_changed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "sheet үүдийн өөрчлөлтийг харуул",
+   "intent": "whats_changed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "өнөөдөр ямар sheet үүд update хийгдсэн бэ",
+   "intent": "whats_changed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "diff ээ шалгамаар байна",
+   "intent": "whats_changed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "БА-01 д change орсон уу",
+   "intent": "whats_changed",
+   "style": "codeswitch",
+   "slot": "БА-01"
+  },
+  {
+   "text": "baseline аас хойш юу change хийгдсэн",
+   "intent": "whats_changed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "compare хийгээд өөрчлөгдсөн хуудсуудыг гарга",
+   "intent": "whats_changed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "HAS ийн sheet үүд өөрчлөгдсөн үү",
+   "intent": "whats_changed",
+   "style": "codeswitch",
+   "slot": "ХАС-*"
+  },
+  {
+   "text": "ямар sheet устсан бэ",
+   "intent": "whats_changed",
+   "style": "codeswitch"
+  },
+  {
+   "text": "юу өөрчлөгдсөн",
+   "intent": "whats_changed",
+   "style": "terse"
+  },
+  {
+   "text": "diff",
+   "intent": "whats_changed",
+   "style": "terse"
+  },
+  {
+   "text": "өөрчлөлт",
+   "intent": "whats_changed",
+   "style": "terse"
+  },
+  {
+   "text": "юу шинэ вэ",
+   "intent": "whats_changed",
+   "style": "terse"
+  },
+  {
+   "text": "юу устгагдсан бэ",
+   "intent": "whats_changed",
+   "style": "terse"
+  },
+  {
+   "text": "БА-09 д өөрчлөлт орсон уу",
+   "intent": "whats_changed",
+   "style": "terse",
+   "slot": "БА-09"
+  },
+  {
+   "text": "Өнөөдөр ямар хуудсууд өөрчлөгдсөнийг харуулж өгнө үү",
+   "intent": "whats_changed",
+   "style": "polite"
+  },
+  {
+   "text": "Суурь хувилбартай харьцуулсан өөрчлөлтийг гаргаж өгөхийг хүсэж байна",
+   "intent": "whats_changed",
+   "style": "polite"
+  },
+  {
+   "text": "Боломжтой бол өчигдрөөс хойшхи өөрчлөлтийг жагсаана уу",
+   "intent": "whats_changed",
+   "style": "polite"
+  },
+  {
+   "text": "Хийгдсэн засваруудыг нэгтгээд үзүүлээч",
+   "intent": "whats_changed",
+   "style": "polite"
+  },
+  {
+   "text": "Өөрчлөлт орсон эсэхийг шалгаад мэдэгдэнэ үү",
+   "intent": "whats_changed",
+   "style": "polite"
+  },
+  {
+   "text": "юу өөрчлөгдсн бэ",
+   "intent": "whats_changed",
+   "style": "typo"
+  },
+  {
+   "text": "өөрчлөлтө хруул",
+   "intent": "whats_changed",
+   "style": "typo"
+  },
+  {
+   "text": "uurchlultiig haruull",
+   "intent": "whats_changed",
+   "style": "typo"
+  },
+  {
+   "text": "өчигдрөөс хойш юу засагдсн",
+   "intent": "whats_changed",
+   "style": "typo"
+  },
+  {
+   "text": "юу устгагдсн бэ",
+   "intent": "whats_changed",
+   "style": "typo"
+  },
+  {
+   "text": "diff haruulach",
+   "intent": "whats_changed",
+   "style": "typo"
+  },
+  {
+   "text": "өөрчлөгдсөн хуудсуудыг үзүүлэоч",
+   "intent": "whats_changed",
+   "style": "typo"
+  },
+  {
+   "text": "хэдэн хуудас өөрчлөгдсөн бэ?",
+   "intent": "whats_changed",
+   "style": "question"
+  },
+  {
+   "text": "ББ ийн хуудсууд өөрчлөгдсөн үү?",
+   "intent": "whats_changed",
+   "style": "question",
+   "slot": "ББ-*"
+  },
+  {
+   "text": "суурь авснаас хойш өөрчлөлт байна уу?",
+   "intent": "whats_changed",
+   "style": "question"
+  },
+  {
+   "text": "хасагдсан элемент байна уу?",
+   "intent": "whats_changed",
+   "style": "question"
+  },
+  {
+   "text": "эхлэл тэмдэглэе",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "одоогийн байдлыг суурь болгож хадгал",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "суурийг нь аваад өгөөч",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "эндээс тоолж эхэлье",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ажил эхлэхийн өмнө суурийг тэмдэглэ",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "энэ хэвээр нь суурь болгоод хадгалчих",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "эхлэлийн цэгээ тавья",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "одооноос хойш өөрчлөлтийг тоолж эхэл",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "загварын одоогийн төлөвийг хадгал",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "БА-01 дээр эхлэл тэмдэглэ",
+   "intent": "set_baseline",
+   "style": "cyrillic",
+   "slot": "БА-01"
+  },
+  {
+   "text": "цэвэрлээд дуусчихлаа одоо эхлэл тэмдэглэе",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өнөөдрийн ажлаа эндээс тоолуулъя, суурь ав",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өмнөх суурийг шинэчилчих",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "Фасадны элемент тодорхойлолт хуудас руу орохын өмнө эхлэл тэмдэглэ",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өмнөх суурийг устгачих",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "суурь авчихсан юм байгаа юу",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "эхлэл тэмдэглээд ажилдаа орьё",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "суурь аваад ажлаа эхэлье",
+   "intent": "set_baseline",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ehleliig temdegle",
+   "intent": "set_baseline",
+   "style": "latin"
+  },
+  {
+   "text": "suuri av",
+   "intent": "set_baseline",
+   "style": "latin"
+  },
+  {
+   "text": "odoogiin baidliig hadgal",
+   "intent": "set_baseline",
+   "style": "latin"
+  },
+  {
+   "text": "endees toolj ehleye",
+   "intent": "set_baseline",
+   "style": "latin"
+  },
+  {
+   "text": "baseline hiiy",
+   "intent": "set_baseline",
+   "style": "latin"
+  },
+  {
+   "text": "snapshot avaad hadgalchih",
+   "intent": "set_baseline",
+   "style": "latin"
+  },
+  {
+   "text": "ehnii baidlaa temdeglechih",
+   "intent": "set_baseline",
+   "style": "latin"
+  },
+  {
+   "text": "ajil ehlehiin umnu suuriig avya",
+   "intent": "set_baseline",
+   "style": "latin"
+  },
+  {
+   "text": "baseline хийчих",
+   "intent": "set_baseline",
+   "style": "codeswitch"
+  },
+  {
+   "text": "snapshot аваад тавь",
+   "intent": "set_baseline",
+   "style": "codeswitch"
+  },
+  {
+   "text": "одоогийн state ийг хадгал",
+   "intent": "set_baseline",
+   "style": "codeswitch"
+  },
+  {
+   "text": "эндээс diff тоолохын тулд baseline ав",
+   "intent": "set_baseline",
+   "style": "codeswitch"
+  },
+  {
+   "text": "БА-01 ийн baseline ав",
+   "intent": "set_baseline",
+   "style": "codeswitch",
+   "slot": "БА-01"
+  },
+  {
+   "text": "model ийн одоогийн байдлыг baseline болгож save хийчих",
+   "intent": "set_baseline",
+   "style": "codeswitch"
+  },
+  {
+   "text": "эхлэлийн snapshot ав",
+   "intent": "set_baseline",
+   "style": "codeswitch"
+  },
+  {
+   "text": "baseline ээ шинэчилье хуучин боллоо",
+   "intent": "set_baseline",
+   "style": "codeswitch"
+  },
+  {
+   "text": "capture baseline хийгээд өгөөч",
+   "intent": "set_baseline",
+   "style": "codeswitch"
+  },
+  {
+   "text": "эхлэл тэмдэглэ",
+   "intent": "set_baseline",
+   "style": "terse"
+  },
+  {
+   "text": "суурь ав",
+   "intent": "set_baseline",
+   "style": "terse"
+  },
+  {
+   "text": "baseline ав",
+   "intent": "set_baseline",
+   "style": "terse"
+  },
+  {
+   "text": "snapshot",
+   "intent": "set_baseline",
+   "style": "terse"
+  },
+  {
+   "text": "БА-09 дээр суурь ав",
+   "intent": "set_baseline",
+   "style": "terse",
+   "slot": "БА-09"
+  },
+  {
+   "text": "Ажил эхлэхээс өмнө одоогийн загварыг суурь болгож хадгалуулах хүсэлтэй байна",
+   "intent": "set_baseline",
+   "style": "polite"
+  },
+  {
+   "text": "Өнөөдрийн ажлаа эндээс тоолуулахын тулд эхлэлийг тэмдэглэж өгнө үү",
+   "intent": "set_baseline",
+   "style": "polite"
+  },
+  {
+   "text": "Та эхлээд одоогийн байдлыг суурь болгож хадгалж өгөөч",
+   "intent": "set_baseline",
+   "style": "polite"
+  },
+  {
+   "text": "Тааз модельчлох /Гал тогоо/ ажил эхлэхийн өмнө суурийг авъя гэсэн юм",
+   "intent": "set_baseline",
+   "style": "polite"
+  },
+  {
+   "text": "Одоогийн төлөвийг эхлэл болгож хадгалаад өгөхийг хүсэж байна",
+   "intent": "set_baseline",
+   "style": "polite"
+  },
+  {
+   "text": "эхлэ тэмдэглэ",
+   "intent": "set_baseline",
+   "style": "typo"
+  },
+  {
+   "text": "сууурь ав",
+   "intent": "set_baseline",
+   "style": "typo"
+  },
+  {
+   "text": "baselien хийчих",
+   "intent": "set_baseline",
+   "style": "typo"
+  },
+  {
+   "text": "odoogiin baidliig hadgl",
+   "intent": "set_baseline",
+   "style": "typo"
+  },
+  {
+   "text": "суурь авчиъя",
+   "intent": "set_baseline",
+   "style": "typo"
+  },
+  {
+   "text": "ehleliig temdegl",
+   "intent": "set_baseline",
+   "style": "typo"
+  },
+  {
+   "text": "одоогийн байдлыг суурь болгож хадгл",
+   "intent": "set_baseline",
+   "style": "typo"
+  },
+  {
+   "text": "одоо суурь авчихвал болох уу?",
+   "intent": "set_baseline",
+   "style": "question"
+  },
+  {
+   "text": "baseline авсан уу?",
+   "intent": "set_baseline",
+   "style": "question"
+  },
+  {
+   "text": "эхлэл тэмдэглэсэн үү?",
+   "intent": "set_baseline",
+   "style": "question"
+  },
+  {
+   "text": "эндээс тоолж эхэлж болох уу?",
+   "intent": "set_baseline",
+   "style": "question"
+  },
+  {
+   "text": "явц хэд болсныг хараад өгөөч",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "миний одоогийн явц хэд байгааг харуул",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "БА-01 ийн явц хэд болсон",
+   "intent": "progress_status",
+   "style": "cyrillic",
+   "slot": "БА-01"
+  },
+  {
+   "text": "энэ хуудасны явц хэдэн хувь болсон бэ",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ББ-12 хуудас хэдэн хувьтай байгааг хараач",
+   "intent": "progress_status",
+   "style": "cyrillic",
+   "slot": "ББ-12"
+  },
+  {
+   "text": "B блокийн явц хэд болов",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "Салхины тооцооны явц хэд хувьтай байна",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "миний ажил хаана явж байна",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "өчигдрөөс хойш явц өөрчлөгдсөн үү",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "Нүүр талуудын явц хэдэн хувь вэ",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "Core төлөвлөлтийн явц хэд болсныг хэлээд өгөөч",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "миний бүртгүүлсэн явц хэд байгааг харуулаач",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ХАС-ийн хуудсуудын дундаж явц хэд вэ",
+   "intent": "progress_status",
+   "style": "cyrillic",
+   "slot": "ХАС-*"
+  },
+  {
+   "text": "энэ долоо хоногийн явц ямар байна",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "дуусахад юу үлдсэн бэ",
+   "intent": "progress_status",
+   "style": "cyrillic"
+  },
+  {
+   "text": "yavts hed ve",
+   "intent": "progress_status",
+   "style": "latin"
+  },
+  {
+   "text": "yavtsaa haruulaach",
+   "intent": "progress_status",
+   "style": "latin"
+  },
+  {
+   "text": "minii ajil heden huvi bolson be",
+   "intent": "progress_status",
+   "style": "latin"
+  },
+  {
+   "text": "status haruul",
+   "intent": "progress_status",
+   "style": "latin"
+  },
+  {
+   "text": "BA-01 iin yavts hed ve",
+   "intent": "progress_status",
+   "style": "latin",
+   "slot": "БА-01"
+  },
+  {
+   "text": "checklist hed bolson bn",
+   "intent": "progress_status",
+   "style": "latin"
+  },
+  {
+   "text": "huudsuudiin yavts hed bolsniig haruul",
+   "intent": "progress_status",
+   "style": "latin"
+  },
+  {
+   "text": "odoo heden huvi deer yavj bna",
+   "intent": "progress_status",
+   "style": "latin"
+  },
+  {
+   "text": "hed uldsen be",
+   "intent": "progress_status",
+   "style": "latin"
+  },
+  {
+   "text": "БА-07 ийн progress хэд вэ",
+   "intent": "progress_status",
+   "style": "codeswitch",
+   "slot": "БА-07"
+  },
+  {
+   "text": "checklist хэд болсон бэ",
+   "intent": "progress_status",
+   "style": "codeswitch"
+  },
+  {
+   "text": "миний task ийн явц хэд вэ",
+   "intent": "progress_status",
+   "style": "codeswitch"
+  },
+  {
+   "text": "өнөөдрийн status ийг харуулаач",
+   "intent": "progress_status",
+   "style": "codeswitch"
+  },
+  {
+   "text": "ЦБУ-ийн sheet үүд хэдэн % болсон бэ",
+   "intent": "progress_status",
+   "style": "codeswitch",
+   "slot": "ЦБУ-*"
+  },
+  {
+   "text": "MGL-260226_MITIC_AZ ийн overall progress хэд вэ",
+   "intent": "progress_status",
+   "style": "codeswitch"
+  },
+  {
+   "text": "явц",
+   "intent": "progress_status",
+   "style": "terse"
+  },
+  {
+   "text": "хэдэн хувь",
+   "intent": "progress_status",
+   "style": "terse"
+  },
+  {
+   "text": "статус",
+   "intent": "progress_status",
+   "style": "terse"
+  },
+  {
+   "text": "progress?",
+   "intent": "progress_status",
+   "style": "terse"
+  },
+  {
+   "text": "хэд дутуу байна",
+   "intent": "progress_status",
+   "style": "terse"
+  },
+  {
+   "text": "БА-09 явц хэд",
+   "intent": "progress_status",
+   "style": "terse",
+   "slot": "БА-09"
+  },
+  {
+   "text": "Өнөөдрийн ажлын явц хэдэн хувь болсныг харуулж өгнө үү",
+   "intent": "progress_status",
+   "style": "polite"
+  },
+  {
+   "text": "Миний одоогийн явцын мэдээллийг үзүүлэхийг хүсэж байна",
+   "intent": "progress_status",
+   "style": "polite"
+  },
+  {
+   "text": "Уучлаарай, БА-01 хуудасны явц хэд болсныг хэлж өгөөч",
+   "intent": "progress_status",
+   "style": "polite",
+   "slot": "БА-01"
+  },
+  {
+   "text": "Хийгдсэн ажлын хувийг шалгуулмаар байна, тусална уу",
+   "intent": "progress_status",
+   "style": "polite"
+  },
+  {
+   "text": "MGL-260501_44 давхар орон сууц төслийн явцыг асуумаар байна",
+   "intent": "progress_status",
+   "style": "polite"
+  },
+  {
+   "text": "явц хэд вээ",
+   "intent": "progress_status",
+   "style": "typo"
+  },
+  {
+   "text": "хийсн ажлын явцаа хараач",
+   "intent": "progress_status",
+   "style": "typo"
+  },
+  {
+   "text": "статсаа харуул",
+   "intent": "progress_status",
+   "style": "typo"
+  },
+  {
+   "text": "progres hed bolson bn",
+   "intent": "progress_status",
+   "style": "typo"
+  },
+  {
+   "text": "явц хэдэн хув болсон бэ",
+   "intent": "progress_status",
+   "style": "typo"
+  },
+  {
+   "text": "yavtsaa haruulach",
+   "intent": "progress_status",
+   "style": "typo"
+  },
+  {
+   "text": "явцаа шалгаж өгөоч",
+   "intent": "progress_status",
+   "style": "typo"
+  },
+  {
+   "text": "явц хэд байна вэ?",
+   "intent": "progress_status",
+   "style": "question"
+  },
+  {
+   "text": "БА-01 дуусахад хэд үлдсэн бэ?",
+   "intent": "progress_status",
+   "style": "question",
+   "slot": "БА-01"
+  },
+  {
+   "text": "checklist ээс хэд нь болсон бэ?",
+   "intent": "progress_status",
+   "style": "question"
+  },
+  {
+   "text": "одоо хэдэн хувьтай яваа вэ?",
+   "intent": "progress_status",
+   "style": "question"
+  },
+  {
+   "text": "ЦАХ-04 ийн явц хэд хүрсэн бэ?",
+   "intent": "progress_status",
+   "style": "question",
+   "slot": "ЦАХ-04"
+  },
+  {
+   "text": "явц 80% болсон уу?",
+   "intent": "progress_status",
+   "style": "question"
+  },
+  {
+   "text": "БА-15 100% болчихсон уу?",
+   "intent": "progress_status",
+   "style": "question",
+   "slot": "БА-15"
+  },
+  {
+   "text": "дууссан уу?",
+   "intent": "progress_status",
+   "style": "question"
+  },
+  {
+   "text": "чи юу хийж чадах вэ",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ямар командууд байдаг вэ",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "тусламж хэрэгтэй байна",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "яаж ажилладаг юм бэ",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "юу юу хийж чадахаа хэлээч",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "надад заавар өгөөч",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "энэ туслах юу хийдэг юм",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "чамайг яаж ашиглахыг хэлээд өгөөч",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "тушаалын жагсаалт харуулаач",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "энд юу бичиж болох вэ",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "чамд ямар боломжууд байгаа юм",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "юу гэж бичихээ мэдэхгүй байна яаж эхлэх вэ",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "тусламжийн цэсээ гаргаад ир",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ямар тушаал ойлгодгоо бичээд өгөөч",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "чи хуудсаас өөр юу хийж чадах вэ",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "дэмждэг үйлдлүүдээ жагсаагаад өг",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "юу асууж болохоо мэдэхгүй байна, тусламж",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "чи ямар үйлдэл дэмждэгээ жагсаа",
+   "intent": "help",
+   "style": "cyrillic"
+  },
+  {
+   "text": "tuslamj",
+   "intent": "help",
+   "style": "latin"
+  },
+  {
+   "text": "chi yu hiij chadah ve",
+   "intent": "help",
+   "style": "latin"
+  },
+  {
+   "text": "yamar komand baidag ve",
+   "intent": "help",
+   "style": "latin"
+  },
+  {
+   "text": "yaaj ajilladag yum be",
+   "intent": "help",
+   "style": "latin"
+  },
+  {
+   "text": "hiij chadah zuilsee hel dee",
+   "intent": "help",
+   "style": "latin"
+  },
+  {
+   "text": "zaavar heregtei baina",
+   "intent": "help",
+   "style": "latin"
+  },
+  {
+   "text": "komandiin jagsaaltiig haruul",
+   "intent": "help",
+   "style": "latin"
+  },
+  {
+   "text": "chamaig yaaj ashiglahiig zaaj ogooch",
+   "intent": "help",
+   "style": "latin"
+  },
+  {
+   "text": "end yu bichij bolno ve",
+   "intent": "help",
+   "style": "latin"
+  },
+  {
+   "text": "чи ямар command ууд дэмждэг вэ",
+   "intent": "help",
+   "style": "codeswitch"
+  },
+  {
+   "text": "help хийгээд өгөөч",
+   "intent": "help",
+   "style": "codeswitch"
+  },
+  {
+   "text": "ямар function ууд байгаа юм чамд",
+   "intent": "help",
+   "style": "codeswitch"
+  },
+  {
+   "text": "isolate ээс гадна өөр юу хийж чадах вэ",
+   "intent": "help",
+   "style": "codeswitch"
+  },
+  {
+   "text": "чиний feature үүд юу вэ товчхон",
+   "intent": "help",
+   "style": "codeswitch"
+  },
+  {
+   "text": "menu гаргаад өгөөч юу байдгийг харъя",
+   "intent": "help",
+   "style": "codeswitch"
+  },
+  {
+   "text": "дэмждэг action уудаа жагсаа",
+   "intent": "help",
+   "style": "codeswitch"
+  },
+  {
+   "text": "тусламж",
+   "intent": "help",
+   "style": "terse"
+  },
+  {
+   "text": "help",
+   "intent": "help",
+   "style": "terse"
+  },
+  {
+   "text": "заавар",
+   "intent": "help",
+   "style": "terse"
+  },
+  {
+   "text": "командууд",
+   "intent": "help",
+   "style": "terse"
+  },
+  {
+   "text": "юу хийдэг вэ",
+   "intent": "help",
+   "style": "terse"
+  },
+  {
+   "text": "жишээ хэлээд өгөөч",
+   "intent": "help",
+   "style": "terse"
+  },
+  {
+   "text": "богино заавар өгөөч",
+   "intent": "help",
+   "style": "terse"
+  },
+  {
+   "text": "Сайн байна уу, та юу хийж чадахаа товч тайлбарлаж өгөөч",
+   "intent": "help",
+   "style": "polite"
+  },
+  {
+   "text": "Уучлаарай, энэ туслахыг хэрхэн ашиглах талаар заавар авч болох уу",
+   "intent": "help",
+   "style": "polite"
+  },
+  {
+   "text": "Юу хийж чадахыг чинь нэг харчихъя",
+   "intent": "help",
+   "style": "polite"
+  },
+  {
+   "text": "Би анх удаа ашиглаж байгаа тул богино зааварчилгаа хэрэгтэй байна",
+   "intent": "help",
+   "style": "polite"
+  },
+  {
+   "text": "Ямар үйлдлүүд дэмжигддэг талаар мэдээлэл өгнө үү",
+   "intent": "help",
+   "style": "polite"
+  },
+  {
+   "text": "туслмаж",
+   "intent": "help",
+   "style": "typo"
+  },
+  {
+   "text": "юу хийж чадх вэ",
+   "intent": "help",
+   "style": "typo"
+  },
+  {
+   "text": "hlep",
+   "intent": "help",
+   "style": "typo"
+  },
+  {
+   "text": "заавр өгөөч ээ",
+   "intent": "help",
+   "style": "typo"
+  },
+  {
+   "text": "тслмж хэрэгтэй бна",
+   "intent": "help",
+   "style": "typo"
+  },
+  {
+   "text": "yamar komand baidg ve",
+   "intent": "help",
+   "style": "typo"
+  },
+  {
+   "text": "тусламжйин цэс гаргаач",
+   "intent": "help",
+   "style": "typo"
+  },
+  {
+   "text": "тусламжийн жагсаалт байна уу?",
+   "intent": "help",
+   "style": "question"
+  },
+  {
+   "text": "чамайг яаж ажиллуулдаг вэ?",
+   "intent": "help",
+   "style": "question"
+  },
+  {
+   "text": "юу гэж бичвэл ойлгох вэ?",
+   "intent": "help",
+   "style": "question"
+  },
+  {
+   "text": "энэ хананы зузааныг 200 болго",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "хавтан суурийн арматурчлалт загварчилаад өг",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "энэ хаалганы өргөнийг 900 болго",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ЕТ дээр зогсоол зураад өг",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "16-20 давхрын байгуулалт /C блок/ ийг зураад өг",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "сайн уу",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "баярлалаа",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "багийн тайлан хэвлэе",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "төслийн зургуудыг сайтаас харуул",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "сонгосон элементүүдээ харуул",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "ирцээ бүртгүүлье",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "чөлөө авъя, өнөөдөр эрт явна",
+   "intent": "unknown",
+   "style": "cyrillic"
+  },
+  {
+   "text": "hana zuraad ogooch",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "sain uu",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "bayrlalaa shuu",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "za bolloo bayartai",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "shalnii material iig solij ogooch",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "revit ee haachih",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "asdf",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "za tegeed",
+   "intent": "unknown",
+   "style": "latin"
+  },
+  {
+   "text": "1F-Шалны материалыг өөрчил",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "family үүсгэ",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "worksharing асаа",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "render хий",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "IFC export хий",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "central file ээ sync хийчих",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "dwg оруулж ирээч",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "warning уудаа цэвэрлэ",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "view template үүсгээд өг",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "БА-01 ийг pdf болгож хэвлэ",
+   "intent": "unknown",
+   "style": "codeswitch",
+   "slot": "БА-01"
+  },
+  {
+   "text": "BB блокийн ачааг тооцоод өгөөч",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "view үүдээ жагсаа",
+   "intent": "unknown",
+   "style": "codeswitch"
+  },
+  {
+   "text": "хана зур",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "дээвэр нэм",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "фасад загварчил",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "ханын дэлгээс үүсгэ",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "багана нэмээд өг",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "за за",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "ok",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "хэхэ",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "...",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "?",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "өмнөхийг нь",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "тийм ээ",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "БА-01 ийг нээ",
+   "intent": "unknown",
+   "style": "terse",
+   "slot": "БА-01"
+  },
+  {
+   "text": "БА-09 руу ор",
+   "intent": "unknown",
+   "style": "terse",
+   "slot": "БА-09"
+  },
+  {
+   "text": "шинэ хуудас үүсгэ",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "даалгавраа харуул",
+   "intent": "unknown",
+   "style": "terse"
+  },
+  {
+   "text": "БА-01 д хаалга нэмээд өгөөч",
+   "intent": "unknown",
+   "style": "polite",
+   "slot": "БА-01"
+  },
+  {
+   "text": "цонхны түүвэр гаргаад өгөөч",
+   "intent": "unknown",
+   "style": "polite"
+  },
+  {
+   "text": "Статик тооцоо+Хөрс ийг хийж өгөөч",
+   "intent": "unknown",
+   "style": "polite"
+  },
+  {
+   "text": "ХАС-05 ийн агаар сэлгэлтийн тооцоог шалгаад өгөөч",
+   "intent": "unknown",
+   "style": "polite",
+   "slot": "ХАС-05"
+  },
+  {
+   "text": "такси дуудаад өгөөч",
+   "intent": "unknown",
+   "style": "polite"
+  },
+  {
+   "text": "өдрийн мэнд",
+   "intent": "unknown",
+   "style": "polite"
+  },
+  {
+   "text": "гүйцэтгэлийн тайлангаа татаад өгөөч",
+   "intent": "unknown",
+   "style": "polite"
+  },
+  {
+   "text": "тааз моделчьлоод өгөөч",
+   "intent": "unknown",
+   "style": "typo"
+  },
+  {
+   "text": "жкдлф",
+   "intent": "unknown",
+   "style": "typo"
+  },
+  {
+   "text": "фасда загварчил",
+   "intent": "unknown",
+   "style": "typo"
+  },
+  {
+   "text": "hana zurad ogoch",
+   "intent": "unknown",
+   "style": "typo"
+  },
+  {
+   "text": "дээвр нэмээд өгөч",
+   "intent": "unknown",
+   "style": "typo"
+  },
+  {
+   "text": "Салхины тооцоо хийж чадах уу",
+   "intent": "unknown",
+   "style": "question"
+  },
+  {
+   "text": "чи хэн бэ",
+   "intent": "unknown",
+   "style": "question"
+  },
+  {
+   "text": "чамайг хэн хийсэн бэ?",
+   "intent": "unknown",
+   "style": "question"
+  },
+  {
+   "text": "level нэмэх үү",
+   "intent": "unknown",
+   "style": "question"
+  },
+  {
+   "text": "цаг агаар ямар байна",
+   "intent": "unknown",
+   "style": "question"
+  },
+  {
+   "text": "өдрийн хоол юу байна",
+   "intent": "unknown",
+   "style": "question"
+  },
+  {
+   "text": "хурал хэдэн цагт вэ?",
+   "intent": "unknown",
+   "style": "question"
+  },
+  {
+   "text": "цалин хэзээ орох вэ",
+   "intent": "unknown",
+   "style": "question"
+  },
+  {
+   "text": "маргааш амарна уу",
+   "intent": "unknown",
+   "style": "question"
+  },
+  {
+   "text": "одоо ямар файл нээлттэй байна",
+   "intent": "unknown",
+   "style": "question"
+  }
+ ]
+}

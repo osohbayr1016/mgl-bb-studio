@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «MGL Smart»-ын (Publish / Count / Clash / Impact) Revit-гүй ЦЭВЭР логикийн тест.
+
+    ⚠️ Гадаад пакет БАЙХГҮЙ (Intelligence.Tests / WorkTracking.Tests-ийн ижил шалтгаан:
+    сүлжээгүй машин дээр ч `dotnet run` ажиллах ёстой).  Өөрийн жижиг runner.
+
+    ⚠️ Revit/WPF assembly ЭНД ОРОХГҮЙ — `addin/Smart*/Core`, `ClashCheck/Core`,
+    `ChangeImpact/Core` дотор `Autodesk.Revit` эсвэл `System.Windows` гарвал энэ төсөл
+    ЭМХЭТГЭГДЭХГҮЙ.  Тэр нь зориудын хамгаалалт: Revit-тэй код (`*/Revit`) нь нимгэн
+    залгаас, бүх шийдвэр энд тестлэгдэнэ.
+
+    `DocKeys.cs` нь `Intelligence/Core`-ынх (цэвэр) — `DocumentKeyBuilder.LegacyPathKey`
+    түүнтэй ЯГ ижил түлхүүр гаргадгийг шалгахад л холбосон.
+
+      dotnet run   (revit-mcp/tests/Smart.Tests хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>Smart.Tests</AssemblyName>
+    <RootNamespace>RevitMcpAddin.Smart.Tests</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\Smart\Core\*.cs" />
+    <Compile Include="..\..\addin\SmartPublish\Core\*.cs" />
+    <Compile Include="..\..\addin\SmartCount\Core\*.cs" />
+    <Compile Include="..\..\addin\ClashCheck\Core\*.cs" />
+    <Compile Include="..\..\addin\ChangeImpact\Core\*.cs" />
+    <Compile Include="..\..\addin\Intelligence\Core\DocKeys.cs" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Revit add-in-ий ЛИЦЕНЗИЙН цэвэр логикийн тест (1.9.0, migration 0374).
+
+    • `addin/Licensing/Core` — гарын үсэг, хугацаа, төхөөрөмжийн id (Revit/WPF-гүй).
+      Тест векторыг СЕРВЕРИЙН жинхэнэ код (`backend/src/lib/revitLicense.ts`
+      `signLease`) ТЕСТИЙН түлхүүрээр үүсгэсэн — TS ↔ C# гэрээ таарч байгааг батална.
+    • `addin/Licensing/HardwareProbe.cs` — энэ компьютер дээр бодитоор уншиж хэвлэнэ
+      (registry + user32; Windows л).
+    • `addin/Licensing/DeviceKeyStore.cs` — Windows CNG (TPM / програмын) түлхүүр: үүсгэх, гарын
+      үсэг зурах, нийтийн түлхүүрээр шалгах (Windows л; бусад OS-д тестүүд алгасагдана).
+
+    ⚠️ Гадаад пакет БАЙХГҮЙ (WorkTracking.Tests-ийн ижил шалтгаан).
+
+      dotnet run   (revit-mcp/tests/Licensing.Tests хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>Licensing.Tests</AssemblyName>
+    <RootNamespace>RevitMcpAddin.Licensing.Tests</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591;CA1416</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\Licensing\Core\*.cs" />
+    <Compile Include="..\..\addin\Licensing\HardwareProbe.cs" />
+    <Compile Include="..\..\addin\Licensing\DeviceKeyStore.cs" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

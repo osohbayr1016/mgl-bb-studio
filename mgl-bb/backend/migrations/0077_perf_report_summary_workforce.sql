@@ -1,0 +1,21 @@
+-- =============================================
+-- Performance report — Section 2 fields (no-op recovery)
+-- =============================================
+-- Originally added two columns to project_performance_reports:
+--
+--   ALTER TABLE project_performance_reports ADD COLUMN summary_text TEXT;
+--   ALTER TABLE project_performance_reports ADD COLUMN workforce_json TEXT;
+--
+-- Both columns are already present in production (verified via
+-- PRAGMA table_info on 2026-05-21) — a previous attempt applied the
+-- DDL out-of-band but did not record the migration in d1_migrations.
+-- That left subsequent `wrangler d1 migrations apply --remote` runs
+-- failing on "duplicate column name: summary_text", blocking every
+-- migration numbered 0078 and later.
+--
+-- Rewriting this file as a no-op lets the tracker register 0077 as
+-- applied so the queue can drain.  The schema is unchanged; the
+-- columns continue to exist exactly as the original ALTERs created
+-- them.  Local databases that already ran the original DDL will also
+-- accept this no-op without error.
+SELECT 1;

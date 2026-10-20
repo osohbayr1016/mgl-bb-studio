@@ -1,0 +1,27 @@
+{
+  "$comment": [
+    "Локал MCP серверүүд.  ЗАМУУДЫГ ШУУД БҮҮ БИЧ — энэ файл git-д track хийгддэг",
+    "тул абсолют зам нь зөвхөн нэг машин дээр ажиллана (өмнө нь яг тийм байсан:",
+    "C:\\Users\\User\\... гэж бичигдсэн байв, харин revit-mcp/.mcp.json нь өөр",
+    "хэрэглэгчийн нэр рүү зааж аль хэдийн эвдэрсэн байсан).",
+    "",
+    "REVIT_MCP_PYTHON нь Revit MCP гүүрний venv доторх python.exe-г заана.",
+    "Тохируулаагүй бол репо доторх revit-mcp/server/.venv-ийг хэрэглэнэ.",
+    "Windows дээр:  $env:REVIT_MCP_PYTHON = 'C:\\зам\\python.exe'",
+    "macOS/Linux:   export REVIT_MCP_PYTHON=/зам/bin/python"
+  ],
+  "mcpServers": {
+    "revit": {
+      "type": "stdio",
+      "command": "${REVIT_MCP_PYTHON:-revit-mcp/server/.venv/Scripts/python.exe}",
+      "args": ["-m", "revit_mcp.server"],
+      "cwd": "revit-mcp/server"
+    },
+    "shadcn": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"],
+      "cwd": "frontend"
+    }
+  }
+}

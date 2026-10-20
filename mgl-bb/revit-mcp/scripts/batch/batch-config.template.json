@@ -1,0 +1,9 @@
+{
+  "_тайлбар": "Энэ файлыг %APPDATA%\\RevitMcpAddin\\batch-config.json болгож хуулаад бөглөнө. path = сүлжээний хавтас дахь central .rvt файлын бүтэн зам; project_id = вэбсайтын төслийн ID (/app/projects хуудасны URL-аас эсвэл MGL > Тохиргоо доторх төслийн жагсаалтаас харна).",
+  "revit_exe": "C:\\Program Files\\Autodesk\\Revit 2027\\Revit.exe",
+  "timeout_minutes": 90,
+  "files": [
+    { "path": "\\\\NAS\\projects\\TOYOTA\\260701_TOYOTA_ServiceCenter_BA.rvt", "project_id": 0 },
+    { "path": "\\\\NAS\\projects\\TENNIS\\250828_Tennis_Hall_BB.rvt", "project_id": 0 }
+  ]
+}

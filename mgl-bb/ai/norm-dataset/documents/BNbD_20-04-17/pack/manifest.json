@@ -1,0 +1,50 @@
+{
+  "dataset_id": "norm-dataset-bnbd_20-04-17",
+  "version": "0.1.0",
+  "counts": {
+    "chunks": 352,
+    "qa_tests": 36
+  },
+  "files": {
+    "aliases.json": {
+      "sha256": "0730740ad6323d30a5483376508728bdbcde36c330296969353217c85eccff5e",
+      "bytes": 206
+    },
+    "calculation_cases.jsonl": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "cross_references.json": {
+      "sha256": "78027ac5e0163c826d1470ce0aa57cb8f571a771e81d00785ab636f73dae0f3f",
+      "bytes": 13843
+    },
+    "document.json": {
+      "sha256": "32f6d4edc0e92d8a5699d08f71232d8a0fc2ff99508b1da1c96a23583898ad7a",
+      "bytes": 1299
+    },
+    "formulas.jsonl": {
+      "sha256": "3e97182ab7825cb687b99019cdf1614ae37e796107289ef9fa4f9a0db9fd377e",
+      "bytes": 24569
+    },
+    "keyword_alias_index.jsonl": {
+      "sha256": "39c618276d6a20830c827f8c617ba34368ad7dbd31093a2817d3307e2ef6a14d",
+      "bytes": 4427
+    },
+    "knowledge_chunks.jsonl": {
+      "sha256": "8c36a2918b37cd64112702c9d12528e950fb98ed06861cb4f1e55c3105e89661",
+      "bytes": 813583
+    },
+    "norm-dataset.pack.json": {
+      "sha256": "a236144b9f236d170f748d35c62f21f9af3237d8f81a2634b578b106b7531516",
+      "bytes": 586
+    },
+    "numeric_requirements.jsonl": {
+      "sha256": "fc829aeaccec6d8021f86ec80e58a26e9d54a01869f9a9d3a1cd029ac4408045",
+      "bytes": 11763
+    },
+    "qa_retrieval_tests.jsonl": {
+      "sha256": "7fa256f7a1e5953ee056b6756f2b6c637a594a63622aff28494b27176825659a",
+      "bytes": 9647
+    }
+  }
+}

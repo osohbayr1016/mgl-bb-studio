@@ -1,0 +1,241 @@
+{
+  "run_name": "mgl-adapter-0.4",
+  "kind": "candidate",
+  "trained_at": "2026-09-11T11:50:11",
+  "base_model": "Qwen/Qwen3-8B",
+  "base_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "dataset": {
+    "name": "behavior",
+    "version": "behav-2026-09-11.6",
+    "train_rows": 477,
+    "val_rows": 52,
+    "sha256": {
+      "train": "6d350c907623f9b990251115a42fa806f379ab399c75e1732b09b6e97d9159d2",
+      "val": "c3cbd389d97a1ab42adfff8131d5587d677dbde53beda8d49b9913ec6778e4c8",
+      "test": "d7d3f665f982cbd37fa1547b6b949fb19c9a790c954c696d68b4d868b9d4b1ac"
+    },
+    "kernel_snapshot": {
+      "prompt_version": "mglai-sys-6",
+      "tool_schema_version": "mglai-tools-1"
+    }
+  },
+  "config": {
+    "base_model": "Qwen/Qwen3-8B",
+    "base_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "dataset": "behavior",
+    "run_name": "mgl-adapter-0.4",
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "micro_batch": 1,
+    "grad_accum": 8,
+    "max_seq_len": 2048,
+    "seq_buckets": [
+      1536,
+      1792,
+      2048
+    ],
+    "learning_rate": 0.0001,
+    "epochs": 2.0,
+    "warmup_ratio": 0.03,
+    "gradient_checkpointing": true,
+    "load_in_4bit": true,
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_compute_dtype": "bfloat16",
+    "bnb_4bit_use_double_quant": true,
+    "optim": "paged_adamw_8bit",
+    "quantize_lm_head": true,
+    "seed": 42,
+    "resume": true,
+    "save_steps": 10,
+    "completion_only": true,
+    "eval_on_val": true,
+    "reason": "0.4:v.6-багц(0.3-ийн-алтан-G-регресс:засварын-ээлж+зөрчилтэй-0%-явцын-хайрцаг,15-жишээ)+0.3-тэй-ижил-тохиргоо"
+  },
+  "reason": "0.4:v.6-багц(0.3-ийн-алтан-G-регресс:засварын-ээлж+зөрчилтэй-0%-явцын-хайрцаг,15-жишээ)+0.3-тэй-ижил-тохиргоо",
+  "seq_tokens": {
+    "mean": 1384,
+    "max": 2048,
+    "buckets": {
+      "1536": 296,
+      "1792": 100,
+      "2048": 133
+    },
+    "critical_truncated": 9,
+    "history_dropped": 27
+  },
+  "train": {
+    "loss_final": 0.03763717437783877,
+    "steps": 120,
+    "duration_s": 239,
+    "metrics": {
+      "train_runtime": 237.8236,
+      "train_samples_per_second": 4.011,
+      "train_steps_per_second": 0.505,
+      "total_flos": 6.032234929016832e+16,
+      "train_loss": 0.03763717437783877,
+      "epoch": 2.0
+    }
+  },
+  "eval": {
+    "eval_loss": 0.5572599768638611,
+    "eval_runtime": 38.5954,
+    "eval_samples_per_second": 1.347,
+    "eval_steps_per_second": 1.347,
+    "epoch": 2.0
+  },
+  "dynamics": {
+    "nan_steps": 0,
+    "step_ms_mean": 19660,
+    "step_ms_by_bucket": {
+      "1536": 19620,
+      "1792": 0,
+      "2048": 19752
+    },
+    "step_ms_max": 25356,
+    "vram_peak_mb": 7426,
+    "vram_reserved_peak_mb": 7654,
+    "ram_rss_mb": 1961,
+    "load_vram_mb": 4992,
+    "log": [
+      {
+        "step": 112,
+        "loss": 0.30401530861854553,
+        "grad_norm": 1.6767064332962036,
+        "learning_rate": 1.4529091286973995e-06,
+        "epoch": 1.8721174004192873,
+        "vram_peak_mb": 7349,
+        "vram_reserved_mb": 7454,
+        "gpu_temp_c": 55.0,
+        "gpu_power_w": 203.48,
+        "gpu_util_pct": 100.0
+      },
+      {
+        "step": 114,
+        "loss": 0.4722374975681305,
+        "grad_norm": 2.5289206504821777,
+        "learning_rate": 8.806131292167618e-07,
+        "epoch": 1.9056603773584906,
+        "vram_peak_mb": 7381,
+        "vram_reserved_mb": 7550,
+        "gpu_temp_c": 58.0,
+        "gpu_power_w": 206.44,
+        "gpu_util_pct": 51.0
+      },
+      {
+        "step": 116,
+        "loss": 0.18015725910663605,
+        "grad_norm": 2.8688597679138184,
+        "learning_rate": 4.4994103770457653e-07,
+        "epoch": 1.9392033542976939,
+        "vram_peak_mb": 7426,
+        "vram_reserved_mb": 7654,
+        "gpu_temp_c": 59.0,
+        "gpu_power_w": 190.2,
+        "gpu_util_pct": 48.0
+      },
+      {
+        "step": 118,
+        "loss": 0.8371213674545288,
+        "grad_norm": 1.447840690612793,
+        "learning_rate": 1.6213459328950352e-07,
+        "epoch": 1.9727463312368974,
+        "vram_peak_mb": 7426,
+        "vram_reserved_mb": 7654,
+        "gpu_temp_c": 64.0,
+        "gpu_power_w": 204.44,
+        "gpu_util_pct": 45.0
+      },
+      {
+        "step": 120,
+        "loss": 0.46469902992248535,
+        "grad_norm": 0.9902856349945068,
+        "learning_rate": 1.802361645573125e-08,
+        "epoch": 2.0,
+        "vram_peak_mb": 7426,
+        "vram_reserved_mb": 7654,
+        "gpu_temp_c": 64.0,
+        "gpu_power_w": 194.25,
+        "gpu_util_pct": 63.0
+      },
+      {
+        "step": 120,
+        "eval_loss": 0.5572599768638611,
+        "eval_runtime": 38.6128,
+        "eval_samples_per_second": 1.347,
+        "eval_steps_per_second": 1.347,
+        "epoch": 2.0,
+        "vram_peak_mb": 7426,
+        "vram_reserved_mb": 7654,
+        "gpu_temp_c": 63.0,
+        "gpu_power_w": 218.11,
+        "gpu_util_pct": 100.0
+      },
+      {
+        "step": 120,
+        "train_runtime": 237.8236,
+        "train_samples_per_second": 4.011,
+        "train_steps_per_second": 0.505,
+        "total_flos": 6.032234929016832e+16,
+        "train_loss": 0.03763717437783877,
+        "epoch": 2.0,
+        "vram_peak_mb": 7426,
+        "vram_reserved_mb": 7654,
+        "gpu_temp_c": 63.0,
+        "gpu_power_w": 211.87,
+        "gpu_util_pct": 76.0
+      },
+      {
+        "step": 120,
+        "eval_loss": 0.5572599768638611,
+        "eval_runtime": 38.5954,
+        "eval_samples_per_second": 1.347,
+        "eval_steps_per_second": 1.347,
+        "epoch": 2.0,
+        "vram_peak_mb": 7426,
+        "vram_reserved_mb": 7654,
+        "gpu_temp_c": 65.0,
+        "gpu_power_w": 218.19,
+        "gpu_util_pct": 100.0
+      }
+    ]
+  },
+  "adapter": {
+    "path": "C:\\Users\\User\\project\\mgl-e-c\\ai\\models\\adapters\\mgl-adapter-0.4\\adapter",
+    "files": {
+      "adapter_config.json": "b835c4c73c2233c687a09775af133e67f39804c31c731e64446dca4c72d539ee",
+      "adapter_model.safetensors": "57027368f9ecb48cad13dd494c8fc2c94f10f7f539bca7a67bbb0ffcc8db4611",
+      "chat_template.jinja": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9",
+      "README.md": "85e2b3a3fae33eab459538a9f1ce2d9ad6bd9fb7c6b97f9ee97e07923ad3e57a",
+      "tokenizer.json": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "tokenizer_config.json": "154e5ff1e7c152d964edf30da854ea62465c767719ac8e97e58babf2d4fa9079"
+    }
+  },
+  "resumed_from_checkpoint": true,
+  "gpu_guard": {
+    "telemetry": {
+      "temp_c": 46.0,
+      "power_w": 22.12,
+      "util_pct": 4.0,
+      "mem_used_mb": 287.0,
+      "mem_total_mb": 8192.0,
+      "throttle": []
+    },
+    "inference_runtime": null,
+    "gpu_processes": [],
+    "allow_shared": false
+  },
+  "gpu_peak_temp_c": 65.0,
+  "gpu_peak_power_w": 218.19,
+  "status": "CANDIDATE_TRAINED_NOT_EVALUATED",
+  "deployed": false
+}

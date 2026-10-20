@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «Зургийн хуудас дугаарлах» цонхны Revit-гүй ТҮЦ ШАЛГАЛТ (smoke), 2026-10-01.
+
+    Бодит `SheetNumeratorWindow` + `SheetNumeratorViewModel`-ийг ХУУРАМЧ gateway-ээр (санах ойн «Revit»)
+    нээж, товч/талбарыг бодитоор өөрчилж, төлөвийг уншиж, PNG зураг болгон хадгална (`SMOKE_OUT` хавтас) —
+    layout, binding, мөрийн өнгө, чирж зөөх логикийг нүдээр шалгахад.
+
+    ⚠️ Revit assembly ЭНД ОРОХГҮЙ: `SheetNumerator/Core` ба `Ui` дотор `Autodesk.Revit` гарвал энэ төсөл ЭМХЭТГЭГДЭХГҮЙ.
+    ⚠️ Интерактив Windows desktop session шаардана (WPF цонх үүсгэнэ).  Цонхнууд дэлгэцийн гадна (-20000)
+       нээгдэнэ — зөвхөн `SMOKE_REAL_MOUSE=1` үед бодит хулганы чирэлт хийхийн тулд хэсэг хугацаанд харагдана.
+
+      dotnet run   (revit-mcp/tests/SheetNumerator.UiSmoke хавтаснаас;  SMOKE_OUT=<хавтас> зураг хадгалах)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>SheetNumerator.UiSmoke</AssemblyName>
+    <RootNamespace>RevitMcpAddin.SheetNumerator.UiSmoke</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\SheetNumerator\Core\*.cs" />
+    <Compile Include="..\..\addin\SheetNumerator\Ui\*.cs" />
+    <!-- Дундын сэдэв/цонхны байрлал (Revit-гүй) — MglWindow нь App-д хамаарахгүй (`OwnerHandleProvider`). -->
+    <Compile Include="..\..\addin\Ui\Core\*.cs" />
+    <Compile Include="..\..\addin\TextFold.cs" />
+    <Compile Include="..\..\addin\Ui\MglStyles.cs" />
+    <Compile Include="..\..\addin\Ui\MglTheme.cs" />
+    <Compile Include="..\..\addin\Ui\MglBrushes.cs" />
+    <Compile Include="..\..\addin\Ui\MglWindow.cs" />
+    <Compile Include="..\..\addin\Ui\MglUiPrefs.cs" />
+    <Compile Include="..\..\addin\Ui\MglNative.cs" />
+    <Compile Include="..\..\addin\Ui\MglPrompt.cs" />
+    <Compile Include="..\..\addin\Ui\MglUi.cs" />
+    <Compile Include="..\..\addin\Ui\MglAuto.cs" />
+    <EmbeddedResource Include="..\..\addin\Ui\Resources\MglControls.xaml" LogicalName="RevitMcpAddin.Ui.MglControls.xaml" />
+    <Page Include="..\..\addin\SheetNumerator\Ui\SheetNumeratorWindow.xaml" Link="Ui\SheetNumeratorWindow.xaml" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

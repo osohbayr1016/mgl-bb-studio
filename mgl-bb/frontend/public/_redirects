@@ -1,0 +1,9 @@
+# Cloudflare Pages SPA fallback — every non-asset URL served by Pages
+# falls through to /index.html so React Router (`react-router-dom`) can
+# resolve the client-side route. Without this, a direct hit / refresh
+# on /app, /client, /request-quote, /app/admin/quotes, etc. returns the
+# Pages 404 page because no static file exists at that path.
+#
+# Static assets under /assets/* are served untouched by Pages's own
+# higher-priority rules; this rule applies to "real" routes only.
+/*  /index.html  200

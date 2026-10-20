@@ -1,0 +1,155 @@
+{
+ "_note": "1B-5 · GOLDEN БАГЦЫН МАНИФЕСТ.  ГАРААР БҮҮ ЗАС — `freeze.py refresh` бичнэ.  `exclude_row_ids` нь GOLDEN-EVAL ∪ GOLDEN-REGRESSION-ийн БҮХ мөрийн тодорхой, тоологдох жагсаалт; `train_intent.py` үүнтэй огтлолцсон сургалтын мөр олвол BUILD УНАНА (сэрэмжлүүлэг биш).  ⚠️ 2-6 (2026-08-31): `golden/rules.json`-ыг бөглөх ЦОРЫН ГАНЦ зөвшөөрөгдсөн зам нь `backend/scripts/gen-rule-golden.mjs`, тэр нь `rule_test_cases`-аас ЗӨВХӨН `verified = 1` мөр экспортолдог.  ГАРААР мөр нэмэхийг ХОРИГЛОНО — `revit-mcp/CLAUDE.md:59-116`-ийн БНбД тоонууд өөрсдөө «design-guidance, албан ёсны БНбД-тэй тулгаагүй».  ⚠️ Тэр хуваарь өнөөдөр ХООСОН ба `run_golden.py --kind rules` нь exit 2 өгдөг — ТЭР НЬ ЗӨВ ХАРИУ.  ⛔ Мөр гарч ирэхэд `freeze.py::stamp_ids` (мөр бүрээс `text`/`intent` шаарддаг) ба `run_golden.py::score` (санааны загвараар оноодог) ХОЁУЛАА дүрмийн мөрийг боловсруулж чадахгүй — тэр өргөтгөл нь `2-7`-ийн ажил.  ⚠️ `curated_train.registry_files`-д жагсаасан `production.json` нь диск дээр БАЙХГҮЙ: релиз N нь seed өгөгдөл дээр л сургагдсан (`training/datasets.manifest.json`-ы `_note`).",
+ "manifest_version": 2,
+ "dataset_version": "2026-08-28.1",
+ "preprocess_contract": "fold-v1",
+ "row_id": {
+  "source": "revit-mcp/training/train_intent.py :: row_id()",
+  "formula": "sha256(preprocess(text) + '\\x00' + intent).hexdigest()[:16]",
+  "_why": "1B-4-ийн тодорхойлолтыг ЯГ дуудна — энд хувилбар бичихийг хориглоно.  Түлхүүр нь ЭВХСЭН текст + санаа, тиймээс «ЦБУ-05 ыг 70 хувь болголоо» ба «cbu 05 ig 70 huv bolgoloo» НЭГ id авна; үсгийн хувилбараар батламжийг тойрох боломжгүй."
+ },
+ "curated_train": {
+  "_source_of_truth": "training/datasets.manifest.json",
+  "registry": "training/datasets.manifest.json",
+  "registry_sha256": "485b1b8be4ff58ea06907ff12ae2a548ce7533b83a6594aaee2ec20cd3b62298",
+  "registry_files": [
+   "hard-negatives.json",
+   "production.json",
+   "seed.json",
+   "bootstrap.json",
+   "english.json",
+   "multilang.json"
+  ],
+  "_files_scanned": [
+   "training/data/bootstrap.json",
+   "training/data/english.json",
+   "training/data/eval-holdout.ids.json",
+   "training/data/hard-negatives.json",
+   "training/data/multilang.json",
+   "training/data/seed.json"
+  ],
+  "_scan_note": "`_files_scanned` нь `training/data/*.json` glob ба бүртгэлийн НЭГДЭЛ — сургалтын датасетын жагсаалт БИШ.  Аль нь үнэхээр сургагддагийг `registry_files` хэлнэ.  `eval-holdout.ids.json` нь 1B-4-ийн хөлдөөсөн ID жагсаалт (`rows` байхгүй, 0 мөр нэмдэг) тул бүртгэлд ХЭЗЭЭ Ч орохгүй.",
+  "unique_folded_rows": 2402,
+  "_unique_folded_rows_note": "`train_intent.clean_records()`-ийн дараах ӨВӨРМӨЦ (preprocess(text), intent) хосын тоо.  Файлын `rows` уртын нийлбэр БИШ."
+ },
+ "holdout": {
+  "file": "training/data/eval-holdout.ids.json",
+  "present": true,
+  "sha256": "6d3d142620a674f6626b398298a1133f283a34a883aa86f9982a4e24b128944d"
+ },
+ "golden": {
+  "intents": {
+   "file": "eval/golden/intents.json",
+   "sha256": "b44ce75af6e05c4275ca2c2fa71482c5f286ea70fc81d7e95b8e454a376206a8",
+   "rows": 61
+  },
+  "bim": {
+   "file": "eval/golden/bim.json",
+   "sha256": "ff569fbede45500930e4055d5eba24d7790556655f0942d62c65213bb519c0e3",
+   "rows": 0
+  },
+  "rules": {
+   "file": "eval/golden/rules.json",
+   "sha256": "a26da4e7205fd1b523bdae4617ebb8b9f00257a71a86019fb3b72ac4207f13ae",
+   "rows": 0
+  },
+  "difficult_cases": {
+   "file": "eval/golden/difficult_cases.json",
+   "sha256": "6a9cb0735c62833ce4bd9ddd8e714fecfb1245a1e7577ae44ec8f62ef2abc0d8",
+   "rows": 0
+  },
+  "regressions": {
+   "file": "eval/golden/regressions.json",
+   "sha256": "6c69646ac48580e162d51966c7c1bbcabf0d42dd8a8fe4a44e63ce153c2e062a",
+   "rows": 4
+  },
+  "adversarial": {
+   "file": "eval/golden/adversarial.json",
+   "sha256": "6358d017faaf23d29b19c9dc35f7de602c38b3225dea0e808a6ec65a555266cf",
+   "rows": 18
+  }
+ },
+ "exclude_row_ids": [
+  "02f382aa4cfcfafc",
+  "034c7d4c57a71848",
+  "0926e40e1c8e032d",
+  "1b7234a3ceaa4d52",
+  "1bdef077e5071c09",
+  "1d94e96d2e41466d",
+  "22259db600658db9",
+  "22a0b69c2463c159",
+  "25de26ea007bbc4a",
+  "2a5f4e258c890e7b",
+  "2af2ad16a7203d23",
+  "2b04317bca9f4edd",
+  "2c62e85c0bed9b89",
+  "2dfc035657db2d2a",
+  "2e2807def9dd9c1a",
+  "2f732e61e9817628",
+  "32d58df7592bfa1a",
+  "33387a1e2b3ad819",
+  "341f4e9b74bc1399",
+  "37fb927a830e0272",
+  "3922176467dd9bd4",
+  "3d8ec046f7e6167c",
+  "4f1a4061dc22a3bb",
+  "5bd5e39bd4d5bd87",
+  "5e34b419d8734775",
+  "601569473fe2b998",
+  "639bcf5f35e67b73",
+  "67b31cfe45fdeea7",
+  "693e9cc23c87e885",
+  "6ca380f35b12e0c6",
+  "6ebe08b9473df4f9",
+  "7c7360251b67b630",
+  "7db36354a0b8e6f8",
+  "80cb331025302b27",
+  "81381d01ff83bc94",
+  "82709936d0ee9cde",
+  "86a313d31988f13d",
+  "8a119a297466fe07",
+  "9a0b182d459d3453",
+  "a3a651cdd903650b",
+  "a4ce9e32ada08fbd",
+  "a8e52bdfd3702e95",
+  "acd536dfb07f491b",
+  "b9654476972097bd",
+  "bbb175a8349bd02a",
+  "bed6a3ab2fe4e9c8",
+  "c4e796ad656d28c5",
+  "c66f8ba26e8fdca9",
+  "c7831143b2d20baa",
+  "c7f26261d46cb873",
+  "c942173cd9878dc3",
+  "cccfaf90bb7e216c",
+  "ceb43f3d7a6636f7",
+  "d5a46acfb4443e12",
+  "db5cf72374504371",
+  "db6fb62fb84acbdc",
+  "dcb656bdd37cd62a",
+  "dff725979e61e2d4",
+  "e2bf7dd02400a206",
+  "e4b0bfd6f56f2f54",
+  "ea15ef06de486e26",
+  "eb7bf88397aea24d",
+  "efb3489981b015ec",
+  "f2e62034a7869529",
+  "f4f2f2d9af6061ad"
+ ],
+ "required_partitions": {
+  "intent": [
+   "intents",
+   "regressions",
+   "adversarial"
+  ],
+  "bim": [
+   "bim",
+   "regressions"
+  ],
+  "rules": [
+   "rules",
+   "regressions"
+  ]
+ },
+ "_required_partitions_note": "`difficult_cases` нь `intent`-д САНААТАЙГААР ОРООГҮЙ — §9-ийн 6-р асуулт (эзний шийдвэр) хараахан хариулагдаагүй, `nominate.py` нэг ч удаа ажиллаагүй.  Эхний нэр дэвшүүлэлтийн дараа эзэн доод хязгаарыг баталж, `freeze.REQUIRED_PARTITIONS`-д нэмнэ."
+}

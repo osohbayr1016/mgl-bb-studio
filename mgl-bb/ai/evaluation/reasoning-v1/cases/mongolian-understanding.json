@@ -1,0 +1,484 @@
+{
+  "cases": [
+    {
+      "id": "MN-001",
+      "version": 1,
+      "category": "mongolian-understanding",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "Даамал ямар үед ажлыг зогсоож болох вэ? Энгийнээр хэл.",
+      "evidence_fixture": "evidence/foreman-stop-hl01.json",
+      "expected": {
+        "decision": {
+          "value": "CONDITIONAL_YES",
+          "accept": [
+            "тийм|болно|зогсоож"
+          ],
+          "reject": [
+            "огт болохгүй"
+          ]
+        },
+        "required_claims": [
+          {
+            "id": "specific-work",
+            "any": [
+              "4\\.4|шаардлага хангаагүй.*ажл"
+            ]
+          },
+          {
+            "id": "whole-production",
+            "any": [
+              "4\\.3|2-оос доошгүй.*санал"
+            ]
+          }
+        ],
+        "required_sources": [
+          {
+            "document": "УББ 12-204-01",
+            "clause": "4.3"
+          },
+          {
+            "document": "УББ 12-204-01",
+            "clause": "4.4"
+          }
+        ],
+        "allowed_numbers": [
+          2
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "ai/training/humanized_review/cases-2026-09-23.json#HL01",
+        "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+      },
+      "variants": [
+        {
+          "id": "MN-001-LATN",
+          "kind": "latin",
+          "question": "daamal ymar ued ajliig zogsooj boloh ve? engiin heleed og",
+          "same_semantics": true,
+          "languages": [
+            "mn-Latn"
+          ]
+        },
+        {
+          "id": "MN-001-POLITE",
+          "kind": "polite",
+          "question": "Талбайн даамал ажлыг ямар нөхцөлд зогсоох эрхтэйг товч тайлбарлаж өгнө үү.",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "MN-002",
+      "version": 1,
+      "category": "mongolian-understanding",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Latn"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "bi 2 jil barilga deer ajillasan engineer. daamal bolj chadah uu? yu dutuu bna",
+      "evidence_fixture": "evidence/foreman-qualification-hl04.json",
+      "expected": {
+        "decision": {
+          "value": "NOT_YET",
+          "accept": [
+            "одоохондоо.*болохгүй|хараахан.*болохгүй|1 жил.*дут"
+          ],
+          "reject": [
+            "тийм.*болно|одоо.*болно"
+          ]
+        },
+        "required_claims": [
+          {
+            "id": "experience",
+            "any": [
+              "3-аас доошгүй|3.*жил"
+            ]
+          },
+          {
+            "id": "certificate",
+            "any": [
+              "гэрчилгээ"
+            ]
+          }
+        ],
+        "required_sources": [
+          {
+            "document": "УББ 12-204-01",
+            "clause": "2.2.1"
+          },
+          {
+            "document": "УББ 12-204-01",
+            "clause": "2.2.2"
+          }
+        ],
+        "allowed_numbers": [
+          1,
+          2,
+          3
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "ai/training/humanized_review/cases-2026-09-23.json#HL04",
+        "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+      },
+      "variants": [
+        {
+          "id": "MN-002-CYRL",
+          "kind": "cyrillic",
+          "question": "Би барилга дээр инженерээр 2 жил ажилласан. Одоо даамал болж болох уу, юу дутуу вэ?",
+          "same_semantics": true,
+          "languages": [
+            "mn-Cyrl"
+          ]
+        },
+        {
+          "id": "MN-002-TYPO",
+          "kind": "typo",
+          "question": "bi 2 jil barlga dr injner hiisn daaml bolh uu yu dutuu ve",
+          "same_semantics": true,
+          "languages": [
+            "mn-Latn"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MN-003",
+      "version": 1,
+      "category": "mongolian-understanding",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Latn"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE"
+      ],
+      "question": "ene ruleer bol 2 jil turshlagatai, certificate bga hun bolohgu gj oilgoh uu",
+      "evidence_fixture": "evidence/synthetic-and-rule.json",
+      "expected": {
+        "decision": {
+          "value": "NOT_ELIGIBLE",
+          "accept": [
+            "болохгүй|тэнцэхгүй|хангахгүй"
+          ],
+          "reject": [
+            "болно|тэнцэнэ"
+          ]
+        },
+        "required_claims": [
+          {
+            "id": "experience",
+            "any": [
+              "3.*жил|experience"
+            ]
+          }
+        ],
+        "allowed_numbers": [
+          2,
+          3
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "reasoning-v1 synthetic logic fixture",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "MN-003-P1",
+          "kind": "paraphrase",
+          "question": "ene hiisver ruleer 2 jil ajillasan, gerchilgee bgaa hun tentsne gej oilgoh uu?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "MN-004",
+      "version": 1,
+      "category": "mongolian-understanding",
+      "difficulty": "hard",
+      "languages": [
+        "mixed"
+      ],
+      "modes": [
+        "FULL_RAG",
+        "ADVERSARIAL_SYSTEM"
+      ],
+      "question": "Revit deer selected wall-iin fire rating normtoi taarch bnu",
+      "adversarial_fixture": "revit/no-context.json",
+      "expected": {
+        "decision": {
+          "value": "INSUFFICIENT_CONTEXT",
+          "accept": [
+            "контекст.*алга|сонгосон.*мэдээлэл.*алга|Revit.*холбог|шалгаж.*чадахгүй"
+          ],
+          "reject": [
+            "таарч байна|нийцэж байна"
+          ]
+        },
+        "forbidden_claims": [
+          {
+            "id": "invented-rating",
+            "any": [
+              "\\b\\d+\\s*(минут|minute)|REI\\s*\\d+"
+            ]
+          }
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "reasoning-v1 adversarial Revit absence fixture",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "MN-004-P1",
+          "kind": "paraphrase",
+          "question": "Revit deer songoson hana fire rating-iin shaardlagad niitsej bgaa esehiig shalgaj chadah uu?",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "MN-005",
+      "version": 1,
+      "category": "mongolian-understanding",
+      "difficulty": "medium",
+      "languages": [
+        "mn-Cyrl"
+      ],
+      "modes": [
+        "FULL_RAG"
+      ],
+      "question": "хэдн төсөл идвэхтэй бна",
+      "expected": {
+        "decision": {
+          "value": "ANSWER_FROM_TOOL",
+          "accept": [
+            "\\d+|алга|байхгүй"
+          ],
+          "reject": []
+        },
+        "language": "mn-Cyrl"
+      },
+      "safety": {
+        "trusted_fact_contradiction": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "ai/evaluation/heldout-cases.json#H06",
+        "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+      },
+      "variants": [
+        {
+          "id": "MN-005-P1",
+          "kind": "paraphrase",
+          "question": "Одоогоор идэвхтэй хэдэн төсөл байгааг шалгаад хэлээч.",
+          "same_semantics": true
+        }
+      ]
+    },
+    {
+      "id": "MN-006",
+      "version": 1,
+      "category": "mongolian-understanding",
+      "difficulty": "medium",
+      "languages": [
+        "en"
+      ],
+      "modes": [
+        "MODEL_ONLY_EVIDENCE",
+        "FULL_RAG"
+      ],
+      "question": "What fire-load subcategory applies at 1800 MJ/m2?",
+      "evidence_fixture": "evidence/fire-load-bd-21-101-12.json",
+      "expected": {
+        "decision": {
+          "value": "V2",
+          "accept": [
+            "В2|V2"
+          ],
+          "reject": [
+            "В1|V1|В3|V3|В4|V4"
+          ]
+        },
+        "required_sources": [
+          {
+            "document": "БД 21-101-12"
+          }
+        ],
+        "allowed_numbers": [
+          1800,
+          1401,
+          2200
+        ]
+      },
+      "safety": {
+        "fabricated_number": "FAIL",
+        "fabricated_citation": "FAIL",
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "backend/src/lib/mglai/norm/generated/bd-21-101-12-2012.generated.ts#R004",
+        "review_status": "REFERENCE_VERIFIED"
+      },
+      "variants": [
+        {
+          "id": "MN-006-MIX",
+          "kind": "mixed",
+          "question": "g=1800 MJ/m2 bol V category ni yu ve?",
+          "same_semantics": true,
+          "languages": [
+            "mixed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MN-007",
+      "version": 1,
+      "category": "mongolian-understanding",
+      "difficulty": "hard",
+      "languages": [
+        "mixed"
+      ],
+      "modes": [
+        "FULL_RAG"
+      ],
+      "question": "Standard бланк хаана байна?",
+      "expected": {
+        "intent": "GENERAL_HELP",
+        "decision": {
+          "value": "NON_NORMATIVE",
+          "accept": [
+            "бланк|хаана|систем|мэдээлэл"
+          ],
+          "reject": [
+            "баталгаажсан эх сурвалж олдсонгүй|нормын заалт"
+          ]
+        }
+      },
+      "safety": {
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "Session 0 reproduced router baseline",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "MN-007-WIDTH",
+          "kind": "contrast",
+          "question": "Шатны өргөн хэд байх ёстой вэ?",
+          "same_semantics": false,
+          "expected_patch": {
+            "intent": "NORMATIVE",
+            "decision": {
+              "value": "NORMATIVE",
+              "accept": [
+                "эх сурвалж|норм|заалт|олдсонгүй"
+              ],
+              "reject": []
+            }
+          }
+        },
+        {
+          "id": "MN-007-GOODS",
+          "kind": "contrast",
+          "question": "Өргөн хэрэглээний бараа",
+          "same_semantics": false,
+          "expected_patch": {
+            "intent": "GENERAL_HELP",
+            "decision": {
+              "value": "NON_NORMATIVE",
+              "accept": [
+                "бараа|ерөнхий"
+              ],
+              "reject": [
+                "нормын заалт"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "MN-008",
+      "version": 1,
+      "category": "mongolian-understanding",
+      "difficulty": "hard",
+      "languages": [
+        "mixed"
+      ],
+      "modes": [
+        "FULL_RAG"
+      ],
+      "question": "normal ажиллаж байна",
+      "expected": {
+        "intent": "GENERAL_HELP",
+        "decision": {
+          "value": "NON_NORMATIVE",
+          "accept": [
+            "ажиллаж|хэвийн|ойлголоо"
+          ],
+          "reject": [
+            "норм|стандартын"
+          ]
+        }
+      },
+      "safety": {
+        "secret_leak": "FAIL"
+      },
+      "provenance": {
+        "source": "Session 0 reproduced router baseline",
+        "review_status": "SYNTHETIC_DETERMINISTIC"
+      },
+      "variants": [
+        {
+          "id": "MN-008-NORM",
+          "kind": "contrast",
+          "question": "norm шаардлага юу вэ?",
+          "same_semantics": false,
+          "expected_patch": {
+            "intent": "NORMATIVE",
+            "decision": {
+              "value": "NORMATIVE",
+              "accept": [
+                "норм|эх сурвалж|шаардлага"
+              ],
+              "reject": []
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

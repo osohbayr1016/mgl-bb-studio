@@ -1,0 +1,198 @@
+{
+  "measured_at": "2026-09-10T14:06:49",
+  "base_model": "Qwen/Qwen3-8B",
+  "base_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "rank": 16,
+  "quant": {
+    "load_in_4bit": true,
+    "type": "nf4",
+    "double_quant": true,
+    "compute": "bfloat16"
+  },
+  "optimizer": "paged_adamw_8bit",
+  "gradient_checkpointing": true,
+  "env": {
+    "os": "Windows 11 (10.0.26200)",
+    "python": "3.12.10",
+    "torch": "2.14.0+cu126",
+    "cuda": "12.6",
+    "cudnn": 91002,
+    "transformers": "5.17.0",
+    "peft": "0.20.0",
+    "bitsandbytes": "0.50.2",
+    "gpu": "NVIDIA GeForce RTX 3070",
+    "vram_total_mb": 8191,
+    "vram_free_at_start_mb": 7100,
+    "ram_total_mb": 32581,
+    "nvidia_smi": "NVIDIA GeForce RTX 3070, 8192 MiB, 576 MiB, 560.94"
+  },
+  "load": {
+    "seconds": 16,
+    "allocated_mb": 5806,
+    "peak_mb": 5887
+  },
+  "token_lengths": {
+    "n": 326,
+    "mean": 1240,
+    "median": 1325,
+    "p90": 1860,
+    "p95": 1917,
+    "max": 2319,
+    "over_512": 305,
+    "over_768": 271,
+    "over_1024": 202,
+    "over_1536": 81,
+    "over_2048": 7,
+    "dataset_version": "behav-2026-09-10.3",
+    "tokenizer": "Qwen/Qwen3-8B@b968826d"
+  },
+  "stages": [
+    {
+      "plan": "all",
+      "max_seq": 512,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "sysmem_spill": false,
+      "loss": 1.9356193542480469,
+      "forward_peak_mb": 6878,
+      "backward_peak_mb": 7171,
+      "peak_allocated_mb": 7223,
+      "peak_reserved_mb": 7904,
+      "step_ms": 2095,
+      "step_ms_all": [
+        2364,
+        2095,
+        1870
+      ],
+      "ram_rss_mb": 2178
+    },
+    {
+      "plan": "all",
+      "max_seq": 768,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "sysmem_spill": false,
+      "loss": 1.3375290632247925,
+      "forward_peak_mb": 7538,
+      "backward_peak_mb": 7822,
+      "peak_allocated_mb": 7822,
+      "peak_reserved_mb": 8418,
+      "step_ms": 3093,
+      "step_ms_all": [
+        2516,
+        3161,
+        3093
+      ],
+      "ram_rss_mb": 2963
+    },
+    {
+      "plan": "all",
+      "max_seq": 1024,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": false,
+      "sysmem_spill": true,
+      "loss": 1.100946307182312,
+      "forward_peak_mb": 8064,
+      "backward_peak_mb": 8416,
+      "peak_allocated_mb": 8416,
+      "peak_reserved_mb": 9648,
+      "step_ms": 5117,
+      "step_ms_all": [
+        5117,
+        5488,
+        4914
+      ],
+      "ram_rss_mb": 4198
+    },
+    {
+      "plan": "all",
+      "max_seq": 1536,
+      "ok": false,
+      "skipped": "өмнөх богино урт унасан"
+    },
+    {
+      "plan": "all",
+      "max_seq": 2048,
+      "ok": false,
+      "skipped": "өмнөх богино урт унасан"
+    },
+    {
+      "plan": "attn",
+      "max_seq": 512,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "sysmem_spill": false,
+      "loss": 2.2662699222564697,
+      "forward_peak_mb": 7258,
+      "backward_peak_mb": 7258,
+      "peak_allocated_mb": 7258,
+      "peak_reserved_mb": 7706,
+      "step_ms": 1583,
+      "step_ms_all": [
+        1583,
+        1551,
+        1701
+      ],
+      "ram_rss_mb": 2335
+    },
+    {
+      "plan": "attn",
+      "max_seq": 768,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": true,
+      "sysmem_spill": false,
+      "loss": 1.725408911705017,
+      "forward_peak_mb": 7416,
+      "backward_peak_mb": 7699,
+      "peak_allocated_mb": 7700,
+      "peak_reserved_mb": 8188,
+      "step_ms": 1796,
+      "step_ms_all": [
+        1881,
+        1796,
+        1794
+      ],
+      "ram_rss_mb": 2879
+    },
+    {
+      "plan": "attn",
+      "max_seq": 1024,
+      "micro_batch": 1,
+      "steps": 3,
+      "ok": false,
+      "sysmem_spill": true,
+      "loss": 1.5659986734390259,
+      "forward_peak_mb": 7942,
+      "backward_peak_mb": 8293,
+      "peak_allocated_mb": 8294,
+      "peak_reserved_mb": 9370,
+      "step_ms": 3026,
+      "step_ms_all": [
+        3026,
+        3109,
+        2902
+      ],
+      "ram_rss_mb": 4239
+    },
+    {
+      "plan": "attn",
+      "max_seq": 1536,
+      "ok": false,
+      "skipped": "өмнөх богино урт унасан"
+    },
+    {
+      "plan": "attn",
+      "max_seq": 2048,
+      "ok": false,
+      "skipped": "өмнөх богино урт унасан"
+    }
+  ],
+  "verdict": "FITS_WITH_OFFLOAD_OR_REDUCED_SEQ",
+  "recommended_max_seq": 768,
+  "recommended_targets": "all"
+}

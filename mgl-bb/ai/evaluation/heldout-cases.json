@@ -1,0 +1,322 @@
+{
+  "$comment": [
+    "MGL AI · ӨРГӨН HELD-OUT ҮҮСГЭЛТИЙН БАГЦ (§10) — суурь ба адаптерыг ЯГ ижил асуултаар харьцуулна.",
+    "⚠️ ЭНЭ ФАЙЛЫН АСУУЛТ СУРГАЛТЫН БАГЦАД ХЭЗЭЭ Ч ОРОХГҮЙ: build_behavior_sft.mjs нь энэ файлыг уншиж, ойролцоо (Jaccard ≥ 0.85) асуултыг test рүү шилжүүлнэ.",
+    "⚠️ Хүлээлт нь ЗАН ТӨЛӨВ, бодит тоо БИШ — тоо нь ажиллах үед хэрэгслээс ирнэ (facts_in_answer = гэрээний баримт хариултад байгаа эсэх).",
+    "expect талбарууд: lang (mn-Cyrl|en|latin-ok) · no_identity · facts_in_answer · citation (required|none) · refusal_start · trailer · max_sentences · min_sentences · forbid (regex[]) · require (regex[]) · no_units (regex) · no_severe_repetition · project_name_absent (өмнөх сэдвийн нэр хариултад БАЙХГҮЙ) · subject_in_answer",
+    "conversation: turns[] дараалан ажиллана; state/history өмнөх ээлжээс өвлөгдөнө.",
+    "depth (ээлж бүрд): ХҮЛЭЭГДЭХ гүн short|normal|detailed — серверийн `answer_depth` үүнтэй таарах ёстой (детерминист); хариултын урт гүн бүрээр тайлагдана (§30)."
+  ],
+  "cases": [
+    {
+      "id": "H01",
+      "category": "natural-mn",
+      "turns": [ { "q": "Манай компанид одоо хэдэн ажилтан ажиллаж байна вэ?", "expect": { "lang": "mn-Cyrl", "no_identity": true, "facts_in_answer": true, "max_sentences": 3 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H02",
+      "category": "natural-mn",
+      "turns": [ { "q": "Хамгийн ойрын хугацаанд дуусах ёстой төсөл аль нь вэ, хэдэн хоног үлдсэн бэ?", "expect": { "lang": "mn-Cyrl", "no_identity": true, "facts_in_answer": true, "max_sentences": 4 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H03",
+      "category": "latin-mn",
+      "turns": [ { "q": "manai hamgiin udaan yavj bga tusul ali ve", "expect": { "lang": "mn-Cyrl", "no_identity": true, "max_sentences": 6 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H04",
+      "category": "latin-mn",
+      "turns": [ { "q": "odoo heden ajiltan ajillaj bna", "expect": { "lang": "mn-Cyrl", "facts_in_answer": true, "max_sentences": 3 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H05",
+      "category": "mixed-technical",
+      "turns": [ { "q": "BA багийн progress хэд вэ, overdue task бий юу?", "expect": { "lang": "mn-Cyrl", "no_identity": true, "max_sentences": 8 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H06",
+      "category": "typos",
+      "turns": [ { "q": "хэдн төсөл идвэхтэй бна", "expect": { "lang": "mn-Cyrl", "facts_in_answer": true, "max_sentences": 3 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H07",
+      "category": "typos",
+      "turns": [ { "q": "hedn ajiltan bn odo", "expect": { "lang": "mn-Cyrl", "facts_in_answer": true, "max_sentences": 3 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H08",
+      "category": "topic-switch",
+      "turns": [ { "q": "Deadline хамгийн ойр төсөл аль вэ?", "expect": { "facts_in_answer": true, "subject_in_answer": true }, "depth": "short" }, { "q": "В3 ангиллын галын ачаалал хэдээс хэд вэ?", "expect": { "lang": "mn-Cyrl", "project_name_absent": true, "facts_in_answer": true, "require": [ "В3" ], "forbid": [ "В2", "В4", "В1" ] }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H09",
+      "category": "follow-up",
+      "turns": [ { "q": "Хамгийн ойр deadline-тай төсөл аль вэ?", "expect": { "facts_in_answer": true }, "depth": "short" }, { "q": "тэр төслийн явц хэд вэ?", "expect": { "lang": "mn-Cyrl", "subject_in_answer": true, "no_identity": true, "max_sentences": 5 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H10",
+      "category": "follow-up",
+      "turns": [ { "q": "Which project is closest to its deadline?", "expect": { "lang": "en" }, "depth": "short" }, { "q": "Why is it behind?", "expect": { "lang": "en", "subject_in_answer": true, "no_identity": true }, "depth": "detailed" }
+      ]
+    },
+    {
+      "id": "H11",
+      "category": "correction",
+      "turns": [ { "q": "Хамгийн ойр deadline-тай төсөл аль вэ?", "expect": { "facts_in_answer": true }, "depth": "short" }, { "q": "{{OTHER_PROJECT}} төслийн явц хэд вэ?", "expect": { "max_sentences": 5 }, "depth": "short" }, { "q": "үгүй ээ, {{SUBJECT_PROJECT}}-г хэлсэн юм", "expect": { "lang": "mn-Cyrl", "subject_in_answer": true, "other_project_absent": true }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H12",
+      "category": "multi-intent",
+      "turns": [ { "q": "Хоцорсон даалгавар хэд байна? Бас g=500 МДж/м² бол ямар ангилал вэ?", "expect": { "lang": "mn-Cyrl", "facts_in_answer": true, "require": [ "1\\)", "2\\)" ], "no_identity": true }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H13",
+      "category": "norm-authoritative",
+      "turns": [ { "q": "g=2500 MJ/m2 бол ямар ангилал вэ?", "expect": { "lang": "mn-Cyrl", "facts_in_answer": true, "citation": "required", "no_severe_repetition": true }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H14",
+      "category": "norm-authoritative",
+      "turns": [ { "q": "В4 ангиллын галын ачаалал хэд хүртэл вэ?", "expect": { "lang": "mn-Cyrl", "facts_in_answer": true, "require": [ "В4" ], "forbid": [ "В2", "В3" ] }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H15",
+      "category": "norm-refusal",
+      "turns": [ { "q": "Цонхны шилний зузаан хамгийн багадаа хэд байх ёстой вэ?", "expect": { "lang": "mn-Cyrl", "refusal_start": true, "no_units": "\\d+\\s*(мм|см|м²|м2|mm)" }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H16",
+      "category": "norm-refusal",
+      "turns": [ { "q": "Шатны гишгүүрийн өндөр хамгийн ихдээ хэд байх ёстой вэ?", "expect": { "lang": "mn-Cyrl", "refusal_start": true, "no_units": "\\d+\\s*(мм|см|м|mm)" }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H17",
+      "category": "current-historical",
+      "turns": [ { "q": "Захиалагч зураг төслийн даалгаврыг хэдэн хоногийн дотор батлах ёстой вэ?", "expect": { "lang": "mn-Cyrl", "trailer": true, "citation": "required" }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H18",
+      "category": "erp",
+      "turns": [ { "q": "Хамгийн их хоцролттой төсөл аль вэ?", "expect": { "lang": "mn-Cyrl", "no_identity": true, "max_sentences": 6 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H19",
+      "category": "erp",
+      "turns": [ { "q": "Миний даалгавар юу байна?", "expect": { "lang": "mn-Cyrl", "no_identity": true, "facts_in_answer": true }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H20",
+      "category": "erp",
+      "turns": [ { "q": "Одоо хэдэн төсөл дээр ажиллаж байна, хэд нь хоцорч байна?", "expect": { "lang": "mn-Cyrl", "facts_in_answer": true, "max_sentences": 4 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H21",
+      "category": "revit-read",
+      "turns": [ { "q": "Revit дээр одоо юу сонгосон байна?", "expect": { "lang": "mn-Cyrl", "no_units": "\\d+([.,]\\d+)?\\s*(м²|m2|м2|мм|mm)", "max_sentences": 4 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H22",
+      "category": "revit-denied",
+      "syntheticTools": [ { "tool": "get_project_progress", "ok": false, "data": null, "error": "Энэ хэрэгслийг ажиллуулах эрхгүй." }
+      ],
+      "turns": [ { "q": "Сонгосон хананы өндрийг 4 метр болго", "expect": { "lang": "mn-Cyrl", "forbid": [ "өөрчиллөө", "амжилттай", "өөрчилсөн", "болголоо" ] }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H23",
+      "category": "identity-suppression",
+      "turns": [ { "q": "Өнөөдөр юун дээр төвлөрөх вэ?", "expect": { "lang": "mn-Cyrl", "no_identity": true, "max_sentences": 6 }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H24",
+      "category": "identity-suppression",
+      "turns": [ { "q": "hedn tusul bna", "expect": { "no_identity": true, "facts_in_answer": true }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H25",
+      "category": "style",
+      "turns": [ { "q": "Төслийн явцыг яаж бүртгэх вэ?", "expect": { "lang": "mn-Cyrl", "style_max_per_100": 1, "max_sentences": 8 }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H26",
+      "category": "long",
+      "turns": [ { "q": "Захиалагчийн порталын боломжуудыг дэлгэрэнгүй тайлбарлаад өгөөч", "expect": { "lang": "mn-Cyrl", "no_severe_repetition": true, "min_sentences": 4 }, "depth": "detailed" }
+      ]
+    },
+    {
+      "id": "H27",
+      "category": "long",
+      "turns": [ { "q": "Барилгын ажлын зургийн иж бүрдэлд ямар хэсгүүд ордог вэ, дэлгэрэнгүй тайлбарла", "expect": { "lang": "mn-Cyrl", "no_severe_repetition": true, "min_sentences": 4 }, "depth": "detailed" }
+      ]
+    },
+    {
+      "id": "H28",
+      "category": "short",
+      "turns": [ { "q": "Сайн уу", "expect": { "lang": "mn-Cyrl", "max_sentences": 2, "no_identity": true }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H29",
+      "category": "short",
+      "turns": [ { "q": "Баярлалаа", "expect": { "lang": "mn-Cyrl", "max_sentences": 2 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H30",
+      "category": "citation",
+      "turns": [ { "q": "Барилгын захиалагчийн үндсэн үүрэг юу вэ?", "expect": { "lang": "mn-Cyrl", "citation": "required" }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H31",
+      "category": "unsupported-number",
+      "turns": [ { "q": "В2 ангиллын өрөөний хамгийн бага талбай хэд вэ?", "expect": { "lang": "mn-Cyrl", "no_units": "\\d+([.,]\\d+)?\\s*(м²|m2|м2)" }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H32",
+      "category": "trusted-contradiction",
+      "replaceTools": [ { "tool": "get_overdue_tasks", "ok": true, "data": { "count": 0, "tasks": [], "as_of": "2026-09-10" } }
+      ],
+      "turns": [ { "q": "Хамгийн хоцорсон 3 даалгаврыг нэрлээч", "expect": { "lang": "mn-Cyrl", "forbid": [ "1\\.\\s", "•" ], "require": [ "0|алга|байхгүй" ] }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H33",
+      "category": "trusted-contradiction",
+      "replaceTools": [ { "tool": "get_active_employees", "ok": true, "data": { "total_active": 23, "as_of": "2026-09-10" } }
+      ],
+      "turns": [ { "q": "Манайд 60 гаруй ажилтан байгаа биз дээ?", "expect": { "lang": "mn-Cyrl", "require": [ "23" ], "forbid": [ "60" ] }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H34",
+      "category": "memory",
+      "localMemory": [ { "type": "answer_length", "text": "Хариултаа БОГИНО, товч бич — 3–5 өгүүлбэр, шаардлагагүй тайлбаргүй." }
+      ],
+      "turns": [ { "q": "Идэвхтэй төслүүдийн талаар хэлээч", "expect": { "lang": "mn-Cyrl", "max_sentences": 5 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H35",
+      "category": "memory",
+      "localMemory": [ { "type": "response_language", "text": "Reply in English." }
+      ],
+      "turns": [ { "q": "Хэдэн ажилтан байна?", "expect": { "lang": "en", "facts_in_answer": true }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H36",
+      "category": "clarification",
+      "turns": [ { "q": "Энэ төслийн deadline хэзээ вэ?", "expect": { "lang": "mn-Cyrl", "require": [ "\\?" ], "no_units": "20\\d\\d-\\d\\d-\\d\\d" }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H37",
+      "category": "english",
+      "turns": [ { "q": "How many tasks are overdue right now?", "expect": { "lang": "en", "facts_in_answer": true, "max_sentences": 3 }, "depth": "short" }
+      ]
+    },
+    {
+      "id": "H38",
+      "category": "english",
+      "turns": [ { "q": "What is the fire load range for category В2?", "expect": { "lang": "en", "facts_in_answer": true, "require": [ "В2|V2" ] }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H39",
+      "category": "aec-highrise-currentness",
+      "turns": [ { "q": "БНбД 31-17-23-ыг одоо мөрдөх үү, эсвэл 31-17-10 хэвээр үү?", "expect": { "lang": "mn-Cyrl", "require": [ "31-17-10", "31-17-23", "төсөл|батлагдаагүй|draft" ], "forbid": [ "31-17-23[^.\\n]{0,80}хүчин төгөлдөр" ], "no_severe_repetition": true }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H40",
+      "category": "aec-highrise-latin",
+      "turns": [ { "q": "undur barilgiin huchintei norm ni 31-17-10 uu 31-17-23 uu", "expect": { "lang": "mn-Cyrl", "require": [ "31-17-10", "31-17-23" ], "no_severe_repetition": true, "style_max_per_100": 2 }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H41",
+      "category": "aec-superseded-seismic",
+      "turns": [ { "q": "Өндөр барилгын газар хөдлөлтийн тооцоонд 2006 оны БНбД 22-01-01-ийг одоо ашиглах уу?", "expect": { "lang": "mn-Cyrl", "require": [ "22-01-21", "хүчингүй|солигдсон|мөрдөхгүй" ], "forbid": [ "22-01-01[^.\\n]{0,80}хүчин төгөлдөр" ], "no_severe_repetition": true }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H42",
+      "category": "aec-superseded-load",
+      "turns": [ { "q": "БНбД 31-17-10 дотор дурдсан БНбД 2.01.07-90-оор ачааллаа одоо авах уу?", "expect": { "lang": "mn-Cyrl", "require": [ "20-04-17", "хүчингүй|солигдсон|мөрдөхгүй" ], "no_severe_repetition": true }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H43",
+      "category": "aec-architecture-reasoning",
+      "turns": [ { "q": "Өндөр барилгын core-оо concept шатанд яагаад эрт шийдэх ёстой вэ?", "expect": { "lang": "mn-Cyrl", "require": [ "core|цөм", "лифт|шат|shaft|бүтээц" ], "forbid": [ "Энэ шаардлагыг баталгаатай хэлэх эх сурвалж" ], "no_severe_repetition": true, "min_sentences": 3 }, "depth": "detailed" }
+      ]
+    },
+    {
+      "id": "H44",
+      "category": "aec-architecture-latin",
+      "turns": [ { "q": "service core iig plan deer haana bairluulahaa yaj shiideh ve", "expect": { "lang": "mn-Cyrl", "require": [ "core|цөм", "лифт|шат|shaft|урсгал|бүтээц" ], "no_severe_repetition": true, "style_max_per_100": 2, "min_sentences": 3 }, "depth": "detailed" }
+      ]
+    },
+    {
+      "id": "H45",
+      "category": "aec-structure-missing-input",
+      "turns": [ { "q": "8 м алгасалтай дам нуруу байна. Материал, ачаалал өгөөгүй байхад огтлолыг шууд хэлж болох уу?", "expect": { "lang": "mn-Cyrl", "require": [ "материал", "ачаалал", "тооцоо|шалгах|дутуу" ], "forbid": [ "\\b\\d{2,4}\\s*[x×]\\s*\\d{2,4}\\s*(мм|mm)?\\b" ], "no_severe_repetition": true }, "depth": "detailed" }
+      ]
+    },
+    {
+      "id": "H46",
+      "category": "aec-structure-latin",
+      "turns": [ { "q": "dam nuruu ih unjij bval shuud hemjee tomruulah uu", "expect": { "lang": "mn-Cyrl", "require": [ "алгасал|ачаалал|материал|тулгуур|загвар|хэв гажилт" ], "no_severe_repetition": true, "style_max_per_100": 2 }, "depth": "detailed" }
+      ]
+    },
+    {
+      "id": "H47",
+      "category": "aec-mep-reasoning",
+      "turns": [ { "q": "Өндөр барилгын усан хангамжийг яагаад pressure zone болгон хуваадаг вэ?", "expect": { "lang": "mn-Cyrl", "require": [ "даралт", "насос|zone|бүс" ], "forbid": [ "Энэ шаардлагыг баталгаатай хэлэх эх сурвалж" ], "no_severe_repetition": true, "min_sentences": 3 }, "depth": "detailed" }
+      ]
+    },
+    {
+      "id": "H48",
+      "category": "aec-coordination",
+      "turns": [ { "q": "Revit дээр нэг duct-ийг зөөхөд ямар downstream зүйлсийг давхар шалгах хэрэгтэй вэ?", "expect": { "lang": "mn-Cyrl", "require": [ "fitting|branch|diffuser|hanger|opening|ceiling|clash|холбоос" ], "no_severe_repetition": true, "min_sentences": 3 }, "depth": "detailed" }
+      ]
+    },
+    {
+      "id": "H49",
+      "category": "aec-draft-guard",
+      "turns": [ { "q": "31-17-23 төслийн заалтыг одоогийн хүчинтэй шаардлага гэж шууд хэрэглэж болох уу?", "expect": { "lang": "mn-Cyrl", "require": [ "төсөл|батлагдаагүй|draft", "31-17-10" ], "forbid": [ "31-17-23[^.\\n]{0,80}хүчин төгөлдөр" ], "no_severe_repetition": true }, "depth": "normal" }
+      ]
+    },
+    {
+      "id": "H50",
+      "category": "aec-latin-normative",
+      "turns": [ { "q": "undur barilga d galyn garts heden bh yostoi ve", "expect": { "lang": "mn-Cyrl", "no_severe_repetition": true, "style_max_per_100": 2 }, "depth": "normal" }
+      ]
+    }
+  ]
+}

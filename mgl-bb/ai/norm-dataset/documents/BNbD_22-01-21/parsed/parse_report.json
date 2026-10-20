@@ -1,0 +1,17 @@
+{
+  "parser": "parse_pdf/1",
+  "warnings": [],
+  "anomalies": [],
+  "counts": {
+    "sections": 9,
+    "appendices": 2,
+    "clauses": 464,
+    "tables": 17,
+    "formulas": 35,
+    "references": 15,
+    "definitions": 54,
+    "numeric_requirements": 101,
+    "tables_ruled_grid": 6,
+    "formulas_clean": 3
+  }
+}

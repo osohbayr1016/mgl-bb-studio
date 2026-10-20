@@ -1,0 +1,100 @@
+<Window x:Class="RevitMcpAddin.SettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MGL — Бүртгэл ба төсөл"
+        Width="520"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        UseLayoutRounding="True">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />   <!-- 0 тайлбар -->
+            <RowDefinition Height="Auto" />   <!-- 1 «1. Бүртгэл» -->
+            <RowDefinition Height="Auto" />   <!-- 2 нэвтрэлтийн төлөв -->
+            <RowDefinition Height="Auto" />   <!-- 3 нэр, нууц үг, товч -->
+            <RowDefinition Height="Auto" />   <!-- 4 «2. ERP төсөл» -->
+            <RowDefinition Height="Auto" />   <!-- 5 төсөл сонгогч -->
+            <RowDefinition Height="Auto" />   <!-- 6 жагсаалтын төлөв -->
+            <RowDefinition Height="Auto" />   <!-- 7 «3. Туузан цэс» -->
+            <RowDefinition Height="Auto" />   <!-- 8 салбарын сонголт -->
+            <RowDefinition Height="Auto" />   <!-- 9 нарийвчилсан -->
+            <RowDefinition Height="Auto" />   <!-- 10 товчны мөр -->
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="IntroText" Grid.Row="0" Margin="0,0,0,12" Style="{DynamicResource MglMuted}"
+                   Text="Компанийн бүртгэлээрээ нэвтэрч, ERP дээр ажиллах төслөө сонгоно. Нууц үг хэзээ ч хадгалагдахгүй." />
+
+        <TextBlock Grid.Row="1" Text="1. Бүртгэл" Style="{DynamicResource MglSubheading}" Margin="0,0,0,6" />
+        <TextBlock x:Name="AccountStatus" Grid.Row="2" TextWrapping="Wrap" Margin="0,0,0,8" />
+
+        <Grid Grid.Row="3" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="UserLabel" Grid.Row="0" Grid.Column="0" Text="Нэвтрэх нэр" VerticalAlignment="Center" Margin="0,0,12,8" MinWidth="96" />
+            <TextBox x:Name="UserBox" Grid.Row="0" Grid.Column="1" Margin="0,0,0,8" />
+
+            <TextBlock x:Name="PassLabel" Grid.Row="1" Grid.Column="0" Text="Нууц үг" VerticalAlignment="Center" Margin="0,0,12,8" />
+            <PasswordBox x:Name="PassBox" Grid.Row="1" Grid.Column="1" Margin="0,0,0,8" />
+
+            <Button x:Name="LoginBtn" Grid.Row="2" Grid.Column="1" Content="Нэвтрэх" Width="130" HorizontalAlignment="Left"
+                    IsDefault="True" Click="LoginBtn_Click" />
+        </Grid>
+
+        <TextBlock Grid.Row="4" Text="2. ERP төсөл" Style="{DynamicResource MglSubheading}" Margin="0,0,0,6" />
+
+        <Grid Grid.Row="5" Margin="0,0,0,6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="ProjectCombo" Grid.Column="0" DisplayMemberPath="Name" SelectionChanged="ProjectCombo_SelectionChanged" />
+            <Button x:Name="LoadProjectsBtn" Grid.Column="1" Content="Жагсаалт шинэчлэх" Margin="8,0,0,0" Click="LoadProjectsBtn_Click" />
+        </Grid>
+        <TextBlock x:Name="ProjectStatus" Grid.Row="6" TextWrapping="Wrap" Margin="0,0,0,12" />
+
+        <TextBlock Grid.Row="7" Text="3. Туузан цэсэнд харагдах хэрэгсэл" Style="{DynamicResource MglSubheading}" Margin="0,0,0,6" />
+
+        <!-- Салбарын шүүлт (2026-10-13): сонголт ШУУД хэрэгжинэ, «Хадгалах» шаардахгүй (Ui/Revit/RibbonDisciplines.cs). -->
+        <StackPanel Grid.Row="8" Margin="0,0,0,12">
+            <RadioButton x:Name="RibbonAutoRadio" GroupName="RibbonMode" Margin="0,0,0,4" Checked="RibbonChoice_Changed" />
+            <RadioButton x:Name="RibbonManualRadio" GroupName="RibbonMode" Content="Өөрөө сонгох" Margin="0,0,0,2" Checked="RibbonChoice_Changed" />
+            <StackPanel x:Name="RibbonManualPanel" Margin="22,2,0,4" />
+            <RadioButton x:Name="RibbonAllRadio" GroupName="RibbonMode" Content="Бүх хэрэгсэл" Margin="0,0,0,2" Checked="RibbonChoice_Changed" />
+            <TextBlock x:Name="RibbonStatus" Style="{DynamicResource MglMuted}" TextWrapping="Wrap" Margin="0,6,0,0" />
+        </StackPanel>
+
+        <Expander x:Name="AdvancedExpander" Grid.Row="9" Header="Нарийвчилсан тохиргоо" Margin="0,0,0,12">
+            <StackPanel Margin="4,4,0,0">
+                <TextBlock x:Name="HostLabel" Text="Серверийн хаяг (API хост)" Margin="0,0,0,4" />
+                <TextBox x:Name="HostBox" Margin="0,0,0,4" />
+                <TextBlock Style="{DynamicResource MglMuted}" Margin="0,0,0,10"
+                           Text="Ихэнх хэрэглэгч өөрчлөх шаардлагагүй. Нэвтрэхэд нууц үг энэ хаяг руу илгээгдэх тул зөвхөн админы өгсөн хаягийг ашиглана уу." />
+                <CheckBox x:Name="IncludeLinksBox"
+                          Content="Тоо хэмжээ илгээхэд холбосон (link) RVT файлуудыг хамруулах"
+                          ToolTip="Ачаалагдсан RVT link бүр тусдаа run болж илгээгдэнэ (файл тус бүрийн түүх вэб дээр харагдана)." />
+            </StackPanel>
+        </Expander>
+
+        <Grid Grid.Row="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="SaveHint" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,12,0" Style="{DynamicResource MglMuted}" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button x:Name="SaveBtn" Content="Хадгалах" Width="110" IsEnabled="False" Click="SaveBtn_Click" />
+                <Button x:Name="CancelBtn" Content="Болих" Width="100" Margin="8,0,0,0" IsCancel="True" Click="CancelBtn_Click" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

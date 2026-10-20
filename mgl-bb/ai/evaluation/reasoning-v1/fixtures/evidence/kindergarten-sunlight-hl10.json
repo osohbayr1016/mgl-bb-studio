@@ -1,0 +1,43 @@
+{
+  "fixture": true,
+  "kind": "EVIDENCE",
+  "id": "kindergarten-sunlight-hl10",
+  "provenance": {
+    "source": "ai/training/humanized_review/cases-2026-09-23.json#HL10",
+    "review_status": "PORTED_FROM_EXISTING_HELDOUT"
+  },
+  "evidence": [
+    {
+      "id": "sun-6.1.11",
+      "kind": "clause",
+      "title": "Тоглоомын талбайн нарны тусгал",
+      "documentUid": "BNBD-31-24-22",
+      "clauseUid": "6.1.11",
+      "page": null,
+      "section": "6",
+      "text": "БНбД 31-24-22-ийн 6.1.11-д тоглоомын талбайд нарны шууд тусгал нийтдээ 2.5 цагаас багагүй байна. Нар тасалдаж тусдаг бол талбайн 50%-д дор хаяж 1 цаг тусна. Заалт энэ шаардлагын шалтгааныг тайлбарлаагүй."
+    },
+    {
+      "id": "sun-4.1.3",
+      "kind": "clause",
+      "title": "Байршил сонгохдоо нарны тусгал",
+      "documentUid": "BNBD-31-24-22",
+      "clauseUid": "4.1.3",
+      "page": null,
+      "section": "4",
+      "text": "БНбД 31-24-22-ийн 4.1.3-д цэцэрлэгийн байршил сонгохдоо нарны тусгалыг тооцох шаардлагатай."
+    }
+  ],
+  "sources": [
+    {
+      "document": "БНбД 31-24-22",
+      "clause": "6.1.11",
+      "verification": "current_registered_verified"
+    },
+    {
+      "document": "БНбД 31-24-22",
+      "clause": "4.1.3",
+      "verification": "current_registered_verified"
+    }
+  ]
+}

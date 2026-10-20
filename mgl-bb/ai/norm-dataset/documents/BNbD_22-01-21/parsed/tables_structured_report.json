@@ -1,0 +1,14 @@
+{
+  "tool": "structure_tables/1",
+  "tables": 17,
+  "tables_with_packed_rows": 8,
+  "packed_rows": 17,
+  "rows_split": 8,
+  "sub_rows": 37,
+  "ambiguous_rows": 9,
+  "grids_not_found": [
+    "БНбД 22-01-21#T8",
+    "БНбД 22-01-21#T13"
+  ],
+  "source_sha256": "0c7c81503db6b676ec671532a776f0c648b2b0db7c9e418e0492785d3ea2faea"
+}

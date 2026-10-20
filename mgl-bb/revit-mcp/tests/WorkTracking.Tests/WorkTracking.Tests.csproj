@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Revit-ийн АВТОМАТ ЦАГ БҮРТГЭЛИЙН цэвэр логикийн тест (Session 4).
+
+    ⚠️ Гадаад пакет БАЙХГҮЙ (Intelligence.Tests-ийн ижил шалтгаан: сүлжээгүй
+    машин дээр ч `dotnet run` ажиллах ёстой).  Жижиг өөрийн runner.
+
+    ⚠️ Revit/WPF assembly ЭНД ОРОХГҮЙ — `addin/WorkTracking/Core` дотор
+    `Autodesk.Revit` эсвэл `System.Windows` гарвал энэ төсөл ЭМХЭТГЭГДЭХГҮЙ.
+    Тэр нь зориудын хамгаалалт: Revit-ийн хост (`WorkTrackingHost`) нь нимгэн
+    залгаас, бүх шийдвэр энд тестлэгдэнэ.
+
+      dotnet run   (revit-mcp/tests/WorkTracking.Tests хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>WorkTracking.Tests</AssemblyName>
+    <RootNamespace>RevitMcpAddin.WorkTracking.Tests</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\WorkTracking\Core\*.cs" />
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+</Project>

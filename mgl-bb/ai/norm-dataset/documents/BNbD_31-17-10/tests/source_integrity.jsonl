@@ -1,0 +1,10 @@
+{"test_id": "S31-17-10-001", "kind": "sha256", "file": "source/BNbD_31-17-10_mcis_2022-06.pdf", "expected": "005f941b814e88a3c1dd707d7bb2958777d4ad73cec2df4b8511af1559ab858f"}
+{"test_id": "S31-17-10-002", "kind": "page_offset", "pdf_page": 5, "expected_printed_page": 3, "marker": "1. ХЭРЭГЛЭХ ХҮРЭЭ"}
+{"test_id": "S31-17-10-003", "kind": "page_offset", "pdf_page": 55, "expected_printed_page": 53, "marker": "1-р хавсралт"}
+{"test_id": "S31-17-10-004", "kind": "clause_page", "chunk_id": "BNBD-31-17-10-2010:clause:6.12", "expected_page": 10}
+{"test_id": "S31-17-10-005", "kind": "clause_page", "chunk_id": "BNBD-31-17-10-2010:clause:14.80", "expected_page": 46}
+{"test_id": "S31-17-10-006", "kind": "clause_text_contains", "chunk_id": "BNBD-31-17-10-2010:clause:1.1", "must_contain": "17 давхар /51м/-ээс 35 давхар /150м/"}
+{"test_id": "S31-17-10-007", "kind": "clause_text_contains", "chunk_id": "BNBD-31-17-10-2010:clause:10.4", "must_contain": "1.6 -7.0м/сек"}
+{"test_id": "S31-17-10-008", "kind": "no_legacy_glyphs", "description": "Decoded text must contain no Latin-1 0xC0-0xFF glyphs (Arial Mon leftovers)"}
+{"test_id": "S31-17-10-009", "kind": "every_chunk_has_page_and_url", "description": "Every clause/table/definition chunk carries source_page and source_url"}
+{"test_id": "S31-17-10-010", "kind": "clause_count_min", "expected_min": 550, "description": "Body 17 sections + 23 appendices with numbered clauses; measured 593 on 2026-09-16"}

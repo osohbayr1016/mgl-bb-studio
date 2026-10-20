@@ -1,0 +1,113 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+
+namespace RevitMcpAddin.SheetNumerator.Tests
+{
+    [AttributeUsage(AttributeTargets.Method)]
+    public sealed class TestAttribute : Attribute { }
+
+    public sealed class AssertFailed : Exception
+    {
+        public AssertFailed(string m) : base(m) { }
+    }
+
+    public static class Assert
+    {
+        public static void True(bool c, string msg = null) { if (!c) throw new AssertFailed(msg ?? "expected true"); }
+        public static void False(bool c, string msg = null) { if (c) throw new AssertFailed(msg ?? "expected false"); }
+
+        public static void Eq<T>(T expected, T actual, string msg = null)
+        {
+            if (!EqualityComparer<T>.Default.Equals(expected, actual))
+                throw new AssertFailed((msg ?? "") + " expected=" + Fmt(expected) + " actual=" + Fmt(actual));
+        }
+
+        public static void SeqEq<T>(IEnumerable<T> expected, IEnumerable<T> actual, string msg = null)
+        {
+            List<T> e = expected.ToList();
+            List<T> a = actual.ToList();
+            bool same = e.Count == a.Count;
+            for (int i = 0; same && i < e.Count; i++)
+                same = EqualityComparer<T>.Default.Equals(e[i], a[i]);
+            if (!same)
+                throw new AssertFailed((msg ?? "") + " expected=[" + string.Join(", ", e.Select(x => Fmt(x))) + "] actual=[" + string.Join(", ", a.Select(x => Fmt(x))) + "]");
+        }
+
+        public static void Null(object o, string msg = null) { if (o != null) throw new AssertFailed(msg ?? "expected null, got " + Fmt(o)); }
+        public static void NotNull(object o, string msg = null) { if (o == null) throw new AssertFailed(msg ?? "expected not null"); }
+
+        public static void Contains<T>(IEnumerable<T> seq, T item, string msg = null)
+        {
+            if (!seq.Contains(item)) throw new AssertFailed((msg ?? "") + " missing " + Fmt(item));
+        }
+
+        public static void Throws<TEx>(Action a, string msg = null) where TEx : Exception
+        {
+            try { a(); }
+            catch (TEx) { return; }
+            catch (Exception ex) { throw new AssertFailed((msg ?? "") + " wrong exception " + ex.GetType().Name + ": " + ex.Message); }
+            throw new AssertFailed((msg ?? "") + " expected " + typeof(TEx).Name);
+        }
+
+        private static string Fmt(object o)
+        {
+            if (o == null) return "null";
+            if (o is string s) return "\"" + Escape(s) + "\"";
+            return o.ToString();
+        }
+
+        /// <summary>Үл үзэгдэх тэмдгийг \uXXXX болгож харуулна — тест унахад юу ялгаатайг харахад.</summary>
+        public static string Escape(string s)
+        {
+            var sb = new System.Text.StringBuilder();
+            foreach (char c in s)
+            {
+                if (c < 32 || c > 126) sb.Append("\\u" + ((int)c).ToString("X4"));
+                else sb.Append(c);
+            }
+            return sb.ToString();
+        }
+    }
+
+    public static class Program
+    {
+        public static int Main(string[] args)
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            // `dotnet run`-д `--nologo` БАЙХГҮЙ — тэр нь ЭНД args болж ирдэг.
+            string filter = args.Length > 0 && !args[0].StartsWith("-") ? args[0] : null;
+            var methods = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t => t.Name.EndsWith("Tests", StringComparison.Ordinal))
+                .SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.Static))
+                .Where(m => m.GetCustomAttribute<TestAttribute>() != null)
+                .OrderBy(m => m.DeclaringType.Name).ThenBy(m => m.Name)
+                .ToList();
+            int pass = 0, fail = 0;
+            var sw = Stopwatch.StartNew();
+            foreach (MethodInfo m in methods)
+            {
+                string name = m.DeclaringType.Name + "." + m.Name;
+                if (filter != null && name.IndexOf(filter, StringComparison.OrdinalIgnoreCase) < 0) continue;
+                try
+                {
+                    m.Invoke(null, null);
+                    pass++;
+                    Console.WriteLine("  ok   " + name);
+                }
+                catch (TargetInvocationException tie)
+                {
+                    fail++;
+                    Exception ex = tie.InnerException ?? tie;
+                    Console.WriteLine("  FAIL " + name + "\n       " + ex.GetType().Name + ": " + ex.Message);
+                    if (!(ex is AssertFailed)) Console.WriteLine(ex.StackTrace);
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine((fail == 0 ? "PASS " : "FAIL ") + pass + "/" + (pass + fail) + " in " + sw.ElapsedMilliseconds + " ms");
+            return fail == 0 ? 0 : 1;
+        }
+    }
+}

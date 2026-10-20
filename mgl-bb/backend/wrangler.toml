@@ -1,0 +1,276 @@
+name = "mgl-progress-api"
+main = "src/index.ts"
+compatibility_date = "2025-04-14"
+# `nodejs_compat` is required by @cloudflare/puppeteer (uses node:buffer
+# internally for the Browser Rendering binding's wire protocol).
+compatibility_flags = ["nodejs_compat"]
+# Pin to the project's owning Cloudflare account so wrangler never silently
+# deploys into whichever account happens to be cached on this machine.
+account_id = "a01b2b194850c45387e7035eb9ebaca6"
+
+# ⚠️ ХҮЙТЭН ЭХЛЭЛТИЙН (cold start) ЗАСВАР — БҮҮ УСТГА.  2026-08-24.
+#
+# Энэ worker-ийн bundle нь minify-гүйгээр 6.5 МБ (gzip 1.26 МБ).  Cloudflare
+# нь isolate-ыг машин бүр дээр тусад нь асаадаг тул хүйтэн машин руу тохирсон
+# ХАМГИЙН АНХНЫ хүсэлт бүтэн script-ийг parse хийж дуустал хүлээдэг.  Хэмжилт
+# (2026-08-24, ULN colo, 8 шинэ холболт × 4 хүсэлт):
+#     хүйтэн машин → эхний 1-2 хүсэлт  >9000 мс (заримдаа ~20 с) хариугүй
+#     дулаан болмогц                     5-6 мс
+#   → шинэ холболтын ~40% нь өлгөгддөг байв.  `wrangler tail` дээр тэдгээр
+#     нь `outcome: "canceled", cpuTime: 0` — өөрөөр хэлбэл worker огт
+#     ажиллаж эхлээгүй, хүсэлт startup дээр гацсан.
+#   → Frontend-ийн `apiFetch` нь timeout-гүй байсан тул `/auth/me` гацахад
+#     апп «Уншиж байна…» дэлгэц дээр ҮҮРД зогсдог байв.
+#
+# `minify = true` нь 6.49 МБ → 3.67 МБ (−43%, gzip 1262 → 922 КБ) болгож
+# parse-ын хугацааг тэр хэмжээгээр богиносгоно.  Wrangler нь deploy үед
+# ӨӨРӨӨ minify ХИЙДЭГГҮЙ — энэ мөр л түүнийг асаана.
+#
+# Хэмжээг өсгөх PR бүрд `npx wrangler deploy --dry-run` -ийн «Total Upload»-ыг
+# шалга.  Шинэ хүнд сан нэмэх бол `await import()`-оор залх (lazy) ачаал —
+# `routes/performanceReports.ts`-ийн html-to-docx, PDF замуудын puppeteer
+# хоёулаа яг тэр загвараар хийгдсэн.
+minify = true
+
+[dev]
+port = 3000
+
+# 2026-08-24 cutover: this is a FULL import of the old account's database
+# (`mgl-progress-api.anandoctane4.workers.dev`), which staff kept using after
+# the account move because attendance on the new site 403'd them.  The two
+# databases had forked — 21 of 106 tables differed and some rows shared an id
+# with different content — so the fork was resolved by replacing, not merging.
+#
+# The pre-cutover company database `mgl-progress-db`
+# (d1911478-9691-49cc-8a8e-833b64834327) is kept as the backup.  Do not write
+# to it; do not delete it until this one has its own days of backups.
+[[d1_databases]]
+binding = "DB"
+database_name = "mgl-progress-db-v3"
+database_id = "03167f58-753b-4f99-a6f9-fb361bf2a453"
+
+# Token / grant / DCR-client storage for @cloudflare/workers-oauth-provider
+# (the remote MCP server's OAuth). The library reads this binding by the EXACT
+# name OAUTH_KV. Created via: wrangler kv namespace create OAUTH_KV.
+[[kv_namespaces]]
+binding = "OAUTH_KV"
+id = "6682acb84a5a416fabadbd34bb272669"
+ 
+[vars]
+FRONTEND_URL = "https://mgl-design-system.pages.dev"
+# CORS allowlist for /api/* — exact origins or `*.suffix` wildcards (Pages
+# preview deploys). Local dev overrides this with localhost via
+# backend/.dev.vars; http://localhost:5173 is ALSO allowed on prod so a local
+# vite frontend can develop against the live API without a local worker.
+ALLOWED_ORIGINS = "https://mgl-design-system.pages.dev,*.mgl-design-system.pages.dev,http://localhost:5173"
+# Speechmatics batch STT regional API base (Хурлын тэмдэглэл).  The API key +
+# webhook secret are wrangler secrets (SPEECHMATICS_API_KEY / _WEBHOOK_SECRET).
+SPEECHMATICS_BASE_URL = "https://eu1.asr.api.speechmatics.com/v2"
+# '1' → auto-analyse a meeting (summary/decisions/action-items via Workers AI)
+# as soon as its transcript lands; anything else → on-demand only.  Kept OFF:
+# Workers-AI map-reduce over long meetings is slow and can exceed the
+# waitUntil budget (status stuck at 'analyzing').  Analysis is done via Claude
+# over MCP (get_meeting → save_meeting_analysis); the Workers-AI button stays
+# as a fallback for short meetings.
+MEETING_AUTO_ANALYZE = "0"
+# '1' → staff API/login/MCP only from office_ips (client + remote_access_allowed
+# bypass). Default OFF: 2026-09-01 the global gate on /api/auth/me froze the SPA
+# (Уншиж байна… → timeout) for anyone not on the five MN Tower WAN CIDRs.
+OFFICE_ACCESS_ENFORCED = "0"
+# Stirling-PDF (self-hosted PDF toolbox) base URL, e.g. https://stirling.example.com.
+# Stirling is a Java/Docker service. The STIRLING_SVC container binding was
+# dropped on 2026-08-20 (see the note further down), so the only remaining
+# transport is an external instance whose URL goes here.
+# Empty + no binding -> the in-app "PDF" report actions stay hidden. Optional API
+# key is a wrangler secret (STIRLING_API_KEY).
+STIRLING_BASE_URL = ""
+# Public URL of the Stirling instance, used only for the manual editor button
+# (the service binding has no browser URL). Empty hides that button.
+STIRLING_PUBLIC_URL = ""
+
+# Баримт бичгийг Google Docs/Sheets дээр засах (lib/google/driveClient.ts).
+#
+# Токен нь Gmail-ийн БАЙГАА OAuth холболтоос ирдэг (email_accounts дээрх
+# refresh token) — service account БИШ.  2026-09-07-нд хэмжихэд продакшны
+# хоёр хайрцаг хоёулаа auth_type='oauth' байсан, өөрөөр хэлбэл domain-wide
+# delegation энэ байгууллагад хэзээ ч тохируулагдаж байгаагүй.
+#
+# Энэ утга нь «Drive дээрх ажлын хуулбарыг АЛЬ холбогдсон хаяг эзэмших вэ»
+# гэдгийг заана.  Хоосон бол идэвхтэй эхний хайрцгийг автоматаар авна.
+DOCS_DRIVE_SUBJECT = "info@mglenc.com"
+# Хөрвүүлсэн ажлын хуулбаруудыг хийх Drive хавтасны id.  Хоосон = My Drive-ын үндэс.
+DOCS_DRIVE_FOLDER_ID = ""
+# domain (өгөгдмөл) = зөвхөн DOCS_DRIVE_DOMAIN-ы Google акаунтаар нэвтэрсэн
+# хүн засна.  link = холбоос мэддэг ХЭН Ч засна — Workspace нь домэйн
+# хуваалцахыг хаасан үед л хэрэглэнэ.
+DOCS_DRIVE_SHARE = "domain"
+DOCS_DRIVE_DOMAIN = "mglenc.com"
+
+# Autodesk Platform Services (APS) 3D viewer — OSS bucket + region for .rvt
+# translation (see lib/aps.ts). Credentials are secrets (APS_CLIENT_ID/SECRET).
+APS_BUCKET = "mgl-aps-models"
+APS_REGION = "US"
+
+# Web Push (VAPID) — RFC 8292 contact address sent as the JWT `sub` claim.
+# Push services use it to reach us if our pushes misbehave.
+VAPID_SUBJECT = "mailto:mgl.eandc@gmail.com"
+# VAPID application-server PUBLIC key: base64url of the 65-byte uncompressed
+# P-256 point.  Generate the PAIR with:  npx web-push generate-vapid-keys
+#
+#   * The public half is NOT a secret — the browser receives it verbatim as
+#     `applicationServerKey`, so it belongs here in [vars], not in a secret.
+#   * The private half goes in:  wrangler secret put VAPID_PRIVATE_KEY
+#     (32-byte raw `d` scalar, base64url — the same string web-push prints).
+#   * ⚠️ ROTATING THIS PUBLIC KEY INVALIDATES EVERY EXISTING SUBSCRIPTION:
+#     each browser binds its endpoint to the key it was given, so after a
+#     rotation every device must re-subscribe (push_subscriptions rows will
+#     start returning 403/410 and get swept away).
+# Empty → vapidConfigured() is false and the whole push feature stays dark.
+VAPID_PUBLIC_KEY = "BDF7K00gN-sWAnVE7UNyU_OWFdaZ9QXBwNkBNnvkvfVzZsysfUN2-KTK26vhOeN2lUi7KYV8uhaSt3jElcCzCyg"
+
+# ⚠️ ТҮР ЗУУРЫН — 2026-08-24-ний акаунт хоорондын нүүлгэлтийн үлдэгдэл.
+# D1 нь 08-24-нд бүтнээрээ хуулагдсан ч R2 нь ~08-21-нд хуулагдсан, ажилтнууд
+# завсарт нь ХУУЧИН сайтыг хэрэглэсээр байсан тул тэр хооронд байршуулсан ~59
+# объект (ЗХ-ын зураг, гарын үсэг, хавсралт) шинэ bucket-д ОРООГҮЙ: мөр нь
+# D1-д, байт нь хуучин акаунтад.  `routes/media.ts` нь олдоогүй түлхүүрийг
+# ЭНЭ origin-оос татаж, хэрэглэгч рүү буцаахын зэрэгцээ `MEDIA_BUCKET` руу
+# бичдэг тул объект бүр анх харагдахдаа аяндаа нүүнэ.
+# Хоосон болговол нөхөх зам бүхэлдээ унтарна.  Хуучин акаунтыг хаах өдөр
+# энэ мөрийг устгана (тэр үед бүх идэвхтэй объект аль хэдийн нүүсэн байх ёстой).
+LEGACY_MEDIA_ORIGIN = "https://mgl-progress-api.anandoctane4.workers.dev"
+
+[[r2_buckets]]
+binding = "MEDIA_BUCKET"
+bucket_name = "mgl-progress-media"
+
+# PRIVATE bucket for meeting voice recordings — NOT served via the public
+# /media mount.  Audio is streamed only through the signed
+# /meeting-audio/:key?t=<jwt> route (routes/meetingAudio.ts).
+[[r2_buckets]]
+binding = "MEETING_BUCKET"
+bucket_name = "mgl-meeting-audio"
+
+# PRIVATE bucket for «Програмын хүсэлт» (engineering feedback) attachments —
+# Revit screenshots, logs, explicitly selected RVT/RFA/ZIP (migrations 0410–0414,
+# routes/engineeringFeedback.ts).  NEVER enable public access / r2.dev / a custom
+# domain on it: bytes are streamed only to the verified reviewer through the
+# authenticated /api/engineering-feedback/inbox/:id/attachments/:aid route.
+# ⚠️ CREATE IT BEFORE THE FIRST DEPLOY THAT CONTAINS THIS BLOCK, or `wrangler deploy`
+#    fails with «bucket not found»:
+#      npx wrangler r2 bucket create mgl-engineering-feedback --config wrangler.toml
+#    (no lifecycle rule is required — the worker's cron sweep deletes abandoned
+#    uploads; ready attachments of submitted requests are never deleted by it).
+[[r2_buckets]]
+binding = "FEEDBACK_BUCKET"
+bucket_name = "mgl-engineering-feedback"
+
+# The ChatRoom Durable Object was removed (in-app chat feature deleted). Its
+# v1 migration stays as history; v5 (below) deletes the class. No binding now.
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["ChatRoom"]
+
+# v2 created the (never-enabled) IFC→.xkt converter's container-fronting DO;
+# v4 deletes it — the 3D viewer + converter feature was removed entirely.
+# Both tags must stay in the file: DO migrations are an append-only history.
+[[migrations]]
+tag = "v2"
+new_classes = ["IfcConverter"]
+
+# Remote MCP server Durable Object (McpAgent from the `agents` SDK).  The
+# Agents SDK resolves this binding by name; `MCP_OBJECT` is its default.
+# McpAgent is SQLite-backed → MUST use `new_sqlite_classes`, not `new_classes`.
+[[durable_objects.bindings]]
+name = "MCP_OBJECT"
+class_name = "MglMcpAgent"
+
+[[migrations]]
+tag = "v3"
+new_sqlite_classes = ["MglMcpAgent"]
+
+# Захиалагчийн порталын realtime өрөө — төсөл тус бүрд нэг DO instance
+# (`idFromName('project:<id>')`).  WebSocket Hibernation API ашигладаг тул
+# сул зогсох үед санах ойгоос гарна.  ⚠️ Зөвхөн ТЭЭВЭР: үнэн нь D1-ийн
+# `client_events` хүснэгтэд (see src/lib/clientEvents.ts).
+[[durable_objects.bindings]]
+name = "CLIENT_ROOM"
+class_name = "ClientRoom"
+
+# System Workbench (`/app/admin/system-workbench`)-ийн амьд урсгал — ГАНЦ instance
+# (`idFromName('workbench:live')`).  Isolate-ууд үзэгч байх үед л ≤1/сек багцаар
+# түлхэнэ, storage бичилт 0 (see src/lib/liveTraffic.ts, src/live/WorkbenchLive.ts).
+[[durable_objects.bindings]]
+name = "WORKBENCH_LIVE"
+class_name = "WorkbenchLive"
+
+# Cloudflare Browser Rendering — drives server-side PDF export by
+# launching a headless Chromium that loads the frontend's print route.
+[browser]
+binding = "BROWSER"
+
+# Workers AI — used to summarize task completion Q&A in Mongolian
+# (see backend/src/lib/taskCompletionAi.ts).
+[ai]
+binding = "AI"
+
+# Cron — TWO expressions; the `scheduled` handler in src/index.ts branches on
+# `event.cron` so they stay independent:
+#
+#   "*/2 * * * *"  Gmail sync + meeting reconcile + Google Calendar sync.
+#                  Slow (5-10 mailboxes polled serially) but 2-minute latency
+#                  is fine for mail.
+#   "* * * * *"    Web Push sweep ONLY (lib/pushSweep.ts).  A push banner is
+#                  worthless if it lands minutes late, so it needs the
+#                  every-minute tick — and it's cheap (one indexed
+#                  `pushed = 0` lookup that no-ops when the queue is empty).
+#                  Deliberately NOT merged into the 2-minute job: that would
+#                  make every push wait on the Gmail round-trips.
+[triggers]
+# 2026-08-20-нд шилжилтийн туршид ХООСОН байсан (хуучин акаунтын Worker
+# production-д ажилласаар байсан тул давхар ажиллах эрсдэлтэй байв).
+#
+# 2026-08-24-нд шилжилт дуусаж сэргээв.  Хуучин Worker-ийн cron-ыг устгах
+# хүртэл хэсэг хугацаанд хоёулаа ажиллаж магадгүй — тэр давхцал дараах
+# шалтгаанаар аюулгүй болохыг хэмжиж баталгаажуулсан:
+#   - syncGoogleCalendar: 43/43 үйл явдал аль хэдийн `google_event_id`-тэй
+#     тул зөвхөн PATCH хийнэ (шинээр давхар үүсгэхгүй), мөн etag-ийн
+#     давталт хамгаалалттай.
+#   - syncAllMailboxes: Gmail-ээс ЗӨВХӨН УНШИНА, хоёр DB тус тусдаа бичнэ.
+#   - runDeadlineSweep: мэдэгдэл нь тухайн DB дотроо үүснэ; хуучин DB-г
+#     хэрэглэгч харахаа больсон.
+#   - sweepPushNotifications: `push_subscriptions` хоосон тул no-op.
+# Хуучин Worker-ийн cron-ыг устгамагц энэ тайлбарыг хас.
+crons = ["*/2 * * * *", "* * * * *"]
+
+# Deletes the IfcConverter DO created by v2 (the IFC→.xkt converter and the
+# xeokit 3D viewer were removed; .ifc uploads now feed the in-browser QTO tab).
+[[migrations]]
+tag = "v4"
+deleted_classes = ["IfcConverter"]
+
+# v5 deletes the ChatRoom DO created by v1 - the in-app chat feature was removed.
+[[migrations]]
+tag = "v5"
+deleted_classes = ["ChatRoom"]
+
+[[migrations]]
+tag = "v6"
+new_sqlite_classes = ["ClientRoom"]
+
+[[migrations]]
+tag = "v7"
+new_sqlite_classes = ["WorkbenchLive"]
+
+# Stirling-PDF ба WeasyPrint container Worker-уудыг компанийн акаунт руу
+# ОДООХОНДОО шилжүүлээгүй.  Эх кодыг нь `stirling/` ба `weasyprint/`-т git
+# түүхээс сэргээж, `account_id`-г шинэ акаунт руу зааж тавьсан боловч deploy
+# хийхэд Docker + Workers Paid шаардана (энэ машин дээр Docker алга).  Тэднийг
+# байрлуулсны дараа доорх хоёр `[[services]]` блокийг буцааж нэмнэ.
+# STIRLING_SVC / WEASYPRINT_SVC хоёул types.ts-д optional
+# бөгөөд stirlingEnabled() / weasyprintEnabled() байхгүйг нь шалгадаг тул
+# энд байхгүй байх нь зөв ажиллана:
+#   - клиентийн тайлангийн WeasyPrint PDF  -> 503 (performanceReports.ts)
+#   - MCP generate_report-ийн PDF          -> pdf_error
+#   - PDF-ийн засварын хэрэгслүүд          -> өөрөө нуугдана
+# Бусад БҮХ PDF (төсөл, үнийн санал, ASR, хурал) Browser Rendering дээр
+# ажилладаг тул хөндөгдөхгүй.

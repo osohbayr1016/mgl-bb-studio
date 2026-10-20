@@ -1,0 +1,132 @@
+{
+  "baseline_id": "base-2026-09-10-mglai-sys-5-120307ba",
+  "label": "pre-training baseline (Qwen3-8B Q4_K_M, sys-5, tfc-1, kernel fixes 2026-09-10)",
+  "frozen_at": "2026-09-10T05:45:02.396Z",
+  "git_head": "206d929",
+  "foundation": {
+    "model": "Qwen/Qwen3-8B",
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "license": "Apache-2.0",
+    "license_file_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "license_cleared_by_owner": false
+  },
+  "serving_artifact": {
+    "repo": "unsloth/Qwen3-8B-GGUF",
+    "repo_revision": "a6adef130ffb23ddaf1a62fec9dced968c9bc482",
+    "file": "Qwen3-8B-Q4_K_M.gguf",
+    "bytes": 5027784512,
+    "sha256": "120307ba529eb2439d6c430d94104dabd578497bc7bfe7e322b5d9933b449bd4",
+    "quantization": "Q4_K_M",
+    "adapter": null,
+    "model_version_tag": "dev-local"
+  },
+  "runtime": {
+    "runtime_version": "1.0.0",
+    "engine": "llama.cpp",
+    "llama_cpp": "version: 0.4.0-dev (build 10850, commit f114f91f9)",
+    "context_tokens": 8192,
+    "perf_profile": "performance",
+    "plan": {
+      "kvCacheType": "q8_0",
+      "gpuLayers": -1,
+      "ubatchSize": 512,
+      "flashAttention": true
+    },
+    "sampling": {
+      "temperature": 0.7,
+      "topP": 0.8,
+      "topK": 20,
+      "minP": 0,
+      "presencePenalty": 1
+    },
+    "enable_thinking": false
+  },
+  "system": {
+    "product_version": "1.0.0",
+    "system_prompt_version": "mglai-sys-5",
+    "tool_schema_version": "mglai-tools-1",
+    "retrieval_version": "mglai-rag-1",
+    "contract_version": "tfc-1",
+    "kernel_files": 31,
+    "kernel_sha256": "64ef411eac6bd16f86ce1f2a81c1265c2163fe8de24acccbb103579c8719b5c1",
+    "orchestrator": {
+      "sha256": "db28f235ea793b54739e79c6038e1abb8df70ecd550322efb2e4c7647627b5ad",
+      "git": "dc34764 2026-09-10T11:57:05+08:00"
+    },
+    "validator": {
+      "sha256": "a2a33571a7779ec7e94ff1244ade4cc29a21ef356ee851f3bf2fbc884fded8ea",
+      "git": "0b02832 2026-09-10T12:30:22+08:00"
+    },
+    "route": {
+      "sha256": "d49464e93273f7e7fe334e20385d4a5e1e6f5fee358a0b52c28ccecb35ad3dcf",
+      "git": "fe8b5ce 2026-09-10T12:36:08+08:00"
+    }
+  },
+  "knowledge": {
+    "installed": true,
+    "documents": [
+      {
+        "doc_id": "UBB-12-204-01-2002",
+        "code": "УББ 12-204-01",
+        "effective_status": "current_status_not_checked_for_later_amendments",
+        "ingested_at": "2026-09-10 05:43:47"
+      },
+      {
+        "doc_id": "BNBD-11-08-23-2023",
+        "code": "БНбД 11-08-23",
+        "effective_status": "in_force",
+        "ingested_at": "2026-09-10 05:38:03"
+      },
+      {
+        "doc_id": "BNBD-11-03-21-2022",
+        "code": "БНбД 11-03-21",
+        "effective_status": "in_force",
+        "ingested_at": "2026-09-10 05:21:27"
+      },
+      {
+        "doc_id": "UBB-11-201-00-2000",
+        "code": "УББ-11-201-00",
+        "effective_status": "current_status_not_checked_for_later_amendments_or_replacement",
+        "ingested_at": "2026-09-09 04:25:42"
+      },
+      {
+        "doc_id": "BNBD-21-04-05-ADD-2018-01-18-10",
+        "code": "БНбД 21-04-05",
+        "effective_status": "unknown_requires_legal_verification",
+        "ingested_at": "2026-09-09 04:23:19"
+      },
+      {
+        "doc_id": "UBB-12-01-01-2001",
+        "code": "УББ 12-01-01",
+        "effective_status": "current_status_not_checked_for_later_amendments_or_replacement",
+        "ingested_at": "2026-09-09 04:23:19"
+      }
+    ],
+    "counts": {
+      "chunks": 995,
+      "rules": 1074,
+      "unverified_rules": 39,
+      "aliases": 3998
+    },
+    "vector": null,
+    "db_sha256": "5365671c35e88b5fc7cd929be32c00f08ef43a4ea9fce3f71c8ca626f5bb87b2"
+  },
+  "evaluation": {
+    "conversation-e2e.mjs": "bee8985376a60aeb4052297ed780fcec1876f09efdb44e2a5df3899a12f2a3ab",
+    "heldout-gen.mjs": "5415dd584a18285deb6b5d311cfc89b100c6e1cb27e5429842634837147c5a75",
+    "heldout-cases.json": "5aff4d663d19ae91a3cbb814429e2962716562d6d93f67910febe05efba58068",
+    "norm-golden.mjs": "89fde65b8bae678281463ec78d65ebb6c05be6010942276d6c7bd2b4fbf1d241",
+    "company-golden.mjs": "1203839f1ac2f30c031732fcdfdb67fdc46a71497a2b81f16bb7cdf897c581eb",
+    "mn-conversation.mjs": "ba100c4cd98f1ed6adcccfe790467cd4b7a0c4ec0f642de45ee25dd12421be36",
+    "style-pairs.mjs": "0a37418508907af1462016766edbba85995c471e0750f596150ff2be1b4bc7b9",
+    "mn_style_pairs.jsonl": "59324d9bceaaf48cad718f63b101e09f1f1c913aa3af08642d229fdbf2398c0b",
+    "lib/repetition.mjs": "ec45eac7c214ba9f0a33b910e307549a867ca24b735dd38343aece6a697d9641",
+    "lib/style.mjs": "5558c8b69b1425efec799b018625a081347828c3280f7f902379ef2b567a6cd3"
+  },
+  "outputs": {
+    "conv_e2e_gen": "conv-e2e-gen-2026-09-10-base8b-reference.json",
+    "heldout_gen": "heldout-gen-2026-09-10-base8b-reference.json",
+    "norm_golden": null,
+    "company_golden": null
+  }
+}

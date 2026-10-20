@@ -1,0 +1,45 @@
+{
+  "fixture": true,
+  "kind": "EVIDENCE",
+  "id": "foreman-plus-erp",
+  "synthetic": true,
+  "disclaimer": "The normative clause is ported from an existing verified reference; the ERP employee fact is synthetic benchmark data.",
+  "provenance": {
+    "source": "humanized HL04 + synthetic ERP fact",
+    "review_status": "SYNTHETIC_DETERMINISTIC"
+  },
+  "evidence": [
+    {
+      "id": "xs-norm",
+      "kind": "clause",
+      "title": "Талбайн даамлын туршлагын шаардлага",
+      "documentUid": "UBB-12-204-01",
+      "clauseUid": "2.2.1",
+      "page": 5,
+      "section": "2",
+      "text": "УББ 12-204-01-ийн 2.2.1-д мэргэжлээрээ барилгын үйлдвэрлэл дээр 3-аас доошгүй жил ажилласан байх шаардлага тавьсан."
+    },
+    {
+      "id": "xs-erp",
+      "kind": "erp",
+      "title": "SYNTHETIC ERP employee fact",
+      "documentUid": null,
+      "clauseUid": null,
+      "page": null,
+      "section": "benchmark",
+      "text": "SYNTHETIC ERP FACT: employee fixture-user has experience_years = 2 as of 2026-10-03."
+    }
+  ],
+  "sources": [
+    {
+      "document": "УББ 12-204-01",
+      "clause": "2.2.1",
+      "verification": "ported_verified_reference"
+    },
+    {
+      "document": "SYNTHETIC ERP FIXTURE",
+      "clause": null,
+      "verification": "synthetic_deterministic"
+    }
+  ]
+}

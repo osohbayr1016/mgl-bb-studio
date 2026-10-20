@@ -1,0 +1,77 @@
+{
+  "schema": "mgl-we-known-issues-v1",
+  "baseline_version": "1.36.0",
+  "baseline_note": "Issues that already existed in 1.36.0 when the release gate was introduced (2026-10-13). A test or live check that fails ONLY with one of these ids is reported as KNOWN, not as a new regression. release_blocking issues still make the final status FAIL until fixed.",
+  "issues": [
+    {
+      "id": "WE-BUG-001",
+      "title": "Upper-floor (upstairs apartment) geometry visible in lower-floor room elevations",
+      "release_blocking": true,
+      "status": "fix-candidate",
+      "root_cause": "CONFIRMED IN CORE AND LIVE (Revit 2024 + 2027, synthetic Interior_Test, 2026-10-13; not yet on a real project). Two paths: (1) WeAnnotationPlanner grows the crop to (highest vertical reference + 100 mm) and the upper level is a reference of the storey-to-storey dimension row (owner rule 2026-10-06) -> crop top = upper level + 100 mm; (2) a room whose Upper Limit is the level above gets room top + 150 mm (WePlanner.RoomVerticalPadFt). Elevations do not cut, so the upper finish floor, furniture and wall bases in that band are drawn. MEASURED (DIAG-CROP-AT-LEVEL-101, 2027, rolled back): crop top exactly at the upper level keeps the level (4/4 views) and the storey dimension (4/4) while upper-storey elements drop 31 -> 4 (the 4 = a beam that physically dips 30 mm below the level); 60 mm below the level loses the level and the dimension. FIX (candidate): WePlanner.RoomCropTopCap - a room elevation's crop top is capped at the first level at or above the room top (>= 1.5 m above the room's own level; a double-height room is not cut at the intermediate level); WeAnnoInput.CropTopCap applies the same cap inside the annotation planner. Unit: AnnotationTests.Crop_is_extended_to_show_the_upper_level now asserts top == upper level (it used to assert the leak, >= level + 99 mm); RegressionTests (3 incl. Double_height_room_is_not_cut_at_the_intermediate_level) pass. NOT hidden: elements below the level stay visible.",
+      "evidence": [
+        "tests/WallElevation.Tests/RegressionTests.cs (4, no [KnownBug] after the fix)",
+        "live 2024 run 20261013-131323 / 2027 run 20261013-132215: GEN-LINK-101..104 + GEN-HOST-101 leak.* KNOWN with the pre-fix candidate",
+        "live 2027 run 20261013-132215: DIAG-CROP-AT-LEVEL-101 + PNG current/at_level/level_minus_1mm/level_minus_60mm"
+      ]
+    },
+    {
+      "id": "WE-BUG-002",
+      "title": "A room cannot be selected by clicking its empty area / its Reference (X); linked rooms only through their tag",
+      "release_blocking": true,
+      "status": "fixed-in-candidate",
+      "root_cause": "CONFIRMED LIVE (Revit 2024, run 20261013-123351): SEL-EMPTY-101 (empty area of a linked room), SEL-X-101 (Room Reference X visible) and SEL-HOST-EMPTY-101 (empty area of a HOST room) all produced no selection. Cause: ElevationTargetResolver.PickTargets used PickObjects(ObjectType.Element, RoomOrWallFilter) - linked elements are never pickable with ObjectType.Element, and a host room is pickable from its area only when Interior Fill / Reference is visible. FIX (candidate, not yet retested live): Revit/WeRoomPicker.cs - the click is a PickPoint, the room at that point is resolved in the host (GetRoomAtPoint with the view phase) and in every loaded, visible link (inverse link transform); several hits -> Core/WePickRules.Choose (room > host > tagged in plan > smaller > first). Esc finishes. The old element pick stays as the 3rd TaskDialog option.",
+      "evidence": [
+        "live: SEL-EMPTY-101, SEL-X-101, SEL-HOST-EMPTY-101 (KNOWN in run 20261013-123351)",
+        "tests/WallElevation.Tests/PickRulesTests.cs (7)",
+        "live retest PASS: 2024 run 20261013-131323, 2027 run 20261013-132215 (candidate 1.36.0-11f6bdf9-of068eadd)"
+      ]
+    },
+    {
+      "id": "WE-BUG-003",
+      "title": "Starting from a sheet: the 'all rooms of this plan' shortcut is not offered and rooms inside a viewport cannot be picked",
+      "release_blocking": false,
+      "status": "fixed-in-candidate",
+      "root_cause": "CODE-DERIVED: on a ViewSheet with the viewport not activated, PickObjects can only hit the Viewport element itself (API limitation - elements inside an inactive viewport are not pickable, and the API cannot activate a viewport). FIX (candidate): WeRoomPicker maps the sheet click through the plan viewport containing it: sheet -> projection (Viewport.GetProjectionToSheetTransform inverse) -> model (View.GetModelToProjectionTransforms inverse, split views by boundary) -> same room lookup. Zero extra steps for the user. Live run 8 could not test it (test-side mapping bug, fixed).",
+      "evidence": [
+        "live: scenarios SHEET-*",
+        "live retest PASS: 2024 run 20261013-131323, 2027 run 20261013-132215 (candidate 1.36.0-11f6bdf9-of068eadd)"
+      ]
+    },
+    {
+      "id": "WE-BUG-004",
+      "title": "Selecting a room tag of an UNLOADED link shows a generic 'no room or wall' message instead of 'load the link'",
+      "release_blocking": false,
+      "status": "fixed-in-candidate",
+      "root_cause": "CONFIRMED LIVE (Revit 2024, NEG-UNLOADED-B101, run 20261013-123351) + code: ElevationTargetResolver.Resolve already adds the explanation ('... achaalagdaagui link ... Manage Links') to WeRequest.SelectionNotes, but WallElevationWorkflow.Run shows only the generic message when no room/wall remains, dropping the notes. FIX (candidate): the message now starts with the selection notes (project-standards summary excluded).",
+      "evidence": [
+        "live: NEG-UNLOADED-B101 message.unloaded_link FAIL in run 20261013-123351",
+        "live retest PASS: 2024 run 20261013-131323, 2027 run 20261013-132215 (candidate 1.36.0-11f6bdf9-of068eadd)"
+      ]
+    },
+    {
+      "id": "WE-RISK-001",
+      "title": "Release DLLs are compiled against a newer Revit API minor than the one installed on the test PC",
+      "release_blocking": false,
+      "status": "fixed-in-candidate",
+      "fix": "V02 (2026-10-16): addin/RevitMcpAddin.csproj pins RevitApiPackageVersion per year (2024.0.0 / 2025.0.2 / 2026.0.4 / 2027.0.0) instead of $(RevitVersion).*; the floating form remains only for an unknown year. Live Revit verification of the pinned build is still pending (release gate live stage).",
+      "root_cause": "MEASURED: addin csproj references Nice3point.Revit.Api.* Version=$(RevitVersion).* (floating). 1.30.0 R24 references RevitAPI 24.3.60 (PC has 2024.1 = 24.1.0.66); R27 references 27.3.0.0 (PC has 27.2.0.39). Any API member added in a later minor would throw MissingMethodException on older updates.",
+      "evidence": [
+        "tests/AddinInspect: check revitapi.compiled_vs_installed (WARN)",
+        "2026-10-16 pinned build: AddinInspect 9/9 PASS for 2024 (RevitAPI 24.0.0.0 <= installed 24.1.0.66) and 2027 (27.0.0.0 <= 27.2.0.39)"
+      ]
+    },
+    {
+      "id": "WE-RISK-002",
+      "title": "Bundle installer silently keeps the OLD DLL when a build with the same version number is installed, and records the NEW payload hash",
+      "release_blocking": false,
+      "status": "fixed-in-candidate",
+      "fix": "V03 (2026-10-16): installer/install.ps1 reuses versions/<ver> only when that folder holds the SAME payload (payload.sha256.txt hash equal + files verify); a different payload replaces the folder, or - when the old DLL is loaded by a running Revit - goes to an immutable versions/<ver>-b<sha8> folder. current.json records folder + the payload actually on disk. Releases still bump the version (1.46.0).",
+      "root_cause": "MEASURED 2026-10-13 (installer/install.ps1, not part of Wall Elevation): step 2 reuses an existing versions/<ver> folder whenever that folder's own payload.sha256.txt still verifies, then current.json is written with the new release payload_sha256. A rebuilt candidate/hotfix under an unchanged version number therefore never reaches Revit and the install record says it did. Releases must bump the version; gate.ps1 removes a stale folder before installing.",
+      "evidence": [
+        "%LOCALAPPDATA%/MGL/RevitAddin/2024/install.log 05:27:45Z reuse=True; current.json payload_sha256 ad7a6a80 while the folder held the previous DLL",
+        "2026-10-16 installer/test-bundle.ps1 scenario H (same version, different payload): the old installer fails 7 checks, the fixed one passes 66/66"
+      ]
+    }
+  ]
+}

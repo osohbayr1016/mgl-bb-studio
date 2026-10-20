@@ -1,0 +1,19 @@
+{
+  "$comment": "GAP-024 (2026-09-14) — сургалт / шалгалт / held-out / GOLD багцын ИЛ тусгаарлалт.  `node training/check-split.mjs` (npm run ai:train:split) энэ манифестыг уншиж train/val ↔ eval давхцлыг ХЭМЖИНЭ; давхцал > 0 бол exit 1.  `train_lora.py --dataset behavior` ЗӨВХӨН `train`/`val`-ыг уншина (training/out).",
+  "version": 1,
+  "train": ["training/out/behavior-sft-train.jsonl"],
+  "val": ["training/out/behavior-sft-val.jsonl"],
+  "test": ["training/out/behavior-sft-test.jsonl"],
+  "eval": {
+    "heldout": ["evaluation/heldout-cases.json", "evaluation/latin-aec-roast.json", "evaluation/human40-v2-cases.json", "evaluation/norm40-v1-cases.json", "evaluation/norm40-adversarial-cases.json"],
+    "gold_norm": ["evaluation/norm-gold.mjs", "evaluation/norm-golden.mjs", "evaluation/conversation-e2e.mjs", "evaluation/company-golden.mjs", "evaluation/mn-conversation.mjs"],
+    "package_tests": ["data-train-files/*/qa_retrieval_tests.jsonl", "data-train-files/*/source_citation_tests.jsonl", "data-train-files/*/calculation_cases.jsonl"],
+    "topic_router": ["norm-dataset/evals/topic_router/topic_router_cases.jsonl", "data-train-files/MCIS_NORM_REGISTRY_L1_TOPIC_ROUTER_2026-09-18/training/topic_router_test.jsonl", "data-train-files/MCIS_NORM_REGISTRY_L1_TOPIC_ROUTER_2026-09-18/training/topic_router_validation.jsonl"]
+  },
+  "excluded_from_training": {
+    "$comment": "Багцын өөрийн SFT файлууд — qa_retrieval_tests-ийн ЯГ ижил асуултуудыг агуулдаг (хэмжсэн 2026-09-14: 902 яг ижил + 54 ойролцоо, Session C training-lint).  Мэдлэг нь ЖИНД орохгүй (багцын `training_policy: retrieval_first_do_not_bake…`, CLAUDE.md §16) тул эдгээрийг сургалтад ХЭЗЭЭ Ч оруулахгүй; устгахгүй (эх багцын нэг хэсэг), зөвхөн «үнэлгээний толь» гэж ангилна.",
+    "files": ["data-train-files/*/domain_sft_verified.jsonl", "data-train-files/*/sft_seed.jsonl", "data-train-files/MCIS_NORM_REGISTRY_L1_TOPIC_ROUTER_2026-09-18/training/topic_router_train.jsonl"],
+    "$comment_topic_router": "2026-09-18 L1: багцын topic_router_train.jsonl нь [ROUTER_RESULTS] JSON + өөр системийн зааврын хэлбэртэй — serving-v2 (assembleTurns + norm_documents хайрцаг)-тай ТААРАХГҮЙ тул шууд сургалтад ОРУУЛАХГҮЙ (train/serve skew — 0.2a/0.3-ийн хэмжсэн шалтгаан).  Ижил зан төлөвийг build_behavior_sft.mjs-ийн norm-documents гэр бүл serving-ийн ЯГ хэлбэрээр үүсгэнэ; багцын validation/test нь eval.topic_router-т (train-д орохгүй).",
+    "reclassified_as": "evaluation-mirror"
+  }
+}

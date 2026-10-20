@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «Ханын дэлгээс»-ийн WPF түц шалгалтыг (WallElevation.UiSmoke) Revit 2024-ийн runtime (.NET Framework 4.8) дээр ажиллуулна.
+    Production R24 build нь Ui-г net48-аар ЭМХЭТГЭДЭГ ч WPF layout/DPI/текст хэмжилтийг net48 дээр хэзээ ч ажиллуулж шалгаагүй байсан —
+    release gate (V04, 2026-10-16) 2024 ба 2027-ийн UI smoke-ийг ТУСДАА статустай байлгана.  Эх файл нь WallElevation.UiSmoke-тэй ИЖИЛ
+    (хуулбар биш), тусдаа obj-той.  Revit-гүй — Revit доторх WPF эзэмшил / DPI-г live gate шалгана.
+
+      dotnet run -c Release   (revit-mcp/tests/WallElevation.UiSmoke.Net48 хавтаснаас)
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>WallElevation.UiSmoke.Net48</AssemblyName>
+    <RootNamespace>RevitMcpAddin.WallElevation.UiSmoke</RootNamespace>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>$(NoWarn);CS1591;CS0649</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <!-- R24 add-in-тэй ИЖИЛ: net48-д System.Text.Json нь NuGet (addin/RevitMcpAddin.csproj) -->
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\addin\WallElevation\Core\*.cs" />
+    <Compile Include="..\..\addin\WallElevation\Ui\*.cs" />
+    <Compile Include="..\..\addin\Ui\Core\*.cs" />
+    <Compile Include="..\..\addin\TextFold.cs" />
+    <Compile Include="..\..\addin\Ui\MglStyles.cs" />
+    <Compile Include="..\..\addin\Ui\MglTheme.cs" />
+    <Compile Include="..\..\addin\Ui\MglBrushes.cs" />
+    <Compile Include="..\..\addin\Ui\MglWindow.cs" />
+    <Compile Include="..\..\addin\Ui\MglUiPrefs.cs" />
+    <Compile Include="..\..\addin\Ui\MglNative.cs" />
+    <Compile Include="..\..\addin\Ui\MglUi.cs" />
+    <Compile Include="..\..\addin\Ui\MglAuto.cs" />
+    <EmbeddedResource Include="..\..\addin\Ui\Resources\MglControls.xaml" LogicalName="RevitMcpAddin.Ui.MglControls.xaml" />
+    <Compile Include="..\Smart.UiSmoke\SmokeKit.cs" Link="SmokeKit.cs" />
+    <Compile Include="..\WallElevation.UiSmoke\*.cs" />
+  </ItemGroup>
+
+</Project>

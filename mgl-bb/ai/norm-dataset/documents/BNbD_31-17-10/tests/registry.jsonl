@@ -1,0 +1,12 @@
+{"test_id": "G001", "query": "БНбД 31-17-10", "kind": "find_by_code", "must_include_code": "БНбД 31-17-10"}
+{"test_id": "G002", "query": "31-17-10", "kind": "find_by_code", "must_include_code": "БНбД 31-17-10"}
+{"test_id": "G003", "query": "Өндөр барилгын төлөвлөлт", "kind": "find_by_title", "must_include_code": "БНбД 31-17-10"}
+{"test_id": "G004", "query": "өндөр барилга", "kind": "find_by_topic", "must_include_code": "БНбД 31-17-10"}
+{"test_id": "G005", "query": "Өндөр барилгын архитектур төлөвлөлтийн норм өг", "kind": "lookup_team", "expected_team": "architecture", "must_include_code": "БНбД 31-17-10"}
+{"test_id": "G006", "query": "Өндөр барилгын бүтээц, даацын нормууд", "kind": "lookup_team", "expected_team": "structure", "must_include_code": "БНбД 31-17-10", "must_include_any": ["БНбД 20-04-17", "БНбД 22-01-21"]}
+{"test_id": "G007", "query": "Өндөр барилгын цахилгаан, гэрэлтүүлгийн норм өг", "kind": "lookup_team", "expected_team": "electrical", "must_include_code": "БНбД 31-17-10", "must_include_any": ["БД 43-101-03", "БД 43-102-07", "БНбД 23-02-08"]}
+{"test_id": "G008", "query": "Өндөр барилгын гадна фасадны материалын норм?", "kind": "lookup_topic", "expected_topics": ["facade"], "must_include_code": "БНбД 31-17-10", "note": "must return more than one norm: fire (21-01-02), thermal (23-02-09) as well when present"}
+{"test_id": "G009", "query": "undur barilgiin norm", "kind": "find_by_topic_latin", "must_include_code": "БНбД 31-17-10"}
+{"test_id": "G010", "query": "Газар хөдлөлтийн бүсэд барилга төлөвлөх норм", "kind": "find_by_title", "must_include_code": "БНбД 22-01-21"}
+{"test_id": "G011", "query": "Ачаалал ба үйлчлэл", "kind": "find_by_title", "must_include_code": "БНбД 20-04-17"}
+{"test_id": "G012", "query": "БНбД 31-17-23", "kind": "draft_visible_only_with_flag", "must_include_code_when_include_drafts": "БНбД 31-17-23", "must_exclude_by_default": true}

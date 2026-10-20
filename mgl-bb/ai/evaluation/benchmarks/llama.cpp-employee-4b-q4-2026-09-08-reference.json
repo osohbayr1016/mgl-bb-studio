@@ -1,0 +1,1 @@
+{"engine":"llama.cpp","runtime_variant":"employee-4b-q4","model_version":"dev-local","quantization":"Q4_K_M","context_tokens":8192,"hardware":{"cpu":"12th Gen Intel(R) Core(TM) i7-12700KF","gpu":"NVIDIA GeForce RTX 3070","vram_mb":8192,"ram_mb":32581},"load_ms":0,"first_token_ms":60,"total_ms":4864,"tokens":128,"tokens_per_sec":26.6,"measured_at":"2026-09-08T07:52:53.382Z"}

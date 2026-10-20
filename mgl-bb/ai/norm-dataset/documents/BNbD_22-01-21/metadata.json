@@ -1,0 +1,182 @@
+{
+  "canonical_code": "БНбД 22-01-21",
+  "doc_id": "BNBD-22-01-21-2021",
+  "title_mn": "Газар хөдлөлтийн бүс нутагт барилга төлөвлөх",
+  "title_en": "Seismic building design code",
+  "title_variants": [
+    "ГАЗАР ХӨДЛӨЛТИЙН БҮС НУТАГТ БАРИЛГА ТӨЛӨВЛӨХ",
+    "Seismic Building Design Code",
+    "Construction codes on construction planning at seismic zones of Mongolia",
+    "Газар хөдлөлтийн бүсэд барилга төлөвлөх"
+  ],
+  "document_type": "BNbD",
+  "jurisdiction": "Mongolia",
+  "status": "ACTIVE",
+  "status_evidence": [
+    "MCIS current-norm register record 17110817013146: «Хүчин төгөлдөр» — «БХБС-ын 2021 оны 117 дугаар тушаал /БНбД 22-01-21/» (tools/mcis_verify.py, checked 2026-09-16 and re-checked 2026-09-23; the register prints the code as «БНбД 22-01-21*»).",
+    "PDF p.4 (front matter of the «Албан ёсны 3 дах хэвлэл», 2023): «1. Барилга, хот байгуулалтын сайдын 2021 оны 5 дугаар сарын 21-ний өдрийн 117 дугаар тушаалын 1 дүгээр хавсралтаар батлав. Барилга, хот байгуулалтын сайдын 2022 оны 1 дүгээр сарын 6-ны өдрийн 07 дугаар тушаалын хавсралтаар шинэчлэн батлав.»",
+    "mcud.gov.mn/ld/318 (Ministry «Сайдын тушаал» page, checked 2026-09-23): «БАРИЛГА БАЙГУУЛАМЖИЙН НОРМ, НОРМАТИВЫН БАРИМТ БИЧИГ БАТЛАХ ТУХАЙ - ГАЗАР ХӨДЛӨЛТИЙН БҮС НУТАГТ БАРИЛГА ТӨЛӨВЛӨХ /БНбД 22-01-21/ БАРИЛГЫН НОРМ, ДҮРЭМ | 2021-05-21 | Дугаар: 117».",
+    "legalinfo.mn order 07 of 2022-01-06 «Тушаалын хавсралтыг шинэчлэн батлах тухай» (official text + annexes, PDF sha256 1bc80390…, checked 2026-09-23): re-approves annexes 1 and 2 of the norm approved by order 117 of 2021-05-21.",
+    "2025 construction-norm register (gazar.gov.mn, p.29, row 1, via registry/cdc-2025): «БНбД 22-01-21*/22» — decisions «БХБСайдын 2021 оны 117 дугаар тушаал, БХБСайдын 2022 оны 7 дугаар тушаал»; no later amending order listed."
+  ],
+  "effective_status": "current_amended_verified",
+  "effective_status_note": "Current (MCIS «Хүчин төгөлдөр», 2026-09-23) with ONE verified amendment: order 07 of 2022-01-06 (annexes 1 and 2).  Later amendments were looked for in the MCIS register record (page dated 2024-04-03, PDF stamped 2025-10-13) and in the 2025 construction-norm register — none found.  The legalinfo.mn amendment panel of order 117/2021 renders dynamically and was NOT read, so «no later amendment» is not a complete legal check (source/SOURCE.json U1) → answers carry the CURRENT_BUT_LATER_AMENDMENTS_NOT_VERIFIED trailer.",
+  "approval": {
+    "order_number": "117",
+    "order_date": "2021-05-21",
+    "issuer": "Барилга, хот байгуулалтын сайд",
+    "attachment": "тушаалын 1 дүгээр хавсралт",
+    "effective_from": "2021-12-01",
+    "effective_from_evidence_level": "official_agency_announcement",
+    "effective_from_evidence": "barilga.gov.mn (Барилгын хөгжлийн төв), announcement of the 2022-04-01 discussion (https://barilga.gov.mn/page_data/63ae74a681c78810e014cbe6, read 2026-09-23): «“Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-21/ барилгын норм ба дүрэм 2021 онд БХБ-ын сайд шинэчлэн баталсан бөгөөд тус нормыг 2021.12.01 өдрөөс мөрдөж эхэлсэн билээ.»  The date is NOT printed in the norm text (3rd edition, all 143 pages searched) nor in order 07/2022; the text of order 117/2021 itself could not be read (legalinfo.mn/mn/detail/16647 loads its body dynamically; pdfExport returns an empty page)."
+  },
+  "amendments": [
+    {
+      "id": "A-2022-07",
+      "order_number": "07",
+      "order_date": "2022-01-06",
+      "issuer": "Барилга, хот байгуулалтын сайд",
+      "title": "Тушаалын хавсралтыг шинэчлэн батлах тухай",
+      "version_alias": "БНбД 22-01-21*/22",
+      "role": "AMENDMENT_SOURCE",
+      "source_url": "https://legalinfo.mn/storage/uploads/process/202202/file_1644390647161759_163403209487511.pdf",
+      "source_page_url": "https://legalinfo.mn/mn/detail?lawId=16390164225891",
+      "source_sha256": "1bc80390df435e1a75b2d9ff0f191a041039b99d421109f8dd31e8c1a51df1ef",
+      "affects": ["annex:1", "annex:2"],
+      "effect_quote": "1.Барилга, хот байгуулалтын сайдын 2021 оны 5 дугаар сарын 21-ний өдрийн 117 дугаар тушаалын хавсралтаар баталсан ““Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-21/ барилгын норм, дүрэм”-ийн нэгдүгээр хавсралт болох “Монгол орны газар хөдлөлтийн ерөнхий мужлал (500 болон 2500 жил), хоёрдугаар хавсралт болох “Монгол орны газар хөдлөлтийн ерөнхий мужлалын зураг (500 жилийн давтагдах хугацаа)”-ийг доор дурдсан нэршилтэйгээр өөрчилж, энэ тушаалын нэг, хоёрдугаар хавсралт ёсоор тус тус шинэчлэн баталсугай: 1.1.“Монгол орны хот, суурингуудын хувьд тооцоолсон 500 жил, 2500 жилийн давтагдах хугацааны хөрсний оргил хурдатгал болон MSK64 шаталбарын баллын утгууд” дүрмийн нэгдүгээр хавсралт; 1.2.Монгол орны газар хөдлөлтийн ерөнхий мужлалын зураг (500 жилийн давтагдах хугацаа)-ийг дүрмийн хоёрдугаар хавсралт. 2. Энэ тушаал гарсантай холбогдуулан “Барилга байгууламжийн норм, нормативын баримт бичиг батлах тухай” Барилга, хот байгуулалтын сайдын 2021 оны 5 дугаар сарын 21-ний өдрийн 117 дугаар тушаалын 2 дугаар зүйлийг хүчингүй болсонд тооцсугай.",
+      "notes": "The content of item 2 of order 117/2021 (declared void by item 2 of this order) is not known — order 117's own text was not retrievable."
+    }
+  ],
+  "annex_versions": [
+    {
+      "annex": "1",
+      "current_title": "Монгол орны хот, суурингуудын хувьд тооцоолсон 500 жил, 2500 жилийн давтагдах хугацааны хөрсний оргил хурдатгал болон MSK64 шаталбарын баллын утгууд",
+      "source_version": "A-2022-07",
+      "effective_version": "2022-01-06",
+      "supersedes": {
+        "version": "2021-05-21 (order 117, annex 1 of the norm)",
+        "title": "Монгол орны газар хөдлөлтийн ерөнхий мужлал (500 болон 2500 жил)",
+        "text_available": false,
+        "note": "The 2021 annex text is not contained in any retrieved source (the 3rd edition prints the 2022 annex; legalinfo publishes order 07's annex). It is recorded as history only and can never be served."
+      },
+      "normative_text_pdf_pages": "103–110"
+    },
+    {
+      "annex": "2",
+      "current_title": "Монгол орны газар хөдлөлтийн ерөнхий мужлалын зураг (500 жилийн давтагдах хугацаа)",
+      "source_version": "A-2022-07",
+      "effective_version": "2022-01-06",
+      "supersedes": {
+        "version": "2021-05-21 (order 117, annex 2 of the norm)",
+        "title": "Монгол орны газар хөдлөлтийн ерөнхий мужлалын зураг (500 жилийн давтагдах хугацаа)",
+        "text_available": false,
+        "note": "Maps only (images). The 2021 maps are not contained in any retrieved source."
+      },
+      "normative_text_pdf_pages": "111–140 (map images; no values extracted)"
+    }
+  ],
+  "aliases": [
+    "БНбД 22-01-21",
+    "БНбД 22-01-21*",
+    "БНбД 22-01-21*/22",
+    "BNbD 22-01-21",
+    "BNBD 22-01-21*/22",
+    "BNbD 22-01-21*/22",
+    "CCM 22-01-21",
+    "CCM 22-01-21*",
+    "БНОД 22-01-21",
+    "22-01-21",
+    "Газар хөдлөлтийн бүс нутагт барилга төлөвлөх",
+    "Seismic building design code"
+  ],
+  "supersedes": [
+    "БНбД 22-01-01*"
+  ],
+  "supersedes_note": "PDF p.4 (front matter, 3rd edition): «2. Энэ тушаал гарсантай холбогдуулан Барилга, хот байгуулалтын сайдын 2006 оны 7 дугаар сарын 24-ний өдрийн 120 дугаар тушаалаар батлагдсан “Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-01*/2006/ барилгын норм ба дүрмийг, мөн 2013 оны 5 дугаар сарын 28-ны өдрийн 106 дугаар тушаалаар батлагдсан нэмэлт өөрчлөлтийг тус тус хүчингүй болсонд тооцсугай.»  legalinfo.mn/mn/detail/9586 (order 120 of 2006-07-24 that approved БНбД 22.01.01/2006) is titled «… - БХБС-ын 2021 оны 117 дугаар тушаалаар хүчингүй болсон.» (checked 2026-09-23).",
+  "superseded_by": null,
+  "successor_draft": null,
+  "edition": {
+    "label": "Албан ёсны 3 дах хэвлэл",
+    "cover_year": "2023",
+    "publisher": "Монгол улсын Барилга, хот байгуулалтын яам",
+    "evidence": "PDF p.2–3 cover: «Албан ёсны 3 дах хэвлэл … Улаанбаатар хот 2023 он»; PDF p.4 prints the 2022 re-approval; annex 1 and annex 2 are reproduced under the headers «… 2022 оны 01 дүгээр сарын 06-ны өдрийн 07 дугаар тушаалын нэгдүгээр/хоёрдугаар хавсралт» (PDF p.103, p.111). Stamped by MCIS (iText) 2025-10-13."
+  },
+  "source_roles": [
+    {
+      "role": "NORMATIVE_SOURCE",
+      "authority": "MCIS register record 17110817013146 (official current-norm register)",
+      "file": "source/BNbD_22-01-21_mcis_2025-10_stamped.pdf",
+      "url": "https://mcis.gov.mn/main/single/17110817013146"
+    },
+    {
+      "role": "AMENDMENT_SOURCE",
+      "authority": "legalinfo.mn — official text of order 07 of 2022-01-06 with its annexes",
+      "file": "source/_external/legalinfo_order-07_2022-01-06.pdf (NOT in git — 38 MB, re-download from the URL; sha256 must match)",
+      "url": "https://legalinfo.mn/storage/uploads/process/202202/file_1644390647161759_163403209487511.pdf"
+    },
+    {
+      "role": "OFFICIAL_COMMENTARY",
+      "authority": null,
+      "note": "None located for БНбД 22-01-21 (2026-09-23).  «БД 22-101-07» is the official commentary of the SUPERSEDED БНбД 22.01.01/2006 (register title «… БНбД 22.01.01/2006-ийн тайлбар») — it is not attached to this norm."
+    },
+    {
+      "role": "PROFESSIONAL_COUNCIL_INTERPRETATION",
+      "authority": null,
+      "note": "None located (web search of mcis.gov.mn, barilga.gov.mn and legalinfo.mn, 2026-09-23).  Nothing is ingested, so no answer can cite one."
+    }
+  ],
+  "teams": [
+    "structure",
+    "architecture",
+    "geotechnical"
+  ],
+  "topics": [
+    "seismic",
+    "high-rise",
+    "loads",
+    "foundation",
+    "concrete",
+    "steel",
+    "geotechnical"
+  ],
+  "building_types": [
+    "residential",
+    "public",
+    "industrial",
+    "high-rise"
+  ],
+  "applicability": {
+    "evidence": "section 1 — «… MSK шаталбараар 7, 8 ба 9 баллын эрчимтэй талбайд шинээр барих барилгын болон барилга, байгууламжийг сэргээн засварлах, шинэчлэх, ажлын зураг төсөл зохиоход мөрдөнө.»; «Газар хөдлөлтийн 9-өөс дээш баллын эрчимтэй талбайд барилга барихыг зөвшөөрөхгүй.»"
+  },
+  "priority": "P0",
+  "capability_level": "L2",
+  "capability_level_note": "L0 registry + L1 full text + L2 clause/table/annex/formula structure from the official MCIS PDF text layer (auto-extracted). Annex 1 (settlement values) is text; annex 2 (seismic zoning and microzoning maps) is 30 map IMAGES — no value is read from a map. L3 compute: formulas catalogued only, none executable.",
+  "deep_ingestion_status": "PARSED",
+  "retrieval_default": true,
+  "source_type": "official",
+  "source_url": "https://mcis.gov.mn/main/single/17110817013146",
+  "source_pdf_url": "https://mcis.gov.mn/storage/uploads/process/202510/file_1760323453830431_161611878330710_stamped.pdf",
+  "legal_source_url": "https://legalinfo.mn/mn/detail?lawId=16390164225891",
+  "source": {
+    "file": "BNbD_22-01-21_mcis_2025-10_stamped.pdf",
+    "sha256": "0c7c81503db6b676ec671532a776f0c648b2b0db7c9e418e0492785d3ea2faea",
+    "page_number_mode": "top_of_page",
+    "printed_page_offset": 2,
+    "page_numbering_note": "The MCIS render prints the page number in the running header (PDF p.5 = printed 3 … PDF p.110 = printed 108; from PDF p.111 the header order flips to «БНбД 22-01-21» then the number). Map pages 112–140 also carry the map's own label number, which is ignored.",
+    "body_first_pdf_page": 5,
+    "body_last_pdf_page": 110,
+    "pdf_pages": 143
+  },
+  "verification": {
+    "text_verification_status": "official_pdf_text_layer_auto_extracted",
+    "human_verified_clauses": 0,
+    "note": "No clause has been verified by a human against the page image yet. Numeric rules therefore stay non-executable (searchable + citable only)."
+  },
+  "formula_review": [
+    {"label": "3", "status": "FORMULA_IMAGE_REVIEW_REQUIRED", "reason": "Formula (3) (clause 5.6, soil categories I–II, curve 1) is printed as THREE lines (Ti ≤ 0.1с; 0.1с < Ti ≤ 0.4с; Ti ≥ 0.4с) with the label beside the middle line. The text layer ends (3) after the second line and gives the third line to (4); its ≤ and β are Adobe Symbol private-use glyphs. The text-layer expression is incomplete — never rebuild it.", "checked_against": "page image, PDF p.22", "checked_at": "2026-09-23"},
+    {"label": "4", "status": "FORMULA_IMAGE_REVIEW_REQUIRED", "reason": "The text-layer expression of (4) starts with the last line of (3) and flattens the exponent: the page prints βi=2.5 (0.4/Ti) with superscript 0.5, the text layer reads «βi=2.5 (0.4/ Ti) 0.5», which parses as a product. Never rebuild it.", "checked_against": "page image, PDF p.22", "checked_at": "2026-09-23"}
+  ],
+  "last_verified": "2026-09-23",
+  "dataset_version": "0.1.0",
+  "training_policy": "retrieval_first_do_not_bake_changeable_norms_into_model_weights"
+}

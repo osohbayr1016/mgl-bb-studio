@@ -1,0 +1,323 @@
+{
+  "query": "Цахилгаантай холбоотой өндөр барилгын бүх норм дүрмийг нэр, код, линктэй нь өг.",
+  "detected_topics": [
+    "highrise",
+    "electrical"
+  ],
+  "count": 11,
+  "results": [
+    {
+      "registry_id": "mn-construction:efa9c834c1f527ec3773",
+      "canonical_code": "БНбД 31-17-10",
+      "title_mn": "Өндөр барилгын төлөвлөлт",
+      "topics": [],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "highrise": [
+          "curated_highrise_core_overlay"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=37",
+      "official_detail_url": "https://legalinfo.mn/mn/detail/7524",
+      "official_pdf_url": null,
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 100.0,
+      "router_reason": "curated_highrise_overlay"
+    },
+    {
+      "registry_id": "mn-construction:682f9dc8992da0dd159d",
+      "canonical_code": "БД 43-101-03 БД 43-101-03*12",
+      "title_mn": "Цахилгаан байгууламжийн дүрэм Цахилгаан байгууламжийн дүрэм. Бүлэг 1,6 “Газардуулга ба цахилгааны аюулгүй байдлын хамгаалалтын арга хэмжээ”",
+      "topics": [
+        "electrical",
+        "electrical_safety",
+        "grounding"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "electrical": [
+          "existing_registry_taxonomy:electrical_power",
+          "title_keyword:цахилгаан",
+          "set_43"
+        ],
+        "electrical_safety": [
+          "title_keyword:цахилгааны аюулгүй"
+        ],
+        "grounding": [
+          "title_keyword:газардуул"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=54",
+      "official_detail_url": null,
+      "official_pdf_url": "https://mcis.gov.mn/storage/uploads/watermarkedPdf/2022111668495958701142.pdf",
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 99.9,
+      "router_reason": "curated_highrise_overlay"
+    },
+    {
+      "registry_id": "mn-construction:a2cc01086652cd4af4ae",
+      "canonical_code": "БД 43-102-07",
+      "title_mn": "Орон сууц, олон нийтийн барилгын цахилгаан төхөөрөмжийг төсөллөх ба угсрах",
+      "topics": [
+        "electrical",
+        "residential"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "electrical": [
+          "existing_registry_taxonomy:electrical_power",
+          "title_keyword:цахилгаан",
+          "set_43"
+        ],
+        "residential": [
+          "title_keyword:орон сууц"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=55",
+      "official_detail_url": "https://mcis.gov.mn/main/single/16201345259112",
+      "official_pdf_url": null,
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 99.8,
+      "router_reason": "curated_highrise_overlay"
+    },
+    {
+      "registry_id": "mn-construction:63e30f793eb451cf26aa",
+      "canonical_code": "БД 43-103-08",
+      "title_mn": "Барилга, байгууламжийн аянга хамгаалалтын зураг төсөл зохиох заавар",
+      "topics": [
+        "electrical",
+        "lightning_protection"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "electrical": [
+          "existing_registry_taxonomy:electrical_power",
+          "set_43"
+        ],
+        "lightning_protection": [
+          "title_keyword:аянга хамгаал"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=55",
+      "official_detail_url": null,
+      "official_pdf_url": null,
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 99.7,
+      "router_reason": "curated_highrise_overlay"
+    },
+    {
+      "registry_id": "mn-construction:43c7973ecbc6711e97a3",
+      "canonical_code": "БД 43-104-12",
+      "title_mn": "Цахилгааны хийц арматур, угсралтын галын аюулгүй байдлын шаардлага. Турших арга",
+      "topics": [
+        "electrical",
+        "fire_safety"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "electrical": [
+          "existing_registry_taxonomy:electrical_power",
+          "title_keyword:цахилгаан",
+          "set_43"
+        ],
+        "fire_safety": [
+          "title_keyword:галын аюул"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=55",
+      "official_detail_url": null,
+      "official_pdf_url": null,
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 99.6,
+      "router_reason": "curated_highrise_overlay"
+    },
+    {
+      "registry_id": "mn-construction:a36605d3b059e68c23f7",
+      "canonical_code": "БД 43-105-12",
+      "title_mn": "Цахилгааны кабель шугамын галын аюулын зэрэглэлийн ангилал ба тодорхойлох арга",
+      "topics": [
+        "electrical",
+        "fire_hazard_classification",
+        "fire_safety"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "electrical": [
+          "existing_registry_taxonomy:electrical_power",
+          "title_keyword:цахилгаан",
+          "set_43"
+        ],
+        "fire_hazard_classification": [
+          "title_keyword:галын аюулын зэрэглэлийн ангилал"
+        ],
+        "fire_safety": [
+          "title_keyword:галын аюул"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=55",
+      "official_detail_url": null,
+      "official_pdf_url": null,
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 99.5,
+      "router_reason": "curated_highrise_overlay"
+    },
+    {
+      "registry_id": "mn-construction:44e080f26c01c09a1bc2",
+      "canonical_code": "БД 43-107-19",
+      "title_mn": "Барилга байгууламжийн цахилгаан төхөөрөмжийн газардуулгын эсэргүүцлийг тооцоолох аргачлал",
+      "topics": [
+        "electrical",
+        "grounding"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "electrical": [
+          "existing_registry_taxonomy:electrical_power",
+          "title_keyword:цахилгаан",
+          "set_43"
+        ],
+        "grounding": [
+          "title_keyword:газардуул"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=56",
+      "official_detail_url": null,
+      "official_pdf_url": null,
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 99.4,
+      "router_reason": "curated_highrise_overlay"
+    },
+    {
+      "registry_id": "mn-construction:53c4ab68fb63320dfcc9",
+      "canonical_code": "БД 43-108-24",
+      "title_mn": "Барилгын холбоо, дохиоллын зураг төсөл төлөвлөлт",
+      "topics": [
+        "electrical",
+        "telecom_signal"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "electrical": [
+          "existing_registry_taxonomy:electrical_power",
+          "set_43"
+        ],
+        "telecom_signal": [
+          "title_keyword:холбоо, дохиол"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=56",
+      "official_detail_url": null,
+      "official_pdf_url": null,
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 99.3,
+      "router_reason": "curated_highrise_overlay"
+    },
+    {
+      "registry_id": "mn-construction:61b01920f6a16b70690d",
+      "canonical_code": "БНбД 23-02-08",
+      "title_mn": "Байгалийн ба зохиомол гэрэлтүүлэг",
+      "topics": [
+        "lighting"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "highrise": [
+          "curated_highrise_core_overlay"
+        ],
+        "lighting": [
+          "title_keyword:гэрэлтүүл"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=31",
+      "official_detail_url": null,
+      "official_pdf_url": "https://mcis.gov.mn/storage/uploads/process/202510/file_1760340444978004_161611878330710_stamped.pdf",
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 99.2,
+      "router_reason": "curated_highrise_overlay"
+    },
+    {
+      "registry_id": "mn-construction:e83b9b26edf44e34a6a4",
+      "canonical_code": "БНбД 21-04-05*/18",
+      "title_mn": "Барилга, байгууламжийн гал унтраах автомат төхөөрөмж, дохиоллын хэрэгсэл",
+      "topics": [
+        "fire_alarm",
+        "fire_safety"
+      ],
+      "scope_classes": [
+        "technical_or_regulatory"
+      ],
+      "topic_evidence": {
+        "fire_alarm": [
+          "title_keyword:гал унтраах автомат"
+        ],
+        "fire_safety": [
+          "existing_registry_taxonomy:fire_safety",
+          "set_21"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=27",
+      "official_detail_url": null,
+      "official_pdf_url": null,
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 99.1,
+      "router_reason": "curated_highrise_overlay"
+    },
+    {
+      "registry_id": "mn-construction:455da4aea1775d62b849",
+      "canonical_code": "БНбД 3.05.06-90",
+      "title_mn": "Цахилгаан техникийн ажил",
+      "topics": [
+        "construction_execution",
+        "electrical"
+      ],
+      "scope_classes": [
+        "construction_execution"
+      ],
+      "topic_evidence": {
+        "construction_execution": [
+          "title_keyword:техникийн ажил"
+        ],
+        "electrical": [
+          "existing_registry_taxonomy:electrical_power",
+          "title_keyword:цахилгаан",
+          "set_43"
+        ]
+      },
+      "source_url": "https://www1.gazar.gov.mn/upload/news_files/16-202504161017426.pdf#page=54",
+      "official_detail_url": null,
+      "official_pdf_url": null,
+      "status": "STATUS_REQUIRES_VERIFICATION",
+      "baseline_status": "ACTIVE_IN_2025_REGISTER",
+      "router_score": 99.0,
+      "router_reason": "curated_highrise_overlay"
+    }
+  ]
+}

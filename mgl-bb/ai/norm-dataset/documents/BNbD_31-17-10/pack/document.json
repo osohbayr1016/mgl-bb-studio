@@ -1,0 +1,43 @@
+{
+  "doc_id": "BNBD-31-17-10-2010",
+  "code": "БНбД 31-17-10",
+  "title_mn": "Өндөр барилгын төлөвлөлт",
+  "title_en": "Planning of high-rise building",
+  "jurisdiction": "Mongolia",
+  "authority": "Зам, тээвэр, барилга, хот байгуулалтын сайд",
+  "order_date": "2010-12-30",
+  "order_number": "429",
+  "version": "2010",
+  "effective_status": "current_status_not_checked_for_later_amendments",
+  "effective_from": "2011-01-01",
+  "dataset_standard": "norm-dataset/1",
+  "source_url": "https://mcis.gov.mn/main/single/16201345052562",
+  "source_pdf_url": "https://mcis.gov.mn/storage/uploads/process/202206/file_1654224802226730_161611878330710.pdf",
+  "legal_source_url": "https://legalinfo.mn/mn/detail/7524",
+  "successor_draft": {
+    "code": "БНбД 31-17-23",
+    "status": "DRAFT",
+    "evidence": "MCIS PDF 2022-10 (file_1665976197392091, 156 pages) — approval line blank; MCIS notice 16571223949734 «Боловсруулж байна», feedback until 2022-10-31",
+    "ingest": false
+  },
+  "amendments": [
+    {
+      "order_number": "222",
+      "order_year": "2022",
+      "issuer": "БХБС",
+      "content_verified": false,
+      "note": "Listed on legalinfo as amending order 429; effect on this norm unresolved (U1)."
+    }
+  ],
+  "supersedes": [],
+  "superseded_by": null,
+  "applicability": {
+    "floors_min": 17,
+    "height_m_min": 51,
+    "floors_max": 35,
+    "height_m_max": 150,
+    "evidence": "clause 1.1"
+  },
+  "training_policy": "retrieval_first_do_not_bake_changeable_norms_into_model_weights",
+  "text_verification_status": "official_pdf_text_layer_auto_extracted"
+}

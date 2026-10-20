@@ -1,0 +1,572 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Multi-version Revit add-in. Нэг DLL бүх Revit-д ачаалагдахгүй (Revit хувилбар
+    бүр өөр .NET runtime): 2024=net48, 2025/2026=net8, 2027=net10. Тиймээс Revit
+    оноор нэг Configuration: "Release R24".."Release R27". Config болбүр өөрийн TFM,
+    RevitAPI пакетийн хувилбар, deploy folder-той.
+
+      dotnet build RevitMcpAddin.csproj -c "Release R27" -p:Platform=x64
+  -->
+
+  <PropertyGroup>
+    <Configurations>Debug R24;Debug R25;Debug R26;Debug R27;Release R24;Release R25;Release R26;Release R27</Configurations>
+
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>false</UseWindowsForms>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>RevitMcpAddin</AssemblyName>
+    <RootNamespace>RevitMcpAddin</RootNamespace>
+    <!-- Тархаалтыг цомхотгох: Roslyn-ы бусад хэлний (cs/de/ja/ru...) алдааны
+         resources.dll-үүдийг хасна — add-in-д хэрэггүй, ~6 MB / 56 файл хэмнэнэ. -->
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <!-- NU1510 нь RESTORE-ийн үеийн анхааруулга тул PackageReference дээрх
+         NoWarn түүнийг дардаггүй — project түвшинд бичих ёстой.
+         net10-д ProtectedData framework-д орсон тул "илүүц" гэж хэлдэг, гэвч
+         net8 (Revit 2025/2026)-д ХЭРЭГТЭЙ тул пакетыг хасахгүй. -->
+    <NoWarn>$(NoWarn);NU1510</NoWarn>
+
+    <!--
+      ⚠️ РЕЛИЗИЙН ХУВИЛБАР.
+      Хувилбаргүй үед бүх DLL `1.0.0.0` тамгатай гардаг тул
+      аль ажилтан аль build-тай явж байгааг МЭДЭХ АРГАГҮЙ
+      (dist/ нь git-д ороогүй — revit-mcp/.gitignore:13).  Ажилтны компьютерт
+      АВТОМАТ ШИНЭЧЛЭЛ БАЙХГҮЙ; тараалт бүр = ~20 машин дээр гар
+      ажиллагаа.  Релиз бүрт ЭНЭ ТООГ өсгө.
+
+      ⚠️ `AssemblyVersion`-ыг 1.0.0.0-д ХӨЛДӨӨНӨ: тэр нь binding identity
+      бөгөөд өсгөвөл Revit-ийн assembly resolve-д нөлөөлж болзошгүй.
+      Хүнд харагдах дугаар нь `FileVersion` / `InformationalVersion` —
+      `BuildInfo.Version` тэднийг уншиж User-Agent ба бүртгэлд тавина.
+
+      ⚠️ 1.1.0 -> 1.2.0 (2026-08-31, Track 2 — суулгалт ба эрүүл мэнд).
+      ЯАГААД ЗААВАЛ ӨСГӨВ: `revit-mcp/dist/` дотор ЗӨВХӨН 1.1.0 байсан тул
+      «өмнөх хувилбар руу буц» гэдэг нь НЭРЛЭХ ЮМГҮЙ — өөрөөр хэлбэл
+      2-8 §8-ийн буцаалт ХЭРЭГЖИХ БОЛОМЖГҮЙ байв.  Түүнчлэн тэдгээр zip-ийн
+      манифест нь `git_sha 9fe82a04` гэж бичигдсэн атлаа савласан эх код
+      түүнээс дөрөв гаруй commit ШИНЭ байсан, 2025/2026-ийн zip-д манифест
+      ОГТ БАЙХГҮЙ — өөрөөр хэлбэл 1.1.0 нь өөрийгөө таних чадваргүй.
+      1.2.0 нь `payload.sha256.txt` + `release.json`-той ЭХНИЙ багц, улмаар
+      1.1.0 нь эхний БОДИТ буцаалтын бай болно.
+
+      1.4.0 -> 1.5.0 (2026-09-30): «Зураг клонлох» (Clone Drawings) — `CloneDrawings/`.
+      1.5.0 -> 1.5.1 (2026-09-30): tag клон — хөрш/link/материал/3D/өрөөний tag, MRA.
+      1.5.1 -> 1.6.0 (2026-09-30): клон — элементийг нэрээр таньж, зөвхөн холбоотой зургийг олно; төрлөөр tag сонголт; ~2.5× хурдан.
+      1.6.0 -> 1.7.0 (2026-09-30): «Автомат хэмжээс» — `AutoAnnotate/` (план/зүсэлт/фасадын хэмжээс, tag).
+      1.7.0 -> 1.7.1 (2026-10-01): «Автомат хэмжээс» — link (холбосон файл)-ийн элементийг уншина (1.7.0-д «Олдсон 0»),
+                                   хэмжээсийн сонголт хэзээ ч идэвхгүй болохгүй, «параллель биш» алдааны цонх гарахгүй.
+      1.7.1 -> 1.8.0 (2026-10-01): «Хуудас дугаарлах» — `SheetNumerator/` (Project Browser-ийн бүлгээр хуудас эрэмбэлж, дугаарыг нэг дор шинэчилнэ)
+                                   + «MGL Smart» самбар — `Smart/`, `SmartPublish/`, `SmartCount/`, `ClashCheck/`, `ChangeImpact/`
+                                   (Өөрчлөлтийн нөлөө, Smart Count, Clash шалгах, Smart Publish; ЗӨВХӨН Revit 2025–2027).
+      1.8.0 -> 1.9.0 (2026-10-01): ЛИЦЕНЗ — `Licensing/`.  БҮХ товч зөвхөн компанийн бүртгэлээр, ажилтны ирц
+                                   бүртгүүлдэг ажлын компьютер дээр ажиллана (серверийн гарын үсэгтэй 72 цагийн лиценз,
+                                   `POST /api/revit/license`, migration 0374).  «MGL нэвтрэлт» товч нэмэгдсэн.
+      1.9.0 -> 1.9.1 (2026-10-01): «Зураг клонлох» — харагдацын шүүлт (өөрийн/ерөнхий/бусад, хайлт, төрөл; зөвхөн
+                                   өөрийн зураг өгөгдмөл), АРЫН горим (Revit-ийн Idling алхам, алхам бүр нэг transaction)
+                                   + баруун талын «MGL — Зураг клонлох» явцын самбар, хэмжээсийн багц шалгалт (хурд).
+      1.9.1 -> 1.10.0 (2026-10-01): ТӨХӨӨРӨМЖИЙН КРИПТО ТАНИЛТ (migration 0375).  Компьютер бүр TPM / CNG дахь
+                                   ECDSA P-256 түлхүүртэй (`Licensing/DeviceKeyStore.cs`); лиценз, session авах бүрд
+                                   серверийн нэг удаагийн challenge-д гарын үсэг зурна.  Лиценз 72 цагаас 12 цаг
+                                   (1 цаг тутам шинэчлэгдэнэ), API дуудлага 365 хоногийн токены оронд 30 минутын
+                                   төхөөрөмжид уяатай session.  Анх удаа дахин нэвтэрч төхөөрөмжөө бүртгүүлнэ.
+      1.10.0 -> 1.10.1 (2026-10-02): Лиценз «бүртгэлээрээ нэвтрэхэд л ажиллана» (сервер `revit.enroll_approval =
+                                   account`) — нэвтрэх цонхны бичвэр; түлхүүр ERP ажилтан тутам (`DeviceKeyStore.ForUser`).
+                                   «Зураг клонлох»: хөнгөн кэш шинэчлэлт, засварлах горимд хүлээх, Ctrl+Z / «Бүгдийг
+                                   буцаах»-ын ID давхардал, ажлын дугаартай алхмын нэр, callout бие даасан план.
+      1.10.1 -> 1.11.0 (2026-10-02): АРМАТУРЫН ХЭРЭГСЭЛ — `Reinforcement/` («Арматур» + «Түүвэр» самбар): Арматурын
+                                   төгсгөлийн тэмдэг, Огтлолын арматурын тэмдэглэгээ (хомутын хэмжээс + tag), Тэмдэглэгээ
+                                   шинэчлэх, Түүвэр хувилах (Partition тус бүрд), Түүвэр синк хийх.  Revit дээр бодитоор
+                                   ажиллуулаагүй — `docs/REINFORCEMENT.md` §8 гар QA.
+      1.11.0 -> 1.11.1 (2026-10-02): АРМАТУРЫН ХЭРЭГСЛИЙН АУДИТЫН ЗАСВАР (`docs/REINFORCEMENT.md` §12): Partition =
+                                   ЗӨВХӨН `NUMBER_PARTITION_PARAM` (Workset-ийг андуурдаг байсан), end-on арматур
+                                   дахин ажиллуулахад давхар тэмдэг тавигдахгүй, «Солих» нь шинэ төрөл бүрэн үүсээгүй
+                                   үед өмнөхийг устгахгүй, T/L/нээлттэй хомутод буруу хэмжээс тавихгүй, proxy шугамд
+                                   гараар холбосон хэмжээс устахгүй, түүврийн нэрийн мөргөлдөөн/split/«хуудсаар шүүх»
+                                   түүврийг хамгаална.  Revit дээр ХАРААХАН ажиллуулаагүй — §12.5 гар QA.
+      1.11.1 -> 1.12.0 (2026-10-02): АРМАТУРЫН ХЭРЭГСЛИЙН ИНЖЕНЕРИЙН САНАЛЫН ЗАСВАР (`docs/REINFORCEMENT.md` §13):
+                                   Огтлол — хуурамч (үл үзэгдэх) лавлагаа шугам ХЭЗЭЭ Ч үүсэхгүй, хэмжээс тэнхлэг бүрт
+                                   НЭГ гинж (нүүр → хомут → хомут → нүүр) арматурын бодит Reference-аар; лавлагаа олдохгүй
+                                   тал алгасагдаж мэдэгдэнэ; tag-ийн төрөл/нуугдсан ангиллыг ӨМНӨ нь шалгана; диалог
+                                   харагдац + элементийг харуулна.  Төгсгөлийн тэмдэг — «Эхний ширхэг» горим, Эхлэл/Төгсгөлийн
+                                   БИЕ ДААСАН эргэлт, тэмдгийн шууд хайлт.  Түүвэр — эх түүврийн шууд хайлт, нэрийн жишээ.
+                                   Revit дээр ХАРААХАН ажиллуулаагүй — §13.6 гар QA.
+      1.12.0 -> 1.12.1 (2026-10-02): «Төгсгөлийн тэмдэг» ДАРААЛАН дарах горим (`docs/REINFORCEMENT.md` §14): тохиргоо
+                                   нэг удаа, дараа нь арматур бүр дээр дарах бүрт тэмдэг шууд тавигдана, Esc = дуусгах;
+                                   явц status bar-т; Ctrl+Z бүр сүүлийн товшилтыг буцаана.  Revit дээр ажиллуулаагүй.
+      1.12.1 -> 1.13.0 (2026-10-02): Огтлолын тэмдэглэгээ — ЗАГВАР ХАРАГДАЦААС ХУУЛАХ (`docs/REINFORCEMENT.md` §15): гараар
+                                   зурсан төстэй харагдацаа нэрээр нь сонгоход түүний хэмжээс, арматурын tag/MRA, текстийг ИДЭВХТЭЙ харагдацын
+                                   дам нуруу/багана дээр шууд нэмнэ (шинэ харагдац үүсгэхгүй).  «Зураг клонлох»-ын хөдөлгүүрийг ашиглана.  Гараар
+                                   тавьсныг устгахгүй, давхар үүсгэхгүй, нэг Ctrl+Z.  Эсрэг талаас харсан огтлолыг эргүүлж буулгана.  Revit дээр
+                                   ХАРААХАН ажиллуулаагүй — §15.4 гар QA.
+      1.13.0 -> 1.14.0 (2026-10-05): UI/UX шинэчлэл (`docs/MGL_UI_UX_REDESIGN.md`, commit 04f07b98): нийтлэг загвар
+                                   (Гэрэл/Харанхуй), ribbon дахин бүлэглэсэн (Ажил · Зураг · Арматур · Түүвэр · Шалгалт ·
+                                   Экспорт · Сан ба тохиргоо), «Хэрэгсэл хайх» каталог, ~35 цонх нэг хэв маягт.  Зан төлөв,
+                                   командын нэр, AddInId өөрчлөгдөөгүй.  Revit дээр ХАРААХАН ажиллуулаагүй — §11 гар QA.
+      1.14.0 -> 1.14.1 (2026-10-05): огтлол дээр хомут → дам нурууны нүүрний хэмжээс (`docs/REINFORCEMENT.md` §16):
+                                   «Огтлолын тэмдэглэгээ» хомутын ирмэгийн далд шугамыг (IncludeNonVisibleObjects) уншина,
+                                   135° дэгээний давхцалтай хомутын 4 тал бүгд; «Зураг клонлох»/«Загвар харагдацаас хуулах»
+                                   олон алгасалтай дам нурууны нүүрийг зөв алгасалаас авна, хумигдсан хэмжээс үлдээхгүй.
+                                   Бодит Revit 2027 дээр (локал хуулбар) засварласан кодоор шалгасан.
+
+      1.14.1 -> 1.15.0 (2026-10-05): «Хэмжээс, тэмдэглэгээ»-д АРМАТУРЫН ГОРИМ (`docs/REINFORCEMENT.md` §17): дам нууруг огтлол/дэлгээсээр автоматаар таньж —
+                                   огтлол (хомутын гинжин хэмжээс + шошго; «загвараас хуулах»-аас бусад), дэлгээс (ажлын арматурын шошго, хомутын MRA,
+                                   давхцлын хэмжээс, тэнхлэгийн гинж).  Шошгоны зай = хэрэглэгчийн мм.  Арматурын шошго дэд-элементийн лавлагаагаар.
+      1.15.0 -> 1.16.0 (2026-10-05): «Хэмжээс, тэмдэглэгээ» НЭГ хэрэгсэл (`docs/REINFORCEMENT.md` §18): багана (босоо дэлгээс), арматурын багц (Rebar set)
+                                   нэг шошго, НЭГ «Хэмжээсийн төрөл» (MRA-ийн хэмжээс ч сонгосон төрлөөр; өмнө нь үл тоогддог байв), хомутын хэмжээс хүртэлх зай,
+                                   «Хуулбарлаж зурах» таб (хуучин «Огтлолын тэмдэглэгээ» орлогдсон; ribbon товч энэ табыг нээнэ).  Бодит Revit 2027 дээр шалгасан.
+
+      1.15.0 -> 1.16.0 (2026-10-05): «Өөрчлөхөөс өмнө» — Change Impact Radar, НЭГ ШИЙДВЭР (`docs/CHANGE_IMPACT_RADAR_MVP.md`): нэг шулуун ханыг зөөхөөс
+                                   ӨМНӨ өрөө/хэмжээс/хаалга-цонх/харагдац/хуудас/хүснэгт/MEP/гарцын нөлөөллийг sandbox (TransactionGroup, ҮРГЭЛЖ
+                                   RollBack)-д хэмжиж 🟢 ТЕХНИКИЙН ХУВЬД ЗӨӨЖ БОЛНО / 🟠 ХЯНААД ЗӨӨ / 🔴 ЗӨӨХГҮЙ / ⚪ ДҮГНЭХ БОЛОМЖГҮЙ гэсэн
+                                   ГАНЦ дүгнэлт өгнө (Монгол нормын автомат баталгаа БИШ — тусдаа мөр).  Preview ба «Хэрэгжүүлэх» нь ИЖИЛ SETTLED
+                                   төлөвийг (commit-ийн дараа) уншина; Apply = TransactionGroup{move → settled тулгалт → Assimilate | RollBack}
+                                   (нэг Ctrl+Z), MGL-ийн ажиглагчид баталгаажсаны дараа л нэг удаа.  Түр дүн → эцсийн дүгнэлт, кэш, сүүдэр
+                                   (DirectContext3D), нэг товчоор зөөх.  Интернэт/AI/төлбөр БАЙХГҮЙ.  Revit дээр ХАРААХАН ажиллуулаагүй — гар QA.
+                                   (Radar-ийн анхны 1.14.0/1.15.0 дугаарууд main-ийн UI/UX ба Арматурын 1.14.0/1.15.0-тай мөргөлдсөн тул нэг 1.16.0 болгов.)
+
+      1.16.0 -> 1.17.0 (2026-10-05): «Өөрчлөхөөс өмнө» → ХААЛГА ЗӨӨХ (интерактив simulation, `docs/CHANGE_IMPACT_RADAR_MVP.md` §14): Revit-д ЯГ НЭГ хаалга
+                                   сонгоод (эсвэл сонгуулаад) шинэ байрлалыг «Зураг дээр сонгох» (Revit PickPoint), ← → / ±10 ±50 ±100 эсвэл мм-ээр заахад хаалганы
+                                   ШИНЭ байрлал (ghost) ба нөлөөлөх элементүүд (улаан/улбар шар/шар/цэнхэр) Revit-ийн ЗУРАГ ДЭЭР (DirectContext3D) шууд харагдана.
+                                   Урьдчилсан дүн ~0.5 мс-ийн хайрцгийн шалгалт; эцсийн дүн ИЖИЛ sandbox (TransactionGroup, ҮРГЭЛЖ RollBack), generation-тэй,
+                                   latest-wins, 220 мс debounce.  «Зөөх» = ЯГ НЭГ бодит зөөлт, нэг Undo «MGL — Хаалга зөөх»; «Цуцлах» = хаалга ХЭЗЭЭ Ч хөдлөөгүй.
+                                   Шийдвэрийн хөдөлгүүр, diff, snapshot, sandbox, apply, stale, кэш НЭГ (хана зөөхтэй хуваалцсан; `IPreChangeOperation`).
+                                   Хаалганы дүүжин (swing), нормын шалгалт ХИЙГДЭЭГҮЙ — цонх үргэлж ИЛ хэлнэ.  Интернэт/AI/төлбөр БАЙХГҮЙ.  Бодит Revit дээр
+                                   ХАРААХАН ажиллуулаагүй — гар QA (`docs/CHANGE_IMPACT_RADAR_MVP.md` §14.9).
+      1.18.0 -> 1.19.0 (2026-10-05): ХЭМЖЭЭС, ТЭМДЭГЛЭГЭЭ — арматурын багцыг НЭГ шошгоор (багцын бүх ширхэг рүү leader, сонголтоор Merge leader);
+                                   хомутын MRA зай «Арматур» табд; шинэ «Хана, хучилт» таб (арматураас хэмжээсийн шугам хүртэл таны мм).  Бүх өмнөх ажил (хаалга зөөх,
+                                   арматур харуулах) нэг багцад.  Амьд Revit 2027 дээр хэмжсэн (docs/REINFORCEMENT.md §20); Revit 2024 дээр ачаалж үзээгүй.
+      1.17.0 -> 1.18.0 (2026-10-05): АРМАТУР — (1) НЭМЭГДСЭН «Захын, голын арматур» (нэг товч: харагдацын БҮХ арматурын олонлогийн эхний, сүүлийн, голын
+                                   ширхгийг үлдээж бусдыг нуух) ба «Ширхэг харуулах» (голоос N дэх ширхэг, гол заавал биш; сонгосон арматурт / ширхэг дарж /
+                                   харагдацын бүгдэд; бүх ширхэгтэй болгож буцаах).  Ганц, 2 ширхэгтэй олонлогт хүрэхгүй (`docs/REINFORCEMENT.md` §19).
+                                   (2) «Хэмжээс, тэмдэглэгээ» нэгтгэл: баганын дэлгээс, арматурын багц нэг шошго/MRA, НЭГ хэмжээсийн төрөл, хана-хучилтын
+                                   олонлогийн MRA, «Хуулбарлаж зурах» таб (`docs/REINFORCEMENT.md` §17–18, `docs/AUTO_ANNOTATE.md`).
+                                   Revit дээр ХАРААХАН ажиллуулаагүй — гар QA.
+
+      1.17.0 -> 1.18.0 (2026-10-05): «Өөрчлөхөөс өмнө» → ЯМАР Ч ЭЛЕМЕНТИЙГ ХУЛГАНААР ЧИРЖ ЗӨӨЖ СИМУЛЯЦ (`docs/CHANGE_IMPACT_RADAR_MVP.md` §15): цэс, диалог, зайн тоо
+                                   БАЙХГҮЙ.  Revit-д ЯМАР Ч элемент (хана, хаалга, багана, шал, суваг, тавилга…) сонгоод товч дарвал (эсвэл дараад зураг дээр сонговол)
+                                   жижиг 3D цонх Revit-тэй төстэй (Viewport3D) бодит геометрээр нээгдэнэ; элементийг ХУЛГАНААР БАРЬЖ чирнэ (хавтгайд / нэг тэнхлэгээр /
+                                   дээш доош; алхам 1–100 мм; сумтай товч).  Чирэх явцад (~мс) мөргөлдөөн УЛААНААР ГУРВАН ХЭМЖЭЭСТ тодорч, «Хэрэв та «X»-г эндээс тийш
+                                   зөөвөл (X +350 мм): … дахин хийх эсвэл ийм асуудал гарах магадлалтай» гэсэн тайлбар гарна; тавьсны дараа Revit-ийн sandbox
+                                   (TransactionGroup, ҮРГЭЛЖ RollBack) эцсийн дүн гаргана.  «Зөвшөөрөх» = ЯГ НЭГ бодит зөөлт, нэг Undo «MGL — Элемент зөөх»; «Болих» = загвар
+                                   ХЭЗЭЭ Ч хөдлөөгүй.  Хуучин хана/хаалганы БҮТЭН шалгалт цонхны «…» цэснээс.  Хулганы hook, Win32, AI, интернэт БАЙХГҮЙ.
+                                   Бодит Revit дээр ХАРААХАН ажиллуулаагүй — гар QA (`docs/CHANGE_IMPACT_RADAR_MVP.md` §15.9).
+
+      1.19.0 -> 1.20.0 (2026-10-05): НЭГТГЭЛ (main 1.18.0 «Өөрчлөхөөс өмнө» хулганаар чирэх симуляц + Арматурын/Хэмжээс-тэмдэглэгээний 1.19.0) ба ШИНЭ:
+                                   (1) Арматурын шошгоны leader-ийн 3 цэг (1 арматур · 2 хугарал · 3 шошго): «Арматур» табд 3→2 ба 2→1 зайг мм-ээр (огтлол, дэлгээс);
+                                   (2) Тэнхлэгийн хэмжээс: «Тэнхлэг бүрийн хооронд ч тавих (гинж)» чагт — унтраавал зөвхөн нийт хэмжээ;
+                                   (3) «Захын, голын арматур» товч одоо цонх нээж эхний/сүүлийн/голын ширхгийг сонгуулна; «Ширхэг харуулах»: «хадгалах» чагт хөндөөгүй
+                                   олонлогт юу ч хадгалахгүй, «Голоос N» бичихэд гол автоматаар арилна;
+                                   (4) «Хуулбарлаж зурах»: «Хомутаас бетон хүртэлх гинжин хэмжээс» чагт.  Revit дээр ХАРААХАН ажиллуулаагүй — гар QA (`docs/AUTO_ANNOTATE.md`).
+
+      1.20.0 -> 1.20.1 (2026-10-05): «Хэмжээс, тэмдэглэгээ» → «Хана, хучилт» таб ҮРГЭЛЖ харагдана (өмнө нь харагдацад ≥ 2 ширхэгтэй хана/хучилтын арматурын
+                                   багц олдоогүй үед таб чимээгүй алга болдог байв).  Багц олдоогүй бол таб ШАЛТГААНТАЙ нээгдэнэ (арматур нуугдсан / хана-хучилтад арматур
+                                   байхгүй / зөвхөн ганц ширхэг) ба тохиргоо хадгалагдана.
+
+      1.20.1 -> 1.21.0 (2026-10-06): «Хэмжээс, тэмдэглэгээ» цонхны ЭХНИЙ таб «Түргэн» — [✓ Шошго] [✓ Хэмжээс] чагт + нэг «Тавих» товч: хоёуланг эсвэл аль нэгийг нь
+                                   сонгоно (хоёулаа ✓ үед хомутын MRA, хана/хучилтын MRA ч).  Чагт нь нарийвчилсан табуудын чагтуудыг шууд удирдана (давхар төлөв үгүй);
+                                   байрлал, зай «Арматур» табын мм-ээр.  Бодит Revit дээр ХАРААХАН ажиллуулаагүй.
+
+      1.21.0 -> 1.21.1 (2026-10-05): «Хуулбарлаж зурах» табаас «Хомутаас бетон хүртэлх гинжин хэмжээс» чагтыг ХАСАВ (эзний хүсэлт) — таб өмнөх шигээ
+                                   зөвхөн загвараас хуулна (хэмжээс · tag · текст), огтлол ба дэлгээс дээр ИЖИЛ цэс.  Гинжин хэмжээс «Арматур» табаар.
+
+      1.21.1 -> 1.22.0 (2026-10-06): ШИНЭ «Ханын дэлгээс» (`MglWallElevations`, Зураг самбар; `docs/WALL_ELEVATIONS.md`): өрөө/хана (эсвэл тэдгээрийн tag)
+                                   сонгоод урьдчилсан дүн (өрөө бүрийн жижиг план, мөр бүр хасаж болно) → нэг Ctrl+Z-ээр ViewSection дэлгээс, өөрийн «Ханын дэлгээс»
+                                   төрөл, дахин ажиллуулахад давхардалгүй (Extensible Storage), байранд нь шинэчилнэ, сонголтоор хуудас.  Revit 2027 дээр туршилтын
+                                   scene-д бүтэн урсгал 133/133 + хөдөлгүүр 198/198; бодит архитектурын загвар, Revit 2024–2026 дээр ажиллуулаагүй.
+                                   ⚠️ Багц = HEAD 51f69fb0 + энэ ажил — ажлын хавтсанд байсан ChangeImpact PostMove WIP ОРООГҮЙ.
+
+      1.22.0 -> 1.23.0 (2026-10-06): «Өөрчлөхөөс өмнө» (`docs/CHANGE_IMPACT_RADAR_MVP.md` §16–17): (1) Revit-ийн ӨӨРИЙН Move/чирэлтээр зөөмөгц автоматаар
+                                   шалгана (`PostMoveWatch`, гүйлгээгүй, ~50 мс) → хэн нэгний ажил хөндөгдсөн бол жижиг цонх [Буцаах | Хаах | Зөөлтийг үлдээх];
+                                   (2) 🔴 үед ч «өөрийн шийдвэрээр» (асуулттай); (3) Revit 2027-д олдсон 6 алдааны засвар (Coarse-д дам нуруу/MEP орчинд
+                                   ороогүй, шал улаан, камер, дагах элементийн үнэн).  ERP мэдэгдэл ХАСАГДСАН (эзэн 2026-10-06: зөөсөн хүн багийн хүнд өөрөө
+                                   хэлнэ) — `ChangeNoticeClient`/`SimNoticePanel`/`SimAuthors` устсан.  Багц = 1.22.0 + энэ ажил.
+
+      1.24.0 -> 1.25.0 (2026-10-06): «Ханын дэлгээс» — БАРИМТ БИЧГИЙН ХУУДАС (`docs/WALL_ELEVATIONS.md` «2-р шат»): нэг шулуун дээрх хана/багана/ниш
+                                   → нэг дэлгээс, харах гүн өрөөний дунд хүртэл, хэвтээ хэмжээс ангиллаар тусдаа эгнээ (тоноглол · хаалга, цонх ·
+                                   хана, тэнхлэг · нийт), дэлгээс бүрийн танигдсан элемент, ТҮЛХҮҮР ПЛАН (тунгалаг ягаан тодруулга, «205A» тэмдэг),
+                                   3D тайрсан изометр, хуудасны зохиомж (түлхүүр план зүүн дээд, 3D доор, дэлгээс баруун талд, перспективын байр,
+                                   legend), detail number = тэмдэг.  Revit 2027 туршилтын scene: 109/109, хуучин тохиргоогоор регресс 198 + 133 + 31.
+                                   2026-10-07: өгөгдмөл = жинхэнэ Elevation маркер (`ElevationViewFactory`, `WeMarkerPlanner`; Section сонголтоор),
+                                   «Detail Number» tag, title block-ийн зурах талбай (`WeSheetFrame`), рендер доод мөрөнд; harness 122/9/133/31.
+                                   Бодит төсөл (GATEWAY): link хана, төслөөс суралцсан стандарт (`WeProjectStandards`), datum/annotation crop
+                                   (`WeViewTidy`), хүрээний саад, түлхүүр план/3D масштабын тохиргоо, материалын тэмдэглэл, хуудсыг автоматаар нээх.
+                                   Арын горим (`WeJob` ← `CdJobHost`/`IMglJob`, самбар «MGL — Ажлын явц»), хурд (нөөц 11.5 → 0.2 с,
+                                   CreateElevation 0.8 → 0.2 с, title block-ийн дискийн кэш), түвшний тэмдэг, давхраас spot, захын туслах
+                                   лавлагаа, түлхүүр планы хэмжээс; harness jobtest/jobidle (`docs/WALL_ELEVATIONS.md` «Арын горим ба хурд»).
+
+      1.25.0 -> 1.26.0 (2026-10-07): «Ханын дэлгээс» 3-р давталт (`docs/WALL_ELEVATIONS.md`): материалын тэмдэглэл монголоор (`WeMaterialLabel`),
+                                   босоо сумтай заагч + давхцалгүй мөр (`WeNoteLayout`, `WeTextMeasure`), заагч ханын харагдах нүүрэн дээр — link
+                                   элементийг ч саад гэж (`WeLeaderPoint`), шилэн хана; хуудас шалгаж дахин зохиомжлох, шалны шугам/гарчиг
+                                   тэгшлэх, хүснэгтийн зүүн талын зай (`WeSheetFrame.Notch`); түлхүүр планы масштаб/regenerate засвар, link
+                                   тэнхлэг нуух, маркерын зай.  Регресс we-test 122/9/31/133/133, нэгжийн тест 149.
+
+      1.26.0 -> 1.27.0 (2026-10-08): «Ханын дэлгээс» ИНТЕРЬЕР (жишээ 205A-F/205G-N/206A-G, MAX ӨРГӨӨ): өнгөлгөөний бүс (шалны хүрээ = wall
+                                   sweep, нимгэн гоёлын хана/хавтан) босоо нарийн гинжинд + «шалнаас тааз · таазаас хучилт» эгнээ; цахилгаан цэг
+                                   (розетк, унтраалга, хананы гэрэл …) — шалнаас төв, ойрын ханын захаас төв хүртэлх хэмжээс дэлгээсийн дотор,
+                                   шошго тэмдгийн дээр; ангиллын шошго ачаалаагүй бол Multi-Category шошго; шинэ өгөгдмөл (хуучин өгөгдмөлийг
+                                   автоматаар шилжүүлнэ), digest «a4».  Revit 2024 (net48) build шалгасан.  Нэгжийн тест 157.
+
+      1.27.0 -> 1.28.0 (2026-10-08): «Ханын дэлгээс» — MITIC 2-р давхарт (Revit 2024, detached) БОДИТООР туршиж жишиг 5 хуудастай тулгасан
+                                   (`docs/WALL_ELEVATIONS.md` «5-р давталт»): LINK-ийн өрөө (интерьерийн файлд өрөө архитектурын link-д, host-д
+                                   зөвхөн tag); өнгөлгөөний keynote (элементийн төрлийн Keynote — «ЦАГААН ЭМУЛЬС» дээр, «МЕТАЛЛ ХАР ШАЛНЫ ХҮРЭЭ»
+                                   доор); буланд баганын хонхор нэг тал; нээлхийн хажуугийн богино хана тусдаа тал биш; link-ийн тусгаарлах
+                                   шугамын дагуух host хана (шилэн хана); олон ханыг тойрсон шалны хүрээ; хуваалцсан маркерын far clip (218D/I
+                                   устгагдаж байсан); Revit-ийн «dimension references invalid» алдаа бүх тэмдэглэгээг буцаадаг байсан; 4 дэлгээс +
+                                   түлхүүр план + 3D нэг хуудсанд (зүүн баганыг жижигрүүлэх, нягт зай); түлхүүр план: оффисын template-ийн
+                                   тохиргоо, бусад өрөөний тэмдэг нуух, өнгөлгөөний нүүрээр хэмжээс.  5 өрөө / 27 дэлгээс алдаагүй.  Тест 161.
+
+      1.29.0 -> 1.30.0 (2026-10-08): «Ханын дэлгээс» 6-р давталт — оффисын 13 жишиг хуудас ИЗД1_A2_39…51-тэй тулгав (`docs/WALL_ELEVATIONS.md`
+                                   «6-р давталт»): үсэг A=баруун B=хойд C=зүүн D=урд; хуудасны цуврал «ИЗД1_A2_NN» + нэр «/A BLOCK 2-Р ДАВХАР/»
+                                   (`WeProjectStandards.LearnNames`); босоо гинж түвшин→шал→гол тааз→дээд түвшин; тааз/шалны контур (`WeSlabInfo.Faces`);
+                                   link-ийн нүүрийн хэмжээс «:0:RVTLINK» (`WeLinkRef.ForDimension`); жижиг сегмент, жижиг тал хасах; түлхүүр план
+                                   оффисынх шиг эргүүлэх; 3D урсгалд зохиомж; шошго зөөх.  Тэмдэглэгээний алдаа 31 → 0.  Нэгжийн тест 173.
+
+      1.30.0 -> 1.32.0 (2026-10-09): 1.31.0 (дам нурууны дэлгээсийн үргэлжилсэн гинж хасалт, тусдаа worktree-д гаргасан) + ШИНЭ
+                                   «Арматурын урт» (MglRebarLengthDim): сонгосон арматуруудын төгсгөлүүдээр үргэлжилсэн хэмжээс
+                                   хулганаар дарсан байрлалд, хэрэглэгчийн одоогийн шугаман хэмжээсийн төрлөөр
+                                   (`Reinforcement/Core/RfLengthDim.cs`, `Revit/RfLengthDimService.cs`, `RebarLengthDimCommand.cs`).
+
+      1.32.0 -> 1.34.0 (2026-10-09): 1.33.0 (хана/хучилтын MRT давхардал, Middle/FirstLast олонлог — b6 сесс) + «Байрлал» нэгтгэл (R2.pdf):
+                                   огтлолын хомутын/гадна гинж ба хана-хучилтын ерөнхий хэмжээсэд ерөнхий хэмжээстэй ИЖИЛ
+                                   «4 талд / Зөвхөн зүүн ба доод» + «эхний гинж, гинж хооронд» (`AutoAnnotate/AaPlacementBlock.cs`,
+                                   `RfSectionOptions.DimAllSides`, `RfSetMraPlanner.OverallLine`).
+
+      1.34.0 -> 1.35.0 (2026-10-12): «Байрлал»-д гурав дахь сонголт «Зөвхөн баруун ба доод талд» (TRET21.pdf) —
+                                   ерөнхий хэмжээс (план/зүсэлт/фасад), огтлолын хомутын/гадна гинж, хана-хучилтын ерөнхий
+                                   хэмжээс гурвуулаа (`AaOptions.RightSide`, `SecRightSide`, `OverallRightSide`; хуучин JSON = зүүн).
+
+      1.35.0 -> 1.36.0 (2026-10-12): НЭГ «Байрлал» бүх хэмжээсэд (t1.pdf): ерөнхий «Байрлал» (тал, эхний гинж, гинж хооронд) огтлол,
+                                   хана-хучилт, дэлгээсэд хуулагдана (`AaOptions.ApplyPlacement`); гурван блок холбогдсон (`AaPlacementBlock.Link`);
+                                   дэлгээс: хэмжээсийн шугам «эхний гинж»-ээс ойр биш (`RfElevOptions.DimFirstFt`), баганын хэмжээс зүүн/баруун (`RfElevHostFrame.RotatedLeft`).
+
+      1.39.0 -> 1.40.0 (2026-10-14): «Ханын дэлгээс» эзний 4 шийдвэр: 1 м-ээс богино булангийн тал дэлгээсгүй (157: 27 → 15,
+                                   `RoomBoundaryAnalyzer.DropShortSides`, нишийн арын хана хэвээр); таазны дээр трибун/шат бол хүрээ таазаар
+                                   (`WeAnnotationPlanner.OverheadAbove`, `WeAnnoSources.Overheads`); манай тэмдэг оффисын хуудсан дээрх планд нуугдана
+                                   (`HideOwnOnOfficeSheets`); link-ийг дахин холбоход хуучин дэлгээсийг өрөөгөөр нь таньж шинэчилнэ (`WeLinkRef.Rebind`).
+
+      1.39.0 -> 1.41.0 (2026-10-14, салаа feat/roomplan-furniture-tiers): «Давхрын план» (MglFloorPlate, Finch маяг) — хоосон
+                                   давхрыг коридор, шат-лифтийн хонгил, айлын харьцаагаар айлуудад хувааж (`RoomPlan/Core/FloorPlateSplitter.cs`,
+                                   бүх өрөө цонхтой байх өргөн `LitWidth`), айл бүрийг «Олон өрөөний план»-ы урсгалаар төлөвлөнө
+                                   (`FloorPlateShell`, `RoomPlanFloorCommand`); тавилга зэрэглэлээр (`Python/plan_furniture.py` — payload-д
+                                   анх удаа орсон); хоёр хэрэгсэл Архитектурын самбарт.  1.40.0-г өөр сессийн хадгалаагүй ханын
+                                   дэлгээсийн ажил эзэлсэн тул алгасав — дараагийнх нь ≥ 1.42.0.
+
+      1.41.0 -> 1.42.0 (2026-10-14): «Давхрын план» ЦОНХГҮЙ — нэг товчоор зүүн талын «MGL — Давхрын план» самбарт 100–500 давхардалгүй
+                                   бүтэн давхрын хувилбар (хуваалт × айл бүрийн өрөөний план, Python зэрэгцээ, арын урсгалд), шилдэг 20
+                                   (тав тух, гэрэл, агаар сэлгэлт, үр ашиг; олон янз) → «Revit-д тавих» (өмнөхийг солино) → «Тавилга
+                                   байрлуулах» (Family автоматаар).  `RoomPlan/Core/FloorStudio.cs`, `FloorStudioEngine.cs`, `FloorStudioPane.cs`.
+
+      1.42.0 -> 1.43.0 (2026-10-14): «Олон өрөөний план» хоосон бүтэн давхар дээр «Давхрын план» самбарыг нээнэ (өмнө нь бүтэн давхрыг
+                                   нэг айл гэж «өргөн 7.8–30 м» гэж унадаг байв); суулгагч нээлттэй Revit ашиглаж буй хуучин хувилбарын
+                                   хавтсыг БҮХЭЛД нь үлдээнэ (хэсэгчлэн устгаж тэр сессийн Python-ыг арилгадаг байв).
+
+      1.43.0 -> 1.45.0 (2026-10-14, багцыг worktree-д feat 38c92e19 + WallElevation overlay-ээр барьж тараасан; main-д commit 99e0acdf):
+                                   «Ханын дэлгээс» интерьерийн 2–3-р тойрог + «+ Хана нэмэх» (1.44.0, 1.45.0).  2026-10-16 merge
+                                   (feat/engineering-feedback-we-2026-10-16): main + feat/roomplan-furniture-tiers = тараасан 1.45.0-ийн эх код.
+
+      1.45.0 -> 1.46.0 (2026-10-16, feat/engineering-feedback-we-2026-10-16; ТАРААГААГҮЙ — release gate-ийн candidate):
+                                   «Ханын дэлгээс» инженерийн санал хүсэлт W01–W10 (арын ажлын дахин төлөвлөлт, нэг хуудас, масштаб,
+                                   маркерын төв, дугаарлалт, үр дүнгийн хөтөч, босоо хүрээ, шал/таазны бодит нүүр, өрөөний зориулалт,
+                                   муруй ханын шударга тайлбар) + «Санал хүсэлт» (F01–F05) + суулгагч/gate (V01–V04).
+
+      ⚠️ Энэ тоог өсгөсний ДАРАА дөрвүүлэн Configuration-ыг ДАХИН барь.
+      `package-addin.ps1` нь DLL-ийн `FileVersion`-ыг энэ утгатай тулгаж,
+      таарахгүй бол «ХУУЧИРСАН» гэж ЗОГСОНО (худал манифест гаргахгүй).
+    -->
+    <Version>1.46.0</Version>
+    <FileVersion>1.46.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <!-- BuildInfo.Version (лиценз, health, User-Agent) үүнийг уншдаг: 1.37.0-д гацсан байсан тул 1.38–1.41 бүгд «1.37.0» гэж мэдээлж байв. -->
+    <InformationalVersion>$(Version)</InformationalVersion>
+  </PropertyGroup>
+
+  <!-- Configuration (Revit он) -> RevitVersion + TargetFramework -->
+  <PropertyGroup Condition="$(Configuration.Contains('R24'))">
+    <RevitVersion>2024</RevitVersion>
+    <TargetFramework>net48</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R25'))">
+    <RevitVersion>2025</RevitVersion>
+    <TargetFramework>net8.0-windows</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R26'))">
+    <RevitVersion>2026</RevitVersion>
+    <TargetFramework>net8.0-windows</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R27'))">
+    <RevitVersion>2027</RevitVersion>
+    <TargetFramework>net10.0-windows</TargetFramework>
+  </PropertyGroup>
+
+  <!-- Fallback: Config нэрэнд Rxx байхгүй (ж: bare `dotnet build`) бол 2027-оор -->
+  <PropertyGroup Condition="'$(TargetFramework)' == ''">
+    <RevitVersion>2027</RevitVersion>
+    <TargetFramework>net10.0-windows</TargetFramework>
+  </PropertyGroup>
+
+  <!--
+    ⚠️ ОПТИМИЗАЦИ.  Configuration нэрүүд нь "Release R24".."Release R27" тул
+    .NET SDK-ийн стандарт `'$(Configuration)' == 'Release'` шалгуурт ХЭЗЭЭ Ч
+    таардаггүй — өөрөөр хэлбэл өнөөг хүртэл БҮХ «Release Rxx» build нь
+    csc-д `optimize-` буюу ОПТИМИЗАЦГҮЙ эмхэтгэгдэж байсан (`Optimize` нь
+    энэ файлд ч, репо даяар ч, Directory.Build.props-д ч нэг ч газар
+    байхгүй байв).  Латентын хэмжилт (Track 1C) ийм DLL дээр хийгдвэл
+    системтэйгээр ПЕССИМИСТ тоо гаргана.  Тиймээс Release-ээр эхэлсэн бүх
+    Configuration-д ил зааж өгнө.  Debug-д ЗОРИУДААР тавихгүй — SDK түүнийг
+    unoptimized үлдээх нь зөв.
+  -->
+  <PropertyGroup Condition="$(Configuration.StartsWith('Release'))">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <!-- Deploy folder Revit оноор -->
+  <PropertyGroup>
+    <AddinDeployDir>$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)</AddinDeployDir>
+  </PropertyGroup>
+
+  <!-- Зөвхөн .NET (Core) target (net8/net10 = Revit 2025-2027): MCP код-гүйцэтгэгч
+       + isolated load (deps.json). net48 (Revit 2024)-д MCP хасагдана. -->
+  <PropertyGroup Condition="'$(TargetFramework)' != 'net48'">
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <DefineConstants>$(DefineConstants);MCP_EXECUTOR</DefineConstants>
+  </PropertyGroup>
+
+  <!-- SESSION R — Revit Intelligence (`Intelligence/`): ЗӨВХӨН .NET (Core) target
+       (net8/net10 = Revit 2025–2027).  net48 (Revit 2024)-д хасагдана (R-22) —
+       хуучин add-in ХЭВЭЭР бүтнэ, шинэ архитектурыг хуучин framework-д
+       тохируулж гажуулахгүй.  `App.cs` / `RevitTools.cs` / `AssistantPane`
+       дахь залгаасууд `#if MGL_INTELLIGENCE`-ээр хамгаалагдсан. -->
+  <PropertyGroup Condition="'$(TargetFramework)' != 'net48'">
+    <DefineConstants>$(DefineConstants);MGL_INTELLIGENCE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Compile Remove="Intelligence/**" />
+    <Page Remove="Intelligence/**" />
+  </ItemGroup>
+
+  <!-- FAMILY HUB (POC, 2026-09-15) — `FamilyHub/`: нийтийн нийлүүлэгчээс family татаж
+       ачаалах туршилт.  Intelligence-тэй ижил дүрмээр ЗӨВХӨН .NET (Core) target
+       (Revit 2025–2027); net48 (Revit 2024)-д хасагдана.  `App.cs`-ийн ганц ribbon
+       товч `#if MGL_FAMILYHUB`-аар хамгаалагдсан.  `FamilyHub/Core` нь Revit төрөлгүй —
+       `tests/FamilyHub.Tests` шууд эмхэтгэдэг. -->
+  <PropertyGroup Condition="'$(TargetFramework)' != 'net48'">
+    <DefineConstants>$(DefineConstants);MGL_FAMILYHUB</DefineConstants>
+  </PropertyGroup>
+  <!-- Family Hub-ийн BIMobject таб = WebView2 (жинхэнэ хөтөч: хэрэглэгч өөрөө нэвтэрч,
+       өөрөө «Download» дарна; anti-bot/нэвтрэлт тойрохгүй).
+       ⚠️ ХУВИЛБАР 1.0.2478.35 нь Revit 2027-ийн өөрийнх нь (AddIns\DynamoForRevit\
+       Microsoft.Web.WebView2.Core.dll = 1.0.2478.35, хэмжсэн 2026-09-15) хувилбар —
+       нэг процесст native WebView2Loader.dll нэг л удаа ачаалагддаг тул ӨӨР хувилбар
+       авбал managed/native зөрөөд `EnsureCoreWebView2Async` унаж болзошгүй.  Revit
+       шинэчлэгдвэл ЭНЭ тоог тэрний хамт шинэчил. -->
+  <ItemGroup Condition="'$(TargetFramework)' != 'net48'">
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2478.35" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Compile Remove="FamilyHub/**" />
+    <Page Remove="FamilyHub/**" />
+  </ItemGroup>
+
+  <!-- АВТОМАТ ЦАГ БҮРТГЭЛ + АЖЛЫН САМБАР (Session 3–5, 2026-09-29) — `WorkTracking/`
+       (цөм: `tests/WorkTracking.Tests` шууд эмхэтгэдэг, Revit төрөлгүй) ба
+       `WorkPane/` («MGL ажил» самбар).  MVP нь ЗӨВХӨН Revit 2027 (эзний шийдвэр);
+       Intelligence-ийн ижил дүрмээр net8/net10-д эмхэтгэгдэж, net48 (Revit 2024)-д
+       хасагдана.  `App.cs`-ийн залгаасууд `#if MGL_WORK_TRACKING`-ээр хамгаалагдсан. -->
+  <PropertyGroup Condition="'$(TargetFramework)' != 'net48'">
+    <DefineConstants>$(DefineConstants);MGL_WORK_TRACKING</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Compile Remove="WorkTracking/**" />
+    <Page Remove="WorkTracking/**" />
+    <Compile Remove="WorkPane/**" />
+    <Page Remove="WorkPane/**" />
+  </ItemGroup>
+
+  <!-- MGL SMART (2026-10-01) — Smart Publish, Smart Count, Clash Checker, Change Impact.
+       Хавтсууд: `Smart/` (дундын суурь), `SmartPublish/`, `SmartCount/`, `ClashCheck/`,
+       `ChangeImpact/` — тус бүрд `Core/` (Revit-гүй цэвэр логик; `tests/Smart.Tests` шууд
+       эмхэтгэнэ), `Revit/` (API-тай нимгэн залгаас), `Ui/` (WPF).  WorkTracking/Intelligence-ийн
+       ижил дүрмээр ЗӨВХӨН .NET (Core) target (Revit 2025–2027); net48 (Revit 2024)-д хасагдана.
+       `App.cs`-ийн залгаасууд `#if MGL_SMART`-аар хамгаалагдсан. -->
+  <PropertyGroup Condition="'$(TargetFramework)' != 'net48'">
+    <DefineConstants>$(DefineConstants);MGL_SMART</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Compile Remove="Smart/**" />
+    <Compile Remove="SmartPublish/**" />
+    <Compile Remove="SmartCount/**" />
+    <Compile Remove="ClashCheck/**" />
+    <Compile Remove="ChangeImpact/**" />
+  </ItemGroup>
+
+  <!-- net48 (Revit 2024): System.Text.Json зэрэг сул DLL-ийн binding зөрчлийг
+       багасгах (add-in .config үүсгэнэ). -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
+
+  <!-- Revit reference assemblies (Revit оноор). Зөвхөн compile — RevitAPI.dll-ийг
+       output руу хуулахгүй (ExcludeAssets=runtime). Build машинд Revit суулгах
+       шаардлагагүй. -->
+  <!-- V02 (2026-10-16): Revit API багцыг он тус бүрд ТОГТМОЛ — тухайн оны АНХНЫ боломжит хувилбар.  Өмнөх хөвөгч
+       `$(RevitVersion).*` нь 2027.3.0 / 2024.3.60 руу сэргээгдэж, 27.2 / 24.1 Revit дээр журналд «API_ERROR … Assembly version
+       conflict … RevitAPI of version 27.3.0.0 conflicts with same preloaded module of version 27.2.0.0» гэж бичигддэг байв.
+       Хамгийн бага хувилбар руу эмхэтгэхэд 0 алдаа (2026-10-16 хэмжсэн: 2024.0.0 / 2025.0.2 / 2026.0.4 / 2027.0.0) ⇒ тухайн
+       оны дараагийн update-д нэмэгдсэн API хэрэглээгүй; тиймээс оны бүх update дээр ижил DLL ачаалагдана.
+       Шинэ update-ийн API хэрэгтэй болбол энд ИЛ өсгөж, ажилтнуудын хамгийн бага update-ийг шалгана.
+       Дарж бичих: `-p:RevitApiPackageVersion=2027.2.0`. -->
+  <PropertyGroup Condition="'$(RevitApiPackageVersion)' == ''">
+    <RevitApiPackageVersion Condition="'$(RevitVersion)' == '2024'">2024.0.0</RevitApiPackageVersion>
+    <RevitApiPackageVersion Condition="'$(RevitVersion)' == '2025'">2025.0.2</RevitApiPackageVersion>
+    <RevitApiPackageVersion Condition="'$(RevitVersion)' == '2026'">2026.0.4</RevitApiPackageVersion>
+    <RevitApiPackageVersion Condition="'$(RevitVersion)' == '2027'">2027.0.0</RevitApiPackageVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RevitApiPackageVersion Condition="'$(RevitApiPackageVersion)' == ''">$(RevitVersion).*</RevitApiPackageVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitApiPackageVersion)" ExcludeAssets="runtime" />
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitApiPackageVersion)" ExcludeAssets="runtime" />
+  </ItemGroup>
+
+  <!-- DPAPI (ProtectedData) — жилийн хугацаатай API токеныг settings.json-д
+       ил бичихгүйн тулд.  net8/net10 дээр framework-д БАЙХГҮЙ тул NuGet пакет
+       шаардлагатай; net48 дээр System.Security.dll дотор байдаг (доор reference).
+       ⚠️ Энэ хоёрын аль нэгийг мартвал тухайн Configuration build УНАНА. -->
+  <ItemGroup Condition="'$(TargetFramework)' != 'net48'">
+    <!-- NU1510: net10-д ProtectedData нь framework-д орсон тул пакет "илүүц"
+         гэж анхааруулна.  net8 (Revit 2025/2026)-д ХЭРЭГТЭЙ тул хасахгүй —
+         зөвхөн анхааруулгыг чимээгүй болгоно. -->
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0"
+                     NoWarn="NU1510" />
+  </ItemGroup>
+
+  <!-- Local Python stdlib planner; copy to the add-in output/bundle.
+       Python 3 interpreter must be installed separately (no pip/AI/API).
+       Nothing is automatically deployed to a live Revit installation. -->
+  <ItemGroup>
+    <Content Include="RoomPlan\Python\roomplan_cli.py"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="RoomPlan\Python\plan_archetypes.py"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="RoomPlan\Python\plan_validation.py"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="RoomPlan\Python\plan_generator.py"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="RoomPlan\Python\plan_furniture.py"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="RoomPlan\Python\roomplan_cli.exe"
+             Condition="Exists('RoomPlan\Python\roomplan_cli.exe')"
+             CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- MGL UI — ДУНДЫН удирдлагын загвар (Ui/Resources/MglControls.xaml).
+       ⚠️ `Page` БИШ, `EmbeddedResource`: ажиллах үед `XamlReader.Load`-оор уншина (pack:// URI хэрэглэхгүй) —
+       repo-д ResourceDictionary/pack:// precedent байхгүй, add-in тусгаарласан assembly-load context-д ачаалагддаг,
+       мөн WPF-ийн хоёр алхамт эмхэтгэл «BG1002 …baml cannot be found»-аар унадаг (docs/INSTALL_BUNDLE.md:30).
+       Синтакс, төрлийн шалгалт: scratch төсөлд энэ файлыг `Page` болгон эмхэтгэнэ (docs/MGL_UI_UX_REDESIGN.md §2).
+       LogicalName нь MglStyles.ResourceName-тэй ЯГ ИЖИЛ байх ёстой.  Бүх Configuration (R24 net48 орно)-д ИЖИЛ. -->
+  <ItemGroup>
+    <Page Remove="Ui\Resources\**\*.xaml" />
+    <EmbeddedResource Include="Ui\Resources\MglControls.xaml" LogicalName="RevitMcpAddin.Ui.MglControls.xaml" />
+  </ItemGroup>
+
+  <!-- Санаа таних загвар — DLL дотор ШИГТГЭНЭ.  Ажилтны компьютерт
+       нэмэлт файл, Python, интернэт ХЭРЭГГҮЙ.  Шинэ загвар гарвал add-in
+       серверээс татаж %APPDATA%-д хадгална; энэ нь СУУРЬ хувилбар. -->
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\intent-model.json"
+                      Condition="Exists('Resources\intent-model.json')" />
+  </ItemGroup>
+
+  <!-- Дүрмийн багцын CANARY — DLL дотор ШИГТГЭНЭ.  Сүлжээгүй, эсвэл сервер
+       404 өгөх үед RulePack.Load() нь гурав дахь түвшинд (юу ч алга) УНАХГҮЙ,
+       энэ ХҮЧИНТЭЙ ХООСОН багц руу унана (v2 §75-ийн офлайн горим).
+       ⚠️ Агуулгыг ГАРААР бүү засварла: pack_sha256 нь биеийнхээ MGL-CANON-1
+       хэлбэрээс тооцогддог тул нэг тэмдэгт өөрчлөхөд RulePack.ParseVerified
+       нь БҮХ БАГЦЫГ ТАТГАЛЗАНА (IntentModel.cs:311-312-ийн хэв маяг). -->
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\rulepack-canary.json"
+                      Condition="Exists('Resources\rulepack-canary.json')" />
+  </ItemGroup>
+
+  <!-- Roslyn scripting — зөвхөн MCP-тэй build (net8/net10). -->
+  <ItemGroup Condition="'$(TargetFramework)' != 'net48'">
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.14.0" />
+  </ItemGroup>
+
+  <!-- net48-д System.Text.Json нь NuGet (net8+ дээр built-in); + net48 targeting pack. -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <!-- System.Net.Http (HttpClient) нь net48-д framework assembly — SDK project-д
+         автоматаар ирдэггүй тул гараар reference хийнэ (net8+ дээр built-in). -->
+    <Reference Include="System.Net.Http" />
+    <!-- ProtectedData (DPAPI) нь net48-д System.Security.dll дотор. -->
+    <Reference Include="System.Security" />
+  </ItemGroup>
+
+  <!-- MCP код-гүйцэтгэгчийн 4 файлыг Revit-2024/net48 build-аас хасах
+       (App.cs-ийн дуудлагууд #if MCP_EXECUTOR-оор хамгаалагдсан). -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Compile Remove="HttpServer.cs" />
+    <Compile Remove="CodeExecutorEventHandler.cs" />
+    <Compile Remove="ScriptGlobals.cs" />
+    <Compile Remove="ExecuteRequest.cs" />
+  </ItemGroup>
+
+  <!-- Build дараа: гаралт (DLL + deps + .addin)-ыг тухайн Revit оны Addins folder
+       (%APPDATA%\Autodesk\Revit\Addins\<он>) руу хуулна.
+
+       ⚠️ ЗӨВХӨН ИЛ ЗӨВШӨӨРӨЛТЭЙ.  Энэ target урьд нь БОЛЗОЛГҮЙ байсан тул
+       `dotnet build` БҮР нь энэ машины АМЬД Revit нэмэлтийг чимээгүйхэн дарж
+       бичдэг байв.  2026-08-28-нд агентын энгийн `dotnet build` 2024/2025/
+       2026/2027 дөрвүүлэн суулгацыг commit хийгээгүй WIP кодоор дарсан.
+       Add-in-д АЛБАДАН ШИНЭЧЛЭХ МЕХАНИЗМ БАЙХГҮЙ (~20 ПК дээр гараар
+       Install.bat) тул ийм санамсаргүй бичилтийг төвлөрсөн байдлаар буцаах
+       арга алга — иймд суулгалт нь ЗОРИУДЫН үйлдэл байх ёстой.
+
+       ⚠️ `Condition="'$(AddinDeployDir)' != ''"` гэж хамгаалах нь ЮУ Ч
+       ХИЙХГҮЙ: AddinDeployDir нь дээрх «Deploy folder Revit оноор» бүлэгт
+       болзолгүйгээр ҮРГЭЛЖ утга авдаг.  Тиймээс ТУСДАА, ил зөвшөөрлийн
+       property (DeployToRevit) хэрэгтэй.
+
+       Зориудаар суулгах:
+         dotnet build RevitMcpAddin.csproj -c "Release R27" -p:Platform=x64 -p:DeployToRevit=true
+       Revit нээлттэй (DLL түгжигдсэн) үед өөр фолдер руу:
+         PowerShell:  ... -p:DeployToRevit=true -p:AddinDeployDir=C:\Temp\mgl
+         Git Bash:    ... -p:DeployToRevit=true -p:AddinDeployDir='C:/Temp/mgl'
+       ⚠️ Git Bash-д ЗАМЫГ ХАШИЛТАНД ХИЙЖ, ЗУРААСЫГ УРАГШ (/) бич.  Хашилтгүй
+          C:\Temp\x гэж бичвэл bash тэмдэгтийг ИДЭЖ C:Tempx болгоно — тэр нь
+          дискний ХАРЬЦАНГУЙ зам тул гаралт ТӨСЛИЙН ФОЛДЕР дотор буудаг.
+          2026-08-28-нд яг ийм байдлаар addin/Tempaudit_optin/ дотор 11 МБ
+          хоёртын файл үүсээд эх мод руу орох шахсан (устгав).
+
+       Тараалт (`scripts\package-addin.ps1`) нь ЭНЭ target-д ТҮШИГЛЭДЭГГҮЙ:
+       тэр bin\x64\<cfg> буюу энгийн build гаралтаас шууд савалдаг, тиймээс
+       тэнд `-p:DeployToRevit=true` нэмэх ШААРДЛАГАГҮЙ. -->
+  <Target Name="DeployAddin" AfterTargets="Build"
+          Condition="'$(DeployToRevit)' == 'true'">
+    <PropertyGroup>
+      <DeployBin>$(AddinDeployDir)\RevitMcpAddin</DeployBin>
+    </PropertyGroup>
+    <ItemGroup>
+      <DeployFiles Include="$(TargetDir)**\*.*" />
+    </ItemGroup>
+    <MakeDir Directories="$(DeployBin)" />
+    <Copy SourceFiles="@(DeployFiles)"
+          DestinationFiles="@(DeployFiles->'$(DeployBin)\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(ProjectDir)RevitMcpAddin.addin"
+          DestinationFolder="$(AddinDeployDir)"
+          SkipUnchangedFiles="false" />
+    <Message Importance="high" Text="Deployed Revit MCP add-in ($(RevitVersion)) to $(DeployBin)" />
+  </Target>
+
+</Project>

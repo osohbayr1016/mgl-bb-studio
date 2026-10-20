@@ -1,0 +1,66 @@
+{
+  "provider": "SYNTHETIC_FIXTURE",
+  "note": "SYNTHETIC — NON_REGULATORY — TEST FIXTURE ONLY. Эдгээр босго нь Монголын ямар ч нормын шаардлага БИШ; зөвхөн хоолойг шалгах зорилготой.",
+  "rules": [
+    {
+      "schema_version": 1,
+      "rule_id": "synthetic.door_min_width",
+      "rule_version": 1,
+      "source": {
+        "kind": "SYNTHETIC",
+        "label_mn": "СИНТЕТИК — хаалганы хамгийн бага өргөн (тест)",
+        "verification": "SYNTHETIC_NON_REGULATORY",
+        "provenance_note": "SYNTHETIC — NON_REGULATORY — TEST FIXTURE. Not a Mongolian regulatory requirement."
+      },
+      "applies_to": { "kinds": ["DOOR"], "categories": [], "level_names": [] },
+      "required_inputs": ["width_mm"],
+      "measurement": { "measure": "width_mm", "unit": "MM", "require_authoritative_edge": true },
+      "predicate": { "op": "GTE", "threshold": 900, "unit": "MM" },
+      "severity": "HIGH",
+      "auto_fix_policy": "NONE",
+      "title_mn": "[СИНТЕТИК] Хаалганы өргөн 900 мм-ээс бага",
+      "explanation_key": "synthetic.door_min_width"
+    },
+    {
+      "schema_version": 1,
+      "rule_id": "synthetic.wall_bounds_room_min_length",
+      "rule_version": 1,
+      "source": {
+        "kind": "SYNTHETIC",
+        "label_mn": "СИНТЕТИК — өрөө хүрээлдэг хананы хамгийн бага урт (тест)",
+        "verification": "SYNTHETIC_NON_REGULATORY",
+        "provenance_note": "SYNTHETIC — NON_REGULATORY — TEST FIXTURE."
+      },
+      "applies_to": { "kinds": ["WALL"], "categories": [], "level_names": [] },
+      "required_inputs": ["length_mm"],
+      "measurement": { "measure": "length_mm", "unit": "MM", "required_relation": "BOUNDS_ROOM", "require_authoritative_edge": true },
+      "predicate": { "op": "GTE", "threshold": 1000, "unit": "MM" },
+      "severity": "MEDIUM",
+      "auto_fix_policy": "NONE",
+      "title_mn": "[СИНТЕТИК] Өрөө хүрээлдэг хана 1 м-ээс богино",
+      "explanation_key": "synthetic.wall_bounds_room_min_length"
+    },
+    {
+      "schema_version": 1,
+      "rule_id": "synthetic.fake_verified_norm",
+      "rule_version": 1,
+      "source": {
+        "kind": "VERIFIED_NORM",
+        "document_code": "TEST-00-00",
+        "clause": "0.0",
+        "label_mn": "ТЕСТ — баталгаажсан мэт норм (зөвхөн эрх бүхий замыг шалгахад)",
+        "verification": "verified",
+        "currentness": "CURRENT",
+        "provenance_note": "TEST FIXTURE pretending to be verified — exists ONLY to test the authoritative path. Never ship."
+      },
+      "applies_to": { "kinds": ["DOOR"], "categories": [], "level_names": [] },
+      "required_inputs": ["width_mm"],
+      "measurement": { "measure": "width_mm", "unit": "MM", "required_relation": "FROM_ROOM", "require_authoritative_edge": true },
+      "predicate": { "op": "GTE", "threshold": 800, "unit": "MM" },
+      "severity": "CRITICAL",
+      "auto_fix_policy": "PROPOSE_ONLY",
+      "title_mn": "[ТЕСТ] Өрөөнөөс гарах хаалга 800 мм-ээс бага",
+      "explanation_key": "test.fake_verified_norm"
+    }
+  ]
+}

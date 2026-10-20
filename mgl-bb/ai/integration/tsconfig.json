@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "../../packages/mglai-common/src/**/*.ts",
+    "../../packages/mglai-common/test/**/*.ts"
+  ]
+}

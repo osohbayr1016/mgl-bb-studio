@@ -1,0 +1,120 @@
+{
+  "type": "cross_document_links",
+  "schema_version": "l2-links/1",
+  "norm_code": "БНбД 22-01-21",
+  "document_id": "BNBD-22-01-21-2021",
+  "incoming": [
+    {
+      "from_code": "БНбД 31-17-10",
+      "from_clause": null,
+      "from_locator": "2-р хавсралт, 5",
+      "original_reference_code": "БНбД 22-01-01*",
+      "resolved_current_code": "БНбД 22-01-21",
+      "resolution": "via_official_supersession",
+      "resolution_basis": "official_supersession_order",
+      "resolution_evidence": [
+        "PDF p.4 of the official text (3rd edition, MCIS record 17110817013146, sha256 0c7c8150…): «2. Энэ тушаал гарсантай холбогдуулан Барилга, хот байгуулалтын сайдын 2006 оны 7 дугаар сарын 24-ний өдрийн 120 дугаар тушаалаар батлагдсан “Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-01*/2006/ барилгын норм ба дүрмийг, мөн 2013 оны 5 дугаар сарын 28-ны өдрийн 106 дугаар тушаалаар батлагдсан нэмэлт өөрчлөлтийг тус тус хүчингүй болсонд тооцсугай.» (read 2026-09-23)",
+        "legalinfo.mn/mn/detail/9586 (checked 2026-09-23): the 2006-07-24 order №120 that approved БНбД 22.01.01/2006 is titled «… - БХБС-ын 2021 оны 117 дугаар тушаалаар хүчингүй болсон.»",
+        "Not in the MCIS current-norm register (tools/mcis_verify.py, checked 2026-09-23: 0 records)"
+      ],
+      "relationship": "normative_reference_list",
+      "context": "“Газар хөдлөлтийн бүс нутагт барилга төлөвлөх барилгын норм ба дүрэм”/ БНбД 22-01-01*/2006/",
+      "source_page": 55
+    },
+    {
+      "from_code": "БНбД 31-17-10",
+      "from_clause": "5.6",
+      "from_locator": "заалт 5.6",
+      "original_reference_code": "БНбД 22-01-01*",
+      "resolved_current_code": "БНбД 22-01-21",
+      "resolution": "via_official_supersession",
+      "resolution_basis": "official_supersession_order",
+      "resolution_evidence": [
+        "PDF p.4 of the official text (3rd edition, MCIS record 17110817013146, sha256 0c7c8150…): «2. Энэ тушаал гарсантай холбогдуулан Барилга, хот байгуулалтын сайдын 2006 оны 7 дугаар сарын 24-ний өдрийн 120 дугаар тушаалаар батлагдсан “Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-01*/2006/ барилгын норм ба дүрмийг, мөн 2013 оны 5 дугаар сарын 28-ны өдрийн 106 дугаар тушаалаар батлагдсан нэмэлт өөрчлөлтийг тус тус хүчингүй болсонд тооцсугай.» (read 2026-09-23)",
+        "legalinfo.mn/mn/detail/9586 (checked 2026-09-23): the 2006-07-24 order №120 that approved БНбД 22.01.01/2006 is titled «… - БХБС-ын 2021 оны 117 дугаар тушаалаар хүчингүй болсон.»",
+        "Not in the MCIS current-norm register (tools/mcis_verify.py, checked 2026-09-23: 0 records)"
+      ],
+      "relationship": "normative_reference",
+      "context": "ооцооны утгыг “Газар хөдлөлтийн бүс нутагт барилга төлөвлөх барилгын норм ба дүрэм” /БНбД 22-01-01*/2006/-ийн 2-р хүснэгтэд заасан илтгэлцүүрээр үржүүлж авна. Харин үүнд цаг уурын",
+      "source_page": 9
+    },
+    {
+      "from_code": "БНбД 31-17-10",
+      "from_clause": "5.2.3",
+      "from_locator": "заалт 5.2.3",
+      "original_reference_code": "БНбД 22.01.01*",
+      "resolved_current_code": "БНбД 22-01-21",
+      "resolution": "via_official_supersession",
+      "resolution_basis": "official_supersession_order",
+      "resolution_evidence": [
+        "PDF p.4 of the official text (3rd edition, MCIS record 17110817013146, sha256 0c7c8150…): «2. Энэ тушаал гарсантай холбогдуулан Барилга, хот байгуулалтын сайдын 2006 оны 7 дугаар сарын 24-ний өдрийн 120 дугаар тушаалаар батлагдсан “Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-01*/2006/ барилгын норм ба дүрмийг, мөн 2013 оны 5 дугаар сарын 28-ны өдрийн 106 дугаар тушаалаар батлагдсан нэмэлт өөрчлөлтийг тус тус хүчингүй болсонд тооцсугай.» (read 2026-09-23)",
+        "legalinfo.mn/mn/detail/9586 (checked 2026-09-23): the 2006-07-24 order №120 that approved БНбД 22.01.01/2006 is titled «… - БХБС-ын 2021 оны 117 дугаар тушаалаар хүчингүй болсон.»",
+        "Not in the MCIS current-norm register (tools/mcis_verify.py, checked 2026-09-23: 0 records)"
+      ],
+      "relationship": "normative_reference",
+      "context": "Өндөр барилгыг “Газар хөдлөлтийн бүсэд барилга төлөвлөх барилгын норм ба дүрэм” /БНбД 22.01.01*/2006/-ийн 2.2 дугаар заалтын а ба б-д заасны дагуу тооцно. Барилга байгууламжийг",
+      "source_page": 67
+    },
+    {
+      "from_code": "БНбД 31-17-10",
+      "from_clause": "5.2.5",
+      "from_locator": "заалт 5.2.5",
+      "original_reference_code": "БНбД 22.01.01*",
+      "resolved_current_code": "БНбД 22-01-21",
+      "resolution": "via_official_supersession",
+      "resolution_basis": "official_supersession_order",
+      "resolution_evidence": [
+        "PDF p.4 of the official text (3rd edition, MCIS record 17110817013146, sha256 0c7c8150…): «2. Энэ тушаал гарсантай холбогдуулан Барилга, хот байгуулалтын сайдын 2006 оны 7 дугаар сарын 24-ний өдрийн 120 дугаар тушаалаар батлагдсан “Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-01*/2006/ барилгын норм ба дүрмийг, мөн 2013 оны 5 дугаар сарын 28-ны өдрийн 106 дугаар тушаалаар батлагдсан нэмэлт өөрчлөлтийг тус тус хүчингүй болсонд тооцсугай.» (read 2026-09-23)",
+        "legalinfo.mn/mn/detail/9586 (checked 2026-09-23): the 2006-07-24 order №120 that approved БНбД 22.01.01/2006 is titled «… - БХБС-ын 2021 оны 117 дугаар тушаалаар хүчингүй болсон.»",
+        "Not in the MCIS current-norm register (tools/mcis_verify.py, checked 2026-09-23: 0 records)"
+      ],
+      "relationship": "normative_reference",
+      "context": "им 7–9 баллын бүсэд “Газар хөдлөлтийн бүсэд барилга төлөвлөх барилгын норм ба дүрэм” БНбД 22.01.01*/2006 - ийн 2.5 дугаар заалтад заасны дагуу авах ба газар хөдлөлтийн эрчим нь 5 б",
+      "source_page": 67
+    },
+    {
+      "from_code": "БНбД 31-17-10",
+      "from_clause": "5.2.9",
+      "from_locator": "заалт 5.2.9",
+      "original_reference_code": "БНбД 22.01.01*",
+      "resolved_current_code": "БНбД 22-01-21",
+      "resolution": "via_official_supersession",
+      "resolution_basis": "official_supersession_order",
+      "resolution_evidence": [
+        "PDF p.4 of the official text (3rd edition, MCIS record 17110817013146, sha256 0c7c8150…): «2. Энэ тушаал гарсантай холбогдуулан Барилга, хот байгуулалтын сайдын 2006 оны 7 дугаар сарын 24-ний өдрийн 120 дугаар тушаалаар батлагдсан “Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-01*/2006/ барилгын норм ба дүрмийг, мөн 2013 оны 5 дугаар сарын 28-ны өдрийн 106 дугаар тушаалаар батлагдсан нэмэлт өөрчлөлтийг тус тус хүчингүй болсонд тооцсугай.» (read 2026-09-23)",
+        "legalinfo.mn/mn/detail/9586 (checked 2026-09-23): the 2006-07-24 order №120 that approved БНбД 22.01.01/2006 is titled «… - БХБС-ын 2021 оны 117 дугаар тушаалаар хүчингүй болсон.»",
+        "Not in the MCIS current-norm register (tools/mcis_verify.py, checked 2026-09-23: 0 records)"
+      ],
+      "relationship": "normative_reference",
+      "context": ".2.1) Үүнд: k1 - барилга байгууламжийн зөвшөөрөгдөх хэв гажилтыг тооцсон илтгэлцүүр (БНбД 22.01.01*/2006 норм ба дүрмийн 3 дугаар хүснэгтээс авах бөгөөд цутгамал төмөр бетон бүтээц",
+      "source_page": 68
+    },
+    {
+      "from_code": "БНбД 31-17-10",
+      "from_clause": "5.2.10",
+      "from_locator": "заалт 5.2.10",
+      "original_reference_code": "БНбД 22.01.01*",
+      "resolved_current_code": "БНбД 22-01-21",
+      "resolution": "via_official_supersession",
+      "resolution_basis": "official_supersession_order",
+      "resolution_evidence": [
+        "PDF p.4 of the official text (3rd edition, MCIS record 17110817013146, sha256 0c7c8150…): «2. Энэ тушаал гарсантай холбогдуулан Барилга, хот байгуулалтын сайдын 2006 оны 7 дугаар сарын 24-ний өдрийн 120 дугаар тушаалаар батлагдсан “Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-01*/2006/ барилгын норм ба дүрмийг, мөн 2013 оны 5 дугаар сарын 28-ны өдрийн 106 дугаар тушаалаар батлагдсан нэмэлт өөрчлөлтийг тус тус хүчингүй болсонд тооцсугай.» (read 2026-09-23)",
+        "legalinfo.mn/mn/detail/9586 (checked 2026-09-23): the 2006-07-24 order №120 that approved БНбД 22.01.01/2006 is titled «… - БХБС-ын 2021 оны 117 дугаар тушаалаар хүчингүй болсон.»",
+        "Not in the MCIS current-norm register (tools/mcis_verify.py, checked 2026-09-23: 0 records)"
+      ],
+      "relationship": "normative_reference",
+      "context": "нэ нормын 5.2.5. ба “Газар хөдлөлтийн бүсэд барилга төлөвлөх барилгын норм ба дүрэм” БНбД 22.01.01*/2006–ийн 2.5-д зааснаар авна) I - барилгын хэлбэлзлийн үе Ti –ээс хамаарах хэлб",
+      "source_page": 68
+    }
+  ],
+  "supersedes": [
+    {
+      "code": "БНбД 22-01-01*",
+      "relationship": "supersedes",
+      "evidence": "PDF p.4 of the official text (3rd edition, MCIS record 17110817013146, sha256 0c7c8150…): «2. Энэ тушаал гарсантай холбогдуулан Барилга, хот байгуулалтын сайдын 2006 оны 7 дугаар сарын 24-ний өдрийн 120 дугаар тушаалаар батлагдсан “Газар хөдлөлтийн бүс нутагт барилга төлөвлөх” /БНбД 22-01-01*/2006/ барилгын норм ба дүрмийг, мөн 2013 оны 5 дугаар сарын 28-ны өдрийн 106 дугаар тушаалаар батлагдсан нэмэлт өөрчлөлтийг тус тус хүчингүй болсонд тооцсугай.» (read 2026-09-23)  legalinfo.mn/mn/detail/9586 (checked 2026-09-23): the 2006-07-24 order №120 that approved БНбД 22.01.01/2006 is titled «… - БХБС-ын 2021 оны 117 дугаар тушаалаар хүчингүй болсон.»"
+    }
+  ],
+  "commentaries": [],
+  "note": "Холбоос бүр бүртгэлийн ирмэг (registry/references.jsonl) эсвэл албан залгамжийн нотолгооноос; сэдвийн ижил төстэй байдлаар ХОЛБООС ЗОХИОГДООГҮЙ.",
+  "generated_at": "2026-09-23"
+}
