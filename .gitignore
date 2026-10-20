@@ -6,3 +6,11 @@ obj/
 *.suo
 dist/
 TestResults/
+
+# Revit загвар, багц, түр файл — репод хэзээ ч орохгүй
+*.rvt
+*.rfa
+*.rte
+*.0*.rvt
+*.zip
+*.log

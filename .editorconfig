@@ -1,0 +1,13 @@
+root = true
+
+[*.cs]
+indent_style = space
+indent_size = 4
+
+# Кирилл бичвэртэй PowerShell 5.1 скрипт BOM-гүй бол эвдэрнэ.
+[*.{ps1,psm1}]
+charset = utf-8-bom
+
+[*.{json,yml,yaml}]
+indent_style = space
+indent_size = 2

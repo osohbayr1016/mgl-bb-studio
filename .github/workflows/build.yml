@@ -1,0 +1,24 @@
+# Revit 2024–2027 бүтээлт + цэвэр тест (build.ps1-тэй ИЖИЛ). Windows минут 2 дахин үнэтэй тул зөвхөн PR болон гараар.
+name: Build
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Build R24–R27 + tests
+        shell: pwsh
+        run: ./build.ps1

@@ -1,5 +1,10 @@
 # MGL ББ Студи — бүтээцийн ажлын зургийн Revit нэмэлт
 
+> *Revit 2024–2027 add-in that learns MGL's structural working-drawing standard from a finished project and generates annotated beam,
+> column, wall and slab drawings, sheets and schedules from modelled rebar. Docs are in Mongolian.*
+>
+> Хамтран хөгжүүлэх: [CONTRIBUTING.md](CONTRIBUTING.md) · хийх ажил: [Issues](https://github.com/osohbayr1016/mgl-bb-studio/issues)
+
 Барилга бүтээцийн (ББ) инженерт зориулсан **тусдаа** Revit нэмэлт. Дууссан төслөөс (ЖИШЭЭ-1) компанийн ажлын зургийн
 стандартыг сурч, загварчилсан арматураас дамнуруу, багана, цутгамал хана, хучилтын дэлгээс / огтлол / төлөвлөгөөг тэр
 стандартаар үүсгэж тэмдэглэнэ, хуудсанд байрлуулж түүврийг хувилна, асуудлыг «Асуудал – Шийдэл» Excel-ээр солилцоно.

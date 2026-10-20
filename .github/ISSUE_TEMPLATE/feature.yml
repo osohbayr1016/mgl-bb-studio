@@ -1,0 +1,21 @@
+name: Шинэ боломж
+description: Шинэ зураг, хэрэгсэл, сайжруулалт
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Юу хэрэгтэй
+      description: Инженер одоо гараар юу хийдэг, юуг автоматжуулах вэ
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Жишээ
+      description: Инженерийн гараар хийсэн зураг / хуудас / харагдацын нэр (ЖИШЭЭ-1 эсвэл бодит төсөл)
+  - type: textarea
+    id: done
+    attributes:
+      label: Хүлээн авах нөхцөл
+      description: Юу болбол дууссан гэж үзэх вэ

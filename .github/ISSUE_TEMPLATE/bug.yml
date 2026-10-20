@@ -1,0 +1,35 @@
+name: Алдаа
+description: Нэмэлт буруу ажилласан, зураг буруу гарсан
+labels: [bug]
+body:
+  - type: dropdown
+    id: revit
+    attributes:
+      label: Revit он
+      options: ['2024', '2025', '2026', '2027']
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Нэмэлтийн хувилбар
+      placeholder: 0.2.0
+  - type: textarea
+    id: steps
+    attributes:
+      label: Юу хийсэн
+      description: Аль төсөл, аль гишүүн (ДН-1, Б-5, ЦХ-1 …), аль товч
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Юу болсон
+      description: Дэлгэцийн зураг; «Асуудал – Шийдэл» Excel; %APPDATA%\MGL\BbStudio\startup-error.txt байвал
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Юу болох ёстой байсан
+      description: Инженерийн гараар хийсэн жишээ зураг / хуудас
