@@ -1,0 +1,3 @@
+mgl-e-c revit-mcp/addin @ a3a22c0cbd6897592d204e14f56fdec83606da41
+copied 2026-10-20 (from worktree mgl-bb, branch feat/bb-drawing-studio, revit-mcp/addin unchanged)
+content also identical to mgl-e-c main @ 1d5eba64 (line endings aside)

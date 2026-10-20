@@ -1,0 +1,102 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    «MGL ББ Студи» — барилга бүтээцийн (ББ) ажлын зургийн ТУСДАА plugin (инженерийн «САЙЖРУУЛАЛТ ББ.pdf», 2026-10-19).
+
+    ⚠️ ҮНДСЭН MGL plugin-ООС (mgl-e-c репогийн revit-mcp/addin/RevitMcpAddin.csproj) ТУСДАА:
+      • өөр assembly (MglBbStudio.dll), өөр AddInId, өөр манифест (MglBbStudio.addin), өөр ribbon таб («MGL ББ»);
+      • үндсэн plugin-ий «хөдөлгүүр» кодыг (арматурын огтлол/дэлгээсийн хэмжээс, шошго, MRA) ../Engine-д ХУУЛБАРЛАСАН
+        (эх: mgl-e-c, engine-files.txt + tools/sync-engine.ps1) — энэ assembly-д эмхэтгэнэ, үндсэн plugin-д огт нөлөөгүй;
+      • тохиргоо %APPDATA%\MGL\BbStudio\-д (үндсэн plugin-ий %APPDATA%\RevitMcpAddin\-ийг хөндөхгүй);
+      • лиценз = үндсэн plugin-ий LicenseGate (reflection-оор) — үндсэн plugin ачаалагдаагүй бол командууд ажиллахгүй;
+      • JSON/XLSX нь гадны сангүй.  System.Text.Json-ийг Revit 2024 (net48)-д ЗОРИУД ачаалахгүй (Infra/StjShim.cs) — үндсэн plugin-ий
+        ачаалдаг хувилбартай нэг процесст мөргөлдөхгүйн тулд.
+
+      dotnet build MglBbStudio.csproj -c "Release R24" -p:Platform=x64
+  -->
+
+  <PropertyGroup>
+    <Configurations>Debug R24;Debug R27;Release R24;Release R25;Release R26;Release R27</Configurations>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>false</UseWindowsForms>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>MglBbStudio</AssemblyName>
+    <RootNamespace>MglBb</RootNamespace>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <NoWarn>$(NoWarn);NU1510;CS1591;CA1416;CS0618;CS0436</NoWarn>
+    <Version>0.2.0</Version>
+    <FileVersion>0.2.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <InformationalVersion>$(Version)</InformationalVersion>
+    <Addin>..\Engine</Addin>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(Configuration.Contains('R24'))">
+    <RevitVersion>2024</RevitVersion>
+    <TargetFramework>net48</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R25'))">
+    <RevitVersion>2025</RevitVersion>
+    <TargetFramework>net8.0-windows</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R26'))">
+    <RevitVersion>2026</RevitVersion>
+    <TargetFramework>net8.0-windows</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R27'))">
+    <RevitVersion>2027</RevitVersion>
+    <TargetFramework>net10.0-windows</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.StartsWith('Release'))">
+    <Optimize>true</Optimize>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' != 'net48'">
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);REVIT$(RevitVersion)</DefineConstants>
+  </PropertyGroup>
+
+  <!-- Үндсэн plugin-тэй ИЖИЛ тогтмол API багц (V02, 2026-10-16). -->
+  <PropertyGroup Condition="'$(RevitApiPackageVersion)' == ''">
+    <RevitApiPackageVersion Condition="'$(RevitVersion)' == '2024'">2024.0.0</RevitApiPackageVersion>
+    <RevitApiPackageVersion Condition="'$(RevitVersion)' == '2025'">2025.0.2</RevitApiPackageVersion>
+    <RevitApiPackageVersion Condition="'$(RevitVersion)' == '2026'">2026.0.4</RevitApiPackageVersion>
+    <RevitApiPackageVersion Condition="'$(RevitVersion)' == '2027'">2027.0.0</RevitApiPackageVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitApiPackageVersion)" ExcludeAssets="runtime" />
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitApiPackageVersion)" ExcludeAssets="runtime" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <Reference Include="System.IO.Compression" />
+  </ItemGroup>
+
+  <!-- Энэ plugin-ий өөрийн код. -->
+  <ItemGroup>
+    <Compile Include="**\*.cs" Exclude="bin\**;obj\**" />
+    <!-- ЖИШЭЭ-1-ээс сурсан өгөгдмөл стандарт: хэрэглэгч «Стандарт сурах»-ыг ажиллуулаагүй үед (Infra/BbStore.cs). -->
+    <EmbeddedResource Include="Resources\standard-default.json" LogicalName="MglBb.standard-default.json" />
+  </ItemGroup>
+
+  <!-- Үндсэн plugin-ий ХӨДӨЛГҮҮР — src/Engine дахь хуулбар (engine-files.txt).  UI, команд, CloneDrawings-ийн файлууд ОРОХГҮЙ
+       (RfText-д хэрэгтэй хоёр CloneDrawings төрлийн хамгийн бага орлуулагч: Infra/LinkedStubs.cs). -->
+  <ItemGroup>
+    <Compile Include="$(Addin)\Reinforcement\Core\*.cs" Link="Linked\Reinforcement\Core\%(Filename)%(Extension)" />
+    <Compile Include="$(Addin)\Reinforcement\Revit\*.cs" Exclude="$(Addin)\Reinforcement\Revit\RfTemplateService.cs" Link="Linked\Reinforcement\Revit\%(Filename)%(Extension)" />
+    <Compile Include="$(Addin)\Reinforcement\RfText.cs" Link="Linked\Reinforcement\RfText.cs" />
+    <Compile Include="$(Addin)\Reinforcement\RfShowText.cs" Link="Linked\Reinforcement\RfShowText.cs" />
+    <Compile Include="$(Addin)\Lang.cs" Link="Linked\Lang.cs" />
+    <Compile Include="$(Addin)\AutoAnnotate\Core\*.cs" Link="Linked\AutoAnnotate\Core\%(Filename)%(Extension)" />
+    <Compile Include="$(Addin)\AutoAnnotate\AaDimType.cs" Link="Linked\AutoAnnotate\AaDimType.cs" />
+  </ItemGroup>
+</Project>
