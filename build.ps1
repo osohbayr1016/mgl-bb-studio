@@ -2,10 +2,12 @@
 #   powershell -ExecutionPolicy Bypass -File build.ps1 [-Years 2024,2027] [-NoTests]
 [CmdletBinding()]
 param(
-  [int[]]$Years = @(2024, 2025, 2026, 2027),
+  [string[]]$Years = @('2024', '2025', '2026', '2027'),
   [switch]$NoTests
 )
 $ErrorActionPreference = 'Stop'
+# `powershell -File … -Years 2024,2027` нь «2024,2027»-ыг НЭГ мөр болгож дамжуулдаг — өөрсдөө хуваана.
+$Years = @($Years | ForEach-Object { $_ -split '[,; ]' } | Where-Object { $_ } | ForEach-Object { [int]$_ })
 $Here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Proj = Join-Path $Here 'src\MglBbStudio\MglBbStudio.csproj'
 foreach ($y in $Years) {
