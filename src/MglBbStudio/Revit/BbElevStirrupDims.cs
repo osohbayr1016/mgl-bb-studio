@@ -31,7 +31,7 @@ namespace MglBb.RevitSide
             public Leg First, Last;
         }
 
-        private sealed class Support
+        internal sealed class Support
         {
             public double R0, R1;
             public Reference Near, Far;
@@ -144,7 +144,7 @@ namespace MglBb.RevitSide
         }
 
         /// <summary>Харагдацын баганууд: дамнурууны дагуух хоёр нүүрний (тэнхлэгт перпендикуляр) лавлагаа.</summary>
-        private static List<Support> Supports(Document doc, View view, BbFrame f)
+        internal static List<Support> Supports(Document doc, View view, BbFrame f)
         {
             var res = new List<Support>();
             foreach (Element col in new FilteredElementCollector(doc, view.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsNotElementType())

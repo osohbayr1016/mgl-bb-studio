@@ -79,6 +79,23 @@ namespace MglBb.RevitSide
                 log.AppendLine("дамнурууны төгсгөлийн нүүр олдсонгүй — гинж тэнхлэг/арматураар, хүрээ r " + mm(lo) + ".." + mm(hi));
             }
             double tolEnd = RfTol.MmToFt(150);
+            // Дамнурууны үзүүр баганын ДОТОР бол (ДН-11: Y1 = баганын гол) гинж тэр баганын ГАДНА нүүрээр эхэлж/төгсөнө — «550 | 3550 | …»;
+            // консол үзүүр (ДДН-10) баганагүй — дамнурууны нүүр хэвээр.
+            // Хэсэгчилсэн дэлгээс (ДН-11 Copy 3 — crop Y3 орчим, дамнуруу 50 м): crop-оос гадуурх баганыг гинжинд оруулахгүй.
+            double cr0 = double.MinValue, cr1 = double.MaxValue;
+            if (view.CropBoxActive) { cr0 = view.CropBox.Min.X; cr1 = view.CropBox.Max.X; }
+            List<BbElevStirrupDims.Support> cols = BbElevStirrupDims.Supports(doc, view, f);
+            BbElevStirrupDims.Support c0 = cols.FirstOrDefault(c => e0.R >= c.R0 - tolEnd && e0.R <= c.R1 + tolEnd && c.R0 >= cr0 - tolEnd);
+            BbElevStirrupDims.Support c1 = cols.LastOrDefault(c => e1.R >= c.R0 - tolEnd && e1.R <= c.R1 + tolEnd && c.R1 <= cr1 + tolEnd);
+            if (c0 != null || c1 != null)
+            {
+                pts.Remove(e0); pts.Remove(e1);
+                if (c0 != null) e0 = new Pt { R = c0.R0, Ref = c0.Near, Rank = 0 };
+                if (c1 != null) e1 = new Pt { R = c1.R1, Ref = c1.Far, Rank = 0 };
+                if (e0.Ref != null) pts.Add(e0);
+                if (e1.Ref != null) pts.Add(e1);
+                log.AppendLine("үзүүр баганад: " + (c0 != null ? "эхлэл баганын нүүр r " + mm(c0.R0) : "эхлэл хэвээр") + ", " + (c1 != null ? "төгсгөл баганын нүүр r " + mm(c1.R1) : "төгсгөл хэвээр"));
+            }
 
             // Тэнхлэгүүд (хөдөлгүүрийн олсон, id-аар давхардалгүй).  Дамнурууны нүүргүй үед (ДН-11 — дамнуруу Y1 тэнхлэг/баганын голд эхэлдэг)
             // захын тэнхлэг гинжийн эхлэл/төгсгөл болно — хүрээний захад ч хасахгүй.
