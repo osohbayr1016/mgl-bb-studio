@@ -26,7 +26,7 @@ namespace MglBb.Infra
                 if (File.Exists(StandardPath))
                 {
                     source = "сурсан стандарт (" + StandardPath + ")";
-                    return BbStandard.Load(StandardPath);
+                    return BbCompanyRules.Apply(BbStandard.Load(StandardPath));
                 }
             }
             catch (Exception ex)
@@ -43,14 +43,53 @@ namespace MglBb.Infra
                         using (var r = new StreamReader(s))
                         {
                             source = "ЖИШЭЭ-1-ээс сурсан өгөгдмөл стандарт";
-                            return BbStandard.FromJson(BbJson.Parse(r.ReadToEnd()));
+                            return BbCompanyRules.Apply(BbStandard.FromJson(BbJson.Parse(r.ReadToEnd())));
                         }
                     }
                 }
             }
             catch { }
             source = "кодын өгөгдмөл";
-            return new BbStandard();
+            return BbCompanyRules.Apply(new BbStandard());
+        }
+
+        public static string OptionsPath { get { return Path.Combine(Paths.Root, "options.json"); } }
+
+        /// <summary>«Тохиргоо»-ны option-ууд (уншигдахгүй бол хоосон — файлыг .broken болгож нөөцөлнө).</summary>
+        public static BbOptionBook LoadOptions()
+        {
+            try { return BbOptionBook.Load(OptionsPath); }
+            catch
+            {
+                try { File.Copy(OptionsPath, OptionsPath + ".broken", true); } catch { }
+                return new BbOptionBook();
+            }
+        }
+
+        public static void SaveOptions(BbOptionBook book) { book.Save(OptionsPath); }
+
+        /// <summary>Төслийн түлхүүр (идэвхтэй option-ийг төсөл бүрт санах): central / файлын зам, хадгалаагүй бол нэр.</summary>
+        public static string ProjectKey(Document doc)
+        {
+            if (doc == null) return "";
+            try
+            {
+                if (doc.IsWorkshared)
+                {
+                    ModelPath central = doc.GetWorksharingCentralModelPath();
+                    if (central != null) return ModelPathUtils.ConvertModelPathToUserVisiblePath(central);
+                }
+            }
+            catch { }
+            return string.IsNullOrEmpty(doc.PathName) ? doc.Title ?? "" : doc.PathName;
+        }
+
+        /// <summary>Ажлын зураг / тэмдэглэгээний стандарт = сурсан стандарт + энэ төслийн идэвхтэй option.</summary>
+        public static BbStandard LoadForProject(Document doc, out string source, out string optionName)
+        {
+            BbStandard std = LoadStandard(out source);
+            std = LoadOptions().Apply(std, ProjectKey(doc), out optionName);
+            return std;
         }
 
         public static void SaveStandard(BbStandard std)

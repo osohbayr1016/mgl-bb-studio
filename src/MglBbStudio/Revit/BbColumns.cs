@@ -97,10 +97,11 @@ namespace MglBb.RevitSide
 
             if (opt.Elevation)
             {
-                ViewFamilyType vft = BbGeom.FindVft(doc, ms.ElevViewType, ViewFamily.Detail);
+                List<string> want = BbCompanyRules.ElevViewTypes(BbMemberKind.Column, ms);
+                ViewFamilyType vft = BbGeom.FindVft(doc, want, ViewFamily.Detail, out bool matched);
                 if (vft == null) throw new InvalidOperationException("«Detail View» төрөл энэ төсөлд алга.");
-                if (!string.IsNullOrEmpty(ms.ElevViewType) && vft.Name != ms.ElevViewType)
-                    res.Issues.Add(Issue(mark, BbSeverity.Warning, "Баганын дэлгээсийн төрөл «" + ms.ElevViewType + "» алга — «" + vft.Name + "»-ээр үүсгэв.", "Компанийн template-ээс оруулах.", "elev-vft"));
+                if (!matched && want.Count > 0)
+                    res.Issues.Add(Issue(mark, BbSeverity.Warning, "Баганын дэлгээсийн төрөл «" + want[0] + "» алга — «" + vft.Name + "»-ээр үүсгэв.", "Компанийн template-ээс оруулах.", "elev-vft"));
                 View template = BbGeom.FindTemplate(doc, ms.ElevTemplate);
                 double left = BbGeom.Ft(ms.ElevCropBelowMm), right = BbGeom.Ft(ms.ElevCropAboveMm), vert = BbGeom.Ft(ms.ElevCropAlongMm);
                 double planeV = v1 - BbGeom.Ft(ms.ElevPlaneInsideMm);
@@ -133,7 +134,10 @@ namespace MglBb.RevitSide
 
             if (opt.Sections)
             {
-                ViewFamilyType vft = BbGeom.FindVft(doc, ms.SecViewType, ViewFamily.Detail);
+                List<string> want = BbCompanyRules.SecViewTypes(BbMemberKind.Column, ms);
+                ViewFamilyType vft = BbGeom.FindVft(doc, want, ViewFamily.Detail, out bool matched);
+                if (vft != null && !matched)
+                    res.Issues.Add(Issue(mark, BbSeverity.Warning, "Баганын огтлолын төрөл «" + want[0] + "» алга — «" + vft.Name + "»-ээр үүсгэв.", "Компанийн template-ээс оруулах.", "sec-vft"));
                 View template = BbGeom.FindTemplate(doc, ms.SecTemplate);
                 // ДЭЭРЭЭС харна: харагч +Z (V = Z), баруун = R, дээш = Z × R.
                 XYZ sV = XYZ.BasisZ, sR = R, sU = sV.CrossProduct(sR).Normalize();
@@ -151,7 +155,8 @@ namespace MglBb.RevitSide
                     if (Exists(doc, name) && opt.Existing == "skip") { res.Notes.Add("«" + name + "» аль хэдийн байгаа — алгасав."); continue; }
                     XYZ o = new XYZ(st.Center.X, st.Center.Y, zc) + R * ((r0 + r1) / 2) + V * ((v0 + v1) / 2);
                     double hw = (r1 - r0) / 2, hd = (v1 - v0) / 2;
-                    double side = BbGeom.Ft(ms.SecCropSideMm), below = BbGeom.Ft(ms.SecCropBelowMm), above = BbGeom.Ft(ms.SecCropAboveMm);
+                    // Баганын дэлгээс дээр огтлолын тэмдэг хэвтээ — хажуугийн crop нь тэмдгийн толгойг баганаас холдуулна.
+                    double side = BbViews.MarkCrop(ms.SecCropSideMm, ms), below = BbGeom.Ft(ms.SecCropBelowMm), above = BbGeom.Ft(ms.SecCropAboveMm);
                     // Огтлолын «дээш» (sU) = −V (R × Z × … ) — хэмжээг харгалзах тэнхлэгээр.
                     double ua = Math.Min(-hd * sU.DotProduct(V), hd * sU.DotProduct(V)), ub = Math.Max(-hd * sU.DotProduct(V), hd * sU.DotProduct(V));
                     ViewSection v = BbViews.CreateDetail(doc, vft, o, sR, sU, sV, -hw - side, hw + side, ua - below, ub + above, BbGeom.Ft(ms.SecFarMm), res, mark);

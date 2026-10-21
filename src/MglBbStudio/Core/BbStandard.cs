@@ -147,6 +147,10 @@ namespace MglBb.Core
         public int SecScale = 20;
         public string SecNamePattern = "{mark} S{n}";
         public double SecCropSideMm = 145, SecCropBelowMm = 45, SecCropAboveMm = 75;
+        /// <summary>Дэлгээс дээрх огтлолын тэмдгийн толгой гишүүнээс (дэлгээсийн цаасан мм) — огтлолын crop-ыг дор хаяж үүнд хүргэнэ.</summary>
+        public double SecMarkGapPaperMm = 2;
+        /// <summary>Огтлолын ажлын арматурын шошгыг ҮРГЭЛЖ зүүн талд (хөдөлгүүр хамгийн ойр талд тавьдаг).</summary>
+        public bool SecTagsLeft = true;
         public double SecFarMm = 330;
         /// <summary>Тулгуурын нүүрнээс огтлол хүртэл (мм); 0 бол алгасал × <see cref="SecSupportRatio"/>.</summary>
         public double SecSupportOffsetMm = 830, SecSupportRatio = 0.12;
@@ -173,6 +177,10 @@ namespace MglBb.Core
         public bool SecRightSide = true;
         public bool ElevColumnLeft = true;
         public bool SingleTagPerSet = true, MultiLeaderPerSet = true;
+        /// <summary>Огтлол: multi-leader-ийн leader-үүдийг нэгтгэх (хөдөлгүүрийн «Merge leader»).</summary>
+        public bool SecMergeLeaders = false;
+        /// <summary>Огтлолын leader: 3→2 шошгоноос хугарал хүртэл, 2→1 хугарлаас арматур хүртэл — хэвтээ, цаасан мм (0 = хөдөлгүүрийн автомат).</summary>
+        public double SecLeaderLandingPaperMm = 0, SecLeaderRunPaperMm = 0;
 
         // ── Дэлгээсийн компанийн загвар (ЖИШЭЭ-1-ийн 235 дэлгээсээс хэмжсэн; <see cref="MglBb.Core.BbMraLayout"/>)
         /// <summary>Хомутын MRA-г компанийн хоёр эгнээний загвараар дахин байрлуулна (false = хөдөлгүүрийн нэг эгнээ).</summary>
@@ -188,6 +196,15 @@ namespace MglBb.Core
         /// <summary>Хөдөлгүүрийн ангилж чадаагүй (нугалсан г.м.) харагдаж буй арматурт шошго нэмнэ.</summary>
         public bool ElevTagOtherBars = true;
         public double SideTagRunPaperMm = 5;
+
+        // ── Огтлолын break line (ЖИШЭЭ-2 «ДН-1 S1…S9», «ДДН-2 S10»-оос хэмжсэн): crop-ын зүүн/баруун ирмэгийг дайрсан хучилт бүрд
+        // «DET-Symbol_Break_Line»-ыг ирмэгээс дотогш, хучилтын зузааны голд; left/right = зузааны хагас, masking = ирмэг хүртэл.
+        public bool SecBreakLines = true;
+        public string BreakFamily = "DET-Symbol_Break_Line";
+        /// <summary>Crop-ын ирмэгээс break line хүртэл (цаасан мм; 1:20-д 45 мм загвар = 2.25).</summary>
+        public double BreakInsetPaperMm = 2.25;
+        /// <summary>«masking depth extension» (цаасан мм; 1:20-д 48.6 мм загвар = 2.43).</summary>
+        public double BreakMaskPaperMm = 2.43;
 
         public static BbMemberStandard DefaultBeam() { return new BbMemberStandard(); }
 
@@ -402,9 +419,9 @@ namespace MglBb.Core
             {
                 if (!o.TryGetValue(f.Name, out object v) || v == null) continue;
                 if (f.FieldType == typeof(string) && v is string str) f.SetValue(into, str);
-                else if (f.FieldType == typeof(double) && v is double d) f.SetValue(into, d);
+                else if ((f.FieldType == typeof(double) || f.FieldType == typeof(double?)) && v is double d) f.SetValue(into, d);
                 else if (f.FieldType == typeof(int) && v is double di) f.SetValue(into, (int)Math.Round(di));
-                else if (f.FieldType == typeof(bool) && v is bool b) f.SetValue(into, b);
+                else if ((f.FieldType == typeof(bool) || f.FieldType == typeof(bool?)) && v is bool b) f.SetValue(into, b);
             }
             return into;
         }

@@ -438,6 +438,50 @@ namespace MglBb.Gate
                                 sb.AppendLine("  in-view viewer " + e.Id.Value + " «" + e.Name + "»");
                         break;
                     }
+                case "breaks":
+                    {
+                        // views=«нэр|нэр»: инженерийн break line-ыг (ХУУЛБАР дээр) тэмдэглээд устгаж, хэрэгслээр дахин тавиад харьцуулна.  2 дахь удаа = давхардал.
+                        BbStandard std = MglBb.Infra.BbStore.LoadStandard(out string _);
+                        foreach (string vn in (kv.TryGetValue("views", out string bvs) ? bvs : "").Split('|').Select(x => x.Trim()).Where(x => x.Length > 0))
+                        {
+                            ViewSection v = new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().FirstOrDefault(x => !x.IsTemplate && x.Name == vn);
+                            if (v == null) { sb.AppendLine("«" + vn + "» алга"); continue; }
+                            BbViewSample smp = BbLearner.Classify(doc, v);
+                            Transform inv = v.CropBox.Transform.Inverse;
+                            Func<FamilyInstance, string> desc = fi =>
+                            {
+                                XYZ q = inv.OfPoint(((LocationPoint)fi.Location).Point);
+                                XYZ h = inv.OfVector(fi.HandOrientation), fc = inv.OfVector(fi.FacingOrientation);
+                                Func<string, string> P = n => { Parameter p = fi.LookupParameter(n); return p == null ? "-" : (BbGeom.ToMm(p.AsDouble())).ToString("0.0", CultureInfo.InvariantCulture); };
+                                return fi.Symbol.Name + " (" + BbGeom.ToMm(q.X).ToString("0.0", CultureInfo.InvariantCulture) + "," + BbGeom.ToMm(q.Y).ToString("0.0", CultureInfo.InvariantCulture) + ") hand(" + h.X.ToString("0.0", CultureInfo.InvariantCulture) + "," + h.Y.ToString("0.0", CultureInfo.InvariantCulture)
+                                    + ") facing(" + fc.X.ToString("0.0", CultureInfo.InvariantCulture) + "," + fc.Y.ToString("0.0", CultureInfo.InvariantCulture) + ") left " + P("left") + " right " + P("right") + " mask " + P("masking depth extension");
+                            };
+                            Func<List<FamilyInstance>> breaks = () => new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_DetailComponents)
+                                .WherePasses(new ElementOwnerViewFilter(v.Id)).OfType<FamilyInstance>().Where(BbBreaks.IsBreakFamily).ToList();
+                            sb.AppendLine("== «" + vn + "» " + (smp == null ? "ангилагдсангүй" : smp.Kind + (smp.IsSection ? " огтлол" : "")) + " 1:" + v.Scale);
+                            List<FamilyInstance> orig = breaks();
+                            foreach (FamilyInstance fi in orig) sb.AppendLine("  инженер: " + desc(fi));
+                            using (var t = new Transaction(doc, "gate: break устгах"))
+                            {
+                                t.Start();
+                                foreach (FamilyInstance fi in orig) doc.Delete(fi.Id);
+                                t.Commit();
+                            }
+                            if (smp == null) continue;
+                            var rep = new BbAnnoReport();
+                            int n1 = BbBreaks.Section(doc, v, std.For(smp.Kind), rep, smp.Mark);
+                            foreach (FamilyInstance fi in breaks()) sb.AppendLine("  хэрэгсэл: " + desc(fi));
+                            int n2 = BbBreaks.Section(doc, v, std.For(smp.Kind), rep, smp.Mark);
+                            sb.AppendLine("  тавьсан " + n1 + ", дахин ажиллуулахад " + n2 + ", харагдацад одоо " + breaks().Count + (rep.Issues.Count > 0 ? " · асуудал: " + string.Join(" | ", rep.Issues.Select(i => i.Problem)) : ""));
+                        }
+                        break;
+                    }
+                case "ping":
+                    {
+                        // Арын ажил явж байхад өөр команд (хэрэглэгчийн ажил) гүйцэтгэгдэж байгааг шалгана.
+                        sb.AppendLine("busy " + MglBb.Generate.GenJobHost.Busy + " views " + new FilteredElementCollector(doc).OfClass(typeof(View)).GetElementCount() + " at " + DateTime.Now.ToString("HH:mm:ss.fff"));
+                        break;
+                    }
                 case "ui":
                     {
                         // Цонхтой урсгал (лицензийн шалгалтгүй — үндсэн plugin harness-д байхгүй).  Цонхыг гаднаас UIA driver дарна.
@@ -463,7 +507,8 @@ namespace MglBb.Gate
                             case "annotate": res = MglBb.Annotate.AnnotateFlow.Run(ud); break;
                             case "issues": res = MglBb.Issues.IssuesFlow.Run(ud); break;
                             case "learn": res = MglBb.Learn.LearnFlow.Run(ud); break;
-                            default: return "cmd=generate|annotate|issues|learn";
+                            case "settings": res = MglBb.Settings.SettingsFlow.Run(ud); break;
+                            default: return "cmd=generate|annotate|issues|learn|settings";
                         }
                         sb.AppendLine("result " + res + " selected " + sel.Count + " active «" + ud.ActiveView?.Name + "»");
                         break;

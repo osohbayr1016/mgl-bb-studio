@@ -267,6 +267,18 @@ namespace MglBb.RevitSide
             return all.FirstOrDefault();
         }
 
+        /// <summary>
+        /// <paramref name="names"/>-ийн эхний таарсан төрөл (<see cref="BbCompanyRules.Pick"/>).  Олдохгүй бол <paramref name="matched"/> = false ба
+        /// тэр гэр бүлийн эхний төрөл (дуудагч Асуудалд бичнэ).
+        /// </summary>
+        public static ViewFamilyType FindVft(Document doc, IList<string> names, ViewFamily family, out bool matched)
+        {
+            var all = new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).Cast<ViewFamilyType>().Where(t => t.ViewFamily == family).ToList();
+            string pick = BbCompanyRules.Pick(all.Select(t => t.Name), names);
+            matched = pick != null;
+            return pick != null ? all.First(t => t.Name == pick) : all.FirstOrDefault();
+        }
+
         public static View FindTemplate(Document doc, string name)
         {
             if (string.IsNullOrEmpty(name)) return null;

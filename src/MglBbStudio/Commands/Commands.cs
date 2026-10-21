@@ -61,6 +61,17 @@ namespace MglBb.Commands
     }
 
     [Transaction(TransactionMode.Manual)]
+    public sealed class ScheduleCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
+            try { return Schedules.ScheduleFlow.Run(uidoc); }
+            catch (Exception ex) { return CommandGuard.Fail("Түүвэр үүсгэх", ex); }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
     public sealed class AnnotateCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -68,6 +79,28 @@ namespace MglBb.Commands
             if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
             try { return Annotate.AnnotateFlow.Run(uidoc); }
             catch (Exception ex) { return CommandGuard.Fail("Стандартаар тэмдэглэх", ex); }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
+    public sealed class BreakCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
+            try { return Breaks.BreakFlow.Run(uidoc); }
+            catch (Exception ex) { return CommandGuard.Fail("Break line", ex); }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
+    public sealed class SettingsCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
+            try { return Settings.SettingsFlow.Run(uidoc); }
+            catch (Exception ex) { return CommandGuard.Fail("Тохиргоо", ex); }
         }
     }
 

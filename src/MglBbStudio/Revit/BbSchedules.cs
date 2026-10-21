@@ -60,10 +60,36 @@ namespace MglBb.RevitSide
             foreach (var kv in roles)
             {
                 kv.Value.Sheets = roleSheets[kv.Key].Count;
-                // Цувралын хуудасны ≥ 30 %-д байдаг үүрэг (нэг удаагийн «НЭГДСЭН» түүвэр ороход хуудас бүрд давтагдахгүй).
-                if (kv.Value.Sheets >= Math.Max(2, 0.3 * seriesSheets)) res.Add(kv.Value);
+                // Цувралын хуудасны ≥ 30 %-д байдаг үүрэг — эсвэл ЗААВАЛ үүсгэх түүвэр (арматур, бетон, нэгдсэн, хэсгийн тодорхойлолт; ББ инженерийн
+                // шаардлага 2026-10-21) нэг ч хуудсанд байвал.
+                if (kv.Value.Sheets >= Math.Max(2, 0.3 * seriesSheets) || BbCompanyRules.IsRequiredSchedule(kv.Key)) res.Add(kv.Value);
             }
             return res.OrderBy(r => r.Pattern, StringComparer.Ordinal).ToList();
+        }
+
+        /// <summary>
+        /// Хуудасны цувралаас ҮЛ ХАМААРАН төслийн БҮХ түүврээс гишүүний түүврийн үүргүүд (нэр нь тэмдгээр төгссөн, шүүлтүүрт тэмдэгтэй) — «Түүвэр
+        /// үүсгэх»-д: цуврал өөр / хуудсанд байрлаагүй ч жишээ түүвэр байвал хувилна.  Хуудсанд байрласан жишээг илүүд үзнэ.
+        /// </summary>
+        public static List<Role> RolesAnywhere(Document doc, ICollection<string> marks)
+        {
+            var res = new Dictionary<string, Role>(StringComparer.Ordinal);
+            if (marks == null || marks.Count == 0) return new List<Role>();
+            var byMarkLen = marks.Where(m => !string.IsNullOrWhiteSpace(m)).Distinct(StringComparer.OrdinalIgnoreCase).OrderByDescending(m => m.Length).ToList();
+            var placed = new HashSet<long>();
+            foreach (ScheduleSheetInstance si in new FilteredElementCollector(doc).OfClass(typeof(ScheduleSheetInstance)).Cast<ScheduleSheetInstance>())
+                if (!si.IsTitleblockRevisionSchedule) placed.Add(si.ScheduleId.Value);
+            foreach (ViewSchedule vs in new FilteredElementCollector(doc).OfClass(typeof(ViewSchedule)).Cast<ViewSchedule>()
+                .Where(v => !v.IsTemplate && !v.IsTitleblockRevisionSchedule).OrderByDescending(v => placed.Contains(v.Id.Value)))
+            {
+                string name = vs.Name ?? "";
+                string mark = byMarkLen.FirstOrDefault(m => EndsWithToken(name, m));
+                if (mark == null || !FiltersMention(vs, mark)) continue;
+                string pattern = name.Substring(0, name.Length - mark.Length) + "{mark}";
+                if (res.TryGetValue(pattern, out Role r)) { r.Sheets += placed.Contains(vs.Id.Value) ? 1 : 0; continue; }
+                res[pattern] = new Role { Pattern = pattern, Template = vs, TemplateMark = mark, Sheets = placed.Contains(vs.Id.Value) ? 1 : 0 };
+            }
+            return res.Values.OrderBy(r => r.Pattern, StringComparer.Ordinal).ToList();
         }
 
         private static bool EndsWithToken(string name, string mark)
@@ -90,7 +116,7 @@ namespace MglBb.RevitSide
         }
 
         /// <summary>Тэмдэг үгийн хилтэй байх байрлал («ДН-1» нь «ДН-12» дотор ТААРАХГҮЙ).</summary>
-        private static int TokenIndex(string s, string mark)
+        internal static int TokenIndex(string s, string mark)
         {
             int from = 0;
             while (true)

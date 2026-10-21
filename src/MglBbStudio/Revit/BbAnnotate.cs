@@ -12,6 +12,7 @@ namespace MglBb.RevitSide
     internal sealed class BbAnnoReport
     {
         public int Views, SecDims, SecMemberDims, SecTags, BarChains, BarChainRefs, ElevTags, ElevMras, ElevLaps, ElevSpans, ElevStirrupDupes, ElevSideTags, Replaced;
+        public int Breaks;
         public readonly List<string> Notes = new List<string>();
         public readonly List<BbIssue> Issues = new List<BbIssue>();
     }
@@ -62,6 +63,7 @@ namespace MglBb.RevitSide
                     "Огтлолд арматур харагдаж байгаа эсэх (VG), хомут бүрэн загварчлагдсан эсэхийг шалгах.", "sec-empty"));
                 return;
             }
+            if (ms.SecTagsLeft) TagsLeft(plan, ui.ToCore(view));
             RfSectionReport r = RfSectionService.Render(doc, view, ctx, plan, ui);
             rep.Views++;
             rep.SecDims += r.DimsMade;
@@ -194,6 +196,45 @@ namespace MglBb.RevitSide
             if (merged != null) yield return merged;
         }
 
+        /// <summary>
+        /// Ажлын арматур ба хомутын шошгыг ЗҮҮН талд (ББ инженерийн шаардлага 2026-10-21; хөдөлгүүр хамгийн ойр талд — доод арматурынхыг доор,
+        /// хомутынхыг баруун хөлөөс баруун талд тавьдаг).  Хомутын leader-ийг ЗҮҮН хөлийн дунд руу (огтлолыг гатлахгүй).  Хөдөлгүүрийн өөрийн
+        /// аргаар: зүүн талын хэмжээсийн шугамаас цааш, заах цэгийн өндрөөр эгнүүлж (<see cref="RfSectionLayout.Spread"/>), давхцлыг арилгана.
+        /// <c>src/Engine</c>-ийг засахгүй — Render-ийн өмнө төлөвлөгөөг л.
+        /// </summary>
+        internal static void TagsLeft(RfSectionPlan plan, RfSectionOptions o)
+        {
+            RfSectionRect rect = plan.Rect;
+            List<RfTagPlan> left = plan.Tags.ToList();
+            if (left.Count == 0 || left.All(t => t.Side == RfSide.Left)) return;
+            foreach (RfTagPlan t in left.Where(t => t.IsStirrup && t.Side != RfSide.Left))
+            {
+                RfStirrupLoop l = plan.Loops.Where(x => x.Id == t.Id).OrderByDescending(x => (x.MaxU - x.MinU) * (x.MaxV - x.MinV)).FirstOrDefault();
+                if (l != null) t.Target = new RfV2(l.MinU, (l.MinV + l.MaxV) / 2);
+            }
+            // Зүүн талын хэмжээсийн (хомутын гинж, гишүүний гадна гинж) хамгийн гадна шугамаас цааш — хөдөлгүүрийн «extra»-тай ижил.
+            double extra = 0;
+            Action<bool, double> take = (alongU, line) =>
+            {
+                if (RfSectionOptions.SideOfLine(rect, alongU, line) != RfSide.Left) return;
+                extra = Math.Max(extra, Math.Abs(line - rect.FacePos(RfSide.Left)) + o.TagGapFt);
+            };
+            foreach (RfDimPlan d in plan.Dims) take(d.AlongU, d.LinePos);
+            foreach (RfDimChain dc in plan.Chains) take(dc.AlongU, dc.LinePos);
+            foreach (RfMemberChain m in plan.MemberChains) take(m.AlongU, m.LinePos);
+
+            left = left.OrderBy(t => t.Target.Y).ToList();
+            double pitch = RfSectionLayout.StackPitch(o.TagWidthFt, o.TagHeightFt, plan.Frame.V);
+            double[] pos = RfSectionLayout.Spread(left.Select(t => t.Target.Y).ToArray(), left.Select(t => pitch).ToArray(), o.TagGapFt);
+            for (int i = 0; i < left.Count; i++)
+            {
+                RfTagPlan t = left[i];
+                t.Side = RfSide.Left;
+                t.Head = new RfV2(rect.MinU - o.TagOutFt - extra - t.LocalWidth / 2, pos[i]);
+            }
+            RfSectionLayout.ResolveCollisions(rect, plan.Frame, plan.Tags, o);
+        }
+
         private static RfSectionUi SectionUi(Document doc, BbMemberStandard ms, BbAnnoReport rep, string mark)
         {
             return new RfSectionUi
@@ -205,6 +246,9 @@ namespace MglBb.RevitSide
                 GroupTags = ms.SecGroupTags,
                 SingleTagPerSet = ms.SingleTagPerSet,
                 MultiLeaderPerSet = ms.SingleTagPerSet && ms.MultiLeaderPerSet,
+                MergeLeaders = ms.SingleTagPerSet && ms.MultiLeaderPerSet && ms.SecMergeLeaders,
+                LeaderLandingMm = Math.Max(0, ms.SecLeaderLandingPaperMm),
+                LeaderRunMm = Math.Max(0, ms.SecLeaderRunPaperMm),
                 ReplacePrevious = true,
                 DimTypeId = DimTypeId(doc, ms.DimType, rep, mark),
                 MainTagTypeId = TagTypeId(doc, ms.BarTagType, rep, mark),

@@ -41,13 +41,15 @@ namespace MglBb.RevitSide
     /// </summary>
     internal static class BbLearner
     {
-        public static BbStandard Learn(Document doc, BbStandard baseStd, int maxPerKind, out BbLearnReport rep)
+        /// <param name="only">Хэрэглэгчийн заасан харагдацууд (ViewId) — бол ЗӨВХӨН тэднээс сурна: энэ хэрэгслийн үүсгэж гараар зассан харагдацыг
+        /// ч оруулна, нэг жишээ хангалттай.  null = төслийн хуудсанд байрласан бүх харагдац (хуучин горим, gate).</param>
+        public static BbStandard Learn(Document doc, BbStandard baseStd, int maxPerKind, out BbLearnReport rep, ISet<long> only = null)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
             rep = new BbLearnReport();
             var s = new BbSamples();
             rep.Samples = s;
-            List<BbViewSample> samples = Collect(doc, rep);
+            List<BbViewSample> samples = Collect(doc, rep, only);
             long tCollect = sw.ElapsedMilliseconds;
             var used = new List<BbViewSample>();
             foreach (var g in samples.GroupBy(x => x.Kind.ToString() + (x.IsSection ? ".sec" : ".elev")))
@@ -98,6 +100,7 @@ namespace MglBb.RevitSide
                     if (v.IsSection) LearnSectionView(doc, v, k, s, chainCache);
                     else LearnElevationView(doc, v, k, s, chainCache);
                     LearnAnnotations(doc, v, k, s, mraDims, mraTags);
+                    if (v.IsSection && (v.Kind == BbMemberKind.Beam || v.Kind == BbMemberKind.BeamAux)) LearnBreaks(doc, v, k, s);
                     rep.Classified++;
                 }
                 catch (Exception ex)
@@ -109,11 +112,11 @@ namespace MglBb.RevitSide
             long tViews = sw.ElapsedMilliseconds;
             LearnSheets(doc, used, s);
             long tSheets = sw.ElapsedMilliseconds;
-            try { LearnPlates(doc, s, rep); } catch (Exception ex) { rep.Notes.Add("хана/хучилт: " + ex.Message); }
+            try { LearnPlates(doc, s, rep, only); } catch (Exception ex) { rep.Notes.Add("хана/хучилт: " + ex.Message); }
             rep.Notes.Add("хугацаа: ангилах " + tCollect + " мс, харагдац " + (tViews - tCollect) + " мс, хуудас " + (tSheets - tViews) + " мс, хана/хучилт " + (sw.ElapsedMilliseconds - tSheets) + " мс");
 
             BbStandard std = baseStd ?? new BbStandard();
-            rep.FieldsLearned = s.ApplyTo(std, minSamples: 3, round: 0.5);
+            rep.FieldsLearned = s.ApplyTo(std, minSamples: only != null ? 1 : 3, round: 0.5);
             // Масштаб, бүхэл тоо — 0.5-аар бөөрөнхийлөх нь буруу (ApplyTo int-ийг mode-оор авна).
             std.Source = doc.Title;
             std.LearnedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
@@ -172,25 +175,24 @@ namespace MglBb.RevitSide
             return _members.Where(m => m.Cat == cat && m.X0 <= bx && m.X1 >= ax && m.Y0 <= by && m.Y1 >= ay && m.Z0 <= bz && m.Z1 >= az).Select(m => m.Fi);
         }
 
-        public static List<BbViewSample> Collect(Document doc, BbLearnReport rep)
+        public static List<BbViewSample> Collect(Document doc, BbLearnReport rep, ISet<long> only = null)
         {
             _members = BuildMemberIndex(doc);
-            try { return CollectCore(doc, rep); }
+            try { return CollectCore(doc, rep, only); }
             finally { _members = null; }
         }
 
-        private static List<BbViewSample> CollectCore(Document doc, BbLearnReport rep)
+        private static List<BbViewSample> CollectCore(Document doc, BbLearnReport rep, ISet<long> only)
         {
             var res = new List<BbViewSample>();
+            var seen = new HashSet<long>();
             foreach (ViewSheet sh in new FilteredElementCollector(doc).OfClass(typeof(ViewSheet)).Cast<ViewSheet>())
             {
                 foreach (ElementId vpId in sh.GetAllViewports())
                 {
                     if (!(doc.GetElement(vpId) is Viewport vp)) continue;
-                    if (!(doc.GetElement(vp.ViewId) is ViewSection v) || v.IsTemplate) continue;
-                    if (v.ViewType != ViewType.Detail && v.ViewType != ViewType.Section) continue;
-                    // Энэ хэрэгслийн үүсгэсэн харагдац (эсвэл gate-ийн туршилтын нэр) — сурахгүй.
-                    if (BbAnnoStore.IsGenerated(v) || (SkipNameContains != null && (v.Name ?? "").Contains(SkipNameContains))) continue;
+                    if (!(doc.GetElement(vp.ViewId) is ViewSection v) || !IsDetailOrSection(v) || !Learnable(v, only)) continue;
+                    seen.Add(v.Id.Value);
                     rep.ViewsScanned++;
                     BbViewSample x = Classify(doc, v, learning: true);
                     if (x == null) continue;
@@ -199,7 +201,31 @@ namespace MglBb.RevitSide
                     res.Add(x);
                 }
             }
+            // Заасан боловч хуудсанд байрлаагүй харагдац — хуудасгүйгээр (харагдацын тохиргоо, тэмдэглэгээг л сурна).
+            if (only != null)
+                foreach (long id in only)
+                {
+                    if (seen.Contains(id) || !(doc.GetElement(new ElementId(id)) is ViewSection v) || !IsDetailOrSection(v) || !Learnable(v, only)) continue;
+                    rep.ViewsScanned++;
+                    BbViewSample x = Classify(doc, v, learning: true);
+                    if (x == null) continue;
+                    x.Sheet = "";
+                    res.Add(x);
+                }
             return res;
+        }
+
+        private static bool IsDetailOrSection(View v) { return v.ViewType == ViewType.Detail || v.ViewType == ViewType.Section; }
+
+        /// <summary>
+        /// Сурах харагдац мөн эсэх.  Заасан горимд: зөвхөн <paramref name="only"/>, энэ хэрэгслийн үүсгэсэн ч (хэрэглэгч гараар зассан байж болно).
+        /// Бүх горимд: энэ хэрэгслийн үүсгэсэн харагдац (эсвэл gate-ийн туршилтын нэр) — сурахгүй.
+        /// </summary>
+        private static bool Learnable(View v, ISet<long> only)
+        {
+            if (v.IsTemplate) return false;
+            if (only != null) return only.Contains(v.Id.Value);
+            return !BbAnnoStore.IsGenerated(v) && (SkipNameContains == null || !(v.Name ?? "").Contains(SkipNameContains));
         }
 
         public static BbViewSample Classify(Document doc, View v, bool learning = false)
@@ -426,6 +452,34 @@ namespace MglBb.RevitSide
             return new FilteredElementCollector(doc, view.Id).OfClass(typeof(T)).Cast<T>().Where(e => e.OwnerViewId == view.Id);
         }
 
+        /// <summary>
+        /// Огтлолын break line (инженерийн гараар тавьсан): family, crop-ын ойрын зүүн/баруун ирмэгээс зай ба «masking depth extension» (цаасан мм).
+        /// Гараар сунгасан masking (ДДН-2 S10: 701.5 мм) медианд нөлөөлөхгүйн тулд ирмэгээс 10 цаасан мм-ээс илүүг алгасна.
+        /// </summary>
+        private static void LearnBreaks(Document doc, BbViewSample v, string k, BbSamples s)
+        {
+            View view = v.View;
+            double sc = Math.Max(1, view.Scale);
+            BoundingBoxXYZ crop = view.CropBox;
+            Transform inv = crop.Transform.Inverse;
+            foreach (FamilyInstance fi in new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_DetailComponents)
+                         .WherePasses(new ElementOwnerViewFilter(view.Id)).OfType<FamilyInstance>())
+            {
+                if (!BbBreaks.IsBreakFamily(fi) || !(fi.Location is LocationPoint lp)) continue;
+                double x = inv.OfPoint(lp.Point).X;
+                double inset = BbGeom.ToMm(Math.Min(Math.Abs(x - crop.Min.X), Math.Abs(crop.Max.X - x))) / sc;
+                if (inset > 10) continue;
+                s.Str(k + "BreakFamily", fi.Symbol.FamilyName);
+                s.Num(k + "BreakInsetPaperMm", inset);
+                Parameter m = fi.LookupParameter("masking depth extension");
+                if (m != null && m.HasValue && m.StorageType == StorageType.Double)
+                {
+                    double mask = BbGeom.ToMm(m.AsDouble()) / sc;
+                    if (mask > 0 && mask < 10) s.Num(k + "BreakMaskPaperMm", mask);
+                }
+            }
+        }
+
         private static void LearnAnnotations(Document doc, BbViewSample v, string k, BbSamples s, HashSet<long> mraDims, HashSet<long> mraTags)
         {
             View view = v.View;
@@ -587,6 +641,7 @@ namespace MglBb.RevitSide
                     double dy = head.Y < u0 ? u0 - head.Y : head.Y > u1 ? head.Y - u1 : 0;
                     off = BbGeom.ToMm(Math.Max(dx, dy)) / sc;
                     if (off > 0) s.Num(k + "SecTagOutPaperMm", off);
+                    if (!stirrup) LearnLeader(t, f, head, sc, k, s);
                 }
             }
             foreach (MultiReferenceAnnotation m in Owned<MultiReferenceAnnotation>(doc, view))
@@ -594,6 +649,27 @@ namespace MglBb.RevitSide
                 if (m.OwnerViewId != view.Id) continue;
                 try { s.Str(k + "MraType", doc.GetElement(m.GetTypeId())?.Name); } catch { }
             }
+        }
+
+        /// <summary>
+        /// Огтлолын ажлын арматурын шошгоны leader: 3→2 = толгойноос хугарал (elbow) хүртэл, 2→1 = хугарлаас арматур хүртэл — ХЭВТЭЭ зай, цаасны мм
+        /// (хөдөлгүүрийн <c>LeaderLandingMm / LeaderRunMm</c>).  Хугаралгүй / Attached төгсгөлтэй leader-ийг алгасна.
+        /// </summary>
+        private static void LearnLeader(IndependentTag t, BbFrame f, XYZ head, double sc, string k, BbSamples s)
+        {
+            try
+            {
+                if (!t.HasLeader || t.LeaderEndCondition != LeaderEndCondition.Free) return;
+                foreach (Reference r in t.GetTaggedReferences())
+                {
+                    if (!t.HasLeaderElbow(r)) continue;
+                    XYZ elbow = f.Local(t.GetLeaderElbow(r)), end = f.Local(t.GetLeaderEnd(r));
+                    double landing = BbGeom.ToMm(Math.Abs(head.X - elbow.X)) / sc, run = BbGeom.ToMm(Math.Abs(elbow.X - end.X)) / sc;
+                    if (landing > 0.5 && landing < 60) s.Num(k + "SecLeaderLandingPaperMm", landing);
+                    if (run > 0.5 && run < 60) s.Num(k + "SecLeaderRunPaperMm", run);
+                }
+            }
+            catch { }
         }
 
         private static List<double> Distinct(IEnumerable<double> xs, double tol)
@@ -617,7 +693,7 @@ namespace MglBb.RevitSide
         /// Хуудсанд байрласан ХАНА («ЦУТГАМАЛ ХАНА ЦХ-1 ХЭВ / АРМАТУРЧЛАЛ») ба ХУЧИЛТЫН («4.93 ТҮВШНИЙ ХУЧИЛТЫН ХЭВНИЙ БАЙГУУЛАЛТ / ДООД / ДЭЭД ҮЕИЙН
         /// АРМАТУРЧЛАЛ») харагдацаас төрөл, загвар, масштаб, MRA-ийн төрлийг сурна.  Нэрийн тэмдэг нь загварт бодит хана байх ёстой.
         /// </summary>
-        private static void LearnPlates(Document doc, BbSamples s, BbLearnReport rep)
+        private static void LearnPlates(Document doc, BbSamples s, BbLearnReport rep, ISet<long> only)
         {
             var wallMarks = new HashSet<string>(new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Walls).WhereElementIsNotElementType()
                 .Select(BbGeom.Mark).Where(m => m.Length > 0), StringComparer.Ordinal);
@@ -632,8 +708,8 @@ namespace MglBb.RevitSide
             int walls = 0, slabs = 0;
             foreach (View v in new FilteredElementCollector(doc).OfClass(typeof(View)).Cast<View>())
             {
-                if (v.IsTemplate || !placed.Contains(v.Id.Value)) continue;
-                if (BbAnnoStore.IsGenerated(v) || (SkipNameContains != null && (v.Name ?? "").Contains(SkipNameContains))) continue;
+                if (only == null && !placed.Contains(v.Id.Value)) continue;
+                if (!Learnable(v, only)) continue;
                 string name = v.Name ?? "";
                 string prefix, field;
                 var wm = WallView.Match(name);
