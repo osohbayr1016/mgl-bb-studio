@@ -34,23 +34,23 @@ namespace MglBb.Breaks
                     if (doc.GetElement(vp) is Viewport p && doc.GetElement(p.ViewId) is ViewSection vs) views.Add(vs);
             views = views.Where(v => !v.IsTemplate).GroupBy(v => v.Id.Value).Select(g => g.First()).ToList();
 
-            // Зөвхөн дамнурууны огтлол.
+            // Дамнурууны огтлол ба дэлгээс.
             var beamSecs = new List<KeyValuePair<ViewSection, BbViewSample>>();
             foreach (ViewSection v in views)
             {
                 BbViewSample smp = BbLearner.Classify(doc, v);
-                if (smp != null && smp.IsSection && (smp.Kind == BbMemberKind.Beam || smp.Kind == BbMemberKind.BeamAux))
+                if (smp != null && (smp.Kind == BbMemberKind.Beam || smp.Kind == BbMemberKind.BeamAux))
                     beamSecs.Add(new KeyValuePair<ViewSection, BbViewSample>(v, smp));
             }
             if (beamSecs.Count == 0)
             {
-                TaskDialog.Show("MGL ББ — Break line", "Дамнурууны огтлол нээх, эсвэл Project Browser / хуудаснаас огтлол (эсвэл хуудас) сонгоно уу.");
+                TaskDialog.Show("MGL ББ — Break line", "Дамнурууны огтлол / дэлгээс нээх, эсвэл Project Browser / хуудаснаас харагдац (эсвэл хуудас) сонгоно уу.");
                 return Result.Cancelled;
             }
 
-            var dlg = new BbDialog("MGL ББ — Break line", "Дамнурууны огтлолын crop-ын зүүн/баруун ирмэгийг дайрсан хучилтад break line тавина " +
-                "(хучилтын дээд, доод ирмэгээр).  Энэ хэрэгслийн өмнө тавьсан нь солигдоно, гараар тавьсан break line хөндөгдөхгүй.");
-            dlg.Section("Огтлол (" + beamSecs.Count + ")");
+            var dlg = new BbDialog("MGL ББ — Break line", "Огтлол: crop-ын зүүн/баруун ирмэгийг дайрсан хучилтад.  Дэлгээс: зүүн/баруун ирмэгийг дайрсан дамнуруу, " +
+                "дээд/доод ирмэгийг дайрсан баганад.  Энэ хэрэгслийн өмнө тавьсан нь солигдоно, гараар тавьсан break line хөндөгдөхгүй.");
+            dlg.Section("Харагдац (" + beamSecs.Count + ")");
             dlg.List(beamSecs.Select(x => x.Key.Name), Math.Min(160, 26 + 18 * beamSecs.Count));
             var optBox = FlowCommon.OptionCombo(dlg, doc, out BbOptionBook book);
             if (!dlg.Show(uidoc.Application.MainWindowHandle)) return Result.Cancelled;
@@ -62,7 +62,11 @@ namespace MglBb.Breaks
                 tg.Start();
                 try
                 {
-                    foreach (var x in beamSecs) BbBreaks.Section(doc, x.Key, std.For(x.Value.Kind), rep, x.Value.Mark);
+                    foreach (var x in beamSecs)
+                    {
+                        if (x.Value.IsSection) BbBreaks.Section(doc, x.Key, std.For(x.Value.Kind), rep, x.Value.Mark);
+                        else BbBreaks.Elevation(doc, x.Key, std.For(x.Value.Kind), rep, x.Value.Mark);
+                    }
                     tg.Assimilate();
                 }
                 catch
@@ -71,7 +75,7 @@ namespace MglBb.Breaks
                     throw;
                 }
             }
-            var lines = new List<string> { "Огтлол " + beamSecs.Count + ", break line " + rep.Breaks, "Стандарт: " + src, "" };
+            var lines = new List<string> { "Огтлол " + beamSecs.Count(x => x.Value.IsSection) + ", дэлгээс " + beamSecs.Count(x => !x.Value.IsSection) + ", break line " + rep.Breaks, "Стандарт: " + src, "" };
             lines.AddRange(rep.Notes.Take(8));
             FlowCommon.Summary(uidoc, "Break line", rep.Breaks + " break line тавилаа.", lines, rep.Issues);
             return Result.Succeeded;

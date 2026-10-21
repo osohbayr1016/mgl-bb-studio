@@ -259,6 +259,10 @@ namespace MglBb.Generate
             var cSec = dlg.Check("Огтлол", true);
             var mode = dlg.Combo("Огтлолын байрлал", new[] { "Стандарт — тулгуур + дунд, давхардалгүй", "Алгасал бүрд (тулгуур + дунд)", "Зөвхөн дунд хэсэгт", "Зөвхөн тулгуурт" }, 0);
             var cAnn = dlg.Check("Стандартаар тэмдэглэх (хэмжээс, шошго, MRA)", true);
+            var cBreaks = dlg.Check("Break line (огтлолын хучилт, дэлгээсийн дамнуруу / багана)", std.Beam.SecBreakLines || std.Beam.ElevBreakLines,
+                "Crop-ын ирмэгийг дайрсан хучилт, дамнуруу, баганад «" + std.Beam.BreakFamily + "».");
+            var cEndSym = dlg.Check("Арматурын төгсгөлийн тэмдэг (дэлгээс)", std.Beam.ElevEndSymbols,
+                string.IsNullOrEmpty(std.Beam.ElevEndSymbolType) ? "Тэмдэг сураагүй — «Стандарт сурах»-аар тэмдэгтэй дэлгээсээс сурна." : "«" + std.Beam.ElevEndSymbolType + "» — сурсан дүрмээр.");
             var cSheet = dlg.Check("Хуудсанд байрлуулах (A2, дэлгээс дээр, огтлол доор)", true, "Дугаар — компанийн цувралын дараагийн чөлөөт дугаар (дамнуруу 5-, багана 4-).");
             List<string> tbs = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TitleBlocks).OfClass(typeof(FamilySymbol)).Cast<FamilySymbol>()
                 .Select(s => s.FamilyName + " : " + s.Name).Distinct().OrderBy(s => s, StringComparer.CurrentCulture).ToList();
@@ -287,6 +291,12 @@ namespace MglBb.Generate
             bool annotate = cAnn.IsChecked == true;
             bool onSheet = cSheet.IsChecked == true;
             if (tbPicked != null) std.Sheet.TitleBlock = tbPicked;
+            // Хэрэглэгчийн сонголт: энэ ажилд break line / төгсгөлийн тэмдэг (стандартад хадгалахгүй — зөвхөн энэ удаа).
+            foreach (BbMemberStandard ms in new[] { std.Beam, std.BeamAux, std.Column })
+            {
+                if (cBreaks.IsChecked != true) { ms.SecBreakLines = false; ms.ElevBreakLines = false; }
+                if (cEndSym.IsChecked != true) ms.ElevEndSymbols = false;
+            }
             if (!opt.Elevation && !opt.Sections) return Result.Cancelled;
 
             GenJobHost.Start(uidoc, new GenJob(doc, items, std, opt, annotate, onSheet, cSched.IsChecked == true), src);

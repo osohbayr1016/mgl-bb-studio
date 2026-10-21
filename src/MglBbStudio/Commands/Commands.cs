@@ -94,6 +94,17 @@ namespace MglBb.Commands
     }
 
     [Transaction(TransactionMode.Manual)]
+    public sealed class EndSymbolCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
+            try { return EndSymbols.EndSymbolFlow.Run(uidoc); }
+            catch (Exception ex) { return CommandGuard.Fail("Төгсгөлийн тэмдэг", ex); }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
     public sealed class SettingsCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
