@@ -86,6 +86,7 @@ namespace MglBb.RevitSide
                 if (d.OwnerViewId != view.Id || mraDims.Contains(d.Id.Value)) continue;
                 sb.AppendLine("  DIM " + d.Id.Value + " «" + d.DimensionType?.Name + "» " + DimText(d, f, mm, pp, U, bars, doc));
             }
+            EndSymbols(doc, v, f, bars, mm, U, sb);
             foreach (IndependentTag t in new FilteredElementCollector(doc, view.Id).OfClass(typeof(IndependentTag)).Cast<IndependentTag>())
             {
                 if (t.OwnerViewId != view.Id || mraTags.Contains(t.Id.Value)) continue;
@@ -112,6 +113,78 @@ namespace MglBb.RevitSide
                 sb.AppendLine("  TAG " + t.Id.Value + " «" + doc.GetElement(t.GetTypeId())?.Name + "» " + head + " leader " + t.HasLeader + lead + " → " + tagged
                               + " txt «" + (t.TagText ?? "").Replace('\n', ' ').Replace('\r', ' ') + "»");
             }
+        }
+
+        /// <summary>
+        /// Арматурын төгсгөлийн тэмдэг: (1) үндсэн plugin-ий «Төгсгөлийн тэмдэг» хэрэгслийн тавьсан (Extensible Storage-тай — арматур, эхлэл/төгсгөл,
+        /// ширхэг, тэмдэг, эргэлт, оффсет); (2) бусад detail family (гараар) — байрлал, эргэлт, хамгийн ойр арматурын үзүүр.
+        /// </summary>
+        private static void EndSymbols(Document doc, BbViewSample v, BbFrame f, Dictionary<long, string> bars, Func<double, string> mm, Func<double, string> U, StringBuilder sb)
+        {
+            View view = v.View;
+            double hu0 = 0, hu1 = 0;
+            BoundingBoxXYZ hb = v.Host?.get_BoundingBox(null);
+            if (hb != null) { f.Extent(hb, out XYZ ha, out XYZ hz); hu0 = ha.Y; hu1 = hz.Y; }
+            Func<Rebar, string> label = rb =>
+            {
+                string l = bars.TryGetValue(rb.Id.Value, out string b) ? b : "rebar";
+                BbBarRole? layer = hb == null ? null : BbElevRules.Layer(rb, f, hu0, hu1);
+                return rb.Id.Value + "[" + l + (layer == null ? "" : " " + layer) + "]";
+            };
+            var tool = new HashSet<long>();
+            Dictionary<string, RevitMcpAddin.Reinforcement.RfPlacedEnd> placed;
+            try { placed = RevitMcpAddin.Reinforcement.RfEndSymbolStore.Previous(doc, view); }
+            catch (Exception ex) { sb.AppendLine("  ENDSYM store — " + ex.Message); placed = new Dictionary<string, RevitMcpAddin.Reinforcement.RfPlacedEnd>(); }
+            foreach (var p in placed.Values)
+            {
+                foreach (Element part in p.Parts) tool.Add(part.Id.Value);
+                if (p.Instance != null) tool.Add(p.Instance.Id.Value);
+                var rb = doc.GetElement(p.RebarUid) as Rebar;
+                string what = p.IsMarker ? "marker " + p.SymbolUid : p.Instance == null ? "?" : p.Instance.Symbol.FamilyName + " : " + p.Instance.Symbol.Name;
+                string at = "";
+                try { if (p.Instance?.Location is LocationPoint lp) { XYZ q = f.Local(lp.Point); at = " at r " + mm(q.X) + " u " + U(q.Y); } } catch { }
+                sb.AppendLine("  ENDSYM tool " + (rb == null ? p.RebarUid : label(rb)) + " " + p.Kind + " bar#" + p.BarIndex + " «" + what + "» rot "
+                              + (p.Rot * 180 / Math.PI).ToString("0") + "° natural " + (p.Natural * 180 / Math.PI).ToString("0") + "° offset " + mm(p.OffsetFt)
+                              + " hooks " + p.Hooks + " auto " + p.Auto + at + (p.Copies > 0 ? " copies " + p.Copies : ""));
+            }
+            // Гараар тавьсан detail family — хамгийн ойр арматурын үзүүр (харагдах ширхгийн тэнхлэгийн төгсгөлүүд).
+            var ends = new List<KeyValuePair<Rebar, XYZ>>();
+            foreach (Rebar rb in new FilteredElementCollector(doc, view.Id).OfClass(typeof(Rebar)).Cast<Rebar>())
+            {
+                if (!bars.ContainsKey(rb.Id.Value)) continue;
+                try
+                {
+                    int n = Math.Min(rb.NumberOfBarPositions, 60);
+                    for (int i = 0; i < n; i++)
+                    {
+                        IList<Curve> cs = rb.GetTransformedCenterlineCurves(false, true, true, MultiplanarOption.IncludeOnlyPlanarCurves, i);
+                        if (cs.Count == 0) continue;
+                        ends.Add(new KeyValuePair<Rebar, XYZ>(rb, f.Local(cs[0].GetEndPoint(0))));
+                        ends.Add(new KeyValuePair<Rebar, XYZ>(rb, f.Local(cs[cs.Count - 1].GetEndPoint(1))));
+                    }
+                }
+                catch { }
+            }
+            int other = 0;
+            foreach (FamilyInstance fi in new FilteredElementCollector(doc).OwnedByView(view.Id).OfClass(typeof(FamilyInstance)).Cast<FamilyInstance>())
+            {
+                if (tool.Contains(fi.Id.Value) || !(fi.Location is LocationPoint lp)) continue;
+                other++;
+                XYZ q = f.Local(lp.Point);
+                string near = "";
+                if (ends.Count > 0)
+                {
+                    var best = ends.OrderBy(e => Math.Pow(e.Value.X - q.X, 2) + Math.Pow(e.Value.Y - q.Y, 2)).First();
+                    double d = Math.Sqrt(Math.Pow(best.Value.X - q.X, 2) + Math.Pow(best.Value.Y - q.Y, 2));
+                    near = " nearest end " + label(best.Key) + " at r " + mm(best.Value.X) + " u " + U(best.Value.Y) + " dist " + mm(d);
+                }
+                double rot = 0;
+                try { rot = lp.Rotation * 180 / Math.PI; } catch { }
+                sb.AppendLine("  ENDSYM manual " + fi.Id.Value + " «" + fi.Symbol.FamilyName + " : " + fi.Symbol.Name + "» cat " + fi.Category?.Name
+                              + " at r " + mm(q.X) + " u " + U(q.Y) + " rot " + rot.ToString("0") + "°" + near);
+            }
+            int curves = new FilteredElementCollector(doc).OwnedByView(view.Id).OfClass(typeof(CurveElement)).Count(e => e is DetailCurve && !tool.Contains(e.Id.Value));
+            sb.AppendLine("  ENDSYM summary: tool " + placed.Count + ", manual families " + other + ", other detail curves " + curves);
         }
 
         private static string DimText(Dimension d, BbFrame f, Func<double, string> mm, Func<double, string> pp, Func<double, string> U, Dictionary<long, string> bars, Document doc)

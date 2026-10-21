@@ -117,6 +117,7 @@ namespace MglBb.RevitSide
         public static void Elevation(Document doc, ViewSection view, IList<Element> hosts, BbMemberStandard ms, BbAnnoReport rep, string mark)
         {
             RfElevUi ui = ElevationUi(doc, ms, rep, mark);
+            bool committed = false;
             using (var t = new Transaction(doc, "MGL ББ: арматурын дэлгээс"))
             {
                 t.Start();
@@ -165,10 +166,13 @@ namespace MglBb.RevitSide
                     BbAnnoStore.Record(doc, view, before);
                     t.Commit();
                     rep.Views++;
+                    committed = true;
                 }
                 // Шинэ тэмдэглэгээ үүсээгүй бол өмнөхийг ч устгахгүй (буруу ангилал/хоосон үр дүн хэрэглэгчийн зургийг арилгахгүй).
                 else t.RollBack();
             }
+            // Арматурын төгсгөлийн тэмдэг (сурсан) — «Төгсгөлийн тэмдэг» хэрэгсэл өөрөө TransactionGroup нээдэг тул transaction-ий ДАРАА.
+            if (committed) BbElevEndSymbols.Apply(doc, view, hosts, ms, rep, mark);
         }
 
         /// <summary>

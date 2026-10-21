@@ -180,6 +180,19 @@ namespace MglBb.Core
         /// </summary>
         public string ElevLeaderSide = "";
         public double ElevLeaderHeadPaperMm = 0, ElevLeaderRunPaperMm = 0;
+
+        // ── Арматурын төгсгөлийн тэмдэг (үндсэн plugin-ий «Төгсгөлийн тэмдэг» хэрэгслийн бүртгэлээс сурна; ЖИШЭЭ-2 ДДН-10: дээд/доод үеийн
+        // ажлын арматурын хоёр үзүүр, харагчид ойр ширхэгт, «MGL_Armaturin togsgol 45 : 20mm»).
+        public bool ElevEndSymbols = false;
+        /// <summary>«Family : Type».</summary>
+        public string ElevEndSymbolType = "";
+        public bool ElevEndSymTop = true, ElevEndSymBottom = true, ElevEndSymSide = false;
+        /// <summary>Дэгээ/нугалаастай үзүүрт ч; арматурын чиглэлээр эргүүлэх; олонлогийн харагчид хамгийн ойр НЭГ ширхэгт (false = бүх ширхэгт).</summary>
+        public bool ElevEndSymHooks = true, ElevEndSymAuto = true, ElevEndSymFront = true;
+        /// <summary>Эхлэл / төгсгөлийн тэмдгийн эргэлт (°, family-ийн өөрийн чиглэл = 0 гэж) ба үзүүрээс оффсет (цаасан мм).</summary>
+        public double ElevEndSymStartDeg = 0, ElevEndSymEndDeg = 0, ElevEndSymOffsetPaperMm = 0;
+        /// <summary>Доод үеийн арматурын эргэлт тусдаа (ЖИШЭЭ-2: дээд эхлэл −90 / төгсгөл 0, доод эхлэл 0 / төгсгөл −90).</summary>
+        public double ElevEndSymBotStartDeg = 0, ElevEndSymBotEndDeg = 0;
         public bool SecDims = true, SecTagLong = true, SecTagStirrups = true, SecMemberDims = true, SecGroupTags = true;
         /// <summary>«нүүр | хомут | АЖЛЫН АРМАТУР БҮРИЙН ТӨВ | хомут | нүүр» (ЖИШЭЭ-1-ийн огтлол бүрд) — хөдөлгүүрийн «нүүр | хомут | хомут | нүүр» гинжийг өргөтгөнө.</summary>
         public bool SecBarChain = true;

@@ -47,6 +47,17 @@ namespace MglBb.Tests
                 Assert.Eq("right", ms.ElevLeaderSide);
                 Assert.Near(7, ms.ElevLeaderHeadPaperMm, 1e-9);
                 Assert.Near(1.5, ms.ElevLeaderRunPaperMm, 1e-9);
+                // Арматурын төгсгөлийн тэмдэг (2026-10-22 06:50): дээд/доод үеийн хоёр үзүүрт, харагчид ойр ширхэгт; эргэлт үеэр тусдаа.
+                Assert.True(ms.ElevEndSymbols);
+                Assert.Eq("MGL_Armaturin togsgol 45 : 20mm", ms.ElevEndSymbolType);
+                Assert.True(ms.ElevEndSymTop);
+                Assert.True(ms.ElevEndSymBottom);
+                Assert.False(ms.ElevEndSymSide);
+                Assert.True(ms.ElevEndSymFront);
+                Assert.Near(-90, ms.ElevEndSymStartDeg, 1e-9);
+                Assert.Near(0, ms.ElevEndSymEndDeg, 1e-9);
+                Assert.Near(0, ms.ElevEndSymBotStartDeg, 1e-9);
+                Assert.Near(-90, ms.ElevEndSymBotEndDeg, 1e-9);
                 Assert.Near(25, ms.StirrupDimOffsetPaperMm, 1e-9);
                 Assert.Near(12, ms.ElevDimFirstPaperMm, 1e-9);
                 // Хугарал (ЖИШЭЭ-2 засвар, 14:56): ажлын арматур — тэнхлэгээс, хомут — хөлөөс.

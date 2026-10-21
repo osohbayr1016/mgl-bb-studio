@@ -114,6 +114,27 @@ namespace MglBb.RevitSide
         }
 
         /// <summary>Нээлттэй Transaction дотор: <paramref name="before"/>-оос хойш шинээр үүссэнийг бүртгэнэ.  Workshared + өөр хүн эзэмшсэн бол бичихгүй.</summary>
+        /// <summary>
+        /// Нээлттэй Transaction дотор: бүртгэлд НЭМЖ бичнэ (дарж бичихгүй) — <see cref="Owned"/>-д ордоггүй элемент (арматурын төгсгөлийн тэмдэг —
+        /// detail family) дараагийн «Стандартаар тэмдэглэх»-д <see cref="DeletePrevious"/>-аар солигдохын тулд.
+        /// </summary>
+        public static void Append(View view, IEnumerable<Element> extra)
+        {
+            try
+            {
+                Document doc = view.Document;
+                if (doc.IsWorkshared && WorksharingUtils.GetCheckoutStatus(doc, view.Id) == CheckoutStatus.OwnedByOtherUser) return;
+                var ids = Read(view);
+                ids.AddRange(extra.Where(e => e != null).Select(e => e.UniqueId).Where(u => !ids.Contains(u)));
+                var ent = new Entity(Get(true));
+                ent.Set("ViewUid", view.UniqueId ?? "");
+                ent.Set("Ids", string.Join(";", ids));
+                ent.Set("Stamp", DateTime.UtcNow.ToString("o"));
+                view.SetEntity(ent);
+            }
+            catch { }
+        }
+
         public static void Record(Document doc, View view, HashSet<long> before)
         {
             try

@@ -628,6 +628,7 @@ namespace MglBb.RevitSide
                 if (anyLap) s.Bool(k + "ElevLapsTopOnly", !nonTopLap);
                 if (gridChain) s.Bool(k + "ElevSpanTotal", gridTwo);
                 if (gridAny) s.Bool(k + "ElevTopChain", topChain);
+                BbElevEndSymbols.Learn(doc, view, f, hu0, hu1, sc, k, s);
                 if (Owned<MultiReferenceAnnotation>(doc, view).Any(m => m.OwnerViewId == view.Id)) s.Bool(k + "ElevStirrupGaps", stirrupGap);
             }
             if (!v.IsSection)
