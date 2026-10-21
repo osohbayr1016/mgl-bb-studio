@@ -34,6 +34,9 @@ namespace MglBb.Tests
                 Assert.Near(8.5, ms.SecTopTagDyFromBarPaperMm, 1e-9);
                 Assert.Near(1.5, ms.SecBottomTagDyFromBarPaperMm, 1e-9);
                 Assert.Near(15.5, ms.SecTagOutPaperMm, 1e-9);
+                // Баруун талын босоо хэмжээс (ЖИШЭЭ-2 засвар, 17:49): нүүрнээс 11.5, гинж хооронд 6.5 цаасан мм.
+                Assert.Near(11.5, ms.SecDimOffsetPaperMm, 1e-9);
+                Assert.Near(6.5, ms.SecStepPaperMm, 1e-9);
                 // Хугарал (ЖИШЭЭ-2 засвар, 14:56): ажлын арматур — тэнхлэгээс, хомут — хөлөөс.
                 ms.RoleElbow(BbBarRole.Top, out string topRef, out double topD);
                 ms.RoleElbow(BbBarRole.Bottom, out string botRef, out double botD);
