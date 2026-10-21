@@ -206,6 +206,12 @@ namespace MglBb.Core
         public double SecBottomTagDxPaperMm = 0, SecBottomTagDyFromBarPaperMm = 0;
         public double SecSideTagDxPaperMm = 0, SecSideTagDyFromBarPaperMm = 0;
         public double SecStirrupTagDxPaperMm = 0, SecStirrupTagDyFromBarPaperMm = 0;
+        /// <summary>
+        /// Leader-ийн хугарал (elbow) үүргээр: Ref «axis» = гишүүний тэнхлэгээс, «end» = leader-ийн төгсгөлөөс (хомутын хөл) шошгоны тал руу Elbow
+        /// цаасан мм; Ref хоосон = сураагүй → <see cref="SecLeaderLandingPaperMm"/> (толгойноос тогтмол зай).
+        /// </summary>
+        public string SecTopTagElbowRef = "", SecBottomTagElbowRef = "", SecSideTagElbowRef = "", SecStirrupTagElbowRef = "";
+        public double SecTopTagElbowPaperMm = 0, SecBottomTagElbowPaperMm = 0, SecSideTagElbowPaperMm = 0, SecStirrupTagElbowPaperMm = 0;
         /// <summary>Нэг талын шошгоны толгой хоорондын ХАМГИЙН БАГА босоо зай (цаасан мм) — давхцвал доош түлхэнэ.</summary>
         public double SecRoleTagPitchPaperMm = 4.5;
 
@@ -295,6 +301,18 @@ namespace MglBb.Core
                 case BbBarRole.Bottom: side = SecBottomTagSide; dx = SecBottomTagDxPaperMm; dy = SecBottomTagDyFromBarPaperMm; break;
                 case BbBarRole.Side: side = SecSideTagSide; dx = SecSideTagDxPaperMm; dy = SecSideTagDyFromBarPaperMm; break;
                 default: side = SecStirrupTagSide; dx = SecStirrupTagDxPaperMm; dy = SecStirrupTagDyFromBarPaperMm; break;
+            }
+        }
+
+        /// <summary>Огтлолын шошгоны хугарлын сурсан лавлах цэг ба зай үүргээр (<paramref name="elbowRef"/> хоосон = сураагүй).</summary>
+        public void RoleElbow(BbBarRole r, out string elbowRef, out double paperMm)
+        {
+            switch (r)
+            {
+                case BbBarRole.Top: elbowRef = SecTopTagElbowRef; paperMm = SecTopTagElbowPaperMm; break;
+                case BbBarRole.Bottom: elbowRef = SecBottomTagElbowRef; paperMm = SecBottomTagElbowPaperMm; break;
+                case BbBarRole.Side: elbowRef = SecSideTagElbowRef; paperMm = SecSideTagElbowPaperMm; break;
+                default: elbowRef = SecStirrupTagElbowRef; paperMm = SecStirrupTagElbowPaperMm; break;
             }
         }
 

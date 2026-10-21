@@ -20,6 +20,24 @@ namespace MglBb.Tests
         }
 
         [Test]
+        public static void ElbowOnAxisForBarsNearLegForStirrups()
+        {
+            // ЖИШЭЭ-2 засвар (2026-10-21): «9 ⌀28» — шошгоноос хэвтээ шугам тэнхлэг (r = 250) хүртэл, тэндээс ширхэг бүр рүү.
+            Assert.Eq(BbTagRoles.ElbowAxis, BbTagRoles.ElbowRef(BbBarRole.Top));
+            Assert.Eq(BbTagRoles.ElbowAxis, BbTagRoles.ElbowRef(BbBarRole.Side));
+            Assert.Eq(BbTagRoles.ElbowEnd, BbTagRoles.ElbowRef(BbBarRole.Stirrup));
+            double axis = (R0 + R1) / 2;
+            Assert.Near(0, BbTagRoles.MeasureElbow(BbTagRoles.Left, 250, axis), 1e-9);
+            Assert.Near(250, BbTagRoles.ElbowFrom(BbTagRoles.Left, axis, 0), 1e-9);
+            // Нарийн дамнуруу (r 0…300): тэнхлэгээс хэмждэг тул хугарал шинэ тэнхлэг дээр (толгойноос тогтмол зай биш).
+            Assert.Near(150, BbTagRoles.ElbowFrom(BbTagRoles.Left, 150, 0), 1e-9);
+            // Хомут: зүүн хөл (r = 40) — хугарал шошгоны тал руу 20 (r = 20); баруун талын шошгонд толин.
+            Assert.Near(20, BbTagRoles.MeasureElbow(BbTagRoles.Left, 20, 40), 1e-9);
+            Assert.Near(20, BbTagRoles.ElbowFrom(BbTagRoles.Left, 40, 20), 1e-9);
+            Assert.Near(480, BbTagRoles.ElbowFrom(BbTagRoles.Right, 460, 20), 1e-9);
+        }
+
+        [Test]
         public static void MeasureThenTargetReturnsSameHead()
         {
             BbTagRoles.Measure(-170, 900, 670, R0, R1, out string side, out double dx, out double dy);

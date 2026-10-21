@@ -118,6 +118,23 @@ namespace MglBb.RevitSide
                 s.Str(key + "Side", side);
                 s.Num(key + "DxPaperMm", BbGeom.ToMm(dx) / sc);
                 s.Num(key + "DyFromBarPaperMm", BbGeom.ToMm(dy) / sc);
+                // Хугарал: ажлын арматур — тэнхлэгээс, хомут — leader-ийн төгсгөлөөс (хөл) шошгоны тал руу.
+                string eref = BbTagRoles.ElbowRef(h.Role);
+                try
+                {
+                    if (!h.Tag.HasLeader || h.Tag.LeaderEndCondition != LeaderEndCondition.Free) continue;
+                    foreach (Reference rf in h.Tag.GetTaggedReferences())
+                    {
+                        if (!h.Tag.HasLeaderElbow(rf)) continue;
+                        double er = f.Local(h.Tag.GetLeaderElbow(rf)).X;
+                        double refR = eref == BbTagRoles.ElbowAxis ? (r0 + r1) / 2 : f.Local(h.Tag.GetLeaderEnd(rf)).X;
+                        double d = BbGeom.ToMm(BbTagRoles.MeasureElbow(side, er, refR)) / sc;
+                        if (d < -30 || d > 60) continue;
+                        s.Str(key + "ElbowRef", eref);
+                        s.Num(key + "ElbowPaperMm", d);
+                    }
+                }
+                catch { }
             }
             foreach (var g in heads.GroupBy(h => h.Local.X > (r0 + r1) / 2))
             {
@@ -179,9 +196,21 @@ namespace MglBb.RevitSide
                     try
                     {
                         h.Tag.TagHeadPosition = f.World(hr, hu, h.Local.Z);
-                        if (landing > 0 && h.Tag.HasLeader && h.Tag.LeaderEndCondition == LeaderEndCondition.Free)
+                        ms.RoleElbow(h.Role, out string eref, out double ed);
+                        bool learned = !string.IsNullOrEmpty(eref);
+                        if ((learned || landing > 0) && h.Tag.HasLeader && h.Tag.LeaderEndCondition == LeaderEndCondition.Free)
                             foreach (Reference rf in h.Tag.GetTaggedReferences())
-                                if (h.Tag.HasLeaderElbow(rf)) h.Tag.SetLeaderElbow(rf, f.World(BbTagRoles.ElbowR(side, hr, landing), hu, h.Local.Z));
+                            {
+                                double er;
+                                if (!learned) { if (!h.Tag.HasLeaderElbow(rf)) continue; er = BbTagRoles.ElbowR(side, hr, landing); }
+                                else
+                                {
+                                    // ЖИШЭЭ-2 засвар: ажлын арматур — шошгоноос ХЭВТЭЭ шугам тэнхлэг хүртэл, тэндээс ширхэг бүр рүү; хомут — хөлийн дэргэд.
+                                    double refR = eref == BbTagRoles.ElbowAxis ? (r0 + r1) / 2 : f.Local(h.Tag.GetLeaderEnd(rf)).X;
+                                    er = BbTagRoles.ElbowFrom(side, refR, ed * ft);
+                                }
+                                h.Tag.SetLeaderElbow(rf, f.World(er, hu, h.Local.Z));
+                            }
                         moved++;
                     }
                     catch (Exception ex)

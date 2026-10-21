@@ -104,5 +104,25 @@ namespace MglBb.Core
         {
             return string.Equals(side, Right, StringComparison.OrdinalIgnoreCase) ? hr - landing : hr + landing;
         }
+
+        /// <summary>Хугарлын (elbow) лавлах цэг: «axis» = гишүүний тэнхлэг (ажлын арматур — ЖИШЭЭ-2 засвар), «end» = leader-ийн төгсгөл (хомутын хөл).</summary>
+        public const string ElbowAxis = "axis", ElbowEnd = "end";
+
+        /// <summary>Үүргийн өгөгдмөл лавлах цэг: хомут — leader-ийн төгсгөл (хөл бүр өөр), бусад — тэнхлэг.</summary>
+        public static string ElbowRef(BbBarRole r) { return r == BbBarRole.Stirrup ? ElbowEnd : ElbowAxis; }
+
+        /// <summary>
+        /// Инженерийн хугарлыг хэмжинэ: лавлах цэгээс (<paramref name="refR"/>) шошгоны тал руу хэвтээ зай (≥ 0 бол шошго тийш; ямар ч нэгж).
+        /// </summary>
+        public static double MeasureElbow(string side, double elbowR, double refR)
+        {
+            return string.Equals(side, Right, StringComparison.OrdinalIgnoreCase) ? elbowR - refR : refR - elbowR;
+        }
+
+        /// <summary>Сурсан зайгаар хугарлын r: лавлах цэгээс шошгоны тал руу <paramref name="d"/>.</summary>
+        public static double ElbowFrom(string side, double refR, double d)
+        {
+            return string.Equals(side, Right, StringComparison.OrdinalIgnoreCase) ? refR + d : refR - d;
+        }
     }
 }

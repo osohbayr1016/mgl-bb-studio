@@ -32,10 +32,18 @@ namespace MglBb.Tests
                 Assert.Eq("left", ms.SecStirrupTagSide);
                 Assert.Near(11, ms.SecTopTagDxPaperMm, 1e-9);
                 Assert.Near(8.5, ms.SecTopTagDyFromBarPaperMm, 1e-9);
-                Assert.Near(3, ms.SecBottomTagDyFromBarPaperMm, 1e-9);
-                Assert.Near(24, ms.SecLeaderLandingPaperMm, 1e-9);
-                Assert.Near(8.5, ms.SecLeaderRunPaperMm, 1e-9);
-                Assert.Near(14.5, ms.SecTagOutPaperMm, 1e-9);
+                Assert.Near(1.5, ms.SecBottomTagDyFromBarPaperMm, 1e-9);
+                Assert.Near(15.5, ms.SecTagOutPaperMm, 1e-9);
+                // Хугарал (ЖИШЭЭ-2 засвар, 14:56): ажлын арматур — тэнхлэгээс, хомут — хөлөөс.
+                ms.RoleElbow(BbBarRole.Top, out string topRef, out double topD);
+                ms.RoleElbow(BbBarRole.Bottom, out string botRef, out double botD);
+                ms.RoleElbow(BbBarRole.Stirrup, out string stRef, out double stD);
+                Assert.Eq(BbTagRoles.ElbowAxis, topRef);
+                Assert.Eq(BbTagRoles.ElbowAxis, botRef);
+                Assert.Eq(BbTagRoles.ElbowEnd, stRef);
+                Assert.Near(3.5, topD, 1e-9);
+                Assert.Near(0.5, botD, 1e-9);
+                Assert.Near(3, stD, 1e-9);
             }
         }
     }
