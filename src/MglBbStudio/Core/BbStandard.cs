@@ -242,6 +242,8 @@ namespace MglBb.Core
         public double SecRoleTagPitchPaperMm = 4.5;
 
         public bool SecBreakLines = true;
+        /// <summary>Дамнурууны дэлгээсэд break line: crop-ын зүүн/баруун ирмэгийг дайрсан дамнуруу, дээд/доод ирмэгийг дайрсан багана.</summary>
+        public bool ElevBreakLines = true;
         public string BreakFamily = "DET-Symbol_Break_Line";
         /// <summary>Crop-ын ирмэгээс break line хүртэл (цаасан мм; 1:20-д 45 мм загвар = 2.25).</summary>
         public double BreakInsetPaperMm = 2.25;

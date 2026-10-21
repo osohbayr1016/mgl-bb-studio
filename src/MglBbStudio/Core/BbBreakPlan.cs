@@ -17,7 +17,16 @@ namespace MglBb.Core
     public sealed class BbBreakSpot
     {
         public bool Right;
+        /// <summary>Crop-ын ДЭЭД / ДООД ирмэг (дэлгээсийн багана) — break line хэвтээ, <see cref="Half"/> нь X-ийн дагуу.</summary>
+        public bool Top, Bottom;
         public double X, Y, Half, Mask;
+        public bool Horizontal { get { return Top || Bottom; } }
+
+        /// <summary>
+        /// Family-ийн эргэлт (радиан, харагдацын хавтгайд): зүүн +90°, баруун −90° (ЖИШЭЭ-2 «Detail 241»-ийн 270°), дээд 0°, доод 180° — masking
+        /// тал нь crop-ын гадагш.
+        /// </summary>
+        public double Angle { get { return Top ? 0 : Bottom ? Math.PI : Right ? -Math.PI / 2 : Math.PI / 2; } }
     }
 
     /// <summary>
@@ -57,12 +66,55 @@ namespace MglBb.Core
             return res;
         }
 
-        /// <summary>Гараар тавьсан break line аль хэдийн энэ байрлалд байна уу (тал нь ижил, X <paramref name="tolX"/>, Y хэсгийн дотор).</summary>
+        /// <summary>
+        /// Гараар тавьсан break line аль хэдийн энэ байрлалд байна уу: босоо (зүүн/баруун) — X <paramref name="tolX"/>, Y хэсгийн дотор; хэвтээ
+        /// (дээд/доод) — Y <paramref name="tolX"/>, X хэсгийн дотор.
+        /// </summary>
         public static bool Covered(BbBreakSpot spot, IEnumerable<double[]> existingXY, double tolX)
         {
             foreach (double[] p in existingXY ?? Enumerable.Empty<double[]>())
-                if (Math.Abs(p[0] - spot.X) <= tolX && Math.Abs(p[1] - spot.Y) <= Math.Max(spot.Half, tolX)) return true;
+            {
+                double across = spot.Horizontal ? Math.Abs(p[1] - spot.Y) : Math.Abs(p[0] - spot.X);
+                double along = spot.Horizontal ? Math.Abs(p[0] - spot.X) : Math.Abs(p[1] - spot.Y);
+                if (across <= tolX && along <= Math.Max(spot.Half, tolX)) return true;
+            }
             return false;
+        }
+
+        /// <summary>
+        /// Дэлгээсийн break line (crop-ын ирмэгийг дайрсан элементийн харагдацын хүрээгээр): зүүн/баруун ирмэг — дамнуруу (босоо break line, өндрийн
+        /// голд, Half = өндрийн хагас), дээд/доод ирмэг — багана (хэвтээ, өргөний голд, Half = өргөний хагас).  Элемент ирмэгийн ДОТОР (break line-ын
+        /// байр) ба ГАДНА (<paramref name="outside"/>) хоёуланд байвал л ирмэгийг дайрсан.  Хүрээ crop-оор хязгаарлагдана.
+        /// </summary>
+        /// <param name="beams">Дамнуруу бүрийн [x0, x1, y0, y1] (харагдацын).</param>
+        /// <param name="columns">Багана бүрийн [x0, x1, y0, y1].</param>
+        public static List<BbBreakSpot> ElevationSpots(double cx0, double cx1, double cy0, double cy1, IEnumerable<double[]> beams, IEnumerable<double[]> columns,
+            double inset, double mask, double outside, double minThick, double mergeTol)
+        {
+            var left = new List<BbYSpan>();
+            var right = new List<BbYSpan>();
+            foreach (double[] b in beams ?? Enumerable.Empty<double[]>())
+            {
+                var ys = new BbYSpan(Math.Max(b[2], cy0), Math.Min(b[3], cy1));
+                if (ys.Hi <= ys.Lo) continue;
+                if (b[0] < cx0 - outside && b[1] > cx0 + inset) left.Add(ys);
+                if (b[1] > cx1 + outside && b[0] < cx1 - inset) right.Add(ys);
+            }
+            List<BbBreakSpot> res = Spots(cx0, cx1, left, right, inset, mask, minThick, mergeTol);
+            var top = new List<BbYSpan>();
+            var bottom = new List<BbYSpan>();
+            foreach (double[] c in columns ?? Enumerable.Empty<double[]>())
+            {
+                var xs = new BbYSpan(Math.Max(c[0], cx0), Math.Min(c[1], cx1));
+                if (xs.Hi <= xs.Lo) continue;
+                if (c[3] > cy1 + outside && c[2] < cy1 - inset) top.Add(xs);
+                if (c[2] < cy0 - outside && c[3] > cy0 + inset) bottom.Add(xs);
+            }
+            foreach (BbYSpan s in Merge(top, mergeTol))
+                if (s.Hi - s.Lo >= minThick) res.Add(new BbBreakSpot { Top = true, X = s.Mid, Y = cy1 - inset, Half = s.Half, Mask = mask });
+            foreach (BbYSpan s in Merge(bottom, mergeTol))
+                if (s.Hi - s.Lo >= minThick) res.Add(new BbBreakSpot { Bottom = true, X = s.Mid, Y = cy0 + inset, Half = s.Half, Mask = mask });
+            return res;
         }
 
         /// <summary>Харагдацын масштабд хамгийн ойр «Scale Factor»-той төрөл (лог зайгаар: 1:20 → 25, 1:50 → 50).  Хоосон бол −1.</summary>

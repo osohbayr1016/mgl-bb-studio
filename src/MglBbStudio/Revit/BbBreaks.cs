@@ -119,6 +119,78 @@ namespace MglBb.RevitSide
                 }
             }
 
+            return PlaceSpots(doc, v, sym, BbBreakPlan.Spots(x0, x1, left, right, inset, mask, 20 * Mm, 2 * Mm), inset, rep, mark);
+        }
+
+        /// <summary>
+        /// Нээлттэй Transaction-гүй үед: дамнурууны ДЭЛГЭЭСЭД break line — crop-ын зүүн/баруун ирмэгийг дайрсан дамнуруу (босоо), дээд/доод ирмэгийг
+        /// дайрсан багана (хэвтээ).  Огтлолынхтой ижил family, ирмэгээс зай, бүртгэл (өмнөх өөрийнхийг солино, гараар тавьсныг хөндөхгүй).
+        /// Багана, дамнуруу дэлгээсийн хавтгайд зүсэгддэггүй (ард нь харагдана) тул хавтгайн огтлол биш — харагдацын гүний муж доторх хүрээгээр.
+        /// </summary>
+        public static int Elevation(Document doc, ViewSection v, BbMemberStandard ms, BbAnnoReport rep, string mark)
+        {
+            if (doc == null || v == null || ms == null || !ms.ElevBreakLines || !v.CropBoxActive) return 0;
+            List<FamilySymbol> syms = Symbols(doc, ms.BreakFamily);
+            if (syms.Count == 0)
+            {
+                rep?.Issues.Add(new BbIssue
+                {
+                    Tool = "Тэмдэглэх", Severity = BbSeverity.Warning, Member = mark ?? "", View = v.Name, ViewId = v.Id.Value,
+                    Problem = "Break line-ын family «" + ms.BreakFamily + "» энэ төсөлд алга — дэлгээсэд break line тавьсангүй.",
+                    Proposal = "Family-г компанийн template-ээс ачаалах (Detail Items).",
+                    Key = "break|family|" + ms.BreakFamily,
+                });
+                return 0;
+            }
+            FamilySymbol sym = syms[Math.Max(0, BbBreakPlan.NearestScale(syms.Select(ScaleFactor).ToList(), v.Scale))];
+            BoundingBoxXYZ crop = v.CropBox;
+            Transform t = crop.Transform, inv = t.Inverse;
+            double sc = Math.Max(1, v.Scale);
+            double inset = ms.BreakInsetPaperMm * sc * Mm, mask = ms.BreakMaskPaperMm * sc * Mm;
+            var beams = new List<double[]>();
+            var cols = new List<double[]>();
+            foreach (Element e in InViewDepth(doc, crop, BuiltInCategory.OST_StructuralFraming)) if (Extent(e, inv, crop, out double[] b)) beams.Add(b);
+            foreach (Element e in InViewDepth(doc, crop, BuiltInCategory.OST_StructuralColumns)) if (Extent(e, inv, crop, out double[] c)) cols.Add(c);
+            List<BbBreakSpot> spots = BbBreakPlan.ElevationSpots(crop.Min.X, crop.Max.X, crop.Min.Y, crop.Max.Y, beams, cols, inset, mask, 1 * Mm, 20 * Mm, 2 * Mm);
+            return PlaceSpots(doc, v, sym, spots, inset, rep, mark);
+        }
+
+        /// <summary>Харагдацын гүний мужтай (crop-ын Z) огтлолцох тэр ангиллын элементүүд (crop-оос хажуу тийш 1 фут илүү — ирмэгийг дайрсныг олох).</summary>
+        private static IEnumerable<Element> InViewDepth(Document doc, BoundingBoxXYZ crop, BuiltInCategory cat)
+        {
+            Transform t = crop.Transform;
+            var pts = new List<XYZ>();
+            foreach (double x in new[] { crop.Min.X - 1, crop.Max.X + 1 })
+                foreach (double y in new[] { crop.Min.Y - 1, crop.Max.Y + 1 })
+                    foreach (double z in new[] { crop.Min.Z, crop.Max.Z })
+                        pts.Add(t.OfPoint(new XYZ(x, y, z)));
+            var ol = new Outline(new XYZ(pts.Min(p => p.X), pts.Min(p => p.Y), pts.Min(p => p.Z)), new XYZ(pts.Max(p => p.X), pts.Max(p => p.Y), pts.Max(p => p.Z)));
+            return new FilteredElementCollector(doc).OfCategory(cat).WhereElementIsNotElementType().WherePasses(new BoundingBoxIntersectsFilter(ol)).ToElements();
+        }
+
+        /// <summary>Элементийн хүрээ харагдацын (crop) координатад [x0, x1, y0, y1]; гүний муж crop-той огтлолцохгүй бол false.</summary>
+        private static bool Extent(Element e, Transform inv, BoundingBoxXYZ crop, out double[] box)
+        {
+            box = null;
+            BoundingBoxXYZ bb = e.get_BoundingBox(null);
+            if (bb == null) return false;
+            double x0 = double.MaxValue, x1 = double.MinValue, y0 = double.MaxValue, y1 = double.MinValue, z0 = double.MaxValue, z1 = double.MinValue;
+            Transform bt = bb.Transform ?? Transform.Identity;
+            for (int i = 0; i < 8; i++)
+            {
+                XYZ q = inv.OfPoint(bt.OfPoint(new XYZ((i & 1) == 0 ? bb.Min.X : bb.Max.X, (i & 2) == 0 ? bb.Min.Y : bb.Max.Y, (i & 4) == 0 ? bb.Min.Z : bb.Max.Z)));
+                x0 = Math.Min(x0, q.X); x1 = Math.Max(x1, q.X); y0 = Math.Min(y0, q.Y); y1 = Math.Max(y1, q.Y); z0 = Math.Min(z0, q.Z); z1 = Math.Max(z1, q.Z);
+            }
+            if (z1 < crop.Min.Z || z0 > crop.Max.Z) return false;
+            box = new[] { x0, x1, y0, y1 };
+            return true;
+        }
+
+        /// <summary>Өмнөх өөрийн break line-ыг устгаад шинийг тавина; гараар тавьсан байгаа газарт алгасна.  Тавьсан тоо.</summary>
+        private static int PlaceSpots(Document doc, View v, FamilySymbol sym, List<BbBreakSpot> spots, double inset, BbAnnoReport rep, string mark)
+        {
+            BoundingBoxXYZ crop = v.CropBox;
+            Transform t = crop.Transform, inv = t.Inverse;
             int placed = 0, kept = 0;
             using (var tr = new Transaction(doc, "MGL ББ: break line " + (mark ?? "")))
             {
@@ -136,7 +208,6 @@ namespace MglBb.RevitSide
                     if (fi.Location is LocationPoint lp) { XYZ q = inv.OfPoint(lp.Point); manual.Add(new[] { q.X, q.Y }); }
                 }
 
-                List<BbBreakSpot> spots = BbBreakPlan.Spots(x0, x1, left, right, inset, mask, 20 * Mm, 2 * Mm);
                 if (spots.Count > 0 && !sym.IsActive) { sym.Activate(); doc.Regenerate(); }
                 foreach (BbBreakSpot s in spots)
                 {
@@ -145,8 +216,8 @@ namespace MglBb.RevitSide
                     {
                         XYZ p = t.OfPoint(new XYZ(s.X, s.Y, crop.Max.Z));
                         FamilyInstance fi = doc.Create.NewFamilyInstance(p, sym, v);
-                        // Зүүн тал: +90° (hand дээш, facing гадагш = зүүн), баруун тал: −90° (ЖИШЭЭ-2 «Detail 241»-ийн 270°).
-                        ElementTransformUtils.RotateElement(doc, fi.Id, Line.CreateBound(p, p + v.ViewDirection), s.Right ? -Math.PI / 2 : Math.PI / 2);
+                        // Зүүн +90° (hand дээш, facing гадагш), баруун −90° (ЖИШЭЭ-2 «Detail 241»-ийн 270°), дээд 0°, доод 180° (BbBreakSpot.Angle).
+                        if (Math.Abs(s.Angle) > 1e-9) ElementTransformUtils.RotateElement(doc, fi.Id, Line.CreateBound(p, p + v.ViewDirection), s.Angle);
                         SetLength(fi, "left", s.Half);
                         SetLength(fi, "right", s.Half);
                         SetLength(fi, "masking depth extension", s.Mask);
@@ -162,7 +233,7 @@ namespace MglBb.RevitSide
                             Tool = "Тэмдэглэх", Severity = BbSeverity.Warning, Member = mark ?? "", View = v.Name, ViewId = v.Id.Value,
                             Problem = "Break line тавьж чадсангүй: " + (ex.Message ?? "").Split('\n')[0],
                             Proposal = "Гараар тавих.",
-                            Key = "break|" + v.Name + "|" + (s.Right ? "R" : "L"),
+                            Key = "break|" + v.Name + "|" + (s.Top ? "T" : s.Bottom ? "B" : s.Right ? "R" : "L"),
                         });
                     }
                 }

@@ -173,6 +173,8 @@ namespace MglBb.RevitSide
             }
             // Арматурын төгсгөлийн тэмдэг (сурсан) — «Төгсгөлийн тэмдэг» хэрэгсэл өөрөө TransactionGroup нээдэг тул transaction-ий ДАРАА.
             if (committed) BbElevEndSymbols.Apply(doc, view, hosts, ms, rep, mark);
+            // Break line: crop-ын ирмэгийг дайрсан дамнуруу (зүүн/баруун) ба багана (дээд/доод) — огтлолын хучилтынхтай ижил family/зай.
+            if (committed && hosts.Count > 0 && !(hosts[0].Category?.Id.Value == (long)BuiltInCategory.OST_StructuralColumns)) BbBreaks.Elevation(doc, view, ms, rep, mark);
         }
 
         /// <summary>
