@@ -26,6 +26,20 @@ namespace MglBb.RevitSide
 
         public static int Place(Document doc, View view, IList<RfElevContext> ctxs, Element mainHost, BbMemberStandard ms, ElementId dimTypeId, BbAnnoReport rep, string mark)
         {
+            var log = new System.Text.StringBuilder();
+            try { return PlaceCore(doc, view, ctxs, mainHost, ms, dimTypeId, rep, mark, log); }
+            finally
+            {
+                // Оношлогоо: гинж яагаад тавигдаагүйг (цэгүүд, лавлагаа, алдаа) харуулна.
+                try { System.IO.File.WriteAllText(System.IO.Path.Combine(Paths.Root, "topchain-log.txt"), DateTime.Now.ToString("s") + " «" + view.Name + "»" + Environment.NewLine + log, new System.Text.UTF8Encoding(true)); }
+                catch { }
+            }
+        }
+
+        private static int PlaceCore(Document doc, View view, IList<RfElevContext> ctxs, Element mainHost, BbMemberStandard ms, ElementId dimTypeId, BbAnnoReport rep, string mark, System.Text.StringBuilder log)
+        {
+            Func<double, string> mm = ft => BbGeom.ToMm(ft).ToString("0");
+            log.AppendLine("enabled " + ms.ElevTopChain + " contexts " + ctxs.Count + " main " + mainHost?.Id.Value);
             if (!ms.ElevTopChain) return 0;
             List<RfElevContext> beams = ctxs.Where(c => !c.IsColumn).ToList();
             if (beams.Count == 0) return 0;
@@ -38,20 +52,44 @@ namespace MglBb.RevitSide
 
             // Дамнурууны хоёр төгсгөл: гинжийн хамгийн зүүн / баруун гишүүний тэнхлэгт перпендикуляр нүүр.
             var ends = new List<Pt>();
-            foreach (RfElevContext c in beams) ends.AddRange(EndFaces(c.Host, view, f));
-            if (ends.Count < 2) return 0;
-            Pt e0 = ends.OrderBy(x => x.R).First(), e1 = ends.OrderBy(x => x.R).Last();
-            pts.Add(e0); pts.Add(e1);
+            foreach (RfElevContext c in beams)
+            {
+                List<Pt> ef = EndFaces(c.Host, view, f);
+                log.AppendLine("host " + c.Host.Id.Value + " end faces " + string.Join(" ", ef.Select(x => mm(x.R))) + " grids " + c.Spans.Count + " bars " + c.Input.Bars.Count + " endRefs " + c.EndRefs.Count);
+                ends.AddRange(ef);
+            }
+            // Нүүр олдохгүй бол (ДН-11: Coarse / баганатай нийлсэн) гинжийг зогсоохгүй — дамнурууны хүрээгээр хязгаарлаж тэнхлэг + арматураар.
+            Pt e0, e1;
+            if (ends.Count >= 2)
+            {
+                e0 = ends.OrderBy(x => x.R).First(); e1 = ends.OrderBy(x => x.R).Last();
+                pts.Add(e0); pts.Add(e1);
+            }
+            else
+            {
+                double lo = double.MaxValue, hi = double.MinValue;
+                foreach (RfElevContext c in beams)
+                {
+                    BoundingBoxXYZ bb = c.Host.get_BoundingBox(null);
+                    if (bb == null) continue;
+                    f.Extent(bb, out XYZ a, out XYZ b);
+                    lo = Math.Min(lo, a.X); hi = Math.Max(hi, b.X);
+                }
+                e0 = new Pt { R = lo }; e1 = new Pt { R = hi };
+                log.AppendLine("дамнурууны төгсгөлийн нүүр олдсонгүй — гинж тэнхлэг/арматураар, хүрээ r " + mm(lo) + ".." + mm(hi));
+            }
             double tolEnd = RfTol.MmToFt(150);
 
-            // Тэнхлэгүүд (хөдөлгүүрийн олсон, id-аар давхардалгүй).
+            // Тэнхлэгүүд (хөдөлгүүрийн олсон, id-аар давхардалгүй).  Дамнурууны нүүргүй үед (ДН-11 — дамнуруу Y1 тэнхлэг/баганын голд эхэлдэг)
+            // захын тэнхлэг гинжийн эхлэл/төгсгөл болно — хүрээний захад ч хасахгүй.
+            bool hasEnds = e0.Ref != null;
             var seen = new HashSet<long>();
             foreach (RfElevContext c in beams)
                 foreach (KeyValuePair<double, Element> g in c.Spans)
                 {
                     if (!(g.Value is Grid) || !seen.Add(g.Value.Id.Value)) continue;
                     double r = f.Local(c.Model(g.Key, 0)).X;
-                    if (r <= e0.R + tolEnd || r >= e1.R - tolEnd) continue;
+                    if (hasEnds ? (r <= e0.R + tolEnd || r >= e1.R - tolEnd) : (r < e0.R - tolEnd || r > e1.R + tolEnd)) continue;
                     pts.Add(new Pt { R = r, Ref = new Reference(g.Value), Rank = 1 });
                 }
 
@@ -66,11 +104,13 @@ namespace MglBb.RevitSide
                 foreach (RfElevBar b in c.Input.Bars)
                     if (!c.EndRefs.ContainsKey(b.Id) && c.Rebars.TryGetValue(b.Id, out Rebar rb) && BbElevRules.Layer(rb, f, hu0, hu1) == BbBarRole.Top)
                         top.Add(new KeyValuePair<RfElevContext, RfElevBar>(c, b));
+            log.AppendLine("top-layer bars " + string.Join(" ", top.Select(x => x.Value.Id + "(d" + mm(x.Value.Diameter) + (x.Key.EndRefs.ContainsKey(x.Value.Id) ? "" : " bent") + ")")));
             if (top.Count > 0)
             {
+                // Ажлын арматур = хамгийн том голчийн ≥ 70 % (ДН-11: ⌀28 ба ⌀25 хоёулаа; ⌀12 холбогч орохгүй).
                 double dmax = top.Max(x => x.Value.Diameter);
                 var bars = new HashSet<long>();
-                foreach (var kv in top.Where(x => x.Value.Diameter > dmax - RfTol.MmToFt(1)))
+                foreach (var kv in top.Where(x => x.Value.Diameter >= 0.7 * dmax))
                 {
                     if (!bars.Add(kv.Value.Id)) continue;
                     if (kv.Key.EndRefs.TryGetValue(kv.Value.Id, out RfElevEndRefs er))
@@ -90,7 +130,8 @@ namespace MglBb.RevitSide
             var chain = new List<Pt>();
             foreach (Pt p in pts.OrderBy(x => x.R).ThenBy(x => x.Rank))
                 if (chain.Count == 0 || p.R - chain[chain.Count - 1].R > RfTol.MmToFt(5)) chain.Add(p);
-            if (chain.Count < 3) return 0;
+            log.AppendLine("chain " + string.Join(" | ", chain.Select(p => (p.Rank == 0 ? "END" : p.Rank == 1 ? "GRID" : "BAR") + "@" + mm(p.R))));
+            if (chain.Count < 3) { log.AppendLine("STOP: гинжийн цэг < 3"); return 0; }
 
             int scale = view.Scale > 0 ? view.Scale : 50;
             double lineU = hu1 + RfTol.PaperMmToModelFt(Math.Max(1, ms.ElevDimFirstPaperMm) + Math.Max(1, ms.DimPitchPaperMm), scale);
@@ -106,10 +147,12 @@ namespace MglBb.RevitSide
                     Dimension d = dimType != null ? doc.Create.NewDimension(view, line, ra, dimType) : doc.Create.NewDimension(view, line, ra);
                     if (d == null) throw new InvalidOperationException("NewDimension → null");
                     st.Commit();
+                    log.AppendLine("OK dimension " + d.Id.Value + " segments " + (d.Segments?.Size ?? 0));
                     return 1;
                 }
                 catch (Exception ex)
                 {
+                    log.AppendLine("FAIL " + ex.GetType().Name + ": " + ex.Message);
                     if (st.HasStarted() && !st.HasEnded()) st.RollBack();
                     rep?.Notes.Add(mark + " «" + view.Name + "»: дээд үеийн гинжин хэмжээс — " + (ex.Message ?? "").Split('\n')[0]);
                     return 0;
@@ -173,36 +216,45 @@ namespace MglBb.RevitSide
         private static List<Pt> EndFaces(Element host, View view, BbFrame f)
         {
             var res = new List<Pt>();
-            GeometryElement ge;
-            try { ge = host.get_Geometry(new Options { ComputeReferences = true, View = view }); }
-            catch { return res; }
-            if (ge == null) return res;
             var faces = new List<Pt>();
-            Walk(ge, s =>
+            // Эхлээд харагдацын геометр; Coarse харагдацад дамнуруу шугам болж нүүргүй (ДН-11) — тэгвэл Fine геометрээс.
+            foreach (Options opt in new[] { new Options { ComputeReferences = true, View = view }, new Options { ComputeReferences = true, DetailLevel = ViewDetailLevel.Fine } })
             {
-                foreach (Face fc in s.Faces)
+                GeometryElement ge;
+                try { ge = host.get_Geometry(opt); }
+                catch { continue; }
+                if (ge == null) continue;
+                Walk(ge, Transform.Identity, (s, tr) =>
                 {
-                    if (!(fc is PlanarFace pf) || pf.Reference == null) continue;
-                    if (Math.Abs(pf.FaceNormal.DotProduct(f.R)) < 0.99) continue;
-                    faces.Add(new Pt { R = f.Local(pf.Origin).X, Ref = pf.Reference, Rank = 0 });
-                }
-            });
+                    foreach (Face fc in s.Faces)
+                    {
+                        if (!(fc is PlanarFace pf) || pf.Reference == null) continue;
+                        if (Math.Abs(tr.OfVector(pf.FaceNormal).DotProduct(f.R)) < 0.99) continue;
+                        faces.Add(new Pt { R = f.Local(tr.OfPoint(pf.Origin)).X, Ref = pf.Reference, Rank = 0 });
+                    }
+                });
+                if (faces.Count > 0) break;
+            }
             if (faces.Count == 0) return res;
             res.Add(faces.OrderBy(x => x.R).First());
             res.Add(faces.OrderBy(x => x.R).Last());
             return res;
         }
 
-        private static void Walk(GeometryElement ge, Action<Solid> onSolid)
+        /// <summary>
+        /// Solid бүрийг загварын хувиргалттай нь.  Таслагдаагүй family (ДН-11-ийн дамнуруу) GeometryInstance-аар ирдэг — instance геометрийн нүүрэнд
+        /// хэмжээсийн лавлагаа байдаггүй тул SYMBOL геометр (лавлагаатай) + instance-ийн хувиргалт.
+        /// </summary>
+        private static void Walk(GeometryElement ge, Transform tr, Action<Solid, Transform> onSolid)
         {
             foreach (GeometryObject go in ge)
             {
-                if (go is Solid s && s.Faces.Size > 0) { onSolid(s); continue; }
+                if (go is Solid s && s.Faces.Size > 0) { onSolid(s, tr); continue; }
                 if (go is GeometryInstance gi)
                 {
                     GeometryElement sub = null;
-                    try { sub = gi.GetInstanceGeometry(); } catch { }
-                    if (sub != null) Walk(sub, onSolid);
+                    try { sub = gi.GetSymbolGeometry(); } catch { }
+                    if (sub != null) Walk(sub, tr.Multiply(gi.Transform), onSolid);
                 }
             }
         }
