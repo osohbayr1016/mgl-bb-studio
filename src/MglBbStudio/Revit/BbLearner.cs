@@ -503,7 +503,7 @@ namespace MglBb.RevitSide
             double r0 = ha.X, r1 = hbx.X, u0 = ha.Y, u1 = hbx.Y;
             // Арматурын ҮЕ-ийг үндсэн гишүүний өндрөөр (гинжийн гүн хэсэг — ЖИШЭЭ-2 ДДН-10-ийн 2067 мм — ангиллыг гажуудуулахгүй).
             double hu0 = ha.Y, hu1 = hbx.Y;
-            bool anyLap = false, nonTopLap = false, gridChain = false, gridTwo = false;
+            bool anyLap = false, nonTopLap = false, gridChain = false, gridTwo = false, stirrupGap = false;
             if (!v.IsSection)
             {
                 foreach (Element e in MembersOfMarkInCrop(doc, v))
@@ -530,7 +530,7 @@ namespace MglBb.RevitSide
                 XYZ o = f.Local(line.Origin);
                 bool hasRebar = false, hasStdBar = false;
                 var refBars = new List<Rebar>();
-                int grids = 0, others = 0;
+                int grids = 0, others = 0, stirrupRefs = 0, colRefs = 0;
                 try
                 {
                     foreach (Reference rf in d.References)
@@ -540,9 +540,16 @@ namespace MglBb.RevitSide
                         {
                             hasRebar = true;
                             if (!refBars.Any(x => x.Id == rb.Id)) refBars.Add(rb);
-                            try { if ((doc.GetElement(rb.GetShapeId()) as RebarShape)?.RebarStyle == RebarStyle.Standard) hasStdBar = true; } catch { }
+                            try
+                            {
+                                RebarStyle style = (doc.GetElement(rb.GetShapeId()) as RebarShape)?.RebarStyle ?? RebarStyle.Standard;
+                                if (style == RebarStyle.Standard) hasStdBar = true;
+                                else stirrupRefs++;
+                            }
+                            catch { }
                         }
                         else if (re is Grid) grids++;
+                        else if (re?.Category != null && re.Category.Id.Value == (long)BuiltInCategory.OST_StructuralColumns) colRefs++;
                         else others++;
                     }
                 }
@@ -550,6 +557,9 @@ namespace MglBb.RevitSide
                 bool inMra = mraDims.Contains(d.Id.Value);
                 if (!v.IsSection && !column && !inMra)
                 {
+                    // Хомутын эгнээний бүс хоорондын хэмжээс: зөвхөн хомут (+ баганын нүүр) — «хомут | хомут», «хомут | нүүр | нүүр | хомут».
+                    if (stirrupRefs > 0 && !hasStdBar && grids == 0 && others == 0) stirrupGap = true;
+                    others += colRefs;
                     // Давхцал = хоёр ажлын арматурын хэмжээс; тэнхлэгийн гинж = зөвхөн тэнхлэгүүд (2 = нийт урт, 3+ = гинж).
                     if (refBars.Count == 2 && grids == 0 && others == 0 && hasStdBar)
                     {
@@ -614,6 +624,7 @@ namespace MglBb.RevitSide
             {
                 if (anyLap) s.Bool(k + "ElevLapsTopOnly", !nonTopLap);
                 if (gridChain) s.Bool(k + "ElevSpanTotal", gridTwo);
+                if (Owned<MultiReferenceAnnotation>(doc, view).Any(m => m.OwnerViewId == view.Id)) s.Bool(k + "ElevStirrupGaps", stirrupGap);
             }
             if (!v.IsSection)
             {

@@ -128,6 +128,7 @@ namespace MglBb.RevitSide
                 if (removed > 0) { doc.Regenerate(); rep.Replaced += removed; }
                 HashSet<long> before = BbAnnoStore.Owned(doc, view);
                 bool any = false;
+                var done = new List<RfElevContext>();
                 foreach (RfElevContext ctx in Contexts(doc, view, hosts, ui))
                 {
                     // Компанийн загвар: давхар хомутыг нэг болгож, өөр байрлалын ижил дугаартай арматурыг тусад нь шошголно (хөдөлгүүрийн ОРОЛТ).
@@ -143,6 +144,7 @@ namespace MglBb.RevitSide
                         rep.ElevSideTags += BbElevMra.MidTags(ctx, r, ui, ms, rep);
                         if (ms.ElevMraLayout && r.Mras > 0) mras = BbElevMra.RelayoutMras(ctx, r, ui, ms, rep, mark);
                     }
+                    done.Add(ctx);
                     rep.ElevTags += r.Tags;
                     rep.ElevMras += mras;
                     rep.ElevLaps += r.Laps;
@@ -151,6 +153,8 @@ namespace MglBb.RevitSide
                     foreach (string n in r.Notes.Take(2)) rep.Notes.Add(mark + " «" + view.Name + "»: " + n);
                     if (r.Created.Count > 0) any = true;
                 }
+                // Хомутын эгнээнд бүс хоорондын / баганын нүүрээс хомут хүртэлх хэмжээс — гинжийн БҮХ гишүүнээр нэг удаа (гишүүн хоорондын баганад ч).
+                if (any) rep.ElevSpans += BbElevStirrupDims.Place(doc, view, done, ms, ui.DimTypeId, rep, mark);
                 if (any)
                 {
                     BbAnnoStore.Record(doc, view, before);

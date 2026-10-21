@@ -97,7 +97,8 @@
   "SecStirrupTagElbowPaperMm": 3,
   "SecRoleTagPitchPaperMm": 4.5,
   "ElevLapsTopOnly": true,
-  "ElevSpanTotal": false
+  "ElevSpanTotal": false,
+  "ElevStirrupGaps": true
  },
  "beamAux": {
   "BarTagType": "Srb-Арматурын_тэмдэглэгээ,_MNSISO3766-2013_BIMon : (Арматурын дугаар) ⌀Диаметр-Алхам",
@@ -193,7 +194,8 @@
   "SecStirrupTagElbowPaperMm": 3,
   "SecRoleTagPitchPaperMm": 4.5,
   "ElevLapsTopOnly": true,
-  "ElevSpanTotal": false
+  "ElevSpanTotal": false,
+  "ElevStirrupGaps": true
  },
  "column": {
   "BarTagType": "Srb-Арматурын_тэмдэглэгээ,_MNSISO3766-2013_BIMon : (Арматурын дугаар) ⌀Диаметр-Алхам",
