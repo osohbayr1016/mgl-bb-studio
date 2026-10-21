@@ -43,6 +43,10 @@ namespace MglBb.Tests
                 Assert.False(ms.ElevSideTags);
                 Assert.True(ms.ElevStirrupGaps, "хомутын бүс хоорондын / баганын нүүрнээс хомут хүртэлх хэмжээс (19:45)");
                 Assert.True(ms.ElevTopChain, "дээд үеийн гинж: төгсгөл | тэнхлэг | дээд ажлын арматурын таслах цэг (20:06)");
+                // Дэлгээсийн шошго (20:29): бичвэр баруун талд, хугарлаас толгой хүртэл 7, хугарал арматураас 1.5 цаасан мм.
+                Assert.Eq("right", ms.ElevLeaderSide);
+                Assert.Near(7, ms.ElevLeaderHeadPaperMm, 1e-9);
+                Assert.Near(1.5, ms.ElevLeaderRunPaperMm, 1e-9);
                 Assert.Near(25, ms.StirrupDimOffsetPaperMm, 1e-9);
                 Assert.Near(12, ms.ElevDimFirstPaperMm, 1e-9);
                 // Хугарал (ЖИШЭЭ-2 засвар, 14:56): ажлын арматур — тэнхлэгээс, хомут — хөлөөс.

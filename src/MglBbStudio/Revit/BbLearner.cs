@@ -685,6 +685,7 @@ namespace MglBb.RevitSide
                 double off;
                 if (!v.IsSection)
                 {
+                    if (!column && !stirrup) LearnElevLeader(t, view, f, sc, k, s);
                     // Бөөрний арматурын шошго: дамнурууны ДОТОР (дунд өндөрт — ЖИШЭЭ-1) эсвэл гадна (доод шошготой нэг эгнээнд — ЖИШЭЭ-2).
                     if (!column && !stirrup && taggedBar != null && BbElevRules.Layer(taggedBar, f, hu0, hu1) == BbBarRole.Side)
                         s.Bool(k + "ElevSideTags", head.Y > hu0 && head.Y < hu1);
@@ -728,6 +729,44 @@ namespace MglBb.RevitSide
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// Дэлгээсийн арматурын шошгоны leader (хөдөлгүүрийн <c>LeaderLandingMm / LeaderRunMm</c>): 3→2 = бичвэрийн ойр ИРМЭГЭЭС (bbox) хугарал хүртэл,
+        /// 2→1 = хугарлаас арматур хүртэл — хэвтээ, цаасан мм.  Хугаралгүй / Attached leader-ийг алгасна.
+        /// </summary>
+        private static void LearnElevLeader(IndependentTag t, View view, BbFrame f, double sc, string k, BbSamples s)
+        {
+            foreach (double[] lr in ElevLeader(t, view, f, sc, out string _))
+            {
+                if (lr[0] > 0.5 && lr[0] < 40) s.Num(k + "ElevLeaderHeadPaperMm", lr[0]);
+                if (lr[1] > 0.3 && lr[1] < 40) s.Num(k + "ElevLeaderRunPaperMm", lr[1]);   // налуу хэсэгтэй leader-ээс (босоо = 0-ийг тоолохгүй)
+                s.Str(k + "ElevLeaderSide", lr[2] > 0 ? BbTagRoles.Right : BbTagRoles.Left);
+            }
+        }
+
+        /// <summary>
+        /// Шошгоны leader бүрийн {хугарлаас толгой хүртэл, хугарлаас арматур хүртэл, бичвэрийн тал (+1 баруун / −1 зүүн)} — хэвтээ, цаасан мм.
+        /// <paramref name="why"/> = хэмжээгүй шалтгаан (тайланд).
+        /// </summary>
+        internal static List<double[]> ElevLeader(IndependentTag t, View view, BbFrame f, double sc, out string why)
+        {
+            var res = new List<double[]>();
+            why = null;
+            try
+            {
+                if (!t.HasLeader) { why = "leader-гүй"; return res; }
+                if (t.LeaderEndCondition != LeaderEndCondition.Free) { why = "Attached"; return res; }
+                double hx = f.Local(t.TagHeadPosition).X;
+                foreach (Reference r in t.GetTaggedReferences())
+                {
+                    if (!t.HasLeaderElbow(r)) { why = "хугаралгүй"; continue; }
+                    double ex = f.Local(t.GetLeaderElbow(r)).X, endX = f.Local(t.GetLeaderEnd(r)).X;
+                    res.Add(new[] { BbGeom.ToMm(Math.Abs(hx - ex)) / sc, BbGeom.ToMm(Math.Abs(ex - endX)) / sc, hx >= ex ? 1.0 : -1.0 });
+                }
+            }
+            catch (Exception ex) { why = ex.GetType().Name + ": " + ex.Message; }
+            return res;
         }
 
         private static List<double> Distinct(IEnumerable<double> xs, double tol)

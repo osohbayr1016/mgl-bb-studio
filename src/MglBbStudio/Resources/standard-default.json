@@ -99,7 +99,10 @@
   "ElevLapsTopOnly": true,
   "ElevSpanTotal": false,
   "ElevStirrupGaps": true,
-  "ElevTopChain": true
+  "ElevTopChain": true,
+  "ElevLeaderSide": "right",
+  "ElevLeaderHeadPaperMm": 7,
+  "ElevLeaderRunPaperMm": 1.5
  },
  "beamAux": {
   "BarTagType": "Srb-Арматурын_тэмдэглэгээ,_MNSISO3766-2013_BIMon : (Арматурын дугаар) ⌀Диаметр-Алхам",
@@ -197,7 +200,10 @@
   "ElevLapsTopOnly": true,
   "ElevSpanTotal": false,
   "ElevStirrupGaps": true,
-  "ElevTopChain": true
+  "ElevTopChain": true,
+  "ElevLeaderSide": "right",
+  "ElevLeaderHeadPaperMm": 7,
+  "ElevLeaderRunPaperMm": 1.5
  },
  "column": {
   "BarTagType": "Srb-Арматурын_тэмдэглэгээ,_MNSISO3766-2013_BIMon : (Арматурын дугаар) ⌀Диаметр-Алхам",

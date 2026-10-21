@@ -93,6 +93,10 @@ namespace MglBb.RevitSide
                 try { tagged = string.Join(",", t.GetTaggedLocalElementIds().Select(id => id.Value + (bars.TryGetValue(id.Value, out string b) ? "[" + b + "]" : ""))); } catch { }
                 string head = "", lead = "";
                 try { XYZ h = f.Local(t.TagHeadPosition); head = "head r " + mm(h.X) + " u " + U(h.Y); } catch { }
+                try { BoundingBoxXYZ tb = t.get_BoundingBox(view); if (tb != null) { f.Extent(tb, out XYZ ta, out XYZ tz); head += " text r " + mm(ta.X) + ".." + mm(tz.X); } } catch { }
+                // Сурагчийн хэмжилт (3→2 / 2→1 цаасан мм) — сурах үнэн хэрэгтээ юу авч байгааг харуулна.
+                List<double[]> lr = BbLearner.ElevLeader(t, view, f, Math.Max(1, view.Scale), out string why);
+                head += " learn " + (lr.Count == 0 ? "— " + why : string.Join(" ", lr.Select(x => x[0].ToString("0.0") + "/" + x[1].ToString("0.0"))));
                 try
                 {
                     if (t.HasLeader)

@@ -143,6 +143,8 @@ namespace MglBb.RevitSide
                         BbElevRules.Prune(ctx, r, ms);
                         rep.ElevSideTags += BbElevMra.MidTags(ctx, r, ui, ms, rep);
                         if (ms.ElevMraLayout && r.Mras > 0) mras = BbElevMra.RelayoutMras(ctx, r, ui, ms, rep, mark);
+                        // Шошгоны хэвтээ landing + хугарал (сурсан тал/зай).
+                        BbElevLeaders.Apply(ctx, r, ms);
                     }
                     done.Add(ctx);
                     rep.ElevTags += r.Tags;

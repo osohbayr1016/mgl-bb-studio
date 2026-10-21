@@ -173,6 +173,13 @@ namespace MglBb.Core
         public bool ElevStirrupGaps = false;
         /// <summary>Дэлгээс: дээд үеийн гинж «дамнурууны төгсгөл | тэнхлэгүүд | дээд ажлын арматурын таслах цэгүүд | төгсгөл» — сурна.</summary>
         public bool ElevTopChain = false;
+        /// <summary>
+        /// Дэлгээсийн арматурын шошгоны leader (сурна; ЖИШЭЭ-2 ДДН-10): бичвэр хугарлын <see cref="ElevLeaderSide"/> талд, хугарлаас шошгоны ТОЛГОЙН цэг
+        /// хүртэл <see cref="ElevLeaderHeadPaperMm"/>, хугарлаас арматур хүртэл <see cref="ElevLeaderRunPaperMm"/> — хэвтээ, цаасан мм.  Side хоосон = хөдөлгүүрийн
+        /// автомат (бичвэр арматурын дээр).  Толгойноос хэмжинэ: шошгоны bbox leader-ийг хамардаг тул бичвэрийн ирмэгээс хэмжиж болохгүй.
+        /// </summary>
+        public string ElevLeaderSide = "";
+        public double ElevLeaderHeadPaperMm = 0, ElevLeaderRunPaperMm = 0;
         public bool SecDims = true, SecTagLong = true, SecTagStirrups = true, SecMemberDims = true, SecGroupTags = true;
         /// <summary>«нүүр | хомут | АЖЛЫН АРМАТУР БҮРИЙН ТӨВ | хомут | нүүр» (ЖИШЭЭ-1-ийн огтлол бүрд) — хөдөлгүүрийн «нүүр | хомут | хомут | нүүр» гинжийг өргөтгөнө.</summary>
         public bool SecBarChain = true;
