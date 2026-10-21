@@ -27,13 +27,11 @@ namespace MglBb.Tests
         public static void SetValuesApplyToBeamsAndColumns()
         {
             BbOption o = BbOption.FromStandard("A", Learned());
-            o.SecTags.TagOutMm = 7; o.SecTags.LeaderRunMm = 0; o.SecTags.MergeLeaders = true; o.SecTags.GroupTags = false; o.SecTags.SecMarkGapMm = 5;
+            o.SecTags.TagOutMm = 7; o.SecTags.LeaderRunMm = 0; o.SecTags.MergeLeaders = true; o.SecTags.GroupTags = false;
             BbStandard std = o.ApplyTo(Learned());
             foreach (BbMemberStandard ms in new[] { std.Beam, std.BeamAux, std.Column })
             {
-                Assert.Near(7, ms.SecTagOutPaperMm, 1e-9);
-                Assert.Near(5, ms.SecMarkGapPaperMm, 1e-9);
-                Assert.Near(0, ms.SecLeaderRunPaperMm, 1e-9);
+                Assert.Near(7, ms.SecTagOutPaperMm, 1e-9);                Assert.Near(0, ms.SecLeaderRunPaperMm, 1e-9);
                 Assert.True(ms.SecMergeLeaders);
                 Assert.False(ms.SecGroupTags);
             }

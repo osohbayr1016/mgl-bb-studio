@@ -35,8 +35,6 @@ namespace MglBb.Core
         public bool? SingleTagPerSet, MultiLeaderPerSet, MergeLeaders, GroupTags;
         /// <summary>Цаасан мм: гишүүнээс шошго хүртэл, шошго хоорондын зай, leader 3→2 (шошгоноос хугарал), 2→1 (хугарлаас арматур; 0 = автомат).</summary>
         public double? TagOutMm, TagGapMm, LeaderLandingMm, LeaderRunMm;
-        /// <summary>Дэлгээс дээрх огтлолын тэмдгийн толгой гишүүний гадна ирмэгээс (дэлгээсийн цаасан мм).</summary>
-        public double? SecMarkGapMm;
 
         public static BbTagLayout From(BbMemberStandard ms)
         {
@@ -44,9 +42,7 @@ namespace MglBb.Core
             return new BbTagLayout
             {
                 SingleTagPerSet = ms.SingleTagPerSet, MultiLeaderPerSet = ms.MultiLeaderPerSet, MergeLeaders = ms.SecMergeLeaders, GroupTags = ms.SecGroupTags,
-                TagOutMm = ms.SecTagOutPaperMm, TagGapMm = ms.TagGapPaperMm, LeaderLandingMm = ms.SecLeaderLandingPaperMm, LeaderRunMm = ms.SecLeaderRunPaperMm,
-                SecMarkGapMm = ms.SecMarkGapPaperMm,
-            };
+                TagOutMm = ms.SecTagOutPaperMm, TagGapMm = ms.TagGapPaperMm, LeaderLandingMm = ms.SecLeaderLandingPaperMm, LeaderRunMm = ms.SecLeaderRunPaperMm,            };
         }
 
         public void ApplyTo(BbMemberStandard ms)
@@ -59,9 +55,7 @@ namespace MglBb.Core
             if (TagOutMm.HasValue) ms.SecTagOutPaperMm = Math.Max(0, TagOutMm.Value);
             if (TagGapMm.HasValue) ms.TagGapPaperMm = Math.Max(0, TagGapMm.Value);
             if (LeaderLandingMm.HasValue) ms.SecLeaderLandingPaperMm = Math.Max(0, LeaderLandingMm.Value);
-            if (LeaderRunMm.HasValue) ms.SecLeaderRunPaperMm = Math.Max(0, LeaderRunMm.Value);
-            if (SecMarkGapMm.HasValue) ms.SecMarkGapPaperMm = Math.Max(0, SecMarkGapMm.Value);
-        }
+            if (LeaderRunMm.HasValue) ms.SecLeaderRunPaperMm = Math.Max(0, LeaderRunMm.Value);        }
     }
 
     /// <summary>

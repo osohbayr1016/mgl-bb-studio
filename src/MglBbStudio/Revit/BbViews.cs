@@ -144,11 +144,11 @@ namespace MglBb.RevitSide
                     BoundingBoxXYZ hb = host.get_BoundingBox(null);
                     var f = new BbFrame { O = new XYZ(onAxis.X, onAxis.Y, (chain.Bottom + chain.Top) / 2), R = R, U = U, V = V };
                     f.Extent(hb, out XYZ a, out XYZ b);
-                    // Дэлгээс дээр огтлолын тэмдэг босоо (урт = crop-ын өндөр) — толгой нь ГИНЖИЙН бүх дамнурууны гадна ирмэгээс (хамгийн доод/дээд)
-                    // SecMarkGapPaperMm зайд; сурсан crop (энэ элементийн нүүрнээс) үүнээс том бол хэвээр.
-                    double side = BbGeom.Ft(ms.SecCropSideMm), gap = MarkCrop(0, ms);
-                    double u0 = Math.Min(a.Y - BbGeom.Ft(ms.SecCropBelowMm), chain.Bottom - f.O.Z - gap);
-                    double u1 = Math.Max(b.Y + BbGeom.Ft(ms.SecCropAboveMm), chain.Top - f.O.Z + gap);
+                    // Crop: ЭНЭ гишүүний нүүрнээс бүх талдаа ижил зай (дээд/доод = хажуугийнх — BbCompanyRules) — ББ инженерийн шаардлага 2026-10-21.
+                    // Огтлолын тэмдгийн төлөө crop-ыг ТОМРУУЛАХГҮЙ: Revit тэмдгийн шугамыг crop-оор, толгойг crop-ын ирмэгээс family-ийн тогтмол
+                    // зайд зурдаг (Revit 2027-д хэмжсэн: crop-ыг өөрчлөхөд тэмдэг дагадаг, толгой ирмэгээс ≈ 1057 мм / 1:50) — тэр зай бол «crop-оос».
+                    double side = BbGeom.Ft(ms.SecCropSideMm);
+                    double u0 = a.Y - BbGeom.Ft(ms.SecCropBelowMm), u1 = b.Y + BbGeom.Ft(ms.SecCropAboveMm);
                     ViewSection v = CreateDetail(doc, vft, f.O, R, U, V, a.X - side, b.X + side, u0, u1, BbGeom.Ft(ms.SecFarMm), res, mark);
                     if (v == null) continue;
                     Configure(doc, v, template, ms.SecScale, BbGeom.Ft(ms.SecFarMm), BbGeom.UniqueViewName(doc, name), res, mark);
@@ -282,16 +282,6 @@ namespace MglBb.RevitSide
             catch { }
             try { v.CropBoxActive = true; } catch { }
             BbCrop.AnnotationCropOff(v);
-        }
-
-        /// <summary>
-        /// Дэлгээс дээрх огтлолын тэмдгийн (section mark) толгой гишүүнээс <see cref="BbMemberStandard.SecMarkGapPaperMm"/> зайд (дэлгээсийн цаасан мм)
-        /// гарахаар огтлолын crop-ын тэр талын нэмэлтийг (загварын фут) — тэмдгийн урт = огтлолын crop.  Сурсан crop үүнээс том бол хэвээр
-        /// (<paramref name="cropMm"/> = 0 бол зөвхөн тэмдгийн зай).
-        /// </summary>
-        internal static double MarkCrop(double cropMm, BbMemberStandard ms)
-        {
-            return BbGeom.Ft(Math.Max(cropMm, ms.SecMarkGapPaperMm * Math.Max(1, ms.ElevScale)));
         }
 
         private static BbIssue Issue(string mark, BbSeverity sev, string problem, string proposal, string code)

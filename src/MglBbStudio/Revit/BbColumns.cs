@@ -155,8 +155,8 @@ namespace MglBb.RevitSide
                     if (Exists(doc, name) && opt.Existing == "skip") { res.Notes.Add("«" + name + "» аль хэдийн байгаа — алгасав."); continue; }
                     XYZ o = new XYZ(st.Center.X, st.Center.Y, zc) + R * ((r0 + r1) / 2) + V * ((v0 + v1) / 2);
                     double hw = (r1 - r0) / 2, hd = (v1 - v0) / 2;
-                    // Баганын дэлгээс дээр огтлолын тэмдэг хэвтээ — хажуугийн crop нь тэмдгийн толгойг баганаас холдуулна.
-                    double side = BbViews.MarkCrop(ms.SecCropSideMm, ms), below = BbGeom.Ft(ms.SecCropBelowMm), above = BbGeom.Ft(ms.SecCropAboveMm);
+                    // Огтлолын тэмдгийн төлөө crop-ыг томруулахгүй — толгой нь crop-ын ирмэгээс Revit-ийн family-ийн зайд (BbViews-ийн тайлбарыг үз).
+                    double side = BbGeom.Ft(ms.SecCropSideMm), below = BbGeom.Ft(ms.SecCropBelowMm), above = BbGeom.Ft(ms.SecCropAboveMm);
                     // Огтлолын «дээш» (sU) = −V (R × Z × … ) — хэмжээг харгалзах тэнхлэгээр.
                     double ua = Math.Min(-hd * sU.DotProduct(V), hd * sU.DotProduct(V)), ub = Math.Max(-hd * sU.DotProduct(V), hd * sU.DotProduct(V));
                     ViewSection v = BbViews.CreateDetail(doc, vft, o, sR, sU, sV, -hw - side, hw + side, ua - below, ub + above, BbGeom.Ft(ms.SecFarMm), res, mark);

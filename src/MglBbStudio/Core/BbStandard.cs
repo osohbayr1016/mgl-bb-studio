@@ -147,8 +147,6 @@ namespace MglBb.Core
         public int SecScale = 20;
         public string SecNamePattern = "{mark} S{n}";
         public double SecCropSideMm = 145, SecCropBelowMm = 45, SecCropAboveMm = 75;
-        /// <summary>Дэлгээс дээрх огтлолын тэмдгийн толгой гишүүнээс (дэлгээсийн цаасан мм) — огтлолын crop-ыг дор хаяж үүнд хүргэнэ.</summary>
-        public double SecMarkGapPaperMm = 2;
         /// <summary>Огтлолын ажлын арматурын шошгыг ҮРГЭЛЖ зүүн талд (хөдөлгүүр хамгийн ойр талд тавьдаг).</summary>
         public bool SecTagsLeft = true;
         public double SecFarMm = 330;

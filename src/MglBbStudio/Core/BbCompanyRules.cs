@@ -44,6 +44,14 @@ namespace MglBb.Core
                 ms.SecBarChain = false;
                 ms.SecTagsLeft = true;
             }
+            // Дамнурууны огтлолын crop: дээд/доод нүүрнээс ХАЖУУГИЙН зайтай ижил (ББ инженерийн шаардлага 2026-10-21) — plugin-ий үүсгэсэн огтлолоос
+            // сурахад томорсон crop (≈ 500 мм) буцаж сурагдах давталтыг таслана.
+            foreach (BbMemberStandard ms in new[] { std.Beam, std.BeamAux })
+            {
+                if (ms == null) continue;
+                ms.SecCropBelowMm = ms.SecCropSideMm;
+                ms.SecCropAboveMm = ms.SecCropSideMm;
+            }
             // Багана: дэлгээс, огтлолд арматурын шошго (IndependentTag) тавихгүй — хэмжээс ба MRA (multi-rebar tag) л (ББ инженерийн шаардлага 2026-10-21).
             if (std.Column != null)
             {

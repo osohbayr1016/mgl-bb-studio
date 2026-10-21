@@ -64,6 +64,17 @@ namespace MglBb.Tests
         }
 
         [Test]
+        public static void BeamSectionCropTopBottomEqualsSides()
+        {
+            var std = new BbStandard();
+            std.Beam.SecCropSideMm = 194.5; std.Beam.SecCropBelowMm = 502; std.Beam.SecCropAboveMm = 500;   // ЖИШЭЭ-2-оос сурсан (давталт)
+            BbCompanyRules.Apply(std);
+            Assert.Near(194.5, std.Beam.SecCropBelowMm, 1e-9);
+            Assert.Near(194.5, std.Beam.SecCropAboveMm, 1e-9);
+            Assert.Near(std.BeamAux.SecCropSideMm, std.BeamAux.SecCropAboveMm, 1e-9);
+        }
+
+        [Test]
         public static void RequiredSchedules()
         {
             Assert.True(BbCompanyRules.IsRequiredSchedule("201.ББ.РАМ.АРМАТУР {mark}"));

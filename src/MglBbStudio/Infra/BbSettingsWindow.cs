@@ -192,7 +192,7 @@ namespace MglBb.Infra
             BbTagLayout learnedLayout = BbTagLayout.From(_learned?.Beam), own = isBase ? null : shown.SecTags;
             foreach (Action<BbTagLayout, BbTagLayout, bool> show in _layoutShow) show(own, learnedLayout, !isBase);
             _learnedNote.Text = "Сурсан утга (дамнуруу): " + Mm(learnedLayout.TagOutMm) + " · " + Mm(learnedLayout.TagGapMm) + " · leader " + Mm(learnedLayout.LeaderLandingMm) +
-                                " / " + Mm(learnedLayout.LeaderRunMm) + " · огтлолын тэмдэг " + Mm(learnedLayout.SecMarkGapMm) + ".  Хоосон талбар = гишүүн бүрийн сурсан утга.";
+                                " / " + Mm(learnedLayout.LeaderRunMm) + ".  Хоосон талбар = гишүүн бүрийн сурсан утга.";
             _resetLayout.IsEnabled = !isBase;
             _loading = false;
             UpdateState();
@@ -233,11 +233,6 @@ namespace MglBb.Infra
             r2.Children.Add(LayoutNum(l => l.LeaderRunMm, (l, v) => l.LeaderRunMm = v));
             r2.Children.Add(Label("мм (цаас; 0 = автомат)"));
             p.Children.Add(r2);
-            var r3 = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 8, 0, 0) };
-            r3.Children.Add(Label("Дэлгээс дээрх огтлолын тэмдэг гишүүний гадна ирмэгээс:"));
-            r3.Children.Add(LayoutNum(l => l.SecMarkGapMm, (l, v) => l.SecMarkGapMm = v));
-            r3.Children.Add(Label("мм (цаас; шинээр үүсгэх огтлолд)"));
-            p.Children.Add(r3);
             p.Children.Add(_learnedNote);
             _resetLayout = new Button { Content = "Сурсан утга руу буцаах", HorizontalAlignment = HorizontalAlignment.Left, Padding = new Thickness(8, 2, 8, 2), Margin = new Thickness(0, 6, 0, 0) };
             _resetLayout.Click += (s, e) =>
