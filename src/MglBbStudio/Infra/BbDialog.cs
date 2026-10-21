@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -61,11 +62,48 @@ namespace MglBb.Infra
             return b;
         }
 
-        /// <summary>Сонгох боломжтой жагсаалт (олон сонголт).</summary>
-        public ListBox Picker(IEnumerable<string> items, double height = 220)
+        /// <summary>
+        /// Сонгох боломжтой жагсаалт (олон сонголт).  <paramref name="search"/> бол дээр нь хайлтын мөр: үг бүр (зайгаар) нэрэнд байх мөрүүд л харагдана,
+        /// нуугдсан мөрийн СОНГОЛТ хэвээр (хайлтаа сольж олон бүлгээс сонгож болно).  Мөрүүд <c>Items</c>-д хэвээр — индекс өөрчлөгдөхгүй.
+        /// </summary>
+        public ListBox Picker(IEnumerable<string> items, double height = 220, bool search = false)
         {
             var lb = new ListBox { Height = height, SelectionMode = SelectionMode.Extended, Margin = new Thickness(0, 2, 0, 4) };
-            foreach (string s in items) lb.Items.Add(new TextBlock { Text = s, TextWrapping = TextWrapping.Wrap, MaxWidth = _w.Width - 70 });
+            VirtualizingStackPanel.SetIsVirtualizing(lb, false);    // нуух/харуулах нь мөр бүрийн container-оор
+            var texts = new List<string>();
+            foreach (string s in items)
+            {
+                texts.Add(s ?? "");
+                lb.Items.Add(new ListBoxItem { Content = new TextBlock { Text = s, TextWrapping = TextWrapping.Wrap, MaxWidth = _w.Width - 70 } });
+            }
+            if (search)
+            {
+                var row = new DockPanel { Margin = new Thickness(0, 2, 0, 2) };
+                var l = new TextBlock { Text = "Хайх:", Width = 50, VerticalAlignment = VerticalAlignment.Center };
+                DockPanel.SetDock(l, Dock.Left);
+                var count = new TextBlock { Foreground = Brushes.DimGray, Margin = new Thickness(8, 0, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+                DockPanel.SetDock(count, Dock.Right);
+                var box = new TextBox();
+                Action update = () =>
+                {
+                    string[] words = (box.Text ?? "").Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    int shown = 0;
+                    for (int i = 0; i < lb.Items.Count; i++)
+                    {
+                        bool ok = words.All(w => texts[i].IndexOf(w, StringComparison.CurrentCultureIgnoreCase) >= 0);
+                        ((ListBoxItem)lb.Items[i]).Visibility = ok ? Visibility.Visible : Visibility.Collapsed;
+                        if (ok) shown++;
+                    }
+                    count.Text = shown + " / " + lb.Items.Count + " · сонгосон " + lb.SelectedItems.Count;
+                };
+                box.TextChanged += (s, e) => update();
+                lb.SelectionChanged += (s, e) => update();
+                row.Children.Add(l);
+                row.Children.Add(count);
+                row.Children.Add(box);
+                _body.Children.Add(row);
+                _w.Loaded += (s, e) => { update(); box.Focus(); };
+            }
             _body.Children.Add(lb);
             return lb;
         }

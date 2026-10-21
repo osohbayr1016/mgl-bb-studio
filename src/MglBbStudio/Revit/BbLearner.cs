@@ -100,7 +100,11 @@ namespace MglBb.RevitSide
                     if (v.IsSection) LearnSectionView(doc, v, k, s, chainCache);
                     else LearnElevationView(doc, v, k, s, chainCache);
                     LearnAnnotations(doc, v, k, s, mraDims, mraTags);
-                    if (v.IsSection && (v.Kind == BbMemberKind.Beam || v.Kind == BbMemberKind.BeamAux)) LearnBreaks(doc, v, k, s);
+                    if (v.IsSection && (v.Kind == BbMemberKind.Beam || v.Kind == BbMemberKind.BeamAux))
+                    {
+                        LearnBreaks(doc, v, k, s);
+                        BbSecTagLayout.Learn(doc, v.View, v.Host.get_BoundingBox(null), k, s, mraTags);
+                    }
                     rep.Classified++;
                 }
                 catch (Exception ex)

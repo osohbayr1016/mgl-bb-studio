@@ -12,7 +12,7 @@ namespace MglBb.RevitSide
     internal sealed class BbAnnoReport
     {
         public int Views, SecDims, SecMemberDims, SecTags, BarChains, BarChainRefs, ElevTags, ElevMras, ElevLaps, ElevSpans, ElevStirrupDupes, ElevSideTags, Replaced;
-        public int Breaks;
+        public int Breaks, RoleTags;
         public readonly List<string> Notes = new List<string>();
         public readonly List<BbIssue> Issues = new List<BbIssue>();
     }

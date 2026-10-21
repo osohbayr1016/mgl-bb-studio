@@ -121,9 +121,9 @@ namespace MglBb.Learn
                 "огтлолын байрлал, хэмжээс/шошго/MRA-ийн зай, хуудасны байрлал).  Загварт ЮУ Ч өөрчлөгдөхгүй.", 640);
             dlg.Section("Харагдац (" + views.Count + ")");
             var lb = dlg.Picker(views.Select(v => v.Name + (sheetOf.TryGetValue(v.Id.Value, out string sn) ? "   · хуудас " + sn : "   · хуудасгүй")
-                + (BbAnnoStore.IsGenerated(v) ? "   · MGL ББ үүсгэсэн" : "")), 360);
+                + (BbAnnoStore.IsGenerated(v) ? "   · MGL ББ үүсгэсэн" : "")), 360, search: true);
             for (int i = 0; i < views.Count && pre.Contains(views[i].Id.Value); i++) lb.SelectedItems.Add(lb.Items[i]);
-            dlg.Note("Ctrl / Shift дарж олныг сонгоно.  Project Browser эсвэл хуудсан дээр урьдчилан сонгосон харагдац энд сонгогдсон байна.  " +
+            dlg.Note("«Хайх»-д нэрийн хэсгийг бичнэ (жишээ «ДН-1 S», «5-11») — хайлтыг сольсон ч өмнө сонгосон нь сонгогдсон хэвээр.  Ctrl / Shift дарж олныг сонгоно.  Project Browser эсвэл хуудсан дээр урьдчилан сонгосон харагдац энд сонгогдсон байна.  " +
                      "Сонгосон харагдац бүр жишээ болно — нэг ч хангалттай.");
             dlg.Note("Одоогийн стандарт: " + src);
             if (!dlg.Show(uidoc.Application.MainWindowHandle)) return Result.Cancelled;
@@ -142,6 +142,7 @@ namespace MglBb.Learn
                 "Сурсан тохиргоо " + rep.FieldsLearned + " · " + (rep.ElapsedMs / 1000.0).ToString("0", CultureInfo.InvariantCulture) + " сек",
                 "",
                 "Дамнуруу: «" + learned.Beam.ElevViewType + "» 1:" + learned.Beam.ElevScale + ", огтлол 1:" + learned.Beam.SecScale + ", нэр «" + learned.Beam.ElevNamePattern + "»",
+                "Дамнурууны огтлолын шошго: " + RoleSummary(learned.Beam),
                 "Туслах дамнуруу: «" + learned.BeamAux.ElevViewType + "»",
                 "Багана: «" + learned.Column.ElevViewType + "» 1:" + learned.Column.ElevScale + ", огтлол 1:" + learned.Column.SecScale,
                 "Хана: «" + learned.Plate.WallRebarViewType + "», MRA «" + learned.Plate.WallMraType + "»",
@@ -165,6 +166,20 @@ namespace MglBb.Learn
             BbStore.SaveStandard(learned);
             FlowCommon.Summary(uidoc, "Стандарт сурах", "Стандарт хадгалагдлаа.", new[] { BbStore.StandardPath }, rep.Issues);
             return Result.Succeeded;
+        }
+
+        /// <summary>«дээд зүүн 12/+5 · доод зүүн 10/+8 · …» (тал, гаднах зай / босоо зай, цаасан мм); сураагүй үүрэг = «—».</summary>
+        internal static string RoleSummary(BbMemberStandard ms)
+        {
+            var parts = new List<string>();
+            foreach (BbBarRole r in new[] { BbBarRole.Top, BbBarRole.Bottom, BbBarRole.Side, BbBarRole.Stirrup })
+            {
+                ms.RoleTag(r, out string side, out double dx, out double dy);
+                string name = r == BbBarRole.Top ? "дээд" : r == BbBarRole.Bottom ? "доод" : r == BbBarRole.Side ? "бөөр" : "хомут";
+                parts.Add(name + " " + (string.IsNullOrEmpty(side) ? "—"
+                    : (side == BbTagRoles.Right ? "баруун " : "зүүн ") + dx.ToString("0.#", CultureInfo.InvariantCulture) + "/" + (dy >= 0 ? "+" : "") + dy.ToString("0.#", CultureInfo.InvariantCulture)));
+            }
+            return string.Join(" · ", parts) + " мм";
         }
 
         /// <summary>Одоо сонгогдсон харагдац: Project Browser-ийн харагдац, хуудсан дээрх viewport, сонгосон хуудасны бүх харагдац.</summary>
@@ -554,8 +569,14 @@ namespace MglBb.Generate
             BbMemberStandard ms = std.For(smp.Kind);
             if (smp.IsSection)
             {
+                bool beam = smp.Kind == BbMemberKind.Beam || smp.Kind == BbMemberKind.BeamAux;
+                HashSet<long> before = beam ? BbAnnoStore.Owned(doc, v) : null;
                 BbAnnotate.Section(doc, v, smp.Host, ms, rep, smp.Mark);
-                if (smp.Kind == BbMemberKind.Beam || smp.Kind == BbMemberKind.BeamAux) BbBreaks.Section(doc, v, ms, rep, smp.Mark);
+                if (beam)
+                {
+                    BbSecTagLayout.Apply(doc, v, smp.Host, ms, before, rep, smp.Mark);
+                    BbBreaks.Section(doc, v, ms, rep, smp.Mark);
+                }
             }
             else BbAnnotate.Elevation(doc, v, BbAnnotate.ElevationHosts(doc, v, smp), ms, rep, smp.Mark);
         }
@@ -623,7 +644,7 @@ namespace MglBb.Annotate
             var lines = new List<string>
             {
                 "Харагдац " + rep.Views + " / " + views.Count,
-                "Огтлол: хэмжээс " + rep.SecDims + " (+арматурын гинж " + rep.BarChains + "), гишүүний гинж " + rep.SecMemberDims + ", шошго " + rep.SecTags + ", break line " + rep.Breaks,
+                "Огтлол: хэмжээс " + rep.SecDims + " (+арматурын гинж " + rep.BarChains + "), гишүүний гинж " + rep.SecMemberDims + ", шошго " + rep.SecTags + " (үүргээр байрлуулсан " + rep.RoleTags + "), break line " + rep.Breaks,
                 "Дэлгээс: шошго " + rep.ElevTags + " (дунд өндөрт " + rep.ElevSideTags + "), MRA " + rep.ElevMras + ", давхцал " + rep.ElevLaps + ", тэнхлэгийн гинж " + rep.ElevSpans,
                 "Хугацаа " + (sw.ElapsedMilliseconds / 1000.0).ToString("0", CultureInfo.InvariantCulture) + " сек",
                 "",

@@ -199,6 +199,16 @@ namespace MglBb.Core
 
         // ── Огтлолын break line (ЖИШЭЭ-2 «ДН-1 S1…S9», «ДДН-2 S10»-оос хэмжсэн): crop-ын зүүн/баруун ирмэгийг дайрсан хучилт бүрд
         // «DET-Symbol_Break_Line»-ыг ирмэгээс дотогш, хучилтын зузааны голд; left/right = зузааны хагас, masking = ирмэг хүртэл.
+        // ── Огтлолын шошго ҮҮРГЭЭР (<see cref="BbTagRoles"/>): тал «left»/«right» (хоосон = сураагүй → хөдөлгүүрийн байрлал хэвээр),
+        // Dx = гишүүний хажуу нүүрнээс гадагш, Dy = ӨӨРИЙН арматурын өндрөөс (огтлолын хавтгай дээр) дээш — цаасан мм.
+        public string SecTopTagSide = "", SecBottomTagSide = "", SecSideTagSide = "", SecStirrupTagSide = "";
+        public double SecTopTagDxPaperMm = 0, SecTopTagDyFromBarPaperMm = 0;
+        public double SecBottomTagDxPaperMm = 0, SecBottomTagDyFromBarPaperMm = 0;
+        public double SecSideTagDxPaperMm = 0, SecSideTagDyFromBarPaperMm = 0;
+        public double SecStirrupTagDxPaperMm = 0, SecStirrupTagDyFromBarPaperMm = 0;
+        /// <summary>Нэг талын шошгоны толгой хоорондын ХАМГИЙН БАГА босоо зай (цаасан мм) — давхцвал доош түлхэнэ.</summary>
+        public double SecRoleTagPitchPaperMm = 4.5;
+
         public bool SecBreakLines = true;
         public string BreakFamily = "DET-Symbol_Break_Line";
         /// <summary>Crop-ын ирмэгээс break line хүртэл (цаасан мм; 1:20-д 45 мм загвар = 2.25).</summary>
@@ -274,6 +284,18 @@ namespace MglBb.Core
                 catch { }
             }
             return def;
+        }
+
+        /// <summary>Огтлолын шошгоны сурсан байрлал үүргээр (<paramref name="side"/> хоосон = сураагүй).</summary>
+        public void RoleTag(BbBarRole r, out string side, out double dx, out double dy)
+        {
+            switch (r)
+            {
+                case BbBarRole.Top: side = SecTopTagSide; dx = SecTopTagDxPaperMm; dy = SecTopTagDyFromBarPaperMm; break;
+                case BbBarRole.Bottom: side = SecBottomTagSide; dx = SecBottomTagDxPaperMm; dy = SecBottomTagDyFromBarPaperMm; break;
+                case BbBarRole.Side: side = SecSideTagSide; dx = SecSideTagDxPaperMm; dy = SecSideTagDyFromBarPaperMm; break;
+                default: side = SecStirrupTagSide; dx = SecStirrupTagDxPaperMm; dy = SecStirrupTagDyFromBarPaperMm; break;
+            }
         }
 
         public string ElevName(string mark, int part)
