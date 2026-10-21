@@ -171,6 +171,8 @@ namespace MglBb.Core
         public bool ElevSpanTotal = true;
         /// <summary>Дэлгээс: хомутын эгнээнд бүс хоорондын «хомут | хомут» ба тулгуурт «хомут | баганын нүүр | нүүр | хомут» хэмжээс — сурна.</summary>
         public bool ElevStirrupGaps = false;
+        /// <summary>Дэлгээс: дээд үеийн гинж «дамнурууны төгсгөл | тэнхлэгүүд | дээд ажлын арматурын таслах цэгүүд | төгсгөл» — сурна.</summary>
+        public bool ElevTopChain = false;
         public bool SecDims = true, SecTagLong = true, SecTagStirrups = true, SecMemberDims = true, SecGroupTags = true;
         /// <summary>«нүүр | хомут | АЖЛЫН АРМАТУР БҮРИЙН ТӨВ | хомут | нүүр» (ЖИШЭЭ-1-ийн огтлол бүрд) — хөдөлгүүрийн «нүүр | хомут | хомут | нүүр» гинжийг өргөтгөнө.</summary>
         public bool SecBarChain = true;

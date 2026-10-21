@@ -503,7 +503,7 @@ namespace MglBb.RevitSide
             double r0 = ha.X, r1 = hbx.X, u0 = ha.Y, u1 = hbx.Y;
             // Арматурын ҮЕ-ийг үндсэн гишүүний өндрөөр (гинжийн гүн хэсэг — ЖИШЭЭ-2 ДДН-10-ийн 2067 мм — ангиллыг гажуудуулахгүй).
             double hu0 = ha.Y, hu1 = hbx.Y;
-            bool anyLap = false, nonTopLap = false, gridChain = false, gridTwo = false, stirrupGap = false;
+            bool anyLap = false, nonTopLap = false, gridChain = false, gridTwo = false, stirrupGap = false, gridAny = false, topChain = false;
             if (!v.IsSection)
             {
                 foreach (Element e in MembersOfMarkInCrop(doc, v))
@@ -559,6 +559,9 @@ namespace MglBb.RevitSide
                 {
                     // Хомутын эгнээний бүс хоорондын хэмжээс: зөвхөн хомут (+ баганын нүүр) — «хомут | хомут», «хомут | нүүр | нүүр | хомут».
                     if (stirrupRefs > 0 && !hasStdBar && grids == 0 && others == 0) stirrupGap = true;
+                    // Дээд үеийн гинж: тэнхлэг + ажлын арматурын үзүүр (+ дамнурууны төгсгөл) нэг хэмжээсэнд.
+                    if (grids > 0) gridAny = true;
+                    if (grids > 0 && hasStdBar && stirrupRefs == 0) topChain = true;
                     others += colRefs;
                     // Давхцал = хоёр ажлын арматурын хэмжээс; тэнхлэгийн гинж = зөвхөн тэнхлэгүүд (2 = нийт урт, 3+ = гинж).
                     if (refBars.Count == 2 && grids == 0 && others == 0 && hasStdBar)
@@ -624,6 +627,7 @@ namespace MglBb.RevitSide
             {
                 if (anyLap) s.Bool(k + "ElevLapsTopOnly", !nonTopLap);
                 if (gridChain) s.Bool(k + "ElevSpanTotal", gridTwo);
+                if (gridAny) s.Bool(k + "ElevTopChain", topChain);
                 if (Owned<MultiReferenceAnnotation>(doc, view).Any(m => m.OwnerViewId == view.Id)) s.Bool(k + "ElevStirrupGaps", stirrupGap);
             }
             if (!v.IsSection)

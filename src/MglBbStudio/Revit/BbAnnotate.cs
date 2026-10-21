@@ -155,6 +155,9 @@ namespace MglBb.RevitSide
                 }
                 // Хомутын эгнээнд бүс хоорондын / баганын нүүрээс хомут хүртэлх хэмжээс — гинжийн БҮХ гишүүнээр нэг удаа (гишүүн хоорондын баганад ч).
                 if (any) rep.ElevSpans += BbElevStirrupDims.Place(doc, view, done, ms, ui.DimTypeId, rep, mark);
+                // Дээд үеийн гинж (дамнурууны төгсгөл | тэнхлэг | дээд ажлын арматурын таслах цэг) — давхцлын эгнээнээс нэг алхам дээш.
+                Element mainHost = done.Where(c => !c.IsColumn).OrderByDescending(c => c.Input.Stirrups.Count).Select(c => c.Host).FirstOrDefault();
+                if (any && mainHost != null) rep.ElevSpans += BbElevTopChain.Place(doc, view, done, mainHost, ms, ui.DimTypeId, rep, mark);
                 if (any)
                 {
                     BbAnnoStore.Record(doc, view, before);
