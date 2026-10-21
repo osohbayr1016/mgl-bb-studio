@@ -105,6 +105,18 @@ namespace MglBb.Core
             return string.Equals(side, Right, StringComparison.OrdinalIgnoreCase) ? hr - landing : hr + landing;
         }
 
+        /// <summary>
+        /// Дэлгээсийн арматурын ҮЕ: <paramref name="u"/> (арматурын хамгийн урт шулуун хэсгийн өндөр) гишүүний дээд/доод нүүрнээс өндрийн 25 %-д
+        /// бол дээд/доод, бусад нь бөөр (ЖИШЭЭ-2 ДДН-10: дээд ⌀28 −74, ⌀12 −100; бөөр −246 / −460; доод −646 — 700-д).
+        /// </summary>
+        public static BbBarRole Layer(double u, double u0, double u1)
+        {
+            double h = u1 - u0;
+            if (u >= u1 - 0.25 * h) return BbBarRole.Top;
+            if (u <= u0 + 0.25 * h) return BbBarRole.Bottom;
+            return BbBarRole.Side;
+        }
+
         /// <summary>Хугарлын (elbow) лавлах цэг: «axis» = гишүүний тэнхлэг (ажлын арматур — ЖИШЭЭ-2 засвар), «end» = leader-ийн төгсгөл (хомутын хөл).</summary>
         public const string ElbowAxis = "axis", ElbowEnd = "end";
 

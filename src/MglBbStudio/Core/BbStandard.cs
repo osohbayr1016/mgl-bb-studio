@@ -165,6 +165,10 @@ namespace MglBb.Core
 
         public double TagOffsetPaperMm = 4, TagGapPaperMm = 4, DimPitchPaperMm = 7.5, StirrupDimOffsetPaperMm = 23, ElevDimFirstPaperMm = 8.5;
         public bool ElevTagBars = true, ElevMra = true, ElevLaps = true, ElevSpans = true;
+        /// <summary>Дэлгээс: давхцлын хэмжээсийг зөвхөн ДЭЭД үеийн арматурт (бөөр, доод үеийнхийг тавихгүй) — инженерийн дэлгээсээс сурна.</summary>
+        public bool ElevLapsTopOnly = false;
+        /// <summary>Дэлгээс: тэнхлэгийн гинжийн доор НИЙТ урт (эхний — сүүлийн тэнхлэг) — инженерийн дэлгээсээс сурна.</summary>
+        public bool ElevSpanTotal = true;
         public bool SecDims = true, SecTagLong = true, SecTagStirrups = true, SecMemberDims = true, SecGroupTags = true;
         /// <summary>«нүүр | хомут | АЖЛЫН АРМАТУР БҮРИЙН ТӨВ | хомут | нүүр» (ЖИШЭЭ-1-ийн огтлол бүрд) — хөдөлгүүрийн «нүүр | хомут | хомут | нүүр» гинжийг өргөтгөнө.</summary>
         public bool SecBarChain = true;

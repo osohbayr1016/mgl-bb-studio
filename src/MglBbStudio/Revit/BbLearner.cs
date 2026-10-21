@@ -30,6 +30,8 @@ namespace MglBb.RevitSide
         public BbSamples Samples;
         public int FieldsLearned;
         public long ElapsedMs;
+        /// <summary>Заасан горимд дамнурууны дэлгээсийн хэмжээс/MRA/шошгоны бүрэн хэмжилт (<see cref="BbElevDump"/>).</summary>
+        public readonly System.Text.StringBuilder ElevDump = new System.Text.StringBuilder();
         public readonly List<BbIssue> Issues = new List<BbIssue>();
     }
 
@@ -100,6 +102,11 @@ namespace MglBb.RevitSide
                     if (v.IsSection) LearnSectionView(doc, v, k, s, chainCache);
                     else LearnElevationView(doc, v, k, s, chainCache);
                     LearnAnnotations(doc, v, k, s, mraDims, mraTags);
+                    if (only != null && !v.IsSection && (v.Kind == BbMemberKind.Beam || v.Kind == BbMemberKind.BeamAux))
+                    {
+                        try { BbElevDump.Beam(doc, v, rep.ElevDump); }
+                        catch (Exception ex) { rep.ElevDump.AppendLine("«" + v.View.Name + "»: тайлан — " + ex.Message); }
+                    }
                     if (v.IsSection && (v.Kind == BbMemberKind.Beam || v.Kind == BbMemberKind.BeamAux))
                     {
                         LearnBreaks(doc, v, k, s);
@@ -494,6 +501,9 @@ namespace MglBb.RevitSide
             f.Extent(hb, out XYZ ha, out XYZ hbx);
             // Гишүүний (бүх ижил тэмдэгтэй хэсгийн) хүрээ харагдацын хавтгайд.
             double r0 = ha.X, r1 = hbx.X, u0 = ha.Y, u1 = hbx.Y;
+            // Арматурын ҮЕ-ийг үндсэн гишүүний өндрөөр (гинжийн гүн хэсэг — ЖИШЭЭ-2 ДДН-10-ийн 2067 мм — ангиллыг гажуудуулахгүй).
+            double hu0 = ha.Y, hu1 = hbx.Y;
+            bool anyLap = false, nonTopLap = false, gridChain = false, gridTwo = false;
             if (!v.IsSection)
             {
                 foreach (Element e in MembersOfMarkInCrop(doc, v))
@@ -519,6 +529,8 @@ namespace MglBb.RevitSide
                 double dr = Math.Abs(dir.DotProduct(f.R)), du = Math.Abs(dir.DotProduct(f.U));
                 XYZ o = f.Local(line.Origin);
                 bool hasRebar = false, hasStdBar = false;
+                var refBars = new List<Rebar>();
+                int grids = 0, others = 0;
                 try
                 {
                     foreach (Reference rf in d.References)
@@ -527,12 +539,29 @@ namespace MglBb.RevitSide
                         if (re is Rebar rb)
                         {
                             hasRebar = true;
+                            if (!refBars.Any(x => x.Id == rb.Id)) refBars.Add(rb);
                             try { if ((doc.GetElement(rb.GetShapeId()) as RebarShape)?.RebarStyle == RebarStyle.Standard) hasStdBar = true; } catch { }
                         }
+                        else if (re is Grid) grids++;
+                        else others++;
                     }
                 }
                 catch { }
                 bool inMra = mraDims.Contains(d.Id.Value);
+                if (!v.IsSection && !column && !inMra)
+                {
+                    // Давхцал = хоёр ажлын арматурын хэмжээс; тэнхлэгийн гинж = зөвхөн тэнхлэгүүд (2 = нийт урт, 3+ = гинж).
+                    if (refBars.Count == 2 && grids == 0 && others == 0 && hasStdBar)
+                    {
+                        anyLap = true;
+                        if (refBars.Any(b => BbElevRules.Layer(b, f, hu0, hu1) != BbBarRole.Top)) nonTopLap = true;
+                    }
+                    if (refBars.Count == 0 && others == 0 && grids >= 2)
+                    {
+                        if (grids == 2) gridTwo = true;
+                        else gridChain = true;
+                    }
+                }
                 if (!v.IsSection)
                 {
                     bool along = column ? du > 0.99 : dr > 0.99;
@@ -581,6 +610,11 @@ namespace MglBb.RevitSide
                     }
                 }
             }
+            if (!v.IsSection && !column)
+            {
+                if (anyLap) s.Bool(k + "ElevLapsTopOnly", !nonTopLap);
+                if (gridChain) s.Bool(k + "ElevSpanTotal", gridTwo);
+            }
             if (!v.IsSection)
             {
                 foreach (var kv in rowOffsets)
@@ -614,6 +648,7 @@ namespace MglBb.RevitSide
                 }
                 catch { }
                 bool stirrup = false, isRebar = false;
+                Rebar taggedBar = null;
                 try
                 {
                     foreach (ElementId id in t.GetTaggedLocalElementIds())
@@ -621,6 +656,7 @@ namespace MglBb.RevitSide
                         if (doc.GetElement(id) is Rebar rb)
                         {
                             isRebar = true;
+                            taggedBar = taggedBar ?? rb;
                             try { if ((doc.GetElement(rb.GetShapeId()) as RebarShape)?.RebarStyle == RebarStyle.StirrupTie) stirrup = true; } catch { }
                         }
                     }
@@ -634,6 +670,9 @@ namespace MglBb.RevitSide
                 double off;
                 if (!v.IsSection)
                 {
+                    // Бөөрний арматурын шошго: дамнурууны ДОТОР (дунд өндөрт — ЖИШЭЭ-1) эсвэл гадна (доод шошготой нэг эгнээнд — ЖИШЭЭ-2).
+                    if (!column && !stirrup && taggedBar != null && BbElevRules.Layer(taggedBar, f, hu0, hu1) == BbBarRole.Side)
+                        s.Bool(k + "ElevSideTags", head.Y > hu0 && head.Y < hu1);
                     double pos = column ? head.X : head.Y, lo = column ? r0 : u0, hi = column ? r1 : u1;
                     if (pos >= lo && pos <= hi) continue;
                     off = BbGeom.ToMm(pos < lo ? lo - pos : pos - hi) / sc;

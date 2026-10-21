@@ -20,6 +20,18 @@ namespace MglBb.Tests
         }
 
         [Test]
+        public static void ElevationBarLayers()
+        {
+            // ЖИШЭЭ-2 ДДН-10 (дээд нүүрнээс, 700 гүн): дээд ⌀28 −74, ⌀12 −100; бөөр −246 / −460; доод −646.
+            const double U0 = -700, U1 = 0;
+            Assert.Eq(BbBarRole.Top, BbTagRoles.Layer(-74, U0, U1));
+            Assert.Eq(BbBarRole.Top, BbTagRoles.Layer(-100, U0, U1));
+            Assert.Eq(BbBarRole.Side, BbTagRoles.Layer(-246, U0, U1));
+            Assert.Eq(BbBarRole.Side, BbTagRoles.Layer(-460, U0, U1));
+            Assert.Eq(BbBarRole.Bottom, BbTagRoles.Layer(-646, U0, U1));
+        }
+
+        [Test]
         public static void ElbowOnAxisForBarsNearLegForStirrups()
         {
             // ЖИШЭЭ-2 засвар (2026-10-21): «9 ⌀28» — шошгоноос хэвтээ шугам тэнхлэг (r = 250) хүртэл, тэндээс ширхэг бүр рүү.

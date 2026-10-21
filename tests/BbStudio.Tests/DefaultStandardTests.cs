@@ -37,6 +37,12 @@ namespace MglBb.Tests
                 // Баруун талын босоо хэмжээс (ЖИШЭЭ-2 засвар, 17:49): нүүрнээс 11.5, гинж хооронд 6.5 цаасан мм.
                 Assert.Near(11.5, ms.SecDimOffsetPaperMm, 1e-9);
                 Assert.Near(6.5, ms.SecStepPaperMm, 1e-9);
+                // Дэлгээс (ЖИШЭЭ-2 ДДН-10, 19:32): давхцал зөвхөн дээд үед, нийт уртгүй, бөөрний шошго гадна, хомутын шугам доод нүүрнээс 25.
+                Assert.True(ms.ElevLapsTopOnly);
+                Assert.False(ms.ElevSpanTotal);
+                Assert.False(ms.ElevSideTags);
+                Assert.Near(25, ms.StirrupDimOffsetPaperMm, 1e-9);
+                Assert.Near(12, ms.ElevDimFirstPaperMm, 1e-9);
                 // Хугарал (ЖИШЭЭ-2 засвар, 14:56): ажлын арматур — тэнхлэгээс, хомут — хөлөөс.
                 ms.RoleElbow(BbBarRole.Top, out string topRef, out double topD);
                 ms.RoleElbow(BbBarRole.Bottom, out string botRef, out double botD);

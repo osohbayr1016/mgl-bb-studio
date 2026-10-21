@@ -136,6 +136,19 @@ namespace MglBb.Learn
             }
 
             BbStandard learned = BbLearner.Learn(doc, current, 100000, out BbLearnReport rep, only);
+            if (rep.ElevDump.Length > 0)
+            {
+                // Дамнурууны дэлгээсийн хэмжээс/шошгоны бүрэн хэмжилт — хөгжүүлэгч зургийн дүрмийг тодорхойлоход.
+                string dump = Path.Combine(Paths.Root, "learn-elev-report.txt");
+                try
+                {
+                    Directory.CreateDirectory(Paths.Root);
+                    File.WriteAllText(dump, doc.Title + "  " + DateTime.Now.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture) + Environment.NewLine + rep.ElevDump,
+                        new System.Text.UTF8Encoding(true));
+                    rep.Notes.Add("Дэлгээсийн хэмжилтийн тайлан: " + dump);
+                }
+                catch (Exception ex) { rep.Notes.Add("Дэлгээсийн тайлан бичигдсэнгүй: " + ex.Message); }
+            }
             var lines = new List<string>
             {
                 "Шинжилсэн харагдац " + rep.ViewsScanned + ", танигдсан " + rep.Classified + " (" + string.Join(", ", rep.PerKind.Select(kv => kv.Key + " " + kv.Value)) + ")",

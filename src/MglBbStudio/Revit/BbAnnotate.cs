@@ -138,6 +138,8 @@ namespace MglBb.RevitSide
                     int mras = r.Mras;
                     if (!ctx.IsColumn)
                     {
+                        // Инженерийн дүрэм (сурсан): илүүдэл давхцал / нийт уртыг MRA байрлуулахаас ӨМНӨ хасна.
+                        BbElevRules.Prune(ctx, r, ms);
                         rep.ElevSideTags += BbElevMra.MidTags(ctx, r, ui, ms, rep);
                         if (ms.ElevMraLayout && r.Mras > 0) mras = BbElevMra.RelayoutMras(ctx, r, ui, ms, rep, mark);
                     }
