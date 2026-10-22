@@ -267,6 +267,13 @@ namespace MglBb.RevitSide
             return all.FirstOrDefault();
         }
 
+        /// <summary>Төслийн Detail харагдацын төрлүүдийн нэр (анхааруулгад — аль нэр байгааг харуулах).</summary>
+        public static string DetailTypeNames(Document doc)
+        {
+            return string.Join("; ", new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).Cast<ViewFamilyType>()
+                .Where(t => t.ViewFamily == ViewFamily.Detail).Select(t => "«" + t.Name + "»").OrderBy(n => n, StringComparer.CurrentCulture));
+        }
+
         /// <summary>
         /// <paramref name="names"/>-ийн эхний таарсан төрөл (<see cref="BbCompanyRules.Pick"/>).  Олдохгүй бол <paramref name="matched"/> = false ба
         /// тэр гэр бүлийн эхний төрөл (дуудагч Асуудалд бичнэ).

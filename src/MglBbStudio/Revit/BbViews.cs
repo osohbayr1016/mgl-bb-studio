@@ -58,7 +58,7 @@ namespace MglBb.RevitSide
                 ViewFamilyType vft = BbGeom.FindVft(doc, want, ViewFamily.Detail, out bool matched);
                 if (vft == null) throw new InvalidOperationException("«Detail View» төрөл энэ төсөлд алга.");
                 if (!matched && want.Count > 0)
-                    res.Issues.Add(Issue(mark, BbSeverity.Warning, "Стандартын дэлгээсийн төрөл «" + want[0] + "» энэ төсөлд алга — «" + vft.Name + "»-ээр үүсгэв.",
+                    res.Issues.Add(Issue(mark, BbSeverity.Warning, "Стандартын дэлгээсийн төрөл «" + want[0] + "» энэ төсөлд алга — «" + vft.Name + "»-ээр үүсгэв.  Төсөлд: " + BbGeom.DetailTypeNames(doc) + ".",
                         "Компанийн template-ээс тэр төрлийг (Transfer Project Standards) оруулах.", "elev-vft"));
                 View template = BbGeom.FindTemplate(doc, ms.ElevTemplate);
                 if (template == null && !string.IsNullOrEmpty(ms.ElevTemplate))
@@ -103,7 +103,7 @@ namespace MglBb.RevitSide
                 List<string> want = BbCompanyRules.SecViewTypes(kind, ms);
                 ViewFamilyType vft = BbGeom.FindVft(doc, want, ViewFamily.Detail, out bool matched);
                 if (vft != null && !matched)
-                    res.Issues.Add(Issue(mark, BbSeverity.Warning, "Стандартын огтлолын төрөл «" + want[0] + "» энэ төсөлд алга — «" + vft.Name + "»-ээр үүсгэв.",
+                    res.Issues.Add(Issue(mark, BbSeverity.Warning, "Стандартын огтлолын төрөл «" + want[0] + "» энэ төсөлд алга — «" + vft.Name + "»-ээр үүсгэв.  Төсөлд: " + BbGeom.DetailTypeNames(doc) + ".",
                         "Компанийн template-ээс тэр төрлийг (Transfer Project Standards) оруулах.", "sec-vft"));
                 View template = BbGeom.FindTemplate(doc, ms.SecTemplate);
                 var member =new BbSpan(BbGeom.ToMm(chain.S0), BbGeom.ToMm(chain.S1));

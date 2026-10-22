@@ -41,6 +41,25 @@ namespace MglBb.Tests
         }
 
         [Test]
+        public static void OtherNumberingFoundByWords()
+        {
+            // ЖИШЭЭ-2-ийн дугаарлалт (2.4. …) — «5.2.1 …» алга; үгээр олно, туслах дамнуруутай андуурахгүй, хучилтын «7.6»-г авахгүй.
+            var ex2 = new[]
+            {
+                "7.6 Хучилтын арматурчлал",
+                "4.4. Хучилтын арматурчлал",
+                "2.4. Рамын арматурчлал + Дамнуруу",
+                "2.4. Рамын арматурчлал + Дамнуруу ОГТЛОЛ",
+                "2.4. Рамын арматурчлал + Туслах Дамнуруу ОГТЛОЛ",
+            };
+            Assert.Eq("2.4. Рамын арматурчлал + Дамнуруу ОГТЛОЛ",
+                BbCompanyRules.Pick(ex2, BbCompanyRules.SecViewTypes(BbMemberKind.Beam, new BbMemberStandard { SecViewType = "4.4. Хучилтын арматурчлал" })));
+            Assert.Eq("2.4. Рамын арматурчлал + Туслах Дамнуруу ОГТЛОЛ", BbCompanyRules.Pick(ex2, new[] { BbCompanyRules.BeamAuxSec }));
+            Assert.Eq("2.4. Рамын арматурчлал + Дамнуруу", BbCompanyRules.Pick(ex2, new[] { BbCompanyRules.BeamElev }));
+            Assert.Eq("521", BbCompanyRules.Code("5.2.1 Рамын арматурчлал"));
+        }
+
+        [Test]
         public static void LooseNameMatch()
         {
             // Том/жижиг үсэг, зай, цэг: «5.2.1. … +Дамнуруу ОГТЛОЛ» = «5.2.1 … + Дамнуруу Огтлол».
