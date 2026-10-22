@@ -68,6 +68,17 @@ namespace MglBb.RevitSide
             }
         }
 
+        /// <summary>«Annotation Crop»-ыг унтраана (шинэ харагдацын өгөгдмөл).  Нээлттэй Transaction дотор.</summary>
+        public static void AnnotationCropOff(View v)
+        {
+            try
+            {
+                Parameter p = v.get_Parameter(BuiltInParameter.VIEWER_ANNOTATION_CROP_ACTIVE);
+                if (p != null && !p.IsReadOnly && p.AsInteger() != 0) p.Set(0);
+            }
+            catch { }
+        }
+
         private static double Clamp(double mm) { return Math.Max(MinMm, Math.Min(MaxMm, mm + 3)); }
     }
 }

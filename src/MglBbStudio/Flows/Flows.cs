@@ -50,6 +50,31 @@ namespace MglBb.Flows
         }
 
         public static string Mm(double mm) { return (mm / 1000).ToString("0.0", CultureInfo.InvariantCulture) + " м"; }
+
+        /// <summary>Цонхонд «Тохиргоо (option)» сонголт — өгөгдмөл нь энэ төсөлд идэвхтэй option.</summary>
+        public static System.Windows.Controls.ComboBox OptionCombo(BbDialog dlg, Document doc, out BbOptionBook book)
+        {
+            book = BbStore.LoadOptions();
+            var names = new List<string> { BbOptionBook.BaseName };
+            names.AddRange(book.Options.Select(o => o.Name).OrderBy(n => n, StringComparer.CurrentCulture));
+            return dlg.Combo("Тохиргоо (option)", names, names.IndexOf(book.ActiveFor(BbStore.ProjectKey(doc))));
+        }
+
+        /// <summary>Сурсан стандарт + сонгосон option.  Сонголт өөрчлөгдсөн бол түүнийг энэ төсөлд идэвхтэй болгож хадгална.</summary>
+        public static BbStandard StandardFor(Document doc, BbOptionBook book, System.Windows.Controls.ComboBox box, out string src)
+        {
+            BbStandard std = BbStore.LoadStandard(out src);
+            string key = BbStore.ProjectKey(doc);
+            string name = box?.SelectedItem as string ?? book.ActiveFor(key);
+            if (book.ActiveFor(key) != (book.Find(name)?.Name ?? BbOptionBook.BaseName))
+            {
+                book.SetActive(key, name);
+                try { BbStore.SaveOptions(book); } catch { }
+            }
+            std = book.Apply(std, key, out string used);
+            src += " · option «" + used + "»";
+            return std;
+        }
     }
 
     internal sealed class MemberFilter : ISelectionFilter
@@ -76,28 +101,61 @@ namespace MglBb.Learn
         {
             Document doc = uidoc.Document;
             BbStandard current = BbStore.LoadStandard(out string src);
-            var ask = new TaskDialog("MGL ББ — Стандарт сурах")
+            // Зөвхөн хэрэглэгчийн ЗААСАН харагдацаас сурна (ББ инженерийн шаардлага 2026-10-21) — Project Browser / хуудсан дээр сонгосныг урьдчилан чагтална.
+            var sheetOf = new Dictionary<long, string>();
+            foreach (Viewport vp in new FilteredElementCollector(doc).OfClass(typeof(Viewport)).Cast<Viewport>())
+                if (doc.GetElement(vp.SheetId) is ViewSheet sh) sheetOf[vp.ViewId.Value] = sh.SheetNumber ?? "";
+            List<View> views = new FilteredElementCollector(doc).OfClass(typeof(View)).Cast<View>()
+                .Where(v => !v.IsTemplate && (v.ViewType == ViewType.Detail || v.ViewType == ViewType.Section
+                    || ((v.ViewType == ViewType.EngineeringPlan || v.ViewType == ViewType.FloorPlan) && sheetOf.ContainsKey(v.Id.Value))))
+                .OrderBy(v => v.Name, StringComparer.CurrentCulture).ToList();
+            HashSet<long> pre = PreSelectedViews(uidoc);
+            views = views.Where(v => pre.Contains(v.Id.Value)).Concat(views.Where(v => !pre.Contains(v.Id.Value))).ToList();
+            if (views.Count == 0)
             {
-                MainInstruction = "Энэ төслийн ДУУССАН ажлын зургаас компанийн стандартыг сурах уу?",
-                MainContent = "Хуудсанд байрлуулсан дамнуруу, багана, цутгамал хана, хучилтын зургийг (харагдацын төрөл, загвар, масштаб, crop, огтлолын байрлал, " +
-                              "хэмжээс/шошго/MRA-ийн зай, хуудасны байрлал, дугаарын цуврал) шинжилнэ.  Энэ хэрэгслийн үүсгэсэн зургийг алгасна.  " +
-                              "Загварт ЮУ Ч өөрчлөгдөхгүй.\n\nОдоогийн стандарт: " + src,
-                FooterText = "Сурсан стандарт: " + BbStore.StandardPath,
-            };
-            ask.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, "Хурдан", "Төрөл бүрээс 60 харагдац (ЖИШЭЭ-1 ≈ 1.5 минут).");
-            ask.AddCommandLink(TaskDialogCommandLinkId.CommandLink2, "Бүрэн", "Бүх харагдац (том төсөлд 5+ минут).");
-            ask.AddCommandLink(TaskDialogCommandLinkId.CommandLink3, "Болих");
-            TaskDialogResult a = ask.Show();
-            if (a != TaskDialogResult.CommandLink1 && a != TaskDialogResult.CommandLink2) return Result.Cancelled;
-            int max = a == TaskDialogResult.CommandLink1 ? 60 : 100000;
+                TaskDialog.Show("MGL ББ — Стандарт сурах", "Энэ төсөлд сурах харагдац (Detail / Section) алга.");
+                return Result.Cancelled;
+            }
 
-            BbStandard learned = BbLearner.Learn(doc, current, max, out BbLearnReport rep);
+            var dlg = new BbDialog("MGL ББ — Стандарт сурах", "Зөвхөн доор СОНГОСОН харагдацаас компанийн стандартыг сурна (харагдацын төрөл, загвар, масштаб, crop, " +
+                "огтлолын байрлал, хэмжээс/шошго/MRA-ийн зай, хуудасны байрлал).  Загварт ЮУ Ч өөрчлөгдөхгүй.", 640);
+            dlg.Section("Харагдац (" + views.Count + ")");
+            var lb = dlg.Picker(views.Select(v => v.Name + (sheetOf.TryGetValue(v.Id.Value, out string sn) ? "   · хуудас " + sn : "   · хуудасгүй")
+                + (BbAnnoStore.IsGenerated(v) ? "   · MGL ББ үүсгэсэн" : "")), 360, search: true);
+            for (int i = 0; i < views.Count && pre.Contains(views[i].Id.Value); i++) lb.SelectedItems.Add(lb.Items[i]);
+            dlg.Note("«Хайх»-д нэрийн хэсгийг бичнэ (жишээ «ДН-1 S», «5-11») — хайлтыг сольсон ч өмнө сонгосон нь сонгогдсон хэвээр.  Ctrl / Shift дарж олныг сонгоно.  Project Browser эсвэл хуудсан дээр урьдчилан сонгосон харагдац энд сонгогдсон байна.  " +
+                     "Сонгосон харагдац бүр жишээ болно — нэг ч хангалттай.");
+            dlg.Note("Одоогийн стандарт: " + src);
+            if (!dlg.Show(uidoc.Application.MainWindowHandle)) return Result.Cancelled;
+            var only = new HashSet<long>();
+            foreach (object o in lb.SelectedItems) only.Add(views[lb.Items.IndexOf(o)].Id.Value);
+            if (only.Count == 0)
+            {
+                TaskDialog.Show("MGL ББ — Стандарт сурах", "Харагдац сонгоогүй — стандарт өөрчлөгдсөнгүй.");
+                return Result.Cancelled;
+            }
+
+            BbStandard learned = BbLearner.Learn(doc, current, 100000, out BbLearnReport rep, only);
+            if (rep.ElevDump.Length > 0)
+            {
+                // Дамнурууны дэлгээсийн хэмжээс/шошгоны бүрэн хэмжилт — хөгжүүлэгч зургийн дүрмийг тодорхойлоход.
+                string dump = Path.Combine(Paths.Root, "learn-elev-report.txt");
+                try
+                {
+                    Directory.CreateDirectory(Paths.Root);
+                    File.WriteAllText(dump, doc.Title + "  " + DateTime.Now.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture) + Environment.NewLine + rep.ElevDump,
+                        new System.Text.UTF8Encoding(true));
+                    rep.Notes.Add("Дэлгээсийн хэмжилтийн тайлан: " + dump);
+                }
+                catch (Exception ex) { rep.Notes.Add("Дэлгээсийн тайлан бичигдсэнгүй: " + ex.Message); }
+            }
             var lines = new List<string>
             {
                 "Шинжилсэн харагдац " + rep.ViewsScanned + ", танигдсан " + rep.Classified + " (" + string.Join(", ", rep.PerKind.Select(kv => kv.Key + " " + kv.Value)) + ")",
                 "Сурсан тохиргоо " + rep.FieldsLearned + " · " + (rep.ElapsedMs / 1000.0).ToString("0", CultureInfo.InvariantCulture) + " сек",
                 "",
                 "Дамнуруу: «" + learned.Beam.ElevViewType + "» 1:" + learned.Beam.ElevScale + ", огтлол 1:" + learned.Beam.SecScale + ", нэр «" + learned.Beam.ElevNamePattern + "»",
+                "Дамнурууны огтлолын шошго: " + RoleSummary(learned.Beam),
                 "Туслах дамнуруу: «" + learned.BeamAux.ElevViewType + "»",
                 "Багана: «" + learned.Column.ElevViewType + "» 1:" + learned.Column.ElevScale + ", огтлол 1:" + learned.Column.SecScale,
                 "Хана: «" + learned.Plate.WallRebarViewType + "», MRA «" + learned.Plate.WallMraType + "»",
@@ -107,7 +165,7 @@ namespace MglBb.Learn
             lines.AddRange(rep.Notes.Take(5));
             if (rep.Classified == 0)
             {
-                FlowCommon.Summary(uidoc, "Стандарт сурах", "Дууссан ажлын зураг олдсонгүй — стандарт өөрчлөгдсөнгүй.", lines, rep.Issues);
+                FlowCommon.Summary(uidoc, "Стандарт сурах", "Сонгосон харагдацаас дамнуруу / багана / хана / хучилтын зураг танигдсангүй — стандарт өөрчлөгдсөнгүй.", lines, rep.Issues);
                 return Result.Cancelled;
             }
             var save = new TaskDialog("MGL ББ — Стандарт сурах")
@@ -121,6 +179,35 @@ namespace MglBb.Learn
             BbStore.SaveStandard(learned);
             FlowCommon.Summary(uidoc, "Стандарт сурах", "Стандарт хадгалагдлаа.", new[] { BbStore.StandardPath }, rep.Issues);
             return Result.Succeeded;
+        }
+
+        /// <summary>«дээд зүүн 12/+5 · доод зүүн 10/+8 · …» (тал, гаднах зай / босоо зай, цаасан мм); сураагүй үүрэг = «—».</summary>
+        internal static string RoleSummary(BbMemberStandard ms)
+        {
+            var parts = new List<string>();
+            foreach (BbBarRole r in new[] { BbBarRole.Top, BbBarRole.Bottom, BbBarRole.Side, BbBarRole.Stirrup })
+            {
+                ms.RoleTag(r, out string side, out double dx, out double dy);
+                string name = r == BbBarRole.Top ? "дээд" : r == BbBarRole.Bottom ? "доод" : r == BbBarRole.Side ? "бөөр" : "хомут";
+                parts.Add(name + " " + (string.IsNullOrEmpty(side) ? "—"
+                    : (side == BbTagRoles.Right ? "баруун " : "зүүн ") + dx.ToString("0.#", CultureInfo.InvariantCulture) + "/" + (dy >= 0 ? "+" : "") + dy.ToString("0.#", CultureInfo.InvariantCulture)));
+            }
+            return string.Join(" · ", parts) + " мм";
+        }
+
+        /// <summary>Одоо сонгогдсон харагдац: Project Browser-ийн харагдац, хуудсан дээрх viewport, сонгосон хуудасны бүх харагдац.</summary>
+        private static HashSet<long> PreSelectedViews(UIDocument uidoc)
+        {
+            var res = new HashSet<long>();
+            Document doc = uidoc.Document;
+            foreach (ElementId id in uidoc.Selection.GetElementIds())
+            {
+                Element e = doc.GetElement(id);
+                if (e is ViewSheet sh) foreach (ElementId vp in sh.GetAllViewports()) { if (doc.GetElement(vp) is Viewport p) res.Add(p.ViewId.Value); }
+                else if (e is View v) res.Add(v.Id.Value);
+                else if (e is Viewport vpt) res.Add(vpt.ViewId.Value);
+            }
+            return res;
         }
     }
 }
@@ -172,11 +259,27 @@ namespace MglBb.Generate
             var cSec = dlg.Check("Огтлол", true);
             var mode = dlg.Combo("Огтлолын байрлал", new[] { "Стандарт — тулгуур + дунд, давхардалгүй", "Алгасал бүрд (тулгуур + дунд)", "Зөвхөн дунд хэсэгт", "Зөвхөн тулгуурт" }, 0);
             var cAnn = dlg.Check("Стандартаар тэмдэглэх (хэмжээс, шошго, MRA)", true);
+            var cBreaks = dlg.Check("Break line (огтлолын хучилт, дэлгээсийн дамнуруу / багана)", std.Beam.SecBreakLines || std.Beam.ElevBreakLines,
+                "Crop-ын ирмэгийг дайрсан хучилт, дамнуруу, баганад «" + std.Beam.BreakFamily + "».");
+            var cEndSym = dlg.Check("Арматурын төгсгөлийн тэмдэг (дэлгээс)", std.Beam.ElevEndSymbols,
+                string.IsNullOrEmpty(std.Beam.ElevEndSymbolType) ? "Тэмдэг сураагүй — «Стандарт сурах»-аар тэмдэгтэй дэлгээсээс сурна." : "«" + std.Beam.ElevEndSymbolType + "» — сурсан дүрмээр.");
             var cSheet = dlg.Check("Хуудсанд байрлуулах (A2, дэлгээс дээр, огтлол доор)", true, "Дугаар — компанийн цувралын дараагийн чөлөөт дугаар (дамнуруу 5-, багана 4-).");
+            List<string> tbs = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TitleBlocks).OfClass(typeof(FamilySymbol)).Cast<FamilySymbol>()
+                .Select(s => s.FamilyName + " : " + s.Name).Distinct().OrderBy(s => s, StringComparer.CurrentCulture).ToList();
+            System.Windows.Controls.ComboBox tbBox =tbs.Count > 0 ? dlg.Combo("Хуудасны хүрээ (title block)", tbs, Math.Max(0, tbs.IndexOf(std.Sheet.TitleBlock))) : null;
             var cSched = dlg.Check("Түүврийг хувилж хуудсанд байрлуулах (арматур, бетон)", true, "Энэ төслийн өөр гишүүний түүврийг хуулж, нэр болон шүүлтүүрийн тэмдгийг солино.");
             var exist = dlg.Combo("Ижил нэртэй харагдац байвал", new[] { "Алгасах", "Шинээр (нэрийн ард дугаар)" }, 0);
+            var optBox = FlowCommon.OptionCombo(dlg, doc, out BbOptionBook book);
             dlg.Note("Стандарт: " + src);
+            dlg.Note("Ажиллаж байх хооронд явцын цонх нээгдэнэ — гишүүн бүрийн хооронд Revit чөлөөлөгдөх тул загвар дээр үргэлжлүүлэн ажиллаж болно.");
             if (!dlg.Show(uidoc.Application.MainWindowHandle)) return Result.Cancelled;
+            if (GenJobHost.Busy)
+            {
+                TaskDialog.Show("MGL ББ — Ажлын зураг гаргах", "Өмнөх ажлын зураг үүсгэлт дуусаагүй байна — явцын цонхноос дуусахыг хүлээх эсвэл «Зогсоох» дарна уу.");
+                return Result.Cancelled;
+            }
+            string tbPicked = tbBox != null && tbBox.SelectedIndex >= 0 ? tbs[tbBox.SelectedIndex] : null;
+            std = FlowCommon.StandardFor(doc, book, optBox, out src);
 
             var opt = new BbGenOptions
             {
@@ -187,27 +290,33 @@ namespace MglBb.Generate
             };
             bool annotate = cAnn.IsChecked == true;
             bool onSheet = cSheet.IsChecked == true;
+            if (tbPicked != null) std.Sheet.TitleBlock = tbPicked;
+            // Хэрэглэгчийн сонголт: энэ ажилд break line / төгсгөлийн тэмдэг (стандартад хадгалахгүй — зөвхөн энэ удаа).
+            foreach (BbMemberStandard ms in new[] { std.Beam, std.BeamAux, std.Column })
+            {
+                if (cBreaks.IsChecked != true) { ms.SecBreakLines = false; ms.ElevBreakLines = false; }
+                if (cEndSym.IsChecked != true) ms.ElevEndSymbols = false;
+            }
             if (!opt.Elevation && !opt.Sections) return Result.Cancelled;
 
-            GenRun g = Execute(doc, items, std, opt, annotate, onSheet, cSched.IsChecked == true);
-            List<BbIssue> issues = g.Issues;
-            List<string> notes = g.Notes;
+            GenJobHost.Start(uidoc, new GenJob(doc, items, std, opt, annotate, onSheet, cSched.IsChecked == true), src);
+            return Result.Succeeded;
+        }
+
+        /// <summary>Дууссан ажлын дүгнэлтийн мөрүүд (явцын цонх / TaskDialog).</summary>
+        internal static List<string> SummaryLines(GenRun g, bool annotate, bool onSheet)
+        {
             BbAnnoReport rep = g.Rep;
-            int elevs = g.Elevs, secs = g.Secs, skipped = g.Skipped, sheetCount = g.Sheets;
-            View first = g.First;
-            var sw = g.Watch;
-            if (first != null) { try { uidoc.ActiveView = first; } catch { } }
             var lines = new List<string>
             {
-                "Дэлгээс " + elevs + ", огтлол " + secs + (skipped > 0 ? " (ижил арматуртай " + skipped + " огтлол алгассан)" : "") + (onSheet ? ", хуудас " + sheetCount + (g.Schedules > 0 ? ", түүвэр " + g.Schedules : "") : ""),
+                "Дэлгээс " + g.Elevs + ", огтлол " + g.Secs + (g.Skipped > 0 ? " (ижил арматуртай " + g.Skipped + " огтлол алгассан)" : "") + (onSheet ? ", хуудас " + g.Sheets + (g.Schedules > 0 ? ", түүвэр " + g.Schedules : "") : ""),
             };
             if (annotate)
-                lines.Add("Тэмдэглэгээ: огтлолын хэмжээс " + rep.SecDims + " (+арматурын гинж " + rep.BarChains + "), шошго " + (rep.SecTags + rep.ElevTags) + ", MRA " + rep.ElevMras + ", давхцал " + rep.ElevLaps);
-            lines.Add("Хугацаа " + (sw.ElapsedMilliseconds / 1000.0).ToString("0", CultureInfo.InvariantCulture) + " сек");
+                lines.Add("Тэмдэглэгээ: огтлолын хэмжээс " + rep.SecDims + " (+арматурын гинж " + rep.BarChains + "), шошго " + (rep.SecTags + rep.ElevTags) + ", MRA " + rep.ElevMras + ", давхцал " + rep.ElevLaps + ", break line " + rep.Breaks);
+            lines.Add("Хугацаа " + (g.Watch.ElapsedMilliseconds / 1000.0).ToString("0", CultureInfo.InvariantCulture) + " сек");
             lines.Add("");
-            lines.AddRange(notes.Take(8));
-            FlowCommon.Summary(uidoc, "Ажлын зураг гаргах", (elevs + secs) + " харагдац үүслээ.", lines, issues);
-            return Result.Succeeded;
+            lines.AddRange(g.Notes.Take(8));
+            return lines;
         }
 
         internal static List<Item> BuildItems(Document doc, IEnumerable<Element> picked)
@@ -265,20 +374,63 @@ namespace MglBb.Generate
         /// <summary>Цонхгүй гүйцэтгэл (gate-ээр ч туршигдана): НЭГ TransactionGroup — үүсгэх → тэмдэглэх → хуудас.</summary>
         internal static GenRun Execute(Document doc, IList<Item> items, BbStandard std, BbGenOptions opt, bool annotate, bool onSheet, bool schedules = true)
         {
-            var g = new GenRun { Watch = Stopwatch.StartNew() };
-            var roleCache = new Dictionary<BbMemberKind, List<BbSchedules.Role>>();
-            var roles = new Dictionary<long, string>();
-            List<BbIssue> issues = g.Issues;
-            List<string> notes = g.Notes;
-            BbAnnoReport rep = g.Rep;
-            int elevs = 0, secs = 0, skipped = 0, sheetCount = 0;
-            View first = null;
+            var job = new GenJob(doc, items, std, opt, annotate, onSheet, schedules);
             using (var tg = new TransactionGroup(doc, "MGL ББ: ажлын зураг"))
             {
                 tg.Start();
                 try
                 {
-                    foreach (Item it in items)
+                    foreach (Item it in items) job.RunItem(it);
+                    tg.Assimilate();
+                }
+                catch
+                {
+                    if (tg.HasStarted() && !tg.HasEnded()) tg.RollBack();
+                    throw;
+                }
+            }
+            return job.Finish();
+        }
+
+        /// <summary>
+        /// Ажлын зургийн гүйцэтгэгч — гишүүн бүрийг (<see cref="RunItem"/>) тусад нь ажиллуулж болно: <see cref="Execute"/> бүгдийг нэг дор, арын
+        /// горим (<see cref="GenJobHost"/>) гишүүн бүрийг өөрийн ExternalEvent-д (хооронд нь хэрэглэгч Revit-д ажиллана).  Transaction-гүй үед дуудна.
+        /// </summary>
+        internal sealed class GenJob
+        {
+            public readonly Document Doc;
+            public readonly IList<Item> Items;
+            private readonly BbStandard _std;
+            private readonly BbGenOptions _opt;
+            private readonly bool _annotate, _onSheet, _schedules;
+            private readonly GenRun _g = new GenRun { Watch = Stopwatch.StartNew() };
+            private readonly Dictionary<BbMemberKind, List<BbSchedules.Role>> _roleCache = new Dictionary<BbMemberKind, List<BbSchedules.Role>>();
+            private readonly Dictionary<long, string> _roles = new Dictionary<long, string>();
+            private bool _finished;
+
+            public GenJob(Document doc, IList<Item> items, BbStandard std, BbGenOptions opt, bool annotate, bool onSheet, bool schedules)
+            {
+                Doc = doc; Items = items; _std = std; _opt = opt; _annotate = annotate; _onSheet = onSheet; _schedules = schedules;
+            }
+
+            public GenRun Progress { get { return _g; } }
+            public bool OnSheet { get { return _onSheet; } }
+            public bool Annotate { get { return _annotate; } }
+
+            /// <summary>Нэг гишүүн: үүсгэх → тэмдэглэх → crop → хуудас (өөр өөр Transaction).  Алдаа гарвал шиднэ — дуудагч буцаана.</summary>
+            public void RunItem(Item it)
+            {
+                Document doc = Doc;
+                BbStandard std = _std;
+                BbGenOptions opt = _opt;
+                bool annotate = _annotate, onSheet = _onSheet, schedules = _schedules;
+                GenRun g = _g;
+                var roleCache = _roleCache;
+                var roles = _roles;
+                List<BbIssue> issues = g.Issues;
+                List<string> notes = g.Notes;
+                BbAnnoReport rep = g.Rep;
+                {
                     {
                         BbGenResult r;
                         using (var t = new Transaction(doc, "MGL ББ: харагдац " + it.Mark))
@@ -291,12 +443,12 @@ namespace MglBb.Generate
                                 : BbViews.CreateBeam(doc, it.Beam, std, opt);
                             t.Commit();
                         }
-                        elevs += r.Elevations.Count + r.Plans.Count;
-                        secs += r.Sections.Count;
-                        skipped += r.SkippedDuplicates;
+                        g.Elevs += r.Elevations.Count + r.Plans.Count;
+                        g.Secs += r.Sections.Count;
+                        g.Skipped += r.SkippedDuplicates;
                         notes.AddRange(r.Notes);
                         issues.AddRange(r.Issues);
-                        if (first == null) first = r.Elevations.Cast<View>().Concat(r.Sections).Concat(r.Plans).FirstOrDefault();
+                        if (g.First == null) g.First = r.Elevations.Cast<View>().Concat(r.Sections).Concat(r.Plans).FirstOrDefault();
                         if (annotate)
                         {
                             if (it.Wall != null || it.Slab != null)
@@ -307,7 +459,8 @@ namespace MglBb.Generate
                             }
                             else foreach (ViewSection v in r.Elevations.Concat(r.Sections)) AnnotateOne(doc, v, std, rep);
                         }
-                        // Тэмдэглэгээний crop: өөрийн тэмдэглэгээ багтах хэмжээгээр (бусад огтлолын тэмдэг viewport-ыг сунгахгүй).
+                        // Тэмдэглэгээний crop (Annotation Crop) — шинэ харагдацад УНТРААЛТТАЙ (ББ инженерийн шаардлага 2026-10-21; өмнө нь
+                        // BbCrop.FitAnnotationCrop-оор асааж тааруулдаг байв).
                         using (var t = new Transaction(doc, "MGL ББ: тэмдэглэгээний crop " + it.Mark))
                         {
                             t.Start();
@@ -317,7 +470,7 @@ namespace MglBb.Generate
                             foreach (View v in all)
                             {
                                 BbDatums.Trim(doc, v);
-                                BbCrop.FitAnnotationCrop(doc, v, notes);
+                                BbCrop.AnnotationCropOff(v);
                             }
                             t.Commit();
                         }
@@ -331,9 +484,9 @@ namespace MglBb.Generate
                                 foreach (View p in r.Plans)
                                 {
                                     List<ViewSheet> sh = BbSheets.Place(doc, p.Name, BbMemberKind.Slab, new List<View> { p }, new List<View>(), std, issues, notes);
-                                    sheetCount += sh.Count;
+                                    g.Sheets += sh.Count;
                                     g.CreatedSheets.AddRange(sh);
-                                    if (sh.Count > 0) first = sh[0];
+                                    if (sh.Count > 0) g.First = sh[0];
                                 }
                                 t.Commit();
                             }
@@ -352,24 +505,26 @@ namespace MglBb.Generate
                                     if (extra != null) sh.Add(extra);
                                 }
                                 t.Commit();
-                                sheetCount += sh.Count;
+                                g.Sheets += sh.Count;
                                 g.CreatedSheets.AddRange(sh);
-                                if (sh.Count > 0) first = sh[0];
+                                if (sh.Count > 0) g.First = sh[0];
                             }
                         }
                     }
-                    tg.Assimilate();
-                }
-                catch
-                {
-                    if (tg.HasStarted() && !tg.HasEnded()) tg.RollBack();
-                    throw;
                 }
             }
-            issues.AddRange(rep.Issues);
-            notes.AddRange(rep.Notes);
-            g.Elevs = elevs; g.Secs = secs; g.Skipped = skipped; g.Sheets = sheetCount; g.First = first;
-            return g;
+
+            /// <summary>Тэмдэглэгээний тайлангийн асуудал/тэмдэглэлийг нэгтгэнэ (нэг удаа).</summary>
+            public GenRun Finish()
+            {
+                if (!_finished)
+                {
+                    _finished = true;
+                    _g.Issues.AddRange(_g.Rep.Issues);
+                    _g.Notes.AddRange(_g.Rep.Notes);
+                }
+                return _g;
+            }
         }
 
         /// <summary>
@@ -383,6 +538,9 @@ namespace MglBb.Generate
                 BuiltInCategory cat = kind == BbMemberKind.Column ? BuiltInCategory.OST_StructuralColumns : kind == BbMemberKind.Wall ? BuiltInCategory.OST_Walls : BuiltInCategory.OST_StructuralFraming;
                 var marks = new FilteredElementCollector(doc).OfCategory(cat).WhereElementIsNotElementType().Select(BbGeom.Mark).Where(m => m.Length > 0).Distinct().ToList();
                 roles = BbSchedules.Roles(doc, BbSheets.Prefix(std.Sheet, kind), marks);
+                // Заавал үүсгэх түүвэр (арматур, бетон, нэгдсэн, хэсгийн тодорхойлолт) цувралын хуудсанд алга бол төслийн бүх түүврээс.
+                var have = new HashSet<string>(roles.Select(x => x.Pattern), StringComparer.Ordinal);
+                roles.AddRange(BbSchedules.RolesAnywhere(doc, marks).Where(x => BbCompanyRules.IsRequiredSchedule(x.Pattern) && have.Add(x.Pattern)));
                 cache[kind] = roles;
                 if (roles.Count == 0)
                     issues.Add(new BbIssue
@@ -432,13 +590,23 @@ namespace MglBb.Generate
                 return;
             }
             BbMemberStandard ms = std.For(smp.Kind);
-            if (smp.IsSection) BbAnnotate.Section(doc, v, smp.Host, ms, rep, smp.Mark);
+            if (smp.IsSection)
+            {
+                bool beam = smp.Kind == BbMemberKind.Beam || smp.Kind == BbMemberKind.BeamAux;
+                HashSet<long> before = beam ? BbAnnoStore.Owned(doc, v) : null;
+                BbAnnotate.Section(doc, v, smp.Host, ms, rep, smp.Mark);
+                if (beam)
+                {
+                    BbSecTagLayout.Apply(doc, v, smp.Host, ms, before, rep, smp.Mark);
+                    BbBreaks.Section(doc, v, ms, rep, smp.Mark);
+                }
+            }
             else BbAnnotate.Elevation(doc, v, BbAnnotate.ElevationHosts(doc, v, smp), ms, rep, smp.Mark);
         }
 
         private static string Label(string mark, Element e) { return string.IsNullOrEmpty(mark) ? "(тэмдэггүй #" + e.Id.Value + ")" : mark; }
 
-        private static List<Element> Pick(UIDocument uidoc)
+        internal static List<Element> Pick(UIDocument uidoc, string prompt = "Ажлын зураг гаргах дамнуруу / багана / хана / хучилтаа сонгоно уу (Finish — дуусгах)")
         {
             Document doc = uidoc.Document;
             var filter = new MemberFilter();
@@ -446,7 +614,7 @@ namespace MglBb.Generate
             if (res.Count > 0) return res;
             try
             {
-                IList<Reference> refs = uidoc.Selection.PickObjects(ObjectType.Element, filter, "Ажлын зураг гаргах дамнуруу / багана / хана / хучилтаа сонгоно уу (Finish — дуусгах)");
+                IList<Reference> refs = uidoc.Selection.PickObjects(ObjectType.Element, filter, prompt);
                 return refs.Select(r => doc.GetElement(r)).Where(x => x != null).ToList();
             }
             catch (Autodesk.Revit.Exceptions.OperationCanceledException) { return null; }
@@ -474,9 +642,11 @@ namespace MglBb.Annotate
             BbStandard std = BbStore.LoadStandard(out string src);
             var dlg = new BbDialog("MGL ББ — Стандартаар тэмдэглэх", "Дараах харагдацад компанийн стандартаар хэмжээс, арматурын шошго, хомутын MRA тавина.");
             dlg.List(views.Select(v => v.Name), Math.Min(160, 26 + 18 * views.Count));
+            var optBox = FlowCommon.OptionCombo(dlg, doc, out BbOptionBook book);
             dlg.Note("Энэ хэрэгслийн өмнө тавьсан тэмдэглэгээ солигдоно (давхардахгүй).  Гараар тавьсан хэмжээс, шошго хөндөгдөхгүй.");
             dlg.Note("Стандарт: " + src);
             if (!dlg.Show(uidoc.Application.MainWindowHandle)) return Result.Cancelled;
+            std = FlowCommon.StandardFor(doc, book, optBox, out src);
 
             var rep = new BbAnnoReport();
             var sw = Stopwatch.StartNew();
@@ -497,7 +667,7 @@ namespace MglBb.Annotate
             var lines = new List<string>
             {
                 "Харагдац " + rep.Views + " / " + views.Count,
-                "Огтлол: хэмжээс " + rep.SecDims + " (+арматурын гинж " + rep.BarChains + "), гишүүний гинж " + rep.SecMemberDims + ", шошго " + rep.SecTags,
+                "Огтлол: хэмжээс " + rep.SecDims + " (+арматурын гинж " + rep.BarChains + "), гишүүний гинж " + rep.SecMemberDims + ", шошго " + rep.SecTags + " (үүргээр байрлуулсан " + rep.RoleTags + "), break line " + rep.Breaks,
                 "Дэлгээс: шошго " + rep.ElevTags + " (дунд өндөрт " + rep.ElevSideTags + "), MRA " + rep.ElevMras + ", давхцал " + rep.ElevLaps + ", тэнхлэгийн гинж " + rep.ElevSpans,
                 "Хугацаа " + (sw.ElapsedMilliseconds / 1000.0).ToString("0", CultureInfo.InvariantCulture) + " сек",
                 "",

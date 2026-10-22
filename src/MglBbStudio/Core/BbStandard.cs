@@ -147,6 +147,8 @@ namespace MglBb.Core
         public int SecScale = 20;
         public string SecNamePattern = "{mark} S{n}";
         public double SecCropSideMm = 145, SecCropBelowMm = 45, SecCropAboveMm = 75;
+        /// <summary>Огтлолын ажлын арматурын шошгыг ҮРГЭЛЖ зүүн талд (хөдөлгүүр хамгийн ойр талд тавьдаг).</summary>
+        public bool SecTagsLeft = true;
         public double SecFarMm = 330;
         /// <summary>Тулгуурын нүүрнээс огтлол хүртэл (мм); 0 бол алгасал × <see cref="SecSupportRatio"/>.</summary>
         public double SecSupportOffsetMm = 830, SecSupportRatio = 0.12;
@@ -163,6 +165,34 @@ namespace MglBb.Core
 
         public double TagOffsetPaperMm = 4, TagGapPaperMm = 4, DimPitchPaperMm = 7.5, StirrupDimOffsetPaperMm = 23, ElevDimFirstPaperMm = 8.5;
         public bool ElevTagBars = true, ElevMra = true, ElevLaps = true, ElevSpans = true;
+        /// <summary>Дэлгээс: давхцлын хэмжээсийг зөвхөн ДЭЭД үеийн арматурт (бөөр, доод үеийнхийг тавихгүй) — инженерийн дэлгээсээс сурна.</summary>
+        public bool ElevLapsTopOnly = false;
+        /// <summary>Дэлгээс: тэнхлэгийн гинжийн доор НИЙТ урт (эхний — сүүлийн тэнхлэг) — инженерийн дэлгээсээс сурна.</summary>
+        public bool ElevSpanTotal = true;
+        /// <summary>Дэлгээс: хомутын эгнээнд бүс хоорондын «хомут | хомут» ба тулгуурт «хомут | баганын нүүр | нүүр | хомут» хэмжээс — сурна.</summary>
+        public bool ElevStirrupGaps = false;
+        /// <summary>Дэлгээс: дээд үеийн гинж «дамнурууны төгсгөл | тэнхлэгүүд | дээд ажлын арматурын таслах цэгүүд | төгсгөл» — сурна.</summary>
+        public bool ElevTopChain = false;
+        /// <summary>
+        /// Дэлгээсийн арматурын шошгоны leader (сурна; ЖИШЭЭ-2 ДДН-10): бичвэр хугарлын <see cref="ElevLeaderSide"/> талд, хугарлаас шошгоны ТОЛГОЙН цэг
+        /// хүртэл <see cref="ElevLeaderHeadPaperMm"/>, хугарлаас арматур хүртэл <see cref="ElevLeaderRunPaperMm"/> — хэвтээ, цаасан мм.  Side хоосон = хөдөлгүүрийн
+        /// автомат (бичвэр арматурын дээр).  Толгойноос хэмжинэ: шошгоны bbox leader-ийг хамардаг тул бичвэрийн ирмэгээс хэмжиж болохгүй.
+        /// </summary>
+        public string ElevLeaderSide = "";
+        public double ElevLeaderHeadPaperMm = 0, ElevLeaderRunPaperMm = 0;
+
+        // ── Арматурын төгсгөлийн тэмдэг (үндсэн plugin-ий «Төгсгөлийн тэмдэг» хэрэгслийн бүртгэлээс сурна; ЖИШЭЭ-2 ДДН-10: дээд/доод үеийн
+        // ажлын арматурын хоёр үзүүр, харагчид ойр ширхэгт, «MGL_Armaturin togsgol 45 : 20mm»).
+        public bool ElevEndSymbols = false;
+        /// <summary>«Family : Type».</summary>
+        public string ElevEndSymbolType = "";
+        public bool ElevEndSymTop = true, ElevEndSymBottom = true, ElevEndSymSide = false;
+        /// <summary>Дэгээ/нугалаастай үзүүрт ч; арматурын чиглэлээр эргүүлэх; олонлогийн харагчид хамгийн ойр НЭГ ширхэгт (false = бүх ширхэгт).</summary>
+        public bool ElevEndSymHooks = true, ElevEndSymAuto = true, ElevEndSymFront = true;
+        /// <summary>Эхлэл / төгсгөлийн тэмдгийн эргэлт (°, family-ийн өөрийн чиглэл = 0 гэж) ба үзүүрээс оффсет (цаасан мм).</summary>
+        public double ElevEndSymStartDeg = 0, ElevEndSymEndDeg = 0, ElevEndSymOffsetPaperMm = 0;
+        /// <summary>Доод үеийн арматурын эргэлт тусдаа (ЖИШЭЭ-2: дээд эхлэл −90 / төгсгөл 0, доод эхлэл 0 / төгсгөл −90).</summary>
+        public double ElevEndSymBotStartDeg = 0, ElevEndSymBotEndDeg = 0;
         public bool SecDims = true, SecTagLong = true, SecTagStirrups = true, SecMemberDims = true, SecGroupTags = true;
         /// <summary>«нүүр | хомут | АЖЛЫН АРМАТУР БҮРИЙН ТӨВ | хомут | нүүр» (ЖИШЭЭ-1-ийн огтлол бүрд) — хөдөлгүүрийн «нүүр | хомут | хомут | нүүр» гинжийг өргөтгөнө.</summary>
         public bool SecBarChain = true;
@@ -173,6 +203,10 @@ namespace MglBb.Core
         public bool SecRightSide = true;
         public bool ElevColumnLeft = true;
         public bool SingleTagPerSet = true, MultiLeaderPerSet = true;
+        /// <summary>Огтлол: multi-leader-ийн leader-үүдийг нэгтгэх (хөдөлгүүрийн «Merge leader»).</summary>
+        public bool SecMergeLeaders = false;
+        /// <summary>Огтлолын leader: 3→2 шошгоноос хугарал хүртэл, 2→1 хугарлаас арматур хүртэл — хэвтээ, цаасан мм (0 = хөдөлгүүрийн автомат).</summary>
+        public double SecLeaderLandingPaperMm = 0, SecLeaderRunPaperMm = 0;
 
         // ── Дэлгээсийн компанийн загвар (ЖИШЭЭ-1-ийн 235 дэлгээсээс хэмжсэн; <see cref="MglBb.Core.BbMraLayout"/>)
         /// <summary>Хомутын MRA-г компанийн хоёр эгнээний загвараар дахин байрлуулна (false = хөдөлгүүрийн нэг эгнээ).</summary>
@@ -188,6 +222,33 @@ namespace MglBb.Core
         /// <summary>Хөдөлгүүрийн ангилж чадаагүй (нугалсан г.м.) харагдаж буй арматурт шошго нэмнэ.</summary>
         public bool ElevTagOtherBars = true;
         public double SideTagRunPaperMm = 5;
+
+        // ── Огтлолын break line (ЖИШЭЭ-2 «ДН-1 S1…S9», «ДДН-2 S10»-оос хэмжсэн): crop-ын зүүн/баруун ирмэгийг дайрсан хучилт бүрд
+        // «DET-Symbol_Break_Line»-ыг ирмэгээс дотогш, хучилтын зузааны голд; left/right = зузааны хагас, masking = ирмэг хүртэл.
+        // ── Огтлолын шошго ҮҮРГЭЭР (<see cref="BbTagRoles"/>): тал «left»/«right» (хоосон = сураагүй → хөдөлгүүрийн байрлал хэвээр),
+        // Dx = гишүүний хажуу нүүрнээс гадагш, Dy = ӨӨРИЙН арматурын өндрөөс (огтлолын хавтгай дээр) дээш — цаасан мм.
+        public string SecTopTagSide = "", SecBottomTagSide = "", SecSideTagSide = "", SecStirrupTagSide = "";
+        public double SecTopTagDxPaperMm = 0, SecTopTagDyFromBarPaperMm = 0;
+        public double SecBottomTagDxPaperMm = 0, SecBottomTagDyFromBarPaperMm = 0;
+        public double SecSideTagDxPaperMm = 0, SecSideTagDyFromBarPaperMm = 0;
+        public double SecStirrupTagDxPaperMm = 0, SecStirrupTagDyFromBarPaperMm = 0;
+        /// <summary>
+        /// Leader-ийн хугарал (elbow) үүргээр: Ref «axis» = гишүүний тэнхлэгээс, «end» = leader-ийн төгсгөлөөс (хомутын хөл) шошгоны тал руу Elbow
+        /// цаасан мм; Ref хоосон = сураагүй → <see cref="SecLeaderLandingPaperMm"/> (толгойноос тогтмол зай).
+        /// </summary>
+        public string SecTopTagElbowRef = "", SecBottomTagElbowRef = "", SecSideTagElbowRef = "", SecStirrupTagElbowRef = "";
+        public double SecTopTagElbowPaperMm = 0, SecBottomTagElbowPaperMm = 0, SecSideTagElbowPaperMm = 0, SecStirrupTagElbowPaperMm = 0;
+        /// <summary>Нэг талын шошгоны толгой хоорондын ХАМГИЙН БАГА босоо зай (цаасан мм) — давхцвал доош түлхэнэ.</summary>
+        public double SecRoleTagPitchPaperMm = 4.5;
+
+        public bool SecBreakLines = true;
+        /// <summary>Дамнурууны дэлгээсэд break line: crop-ын зүүн/баруун ирмэгийг дайрсан дамнуруу, дээд/доод ирмэгийг дайрсан багана.</summary>
+        public bool ElevBreakLines = true;
+        public string BreakFamily = "DET-Symbol_Break_Line";
+        /// <summary>Crop-ын ирмэгээс break line хүртэл (цаасан мм; 1:20-д 45 мм загвар = 2.25).</summary>
+        public double BreakInsetPaperMm = 2.25;
+        /// <summary>«masking depth extension» (цаасан мм; 1:20-д 48.6 мм загвар = 2.43).</summary>
+        public double BreakMaskPaperMm = 2.43;
 
         public static BbMemberStandard DefaultBeam() { return new BbMemberStandard(); }
 
@@ -257,6 +318,30 @@ namespace MglBb.Core
                 catch { }
             }
             return def;
+        }
+
+        /// <summary>Огтлолын шошгоны сурсан байрлал үүргээр (<paramref name="side"/> хоосон = сураагүй).</summary>
+        public void RoleTag(BbBarRole r, out string side, out double dx, out double dy)
+        {
+            switch (r)
+            {
+                case BbBarRole.Top: side = SecTopTagSide; dx = SecTopTagDxPaperMm; dy = SecTopTagDyFromBarPaperMm; break;
+                case BbBarRole.Bottom: side = SecBottomTagSide; dx = SecBottomTagDxPaperMm; dy = SecBottomTagDyFromBarPaperMm; break;
+                case BbBarRole.Side: side = SecSideTagSide; dx = SecSideTagDxPaperMm; dy = SecSideTagDyFromBarPaperMm; break;
+                default: side = SecStirrupTagSide; dx = SecStirrupTagDxPaperMm; dy = SecStirrupTagDyFromBarPaperMm; break;
+            }
+        }
+
+        /// <summary>Огтлолын шошгоны хугарлын сурсан лавлах цэг ба зай үүргээр (<paramref name="elbowRef"/> хоосон = сураагүй).</summary>
+        public void RoleElbow(BbBarRole r, out string elbowRef, out double paperMm)
+        {
+            switch (r)
+            {
+                case BbBarRole.Top: elbowRef = SecTopTagElbowRef; paperMm = SecTopTagElbowPaperMm; break;
+                case BbBarRole.Bottom: elbowRef = SecBottomTagElbowRef; paperMm = SecBottomTagElbowPaperMm; break;
+                case BbBarRole.Side: elbowRef = SecSideTagElbowRef; paperMm = SecSideTagElbowPaperMm; break;
+                default: elbowRef = SecStirrupTagElbowRef; paperMm = SecStirrupTagElbowPaperMm; break;
+            }
         }
 
         public string ElevName(string mark, int part)
@@ -402,9 +487,9 @@ namespace MglBb.Core
             {
                 if (!o.TryGetValue(f.Name, out object v) || v == null) continue;
                 if (f.FieldType == typeof(string) && v is string str) f.SetValue(into, str);
-                else if (f.FieldType == typeof(double) && v is double d) f.SetValue(into, d);
+                else if ((f.FieldType == typeof(double) || f.FieldType == typeof(double?)) && v is double d) f.SetValue(into, d);
                 else if (f.FieldType == typeof(int) && v is double di) f.SetValue(into, (int)Math.Round(di));
-                else if (f.FieldType == typeof(bool) && v is bool b) f.SetValue(into, b);
+                else if ((f.FieldType == typeof(bool) || f.FieldType == typeof(bool?)) && v is bool b) f.SetValue(into, b);
             }
             return into;
         }

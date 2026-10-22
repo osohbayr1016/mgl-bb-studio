@@ -328,8 +328,8 @@ namespace MglBb.RevitSide
             }
             // Түвшин/тэнхлэгийн шугам + толгой (BbDatums.Trim-ээр crop-д тайрсан).
             BbDatums.AddExtents(doc, v, add);
-            // Гарчгийг агуулгын зүүн доод буланд (ЖИШЭЭ-1 «Гарчиг - Доогуур зураас» — зургийн доор шууд).
-            if (x0 <= x1 && AlignLabel(vp, x0, y0)) doc.Regenerate();
+            // Гарчгийг агуулгын зүүн ДЭЭД буланд — зургийн дээр шууд (ББ инженерийн шаардлага 2026-10-21; ЖИШЭЭ-1-д доор байсан).
+            if (x0 <= x1 && AlignLabel(vp, x0, y1)) doc.Regenerate();
             try
             {
                 Outline lo = vp.GetLabelOutline();
@@ -348,14 +348,14 @@ namespace MglBb.RevitSide
             return new Rect { X0 = x0, Y0 = y0, X1 = x1, Y1 = y1 };
         }
 
-        /// <summary>Гарчгийн зүүн дээд буланг (x, y − 2 мм)-д.  Өөрчилсөн бол true.</summary>
+        /// <summary>Гарчгийн зүүн доод буланг (x, y + 2 мм)-д — агуулгын дээд ирмэгийн дээр.  Өөрчилсөн бол true.</summary>
         private static bool AlignLabel(Viewport vp, double x, double y)
         {
             try
             {
                 Outline lo = vp.GetLabelOutline();
                 if (lo == null || lo.IsEmpty) return false;
-                double dx = x - lo.MinimumPoint.X, dy = (y - Mm(2)) - lo.MaximumPoint.Y;
+                double dx = x - lo.MinimumPoint.X, dy = (y + Mm(2)) - lo.MinimumPoint.Y;
                 if (Math.Abs(dx) < Mm(0.5) && Math.Abs(dy) < Mm(0.5)) return false;
                 vp.LabelOffset = vp.LabelOffset + new XYZ(dx, dy, 0);
                 return true;

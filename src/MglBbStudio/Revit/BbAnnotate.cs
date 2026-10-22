@@ -12,6 +12,7 @@ namespace MglBb.RevitSide
     internal sealed class BbAnnoReport
     {
         public int Views, SecDims, SecMemberDims, SecTags, BarChains, BarChainRefs, ElevTags, ElevMras, ElevLaps, ElevSpans, ElevStirrupDupes, ElevSideTags, Replaced;
+        public int Breaks, RoleTags;
         public readonly List<string> Notes = new List<string>();
         public readonly List<BbIssue> Issues = new List<BbIssue>();
     }
@@ -62,6 +63,7 @@ namespace MglBb.RevitSide
                     "Огтлолд арматур харагдаж байгаа эсэх (VG), хомут бүрэн загварчлагдсан эсэхийг шалгах.", "sec-empty"));
                 return;
             }
+            if (ms.SecTagsLeft) TagsLeft(plan, ui.ToCore(view));
             RfSectionReport r = RfSectionService.Render(doc, view, ctx, plan, ui);
             rep.Views++;
             rep.SecDims += r.DimsMade;
@@ -115,6 +117,7 @@ namespace MglBb.RevitSide
         public static void Elevation(Document doc, ViewSection view, IList<Element> hosts, BbMemberStandard ms, BbAnnoReport rep, string mark)
         {
             RfElevUi ui = ElevationUi(doc, ms, rep, mark);
+            bool committed = false;
             using (var t = new Transaction(doc, "MGL ББ: арматурын дэлгээс"))
             {
                 t.Start();
@@ -126,6 +129,7 @@ namespace MglBb.RevitSide
                 if (removed > 0) { doc.Regenerate(); rep.Replaced += removed; }
                 HashSet<long> before = BbAnnoStore.Owned(doc, view);
                 bool any = false;
+                var done = new List<RfElevContext>();
                 foreach (RfElevContext ctx in Contexts(doc, view, hosts, ui))
                 {
                     // Компанийн загвар: давхар хомутыг нэг болгож, өөр байрлалын ижил дугаартай арматурыг тусад нь шошголно (хөдөлгүүрийн ОРОЛТ).
@@ -136,9 +140,14 @@ namespace MglBb.RevitSide
                     int mras = r.Mras;
                     if (!ctx.IsColumn)
                     {
+                        // Инженерийн дүрэм (сурсан): илүүдэл давхцал / нийт уртыг MRA байрлуулахаас ӨМНӨ хасна.
+                        BbElevRules.Prune(ctx, r, ms);
                         rep.ElevSideTags += BbElevMra.MidTags(ctx, r, ui, ms, rep);
                         if (ms.ElevMraLayout && r.Mras > 0) mras = BbElevMra.RelayoutMras(ctx, r, ui, ms, rep, mark);
+                        // Шошгоны хэвтээ landing + хугарал (сурсан тал/зай).
+                        BbElevLeaders.Apply(ctx, r, ms);
                     }
+                    done.Add(ctx);
                     rep.ElevTags += r.Tags;
                     rep.ElevMras += mras;
                     rep.ElevLaps += r.Laps;
@@ -147,15 +156,25 @@ namespace MglBb.RevitSide
                     foreach (string n in r.Notes.Take(2)) rep.Notes.Add(mark + " «" + view.Name + "»: " + n);
                     if (r.Created.Count > 0) any = true;
                 }
+                // Хомутын эгнээнд бүс хоорондын / баганын нүүрээс хомут хүртэлх хэмжээс — гинжийн БҮХ гишүүнээр нэг удаа (гишүүн хоорондын баганад ч).
+                if (any) rep.ElevSpans += BbElevStirrupDims.Place(doc, view, done, ms, ui.DimTypeId, rep, mark);
+                // Дээд үеийн гинж (дамнурууны төгсгөл | тэнхлэг | дээд ажлын арматурын таслах цэг) — давхцлын эгнээнээс нэг алхам дээш.
+                Element mainHost = done.Where(c => !c.IsColumn).OrderByDescending(c => c.Input.Stirrups.Count).Select(c => c.Host).FirstOrDefault();
+                if (any && mainHost != null) rep.ElevSpans += BbElevTopChain.Place(doc, view, done, mainHost, ms, ui.DimTypeId, rep, mark);
                 if (any)
                 {
                     BbAnnoStore.Record(doc, view, before);
                     t.Commit();
                     rep.Views++;
+                    committed = true;
                 }
                 // Шинэ тэмдэглэгээ үүсээгүй бол өмнөхийг ч устгахгүй (буруу ангилал/хоосон үр дүн хэрэглэгчийн зургийг арилгахгүй).
                 else t.RollBack();
             }
+            // Арматурын төгсгөлийн тэмдэг (сурсан) — «Төгсгөлийн тэмдэг» хэрэгсэл өөрөө TransactionGroup нээдэг тул transaction-ий ДАРАА.
+            if (committed) BbElevEndSymbols.Apply(doc, view, hosts, ms, rep, mark);
+            // Break line: crop-ын ирмэгийг дайрсан дамнуруу (зүүн/баруун) ба багана (дээд/доод) — огтлолын хучилтынхтай ижил family/зай.
+            if (committed && hosts.Count > 0 && !(hosts[0].Category?.Id.Value == (long)BuiltInCategory.OST_StructuralColumns)) BbBreaks.Elevation(doc, view, ms, rep, mark);
         }
 
         /// <summary>
@@ -194,6 +213,45 @@ namespace MglBb.RevitSide
             if (merged != null) yield return merged;
         }
 
+        /// <summary>
+        /// Ажлын арматур ба хомутын шошгыг ЗҮҮН талд (ББ инженерийн шаардлага 2026-10-21; хөдөлгүүр хамгийн ойр талд — доод арматурынхыг доор,
+        /// хомутынхыг баруун хөлөөс баруун талд тавьдаг).  Хомутын leader-ийг ЗҮҮН хөлийн дунд руу (огтлолыг гатлахгүй).  Хөдөлгүүрийн өөрийн
+        /// аргаар: зүүн талын хэмжээсийн шугамаас цааш, заах цэгийн өндрөөр эгнүүлж (<see cref="RfSectionLayout.Spread"/>), давхцлыг арилгана.
+        /// <c>src/Engine</c>-ийг засахгүй — Render-ийн өмнө төлөвлөгөөг л.
+        /// </summary>
+        internal static void TagsLeft(RfSectionPlan plan, RfSectionOptions o)
+        {
+            RfSectionRect rect = plan.Rect;
+            List<RfTagPlan> left = plan.Tags.ToList();
+            if (left.Count == 0 || left.All(t => t.Side == RfSide.Left)) return;
+            foreach (RfTagPlan t in left.Where(t => t.IsStirrup && t.Side != RfSide.Left))
+            {
+                RfStirrupLoop l = plan.Loops.Where(x => x.Id == t.Id).OrderByDescending(x => (x.MaxU - x.MinU) * (x.MaxV - x.MinV)).FirstOrDefault();
+                if (l != null) t.Target = new RfV2(l.MinU, (l.MinV + l.MaxV) / 2);
+            }
+            // Зүүн талын хэмжээсийн (хомутын гинж, гишүүний гадна гинж) хамгийн гадна шугамаас цааш — хөдөлгүүрийн «extra»-тай ижил.
+            double extra = 0;
+            Action<bool, double> take = (alongU, line) =>
+            {
+                if (RfSectionOptions.SideOfLine(rect, alongU, line) != RfSide.Left) return;
+                extra = Math.Max(extra, Math.Abs(line - rect.FacePos(RfSide.Left)) + o.TagGapFt);
+            };
+            foreach (RfDimPlan d in plan.Dims) take(d.AlongU, d.LinePos);
+            foreach (RfDimChain dc in plan.Chains) take(dc.AlongU, dc.LinePos);
+            foreach (RfMemberChain m in plan.MemberChains) take(m.AlongU, m.LinePos);
+
+            left = left.OrderBy(t => t.Target.Y).ToList();
+            double pitch = RfSectionLayout.StackPitch(o.TagWidthFt, o.TagHeightFt, plan.Frame.V);
+            double[] pos = RfSectionLayout.Spread(left.Select(t => t.Target.Y).ToArray(), left.Select(t => pitch).ToArray(), o.TagGapFt);
+            for (int i = 0; i < left.Count; i++)
+            {
+                RfTagPlan t = left[i];
+                t.Side = RfSide.Left;
+                t.Head = new RfV2(rect.MinU - o.TagOutFt - extra - t.LocalWidth / 2, pos[i]);
+            }
+            RfSectionLayout.ResolveCollisions(rect, plan.Frame, plan.Tags, o);
+        }
+
         private static RfSectionUi SectionUi(Document doc, BbMemberStandard ms, BbAnnoReport rep, string mark)
         {
             return new RfSectionUi
@@ -205,6 +263,9 @@ namespace MglBb.RevitSide
                 GroupTags = ms.SecGroupTags,
                 SingleTagPerSet = ms.SingleTagPerSet,
                 MultiLeaderPerSet = ms.SingleTagPerSet && ms.MultiLeaderPerSet,
+                MergeLeaders = ms.SingleTagPerSet && ms.MultiLeaderPerSet && ms.SecMergeLeaders,
+                LeaderLandingMm = Math.Max(0, ms.SecLeaderLandingPaperMm),
+                LeaderRunMm = Math.Max(0, ms.SecLeaderRunPaperMm),
                 ReplacePrevious = true,
                 DimTypeId = DimTypeId(doc, ms.DimType, rep, mark),
                 MainTagTypeId = TagTypeId(doc, ms.BarTagType, rep, mark),

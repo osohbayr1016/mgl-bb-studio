@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using MglBb.Core;
 
 namespace MglBb.RevitSide
@@ -53,10 +54,11 @@ namespace MglBb.RevitSide
             // ── Дэлгээс
             if (opt.Elevation)
             {
-                ViewFamilyType vft = BbGeom.FindVft(doc, ms.ElevViewType, ViewFamily.Detail);
+                List<string> want = BbCompanyRules.ElevViewTypes(kind, ms);
+                ViewFamilyType vft = BbGeom.FindVft(doc, want, ViewFamily.Detail, out bool matched);
                 if (vft == null) throw new InvalidOperationException("«Detail View» төрөл энэ төсөлд алга.");
-                if (!string.IsNullOrEmpty(ms.ElevViewType) && vft.Name != ms.ElevViewType)
-                    res.Issues.Add(Issue(mark, BbSeverity.Warning, "Стандартын дэлгээсийн төрөл «" + ms.ElevViewType + "» энэ төсөлд алга — «" + vft.Name + "»-ээр үүсгэв.",
+                if (!matched && want.Count > 0)
+                    res.Issues.Add(Issue(mark, BbSeverity.Warning, "Стандартын дэлгээсийн төрөл «" + want[0] + "» энэ төсөлд алга — «" + vft.Name + "»-ээр үүсгэв.  Төсөлд: " + BbGeom.DetailTypeNames(doc) + ".",
                         "Компанийн template-ээс тэр төрлийг (Transfer Project Standards) оруулах.", "elev-vft"));
                 View template = BbGeom.FindTemplate(doc, ms.ElevTemplate);
                 if (template == null && !string.IsNullOrEmpty(ms.ElevTemplate))
@@ -89,6 +91,8 @@ namespace MglBb.RevitSide
                     ViewSection v = CreateDetail(doc, vft, o, R, U, V, -hw, hw, -hd - below, hd + above, depth, res, mark);
                     if (v == null) continue;
                     Configure(doc, v, template, ms.ElevScale, depth, BbGeom.UniqueViewName(doc, name), res, mark);
+                    int hidden = HideForeignRebar(doc, v, chain.Members.Select(m => m.Id.Value));
+                    if (hidden > 0) res.Notes.Add("«" + v.Name + "»: энэ дамнуруунд хамааралгүй " + hidden + " арматурыг нуув.");
                     res.Elevations.Add(v);
                 }
             }
@@ -96,9 +100,13 @@ namespace MglBb.RevitSide
             // ── Огтлол
             if (opt.Sections)
             {
-                ViewFamilyType vft = BbGeom.FindVft(doc, ms.SecViewType, ViewFamily.Detail);
+                List<string> want = BbCompanyRules.SecViewTypes(kind, ms);
+                ViewFamilyType vft = BbGeom.FindVft(doc, want, ViewFamily.Detail, out bool matched);
+                if (vft != null && !matched)
+                    res.Issues.Add(Issue(mark, BbSeverity.Warning, "Стандартын огтлолын төрөл «" + want[0] + "» энэ төсөлд алга — «" + vft.Name + "»-ээр үүсгэв.  Төсөлд: " + BbGeom.DetailTypeNames(doc) + ".",
+                        "Компанийн template-ээс тэр төрлийг (Transfer Project Standards) оруулах.", "sec-vft"));
                 View template = BbGeom.FindTemplate(doc, ms.SecTemplate);
-                var member = new BbSpan(BbGeom.ToMm(chain.S0), BbGeom.ToMm(chain.S1));
+                var member =new BbSpan(BbGeom.ToMm(chain.S0), BbGeom.ToMm(chain.S1));
                 List<BbSpan> spans = BbLayoutMath.ClearSpans(member, chain.Supports);
                 bool atSup = opt.SectionMode != "mid", atMid = opt.SectionMode != "supports";
                 List<double> stations = BbLayoutMath.SectionStations(member, spans, chain.Supports, ms.SecSupportOffsetMm, ms.SecSupportRatio, atSup, atMid, ms.SecMinGapMm,
@@ -136,8 +144,12 @@ namespace MglBb.RevitSide
                     BoundingBoxXYZ hb = host.get_BoundingBox(null);
                     var f = new BbFrame { O = new XYZ(onAxis.X, onAxis.Y, (chain.Bottom + chain.Top) / 2), R = R, U = U, V = V };
                     f.Extent(hb, out XYZ a, out XYZ b);
-                    double side = BbGeom.Ft(ms.SecCropSideMm), below = BbGeom.Ft(ms.SecCropBelowMm), above = BbGeom.Ft(ms.SecCropAboveMm);
-                    ViewSection v = CreateDetail(doc, vft, f.O, R, U, V, a.X - side, b.X + side, a.Y - below, b.Y + above, BbGeom.Ft(ms.SecFarMm), res, mark);
+                    // Crop: ЭНЭ гишүүний нүүрнээс бүх талдаа ижил зай (дээд/доод = хажуугийнх — BbCompanyRules) — ББ инженерийн шаардлага 2026-10-21.
+                    // Огтлолын тэмдгийн төлөө crop-ыг ТОМРУУЛАХГҮЙ: Revit тэмдгийн шугамыг crop-оор, толгойг crop-ын ирмэгээс family-ийн тогтмол
+                    // зайд зурдаг (Revit 2027-д хэмжсэн: crop-ыг өөрчлөхөд тэмдэг дагадаг, толгой ирмэгээс ≈ 1057 мм / 1:50) — тэр зай бол «crop-оос».
+                    double side = BbGeom.Ft(ms.SecCropSideMm);
+                    double u0 = a.Y - BbGeom.Ft(ms.SecCropBelowMm), u1 = b.Y + BbGeom.Ft(ms.SecCropAboveMm);
+                    ViewSection v = CreateDetail(doc, vft, f.O, R, U, V, a.X - side, b.X + side, u0, u1, BbGeom.Ft(ms.SecFarMm), res, mark);
                     if (v == null) continue;
                     Configure(doc, v, template, ms.SecScale, BbGeom.Ft(ms.SecFarMm), BbGeom.UniqueViewName(doc, name), res, mark);
                     res.Sections.Add(v);
@@ -162,6 +174,28 @@ namespace MglBb.RevitSide
         private static bool Exists(Document doc, string name)
         {
             return new FilteredElementCollector(doc).OfClass(typeof(View)).Cast<View>().Any(v => !v.IsTemplate && v.Name == name);
+        }
+
+        /// <summary>
+        /// Дэлгээсэд харагдах, хост нь <paramref name="hostIds"/>-д БАЙХГҮЙ арматурыг (хөндлөн дамнуруу, багана, хучилт, бүлгийн арматур) ЭНЭ
+        /// харагдацад нууна (ББ инженерийн шаардлага 2026-10-21).  Буцаах: нуусан тоо.
+        /// </summary>
+        internal static int HideForeignRebar(Document doc, View view, IEnumerable<long> hostIds)
+        {
+            var mine = new HashSet<long>(hostIds);
+            var hide = new List<ElementId>();
+            doc.Regenerate();
+            foreach (Element e in new FilteredElementCollector(doc, view.Id).WherePasses(new ElementMulticlassFilter(new List<Type> { typeof(Rebar), typeof(RebarInSystem) })))
+            {
+                try
+                {
+                    ElementId host = e is Rebar r ? r.GetHostId() : ((RebarInSystem)e).GetHostId();
+                    if (!mine.Contains(host.Value) && e.CanBeHidden(view)) hide.Add(e.Id);
+                }
+                catch { }
+            }
+            if (hide.Count == 0) return 0;
+            try { view.HideElements(hide); return hide.Count; } catch { return 0; }
         }
 
         /// <summary>
@@ -247,6 +281,7 @@ namespace MglBb.RevitSide
             }
             catch { }
             try { v.CropBoxActive = true; } catch { }
+            BbCrop.AnnotationCropOff(v);
         }
 
         private static BbIssue Issue(string mark, BbSeverity sev, string problem, string proposal, string code)
