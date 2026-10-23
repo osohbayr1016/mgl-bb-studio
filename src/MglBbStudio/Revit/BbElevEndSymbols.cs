@@ -49,6 +49,13 @@ namespace MglBb.RevitSide
             Dictionary<string, RfPlacedEnd> placed;
             try { placed = RfEndSymbolStore.Previous(doc, view); } catch { return; }
             var marked = new HashSet<string>(placed.Values.Select(p => p.RebarUid), StringComparer.Ordinal);
+            // Гараар (хуулж) тавьсан тэмдэг ч тооцогдоно — ДН-5: доод #2-ын 4 үзүүрт гараар, бүртгэлгүй (арматурын үзүүрээс 0 мм).
+            var tool = new HashSet<long>(placed.Values.Where(p => p.Instance != null).Select(p => p.Instance.Id.Value));
+            var manual = new List<KeyValuePair<XYZ, FamilyInstance>>();
+            foreach (FamilyInstance fi in new FilteredElementCollector(doc).OwnedByView(view.Id).OfClass(typeof(FamilyInstance)).Cast<FamilyInstance>())
+                if (!tool.Contains(fi.Id.Value) && fi.Location is LocationPoint lp) manual.Add(new KeyValuePair<XYZ, FamilyInstance>(f.Local(lp.Point), fi));
+            FamilyInstance manualHit = null;
+            double near = BbGeom.Ft(1.5 * sc);
             int bars = 0;
             foreach (Rebar rb in new FilteredElementCollector(doc, view.Id).OfClass(typeof(Rebar)).Cast<Rebar>())
             {
@@ -56,10 +63,15 @@ namespace MglBb.RevitSide
                 BbBarRole? layer = BbElevRules.Layer(rb, f, hu0, hu1);
                 if (layer == null) continue;
                 bars++;
-                s.Bool(k + "ElevEndSym" + (layer == BbBarRole.Top ? "Top" : layer == BbBarRole.Bottom ? "Bottom" : "Side"), marked.Contains(rb.UniqueId));
+                FamilyInstance hit = manual.Count > 0 ? EndsNear(rb, f, manual, near) : null;
+                if (hit != null && manualHit == null) manualHit = hit;
+                bool has = marked.Contains(rb.UniqueId) || hit != null;
+                s.Bool(k + "ElevEndSym" + (layer == BbBarRole.Top ? "Top" : layer == BbBarRole.Bottom ? "Bottom" : "Side"), has);
             }
             if (bars == 0) return;
-            s.Bool(k + "ElevEndSymbols", placed.Count > 0);
+            // ТДН-4: бүх тэмдэг гараар (бүртгэлгүй) — тэр ч тэмдэг тавьдаг гэсэн үг; төрлийг тэр instance-аас.
+            s.Bool(k + "ElevEndSymbols", placed.Count > 0 || manualHit != null);
+            if (placed.Count == 0 && manualHit != null) s.Str(k + "ElevEndSymbolType", manualHit.Symbol.FamilyName + " : " + manualHit.Symbol.Name);
             foreach (RfPlacedEnd p in placed.Values)
             {
                 if (p.IsMarker || p.Instance == null) continue;
@@ -74,6 +86,27 @@ namespace MglBb.RevitSide
                 s.Num(k + pre + (p.Kind == RfEndKind.Start ? "StartDeg" : "EndDeg"), deg);
                 if (rb != null && rb.NumberOfBarPositions > 1) s.Bool(k + "ElevEndSymFront", p.BarIndex == FrontIndex(rb, f));
             }
+        }
+
+        /// <summary>Арматурын аль нэг ширхгийн тэнхлэгийн үзүүрт (<paramref name="tol"/> дотор) гараар тавьсан тэмдэг байгаа эсэх.</summary>
+        private static FamilyInstance EndsNear(Rebar rb, BbFrame f, List<KeyValuePair<XYZ, FamilyInstance>> pts, double tol)
+        {
+            try
+            {
+                int n = Math.Min(rb.NumberOfBarPositions, 60);
+                for (int i = 0; i < n; i++)
+                {
+                    IList<Curve> cs = rb.GetTransformedCenterlineCurves(false, true, true, MultiplanarOption.IncludeOnlyPlanarCurves, i);
+                    if (cs.Count == 0) continue;
+                    foreach (XYZ e in new[] { f.Local(cs[0].GetEndPoint(0)), f.Local(cs[cs.Count - 1].GetEndPoint(1)) })
+                    {
+                        var hit = pts.FirstOrDefault(p => Math.Abs(p.Key.X - e.X) < tol && Math.Abs(p.Key.Y - e.Y) < tol);
+                        if (hit.Value != null) return hit.Value;
+                    }
+                }
+            }
+            catch { }
+            return null;
         }
 
         /// <summary>⚠️ Нээлттэй Transaction-гүй үед (хэрэгсэл өөрөө TransactionGroup нээнэ).  Тавьсан тэмдгийн тоо.</summary>

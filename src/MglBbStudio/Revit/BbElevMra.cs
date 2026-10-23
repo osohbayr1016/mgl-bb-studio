@@ -195,6 +195,13 @@ namespace MglBb.RevitSide
                 MinTagGapFt = ft(1.5),
             };
             BbMraLayout.Plan(zones, cursor, rules);
+            // Хамгийн гадна эгнээ доод нүүрнээс StirrupDimOffsetPaperMm-ээс ойр биш (ДН-5: инженер 17.2 → 22.7 мм; бүс хоорондын хэмжээс мөн энэ эгнээнд).
+            if (ms.StirrupDimOffsetPaperMm > 0)
+            {
+                double pin = c.Input.BeamV0 - ft(ms.StirrupDimOffsetPaperMm);
+                double far = zones.Min(z => z.LineV);
+                if (far > pin) foreach (BbMraZone z in zones) { z.LineV -= far - pin; z.HeadV -= far - pin; }
+            }
 
             // Хөдөлгүүрийн MRA-г устгаж шинээр үүсгэнэ.
             double oldLowest = plan.Mras.Min(m => Math.Min(m.LineV, m.Head.Y - m.Height / 2));
@@ -218,7 +225,8 @@ namespace MglBb.RevitSide
             }
 
             // Тэнхлэгийн гинжийг шинэ MRA-ийн гадна (нэг алхамын зайтай).
-            double newLowest = zones.Min(z => Math.Min(z.LineV, z.HeadV + z.DB));
+            // Толгой шугамаас гишүүн рүү бол шугам л хамгийн гадна (хэмжсэн DB нь шугамаас доош 275 мм — ДН-5 тэнхлэг 48 мм-т гарч байв, инженер 42).
+            double newLowest = zones.Min(z => z.HeadV >= z.LineV ? z.LineV : Math.Min(z.LineV, z.HeadV + z.DB));
             var spanLines = plan.Spans.Where(s => s.LineV < c.Input.BeamV0).Select(s => s.LineV).ToList();
             if (spanLines.Count > 0)
             {
@@ -338,6 +346,16 @@ namespace MglBb.RevitSide
             var tags = r.Created.Select(id => c.Doc.GetElement(id)).OfType<IndependentTag>().ToList();
             double wDefault = plan != null && plan.Tags.Count > 0 ? plan.Tags.Select(t => t.Width).OrderBy(x => x).ElementAt(plan.Tags.Count / 2) : RfTol.PaperMmToModelFt(12, scale);
             var moves = new List<MidMove>();
+            var faceTop = new List<MidMove>();
+            var faceBot = new List<MidMove>();
+            // Дунд өндрийн (бөөр) арматурын шошго дунд эгнээнд биш үед (туслах дамнуруу) — ДООД эгнээнд (ЖИШЭЭ 3 ТДН-1-5/1-6: хөдөлгүүр яг дунд
+            // өндрийн ⌀12-ыг дээд талд тавьж байсан, инженер хоёуланд нь доор).
+            if (plan != null && !ms.ElevSideTags)
+                foreach (RfElevTagPlan t in plan.Tags.Where(t => t.Side == RfElevSide.Top && IsSide(c, t.Anchor.Y)))
+                {
+                    IndependentTag tag = tags.FirstOrDefault(x => Tagged(x).Contains(t.BarId));
+                    if (tag != null) faceBot.Add(new MidMove { Tag = tag, Cx = t.Anchor.X, Dir = 1, Anchor = t.Anchor });
+                }
             if (plan != null && ms.ElevSideTags)
             {
                 foreach (RfElevTagPlan t in plan.Tags.OrderBy(t => t.Anchor.X))
@@ -345,13 +363,47 @@ namespace MglBb.RevitSide
                     if (!IsSide(c, t.Anchor.Y)) continue;
                     IndependentTag tag = tags.FirstOrDefault(x => Tagged(x).Contains(t.BarId));
                     if (tag == null) continue;
+                    // Нугалсан арматурын bbox-ын зангуу дунд өндөрт буудаг (ДН-5 #6 Г хэлбэр) — гол шулуун хэсэг нь дээд/доод нүүрэнд бол тэр талын
+                    // шошгоны эгнээнд, leader шулуун хэсгийн голд (инженер ингэж зассан).
+                    if (c.Rebars.TryGetValue(t.BarId, out Rebar rb) && MainMid(c, rb, out RfV2 mm) && !IsSide(c, mm.Y))
+                    {
+                        (mm.Y > row.Mid ? faceTop : faceBot).Add(new MidMove { Tag = tag, Cx = mm.X, Dir = 1, Anchor = mm });
+                        continue;
+                    }
                     double cx = row.Place(t.Anchor.X, t.Width, out double dir);
                     moves.Add(new MidMove { Tag = tag, Cx = cx, Dir = dir, Anchor = t.Anchor });
                 }
             }
             if (ms.ElevTagOtherBars && ui.BarTagTypeId != ElementId.InvalidElementId)
                 TagOtherBars(c, r, ui, row, wDefault, rep, moves);
-            return ApplyMid(c, row, moves);
+            int n = ApplyMid(c, row, moves);
+            double off = RfTol.PaperMmToModelFt(Math.Max(0, ms.TagOffsetPaperMm), scale);
+            foreach (bool top in new[] { true, false })
+            {
+                List<MidMove> fm = top ? faceTop : faceBot;
+                if (fm.Count == 0) continue;
+                RfElevSide side = top ? RfElevSide.Top : RfElevSide.Bottom;
+                List<double> heads = plan.Tags.Where(t => t.Side == side && !IsSide(c, t.Anchor.Y)).Select(t => t.Head.Y).ToList();
+                double v = heads.Count > 0 ? (top ? heads.Max() : heads.Min()) : top ? v1 + off : v0 - off;
+                n += ApplyMid(c, new MidRow { Mid = v, Run = row.Run, Gap = row.Gap }, fm);
+            }
+            return n;
+        }
+
+        /// <summary>Арматурын хамгийн урт шулуун хэсгийн дунд цэг (гишүүний frame).</summary>
+        private static bool MainMid(RfElevContext c, Rebar rb, out RfV2 p)
+        {
+            p = default(RfV2);
+            Line best = null;
+            try
+            {
+                foreach (Curve cv in rb.GetTransformedCenterlineCurves(false, true, true, MultiplanarOption.IncludeOnlyPlanarCurves, 0))
+                    if (cv is Line l && (best == null || l.Length > best.Length)) best = l;
+            }
+            catch { }
+            if (best == null) return false;
+            p = c.Frame.ToView(RfConv.V(best.Evaluate(0.5, true)));
+            return true;
         }
 
         private sealed class MidRow

@@ -93,6 +93,14 @@ namespace MglBb.RevitSide
                 if (!_owned.TryGetValue(ov, out List<Element> l)) _owned[ov] = l = new List<Element>();
                 l.Add(e);
             }
+            // Заасан (цөөн) харагдацад ХАРАГДАХ тэмдэглэгээг л — ЖИШЭЭ 3-т өмнөх ажиллагааны нуугдсан хэмжээс/шошго үлдсэн (ТДН-1-11: давхцал
+            // 11 мм-ийн оронд нуугдсан 9 мм сурагдаж байв).  Бүх харагдацын горимд (720+) харагдацын цуглуулга удаан тул хийхгүй.
+            if (only != null)
+                foreach (long ov in _owned.Keys.ToList())
+                {
+                    var vis = new HashSet<long>(new FilteredElementCollector(doc, new ElementId(ov)).ToElementIds().Select(x => x.Value));
+                    _owned[ov] = _owned[ov].Where(e => vis.Contains(e.Id.Value)).ToList();
+                }
 
             foreach (BbViewSample v in used)
             {
@@ -530,7 +538,7 @@ namespace MglBb.RevitSide
                 XYZ o = f.Local(line.Origin);
                 bool hasRebar = false, hasStdBar = false;
                 var refBars = new List<Rebar>();
-                int grids = 0, others = 0, stirrupRefs = 0, colRefs = 0;
+                int grids = 0, others = 0, stirrupRefs = 0, colRefs = 0, beamRefs = 0;
                 try
                 {
                     foreach (Reference rf in d.References)
@@ -550,6 +558,8 @@ namespace MglBb.RevitSide
                         }
                         else if (re is Grid) grids++;
                         else if (re?.Category != null && re.Category.Id.Value == (long)BuiltInCategory.OST_StructuralColumns) colRefs++;
+                        // Тулгуур дамнуруу (огтлолоор) — баганатай адил тулгуур (ЖИШЭЭ 3 ТДН-1-5: гинж тулгуур дамнуурын нүүрээр эхэлдэг).
+                        else if (re?.Category != null && re.Category.Id.Value == (long)BuiltInCategory.OST_StructuralFraming && re.Id != v.Host.Id) { colRefs++; beamRefs++; }
                         else others++;
                     }
                 }
@@ -558,10 +568,25 @@ namespace MglBb.RevitSide
                 if (!v.IsSection && !column && !inMra)
                 {
                     // Хомутын эгнээний бүс хоорондын хэмжээс: зөвхөн хомут (+ баганын нүүр) — «хомут | хомут», «хомут | нүүр | нүүр | хомут».
-                    if (stirrupRefs > 0 && !hasStdBar && grids == 0 && others == 0) stirrupGap = true;
-                    // Дээд үеийн гинж: тэнхлэг + ажлын арматурын үзүүр (+ дамнурууны төгсгөл) нэг хэмжээсэнд.
-                    if (grids > 0) gridAny = true;
-                    if (grids > 0 && hasStdBar && stirrupRefs == 0) topChain = true;
+                    // Тулгуурын нүүртэй хомутын хэмжээс — дотор нь тэнхлэг оруулсан эсэх (ДДН-3 тийм, ДН-5 үгүй).
+                    if (stirrupRefs > 0 && !hasStdBar && others == 0 && colRefs > 0) s.Bool(k + "ElevGapGrid", grids > 0);
+                    // Тэнхлэгийн гинж: тулгуурын нүүр хүртэл (ДДН-3 «… | 550») эсвэл зөвхөн тэнхлэг (ДН-5 «6000 | 6000», ТДН-1-9/1-11).
+                    if (refBars.Count == 0 && grids >= 2 && others == 0) s.Bool(k + "ElevGridChainToSupport", colRefs > 0);
+                    if (stirrupRefs > 0 && !hasStdBar && grids == 0 && others == 0)
+                    {
+                        stirrupGap = true;
+                        // Богино бүсийн (≤ 3 ширхэг) хажуугийн зай — инженер тавьсан бол сурна (ЖИШЭЭ 3 ТДН-1-9).
+                        if (refBars.Any(b => b.NumberOfBarPositions <= 4)) s.Bool(k + "ElevStirrupGapsShort", true);   // ТДН-1-9: олонлог 4, харагдах 3
+                    }
+                    // Дээд үеийн гинж: ажлын арматурын үзүүр + тэнхлэг ЭСВЭЛ тулгуурын нүүр (тэнхлэггүй ч болно — ЖИШЭЭ 3 ТДН-1-5), хомутгүй.
+                    bool chainLike = (grids > 0 || colRefs > 0) && hasStdBar && stirrupRefs == 0;
+                    if (grids > 0 || chainLike) gridAny = true;
+                    if (chainLike)
+                    {
+                        topChain = true;
+                        // Тулгуурын нүүрээс эхэлсэн гинж (тэнхлэггүй) — тэнхлэгийг гинжинд оруулахгүй гэсэн инженерийн сонголт.
+                        if (colRefs > 0) s.Bool(k + "ElevTopChainGrids", grids > 0);
+                    }
                     others += colRefs;
                     // Давхцал = хоёр ажлын арматурын хэмжээс; тэнхлэгийн гинж = зөвхөн тэнхлэгүүд (2 = нийт урт, 3+ = гинж).
                     if (refBars.Count == 2 && grids == 0 && others == 0 && hasStdBar)
@@ -580,7 +605,9 @@ namespace MglBb.RevitSide
                     bool along = column ? du > 0.99 : dr > 0.99;
                     if (!along) continue;
                     double pos = column ? o.X : o.Y;
-                    double lo = column ? r0 : u0, hi = column ? r1 : u1;
+                    // Дамнуруу: дээд талын зай ҮНДСЭН гишүүний дээд нүүрнээс (ижил тэмдэгтэй өөр гишүүн crop-д өндөр байвал 2 мм бага сурагдаж байв —
+                    // ЖИШЭЭ 3 ТДН-1-11: давхцал 11 → 9).
+                    double lo = column ? r0 : u0, hi = column ? r1 : hu1;
                     string side = pos < lo ? "lo" : pos > hi ? "hi" : "in";
                     if (side == "in") continue;
                     double off = BbGeom.ToMm(side == "lo" ? lo - pos : pos - hi) / sc;
@@ -637,7 +664,9 @@ namespace MglBb.RevitSide
                 {
                     List<double> rows = Distinct(kv.Value, 2.0);
                     if (rows.Count == 0) continue;
-                    s.Num(k + "ElevDimFirstPaperMm", rows[0]);
+                    // Дамнуруу: эхний эгнээ = ДЭЭД талын (давхцлын) эгнээ.  Доод талынх MRA/тэнхлэгийн ард (ДН-5: 22.7) — дундаж нь 9.5 ба 22.7-ийн
+                    // хооронд 16 болж давхцлыг шошгоноос нэг алхам хол түлхэж байв.
+                    if (column || kv.Key == "hi") s.Num(k + "ElevDimFirstPaperMm", rows[0]);
                     for (int i = 1; i < rows.Count; i++) if (rows[i] - rows[i - 1] < 20) s.Num(k + "DimPitchPaperMm", rows[i] - rows[i - 1]);
                 }
             }

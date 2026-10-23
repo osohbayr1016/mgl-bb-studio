@@ -130,6 +130,7 @@ namespace MglBb.RevitSide
                 HashSet<long> before = BbAnnoStore.Owned(doc, view);
                 bool any = false;
                 var done = new List<RfElevContext>();
+                var plans = new Dictionary<RfElevContext, RfElevPlan>();
                 foreach (RfElevContext ctx in Contexts(doc, view, hosts, ui))
                 {
                     // Компанийн загвар: давхар хомутыг нэг болгож, өөр байрлалын ижил дугаартай арматурыг тусад нь шошголно (хөдөлгүүрийн ОРОЛТ).
@@ -141,13 +142,16 @@ namespace MglBb.RevitSide
                     if (!ctx.IsColumn)
                     {
                         // Инженерийн дүрэм (сурсан): илүүдэл давхцал / нийт уртыг MRA байрлуулахаас ӨМНӨ хасна.
+                        BbElevRules.RetargetHiddenBars(ctx, r);
                         BbElevRules.Prune(ctx, r, ms);
+                        BbElevRules.TopLapRow(ctx, r, ms);
                         rep.ElevSideTags += BbElevMra.MidTags(ctx, r, ui, ms, rep);
                         if (ms.ElevMraLayout && r.Mras > 0) mras = BbElevMra.RelayoutMras(ctx, r, ui, ms, rep, mark);
                         // Шошгоны хэвтээ landing + хугарал (сурсан тал/зай).
                         BbElevLeaders.Apply(ctx, r, ms);
                     }
                     done.Add(ctx);
+                    if (r.Plan != null) plans[ctx] = r.Plan;
                     rep.ElevTags += r.Tags;
                     rep.ElevMras += mras;
                     rep.ElevLaps += r.Laps;
@@ -160,13 +164,24 @@ namespace MglBb.RevitSide
                 if (any) rep.ElevSpans += BbElevStirrupDims.Place(doc, view, done, ms, ui.DimTypeId, rep, mark);
                 // Дээд үеийн гинж (дамнурууны төгсгөл | тэнхлэг | дээд ажлын арматурын таслах цэг) — давхцлын эгнээнээс нэг алхам дээш.
                 Element mainHost = done.Where(c => !c.IsColumn).OrderByDescending(c => c.Input.Stirrups.Count).Select(c => c.Host).FirstOrDefault();
-                if (any && mainHost != null) rep.ElevSpans += BbElevTopChain.Place(doc, view, done, mainHost, ms, ui.DimTypeId, rep, mark);
+                if (any && mainHost != null) rep.ElevSpans += BbElevTopChain.Place(doc, view, done, mainHost, ms, ui.DimTypeId, rep, mark, plans);
+                // Дээд шошгыг давхцал/гинжийн туслах шугам дайрвал арматурын дагуу зөөнө (гинж шошгоны дараа зурагддаг).
+                if (any && mainHost != null) BbElevLeaders.AvoidWitness(doc, view, done.First(c => c.Host.Id == mainHost.Id));
+                BbElevStirrupDims.Restore(doc, view);
                 if (any)
                 {
                     BbAnnoStore.Record(doc, view, before);
-                    t.Commit();
-                    rep.Views++;
-                    committed = true;
+                    BbSwallowWarnings.LastErrors.Clear();
+                    TransactionStatus ts = t.Commit();
+                    if (ts == TransactionStatus.Committed)
+                    {
+                        rep.Views++; committed = true;
+                        if (BbSwallowWarnings.LastErrors.Count > 0)
+                            rep.Issues.Add(Issue(mark, view, BbSeverity.Warning, "Revit " + BbSwallowWarnings.LastErrors.Count + " хэмжээсийг хүчингүй лавлагаатай гэж засав/хасав: " + string.Join(" | ", BbSwallowWarnings.LastErrors.Take(3)),
+                                "Тэр хэмжээсийг гараар шалгах.", "elev-resolved"));
+                    }
+                    else rep.Issues.Add(Issue(mark, view, BbSeverity.Error, "Тэмдэглэгээ Revit-ийн алдаагаар буцаагдсан (" + ts + "): " + string.Join(" | ", BbSwallowWarnings.LastErrors.Take(5)),
+                        "Алдааны элементийг шалгах.", "elev-rollback"));
                 }
                 // Шинэ тэмдэглэгээ үүсээгүй бол өмнөхийг ч устгахгүй (буруу ангилал/хоосон үр дүн хэрэглэгчийн зургийг арилгахгүй).
                 else t.RollBack();
@@ -175,6 +190,14 @@ namespace MglBb.RevitSide
             if (committed) BbElevEndSymbols.Apply(doc, view, hosts, ms, rep, mark);
             // Break line: crop-ын ирмэгийг дайрсан дамнуруу (зүүн/баруун) ба багана (дээд/доод) — огтлолын хучилтынхтай ижил family/зай.
             if (committed && hosts.Count > 0 && !(hosts[0].Category?.Id.Value == (long)BuiltInCategory.OST_StructuralColumns)) BbBreaks.Elevation(doc, view, ms, rep, mark);
+            // CUT_EDGE-тэй хэмжээсийг дараагийн transaction-уудын Regenerate дахин шилжүүлдэг (ЖИШЭЭ 3 ТДН-1-11: гинж 975 → -1869) — эцэст нь дахин.
+            if (committed)
+                using (var tr = new Transaction(doc, "MGL ББ: хэмжээсийн байрлал"))
+                {
+                    tr.Start();
+                    int moved = BbElevStirrupDims.Restore(doc, view);
+                    if (moved > 0) tr.Commit(); else tr.RollBack();
+                }
         }
 
         /// <summary>
@@ -338,11 +361,25 @@ namespace MglBb.RevitSide
     /// <summary>Анхааруулгыг чимээгүй устгана (тэмдэглэгээ үүсгэхэд Revit-ийн «давхцсан» г.м.).  Алдааг хөндөхгүй.</summary>
     internal sealed class BbSwallowWarnings : IFailuresPreprocessor
     {
+        /// <summary>Сүүлийн transaction-ийн АЛДАА (анхааруулга биш) — commit буцаагдсан шалтгааныг тайлагнахад.</summary>
+        [ThreadStatic] public static List<string> LastErrorsStore;
+        public static List<string> LastErrors { get { return LastErrorsStore ?? (LastErrorsStore = new List<string>()); } }
+
         public FailureProcessingResult PreprocessFailures(FailuresAccessor fa)
         {
+            bool resolved = false;
             foreach (FailureMessageAccessor m in fa.GetFailureMessages())
-                if (m.GetSeverity() == FailureSeverity.Warning) fa.DeleteWarning(m);
-            return FailureProcessingResult.Continue;
+            {
+                if (m.GetSeverity() == FailureSeverity.Warning) { fa.DeleteWarning(m); continue; }
+                try { LastErrors.Add(m.GetDescriptionText() + " [" + string.Join(",", m.GetFailingElementIds().Select(x => x.Value)) + "]"); } catch { }
+                // Хэмжээсийн лавлагаа хүчингүй (ЖИШЭЭ 3 ТДН-1-5: налуу тулгуур) — Revit-ийн шийдлээр тэр хэмжээсийг л засах/устгах; бүх тэмдэглэгээ
+                // буцаагдахгүй.
+                if (m.GetSeverity() == FailureSeverity.Error && m.HasResolutions())
+                {
+                    try { fa.ResolveFailure(m); resolved = true; } catch { }
+                }
+            }
+            return resolved ? FailureProcessingResult.ProceedWithCommit : FailureProcessingResult.Continue;
         }
     }
 }

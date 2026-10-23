@@ -39,6 +39,90 @@ namespace MglBb.RevitSide
             return BbTagRoles.Layer(u, u0, u1);
         }
 
+        /// <summary>
+        /// Хөдөлгүүр шошгыг олонлогийн 0-р ширхэгт (…:2000000:SUBELEMENT) холбодог — ЖИШЭЭ 3-ын туслах дамнуурын харагдацад (гүн 148 мм) тэр
+        /// ширхгийн шошго ХАРАГДДАГГҮЙ, зөвхөн дунд ширхгийнх харагддаг (инженер ч 2000001-д; ширхэг бүр геометрээрээ зурагддаг ч — хэмжсэн).
+        /// Урьдчилан таах дүрэм олдоогүй тул туршина: харагдахгүй шошгыг дунд ширхэгт, тэр ч үгүй бол бусад ширхэгт дахин үүсгэнэ (байрлал,
+        /// leader хэвээр); <c>r.Created</c>-ийг шинэчилнэ.  Харагдацын цуглуулга (view-ийг дахин тооцдог) — оролдлого бүрд НЭГ удаа.
+        /// </summary>
+        public static int RetargetHiddenBars(RfElevContext c, RfElevReport r)
+        {
+            Document doc = c.Doc;
+            View view = c.View;
+            var pending = new List<KeyValuePair<ElementId, int>>();   // шошго → дараагийн оролдлогын дугаар
+            foreach (ElementId id in r.Created) if (doc.GetElement(id) is IndependentTag) pending.Add(new KeyValuePair<ElementId, int>(id, 0));
+            if (pending.Count == 0) return 0;
+            int n = 0;
+            for (int round = 0; round < 4 && pending.Count > 0; round++)
+            {
+                doc.Regenerate();
+                var visible = new HashSet<long>(new FilteredElementCollector(doc, view.Id).OfClass(typeof(IndependentTag)).ToElementIds().Select(x => x.Value));
+                var next = new List<KeyValuePair<ElementId, int>>();
+                foreach (var kv in pending)
+                {
+                    if (visible.Contains(kv.Key.Value) || !(doc.GetElement(kv.Key) is IndependentTag t)) continue;
+                    Reference rf = t.GetTaggedReferences().FirstOrDefault();
+                    if (rf == null || !(doc.GetElement(rf.ElementId) is Rebar rb)) continue;
+                    string rep;
+                    try { rep = rf.ConvertToStableRepresentation(doc); } catch { continue; }
+                    var m = System.Text.RegularExpressions.Regex.Match(rep, @":(\d+):SUBELEMENT$");
+                    if (!m.Success) continue;
+                    int cur = int.Parse(m.Groups[1].Value) - 2000000, cnt = rb.NumberOfBarPositions;
+                    // Оролдлогын дараалал: дунд, дараа нь бусад (одоогийнхоос бусад).
+                    var order = new List<int> { (cnt - 1) / 2 };
+                    for (int i = 0; i < cnt; i++) if (!order.Contains(i)) order.Add(i);
+                    order.Remove(cur);
+                    if (kv.Value >= order.Count) continue;
+                    int vis = order[kv.Value];
+                    try
+                    {
+                        Reference nr = Reference.ParseFromStableRepresentation(doc, rep.Substring(0, m.Index) + ":" + (2000000 + vis) + ":SUBELEMENT");
+                        XYZ head = t.TagHeadPosition;
+                        bool free = t.HasLeader && t.LeaderEndCondition == LeaderEndCondition.Free;
+                        XYZ end = free ? t.GetLeaderEnd(rf) : null;
+                        IndependentTag nt = IndependentTag.Create(doc, t.GetTypeId(), view.Id, nr, t.HasLeader, t.TagOrientation, head);
+                        doc.Delete(t.Id);
+                        // Create-ийн цэг leader-тэй үед толгой биш (ЖИШЭЭ 3: дээд шошго 200-ийн оронд 684-т) — дараа нь шууд онооно.
+                        if (free) { nt.LeaderEndCondition = LeaderEndCondition.Free; nt.SetLeaderEnd(nr, end); }
+                        nt.TagHeadPosition = head;
+                        int k = r.Created.IndexOf(kv.Key);
+                        if (k >= 0) r.Created[k] = nt.Id; else r.Created.Add(nt.Id);
+                        next.Add(new KeyValuePair<ElementId, int>(nt.Id, kv.Value + 1));
+                        n++;
+                    }
+                    catch { }
+                }
+                pending = next;
+            }
+            return n;
+        }
+
+        /// <summary>
+        /// Дээд талын давхцлын эгнээ = дээд нүүрнээс <see cref="BbMemberStandard.ElevDimFirstPaperMm"/> (ДН-5: 9.5 мм).  Хөдөлгүүр давхцлыг шошгоны
+        /// эгнээнээс БҮТЭН алхам гадна (18.5) тавьдаг — шошго ба давхцал хэвтээ чиглэлд давхцдаггүй тул инженер шошгоны дээр шууд тавьдаг.
+        /// </summary>
+        public static int TopLapRow(RfElevContext c, RfElevReport r, BbMemberStandard ms)
+        {
+            RfElevPlan plan = r?.Plan;
+            if (plan == null || c.IsColumn || ms.ElevDimFirstPaperMm <= 0) return 0;
+            List<RfElevLapPlan> laps = plan.Laps.Where(l => l.Side == RfElevSide.Top).ToList();
+            if (laps.Count == 0) return 0;
+            int scale = c.View.Scale > 0 ? c.View.Scale : 50;
+            double want = c.Input.BeamV1 + RfTol.PaperMmToModelFt(ms.ElevDimFirstPaperMm, scale);
+            double tol = BbGeom.Ft(5);
+            var lines = laps.Select(l => l.LineV).Where(v => Math.Abs(v - want) > tol).Distinct().ToList();
+            int n = 0;
+            foreach (ElementId id in r.Created)
+            {
+                if (!(c.Doc.GetElement(id) is Dimension d) || d is SpotDimension || !(d.Curve is Line l)) continue;
+                double v = c.Frame.ToView(RfConv.V(l.Origin)).Y;
+                if (!lines.Any(x => Math.Abs(x - v) < tol)) continue;
+                try { ElementTransformUtils.MoveElement(c.Doc, d.Id, c.Model(0, want) - c.Model(0, v)); n++; } catch { }
+            }
+            foreach (RfElevLapPlan lp in laps) lp.LineV = want;
+            return n;
+        }
+
         /// <summary>Хөдөлгүүрийн зурсан илүүдэл давхцал / нийт уртыг устгаж төлөвлөгөөнөөс хасна (Transaction дотор).  Хассан тоо.</summary>
         public static int Prune(RfElevContext c, RfElevReport r, BbMemberStandard ms)
         {

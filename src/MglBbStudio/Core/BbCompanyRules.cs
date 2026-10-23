@@ -44,6 +44,9 @@ namespace MglBb.Core
                 ms.SecBarChain = false;
                 ms.SecTagsLeft = true;
             }
+            // Туслах дамнурууны дээд гинжинд тэнхлэг оруулахгүй (ББ инженер 2026-10-23; ТДН-1-11 дээр завсрын Ax-ууд байсан ч).
+            if (std.BeamAux != null) std.BeamAux.ElevTopChainGrids = false;
+            // ElevGridChainToSupport, ElevGapGrid — СУРНА (turshilt1 ДН-5 ба ЖИШЭЭ 3 ДДН-3 хоёр өөр — төсөл бүрийн инженерийн хэв маяг).
             // Дамнурууны огтлолын crop: дээд/доод нүүрнээс ХАЖУУГИЙН зайтай ижил (ББ инженерийн шаардлага 2026-10-21) — plugin-ий үүсгэсэн огтлолоос
             // сурахад томорсон crop (≈ 500 мм) буцаж сурагдах давталтыг таслана.
             foreach (BbMemberStandard ms in new[] { std.Beam, std.BeamAux })

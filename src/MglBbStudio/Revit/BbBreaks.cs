@@ -50,8 +50,13 @@ namespace MglBb.RevitSide
         public static List<FamilySymbol> Symbols(Document doc, string family)
         {
             string key = BbCompanyRules.Norm(family ?? "");
-            return new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_DetailComponents).WhereElementIsElementType().OfType<FamilySymbol>()
-                .Where(fs => BbCompanyRules.Norm(fs.FamilyName ?? "") == key).ToList();
+            List<FamilySymbol> all = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_DetailComponents).WhereElementIsElementType().OfType<FamilySymbol>().ToList();
+            List<FamilySymbol> res = all.Where(fs => BbCompanyRules.Norm(fs.FamilyName ?? "") == key).ToList();
+            if (res.Count > 0) return res;
+            // Өөр төсөлд нэр нь бага зэрэг өөр (ЖИШЭЭ 3: «DET-Symbol_Break_Line1») — эхлэлээр, эс бөгөөс «Break» үгтэй анхны family.
+            string fam = all.Select(fs => fs.FamilyName ?? "").Where(n => key.Length > 0 && BbCompanyRules.Norm(n).StartsWith(key, StringComparison.Ordinal)).OrderBy(n => n.Length).FirstOrDefault()
+                         ?? all.Select(fs => fs.FamilyName ?? "").Where(n => n.IndexOf("Break", StringComparison.OrdinalIgnoreCase) >= 0).OrderBy(n => n.Length).FirstOrDefault();
+            return fam == null ? res : all.Where(fs => fs.FamilyName == fam).ToList();
         }
 
         public static bool IsBreakFamily(FamilyInstance fi)

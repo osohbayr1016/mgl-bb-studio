@@ -24,10 +24,10 @@ namespace MglBb.RevitSide
             public int Rank;   // давхцвал: 0 дамнурууны төгсгөл, 1 тэнхлэг, 2 арматур
         }
 
-        public static int Place(Document doc, View view, IList<RfElevContext> ctxs, Element mainHost, BbMemberStandard ms, ElementId dimTypeId, BbAnnoReport rep, string mark)
+        public static int Place(Document doc, View view, IList<RfElevContext> ctxs, Element mainHost, BbMemberStandard ms, ElementId dimTypeId, BbAnnoReport rep, string mark, IDictionary<RfElevContext, RfElevPlan> plans = null)
         {
             var log = new System.Text.StringBuilder();
-            try { return PlaceCore(doc, view, ctxs, mainHost, ms, dimTypeId, rep, mark, log); }
+            try { return PlaceCore(doc, view, ctxs, mainHost, ms, dimTypeId, rep, mark, log, plans); }
             finally
             {
                 // Оношлогоо: гинж яагаад тавигдаагүйг (цэгүүд, лавлагаа, алдаа) харуулна.
@@ -36,11 +36,12 @@ namespace MglBb.RevitSide
             }
         }
 
-        private static int PlaceCore(Document doc, View view, IList<RfElevContext> ctxs, Element mainHost, BbMemberStandard ms, ElementId dimTypeId, BbAnnoReport rep, string mark, System.Text.StringBuilder log)
+        private static int PlaceCore(Document doc, View view, IList<RfElevContext> ctxs, Element mainHost, BbMemberStandard ms, ElementId dimTypeId, BbAnnoReport rep, string mark, System.Text.StringBuilder log, IDictionary<RfElevContext, RfElevPlan> plans)
         {
             Func<double, string> mm = ft => BbGeom.ToMm(ft).ToString("0");
             log.AppendLine("enabled " + ms.ElevTopChain + " contexts " + ctxs.Count + " main " + mainHost?.Id.Value);
-            if (!ms.ElevTopChain) return 0;
+            // Нугалсан арматурын давхцал гинжгүй ч зурагдана (ЖИШЭЭ 3 ТДН-1-5: туслах дамнууруу гинж сураагүй байхад «550» алга байв).
+            if (!ms.ElevTopChain && !ms.ElevLaps) return 0;
             List<RfElevContext> beams = ctxs.Where(c => !c.IsColumn).ToList();
             if (beams.Count == 0) return 0;
             BbFrame f = BbFrame.Of(view);
@@ -60,7 +61,8 @@ namespace MglBb.RevitSide
             }
             // Нүүр олдохгүй бол (ДН-11: Coarse / баганатай нийлсэн) гинжийг зогсоохгүй — дамнурууны хүрээгээр хязгаарлаж тэнхлэг + арматураар.
             Pt e0, e1;
-            if (ends.Count >= 2)
+            // Нэг л нүүр олдвол (ЖИШЭЭ 3 ТДН-1-5: зүүн үзүүр тулгуур дамнуруутай нийлсэн — нүүр лавлагаагүй) хоёр үзүүр ижил болдог — хүрээгээр.
+            if (ends.Count >= 2 && ends.Max(x => x.R) - ends.Min(x => x.R) > RfTol.MmToFt(300))
             {
                 e0 = ends.OrderBy(x => x.R).First(); e1 = ends.OrderBy(x => x.R).Last();
                 pts.Add(e0); pts.Add(e1);
@@ -84,7 +86,7 @@ namespace MglBb.RevitSide
             // Хэсэгчилсэн дэлгээс (ДН-11 Copy 3 — crop Y3 орчим, дамнуруу 50 м): crop-оос гадуурх баганыг гинжинд оруулахгүй.
             double cr0 = double.MinValue, cr1 = double.MaxValue;
             if (view.CropBoxActive) { cr0 = view.CropBox.Min.X; cr1 = view.CropBox.Max.X; }
-            List<BbElevStirrupDims.Support> cols = BbElevStirrupDims.Supports(doc, view, f);
+            List<BbElevStirrupDims.Support> cols = BbElevStirrupDims.Supports(doc, view, f, true);
             BbElevStirrupDims.Support c0 = cols.FirstOrDefault(c => e0.R >= c.R0 - tolEnd && e0.R <= c.R1 + tolEnd && c.R0 >= cr0 - tolEnd);
             BbElevStirrupDims.Support c1 = cols.LastOrDefault(c => e1.R >= c.R0 - tolEnd && e1.R <= c.R1 + tolEnd && c.R1 <= cr1 + tolEnd);
             if (c0 != null || c1 != null)
@@ -101,6 +103,9 @@ namespace MglBb.RevitSide
             // захын тэнхлэг гинжийн эхлэл/төгсгөл болно — хүрээний захад ч хасахгүй.
             bool hasEnds = e0.Ref != null;
             var seen = new HashSet<long>();
+            // Сурсан бол тэнхлэггүй (ЖИШЭЭ 3 ТДН-1-5/1-6) — тулгуурын нүүргүй (hasEnds = false) үед тэнхлэг л гинжийн үзүүр тул хэвээр.
+            if (!ms.ElevTopChainGrids && hasEnds) log.AppendLine("тэнхлэггүй гинж (сурсан)");
+            else
             foreach (RfElevContext c in beams)
                 foreach (KeyValuePair<double, Element> g in c.Spans)
                 {
@@ -143,38 +148,161 @@ namespace MglBb.RevitSide
                             if (p.R > e0.R + tolEnd && p.R < e1.R - tolEnd) pts.Add(p);
                 }
             }
+            int scale = view.Scale > 0 ? view.Scale : 50;
+            var dimType = dimTypeId != null && dimTypeId != ElementId.InvalidElementId ? doc.GetElement(dimTypeId) as DimensionType : null;
+            // Дээд нүүр — хөдөлгүүрийн гишүүний хүрээгээр (host-ын bbox ДН-5-д 100 мм илүү өндөр — гинж 2 мм цаасаар дээш гардаг байв).
+            RfElevContext mc = beams.FirstOrDefault(c => c.Host.Id == (mainHost ?? beams[0].Host).Id) ?? beams[0];
+            double topFace = mc.Input.BeamV1 > mc.Input.BeamV0 ? f.Local(mc.Model(0, mc.Input.BeamV1)).Y : hu1;
+            double lapU = topFace + RfTol.PaperMmToModelFt(Math.Max(1, ms.ElevDimFirstPaperMm), scale);
+
+            // Давхцлын муж (BbFrame R): хөдөлгүүрийнх + нугалсан арматурынх (энд зурна).
+            var laps = new List<double[]>();
+            foreach (RfElevContext c in beams)
+                foreach (RfElevLapPlan l in plans != null && plans.TryGetValue(c, out RfElevPlan pl) ? pl.Laps : new List<RfElevLapPlan>())
+                    if (l.Side == RfElevSide.Top) laps.Add(new[] { f.Local(c.Model(l.U0, 0)).X, f.Local(c.Model(l.U1, 0)).X });
+            if (ms.ElevLaps)
+                foreach (double[] l in BentLaps(doc, view, f, beams, hu0, hu1, lapU, v, dimType, log)) laps.Add(l);
+
+            if (!ms.ElevTopChain) { log.AppendLine("гинж унтраалттай — зөвхөн давхцал"); return 0; }
+
             // Ижил цэгт нэгийг (төгсгөл > тэнхлэг > арматур).
             var chain = new List<Pt>();
             foreach (Pt p in pts.OrderBy(x => x.R).ThenBy(x => x.Rank))
                 if (chain.Count == 0 || p.R - chain[chain.Count - 1].R > RfTol.MmToFt(5)) chain.Add(p);
+            // Давхцлын хоёр үзүүр хоёулаа гинжид үлдэнэ (ББ инженер 2026-10-23: «хоёрыг хоёуланг нь»).
+            double tolPt = RfTol.MmToFt(5);
+            log.AppendLine("laps " + string.Join(" ", laps.Select(l => mm(l[0]) + ".." + mm(l[1]))));
             log.AppendLine("chain " + string.Join(" | ", chain.Select(p => (p.Rank == 0 ? "END" : p.Rank == 1 ? "GRID" : "BAR") + "@" + mm(p.R))));
             if (chain.Count < 3) { log.AppendLine("STOP: гинжийн цэг < 3"); return 0; }
 
-            int scale = view.Scale > 0 ? view.Scale : 50;
-            double lineU = hu1 + RfTol.PaperMmToModelFt(Math.Max(1, ms.ElevDimFirstPaperMm) + Math.Max(1, ms.DimPitchPaperMm), scale);
-            var dimType = dimTypeId != null && dimTypeId != ElementId.InvalidElementId ? doc.GetElement(dimTypeId) as DimensionType : null;
-            using (var st = new SubTransaction(doc))
+            double lineU = lapU + RfTol.PaperMmToModelFt(Math.Max(1, ms.DimPitchPaperMm), scale);
+            // Баганын нүүрний лавлагааг Revit заримдаа хасдаг (ДН-5: ижил кодоор 8 / 7 / 6 сегмент) — дутуу бол буцааж, лавлагааг шинээр авч дахин.
+            for (int attempt = 0; attempt < 3; attempt++)
             {
-                st.Start();
-                try
+                if (attempt > 0)
                 {
-                    var ra = new ReferenceArray();
-                    foreach (Pt p in chain) ra.Append(p.Ref);
-                    Line line = Line.CreateBound(f.World(chain[0].R, lineU, v), f.World(chain[chain.Count - 1].R, lineU, v));
-                    Dimension d = dimType != null ? doc.Create.NewDimension(view, line, ra, dimType) : doc.Create.NewDimension(view, line, ra);
-                    if (d == null) throw new InvalidOperationException("NewDimension → null");
-                    st.Commit();
-                    log.AppendLine("OK dimension " + d.Id.Value + " segments " + (d.Segments?.Size ?? 0));
-                    return 1;
+                    doc.Regenerate();
+                    List<BbElevStirrupDims.Support> fresh = BbElevStirrupDims.Supports(doc, view, f, true);
+                    foreach (Pt p in chain.Where(x => x.Rank == 0))
+                    {
+                        BbElevStirrupDims.Support sp = fresh.FirstOrDefault(x => Math.Abs(x.R0 - p.R) < tolPt || Math.Abs(x.R1 - p.R) < tolPt);
+                        if (sp != null) p.Ref = Math.Abs(sp.R0 - p.R) < tolPt ? sp.Near : sp.Far;
+                    }
                 }
-                catch (Exception ex)
+                bool last = attempt == 2;
+                using (var st = new SubTransaction(doc))
                 {
-                    log.AppendLine("FAIL " + ex.GetType().Name + ": " + ex.Message);
-                    if (st.HasStarted() && !st.HasEnded()) st.RollBack();
-                    rep?.Notes.Add(mark + " «" + view.Name + "»: дээд үеийн гинжин хэмжээс — " + (ex.Message ?? "").Split('\n')[0]);
-                    return 0;
+                    st.Start();
+                    try
+                    {
+                        var ra = new ReferenceArray();
+                        foreach (Pt p in chain) ra.Append(p.Ref);
+                        Line line = Line.CreateBound(f.World(chain[0].R, lineU, v), f.World(chain[chain.Count - 1].R, lineU, v));
+                        Dimension d = dimType != null ? doc.Create.NewDimension(view, line, ra, dimType) : doc.Create.NewDimension(view, line, ra);
+                        if (d == null) throw new InvalidOperationException("NewDimension → null");
+                        int segs = d.Segments?.Size ?? 0;
+                        log.AppendLine("attempt " + attempt + " dimension " + d.Id.Value + " segments " + segs + " / " + (chain.Count - 1));
+                        if (segs < chain.Count - 1 && !last)
+                        {
+                            foreach (Reference rf in d.References) { string sr = "?"; try { sr = rf.ConvertToStableRepresentation(doc); } catch { } log.AppendLine("  out " + sr); }
+                            // RollBack БИШ — subtransaction буцаахад огтлолын ирмэгээр (CUT_EDGE) хэмжсэн бусад хэмжээсийг Revit 4.75 м доош шилжүүлдэг
+                            // (ЖИШЭЭ 3 ТДН-1-5, хэмжсэн).  Дутуу хэмжээсийг устгаад commit.
+                            doc.Delete(d.Id);
+                            st.Commit();
+                            continue;
+                        }
+                        st.Commit();
+                        BbElevStirrupDims.Track(d, lineU);   // CUT_EDGE-тэй бол Regenerate шилжүүлдэг (ТДН-1-9: 975 → -3775)
+                        return 1;
+                    }
+                    catch (Exception ex)
+                    {
+                        log.AppendLine("FAIL " + ex.GetType().Name + ": " + ex.Message);
+                        if (st.HasStarted() && !st.HasEnded()) st.RollBack();
+                        if (!last) continue;
+                        rep?.Notes.Add(mark + " «" + view.Name + "»: дээд үеийн гинжин хэмжээс — " + (ex.Message ?? "").Split('\n')[0]);
+                        return 0;
+                    }
                 }
             }
+            return 0;
+        }
+
+        /// <summary>
+        /// Нугалсан дээд арматурын (хөдөлгүүр үзүүрийн лавлагаагүй тул давхцалд оруулдаггүй) чөлөөт үзүүр өөр дээд арматурын дотор орсон бол давхцлын
+        /// хэмжээс — ДН-5: #6 (Г хэлбэр) ба ⌀12 #5, «500» хоёр талд.  Давхцлын эгнээнд (<paramref name="lapU"/>).  Зурсан мужууд (R).
+        /// </summary>
+        private static List<double[]> BentLaps(Document doc, View view, BbFrame f, List<RfElevContext> beams, double hu0, double hu1, double lapU, double depth, DimensionType dimType, System.Text.StringBuilder log)
+        {
+            var res = new List<double[]>();
+            var straight = new List<Pt[]>();   // [зүүн, баруун]
+            var bent = new List<KeyValuePair<Rebar, RfElevBar>>();
+            foreach (RfElevContext c in beams)
+                foreach (RfElevBar b in c.Input.Bars)
+                {
+                    if (!c.Rebars.TryGetValue(b.Id, out Rebar rb) || BbElevRules.Layer(rb, f, hu0, hu1) != BbBarRole.Top) continue;
+                    if (c.EndRefs.TryGetValue(b.Id, out RfElevEndRefs er))
+                    {
+                        if (er.Left != null && er.Right != null)
+                            straight.Add(new[] { new Pt { R = f.Local(c.Model(b.U0, 0)).X, Ref = er.Left }, new Pt { R = f.Local(c.Model(b.U1, 0)).X, Ref = er.Right } });
+                    }
+                    else bent.Add(new KeyValuePair<Rebar, RfElevBar>(rb, b));
+                }
+            double tol = RfTol.MmToFt(5), maxLap = RfTol.MmToFt(3000);
+            foreach (var kv in bent)
+            {
+                if (!MainSpan(kv.Key, f, out double a0, out double a1)) continue;
+                foreach (Pt p in BentEnds(kv.Key, view, f, kv.Value.Diameter))
+                {
+                    bool right = Math.Abs(p.R - a1) < Math.Abs(p.R - a0);
+                    foreach (Pt[] s in straight)
+                    {
+                        // Баруун чөлөөт үзүүр: B-ийн зүүн үзүүр A дотор, A-ийн үзүүр B дотор → [B.зүүн, A.үзүүр]; зүүн нь эсрэгээр.
+                        Pt lo = right ? s[0] : p, hi = right ? p : s[1];
+                        if (right ? !(s[0].R > a0 + tol && s[0].R < p.R - tol && p.R < s[1].R - tol)
+                                  : !(s[1].R < a1 - tol && s[1].R > p.R + tol && p.R > s[0].R + tol)) continue;
+                        if (hi.R - lo.R > maxLap) continue;
+                        using (var st = new SubTransaction(doc))
+                        {
+                            st.Start();
+                            try
+                            {
+                                var ra = new ReferenceArray();
+                                ra.Append(lo.Ref); ra.Append(hi.Ref);
+                                Line line = Line.CreateBound(f.World(lo.R, lapU, depth), f.World(hi.R, lapU, depth));
+                                Dimension d = dimType != null ? doc.Create.NewDimension(view, line, ra, dimType) : doc.Create.NewDimension(view, line, ra);
+                                if (d == null) throw new InvalidOperationException("NewDimension → null");
+                                st.Commit();
+                                res.Add(new[] { lo.R, hi.R });
+                                log.AppendLine("bent lap " + kv.Value.Id + " " + BbGeom.ToMm(lo.R).ToString("0") + ".." + BbGeom.ToMm(hi.R).ToString("0") + " OK " + d.Id.Value);
+                            }
+                            catch (Exception ex)
+                            {
+                                if (st.HasStarted() && !st.HasEnded()) st.RollBack();
+                                log.AppendLine("bent lap " + kv.Value.Id + " FAIL " + ex.Message);
+                            }
+                        }
+                    }
+                }
+            }
+            return res;
+        }
+
+        /// <summary>Хамгийн урт шулуун хэсгийн R-муж.</summary>
+        private static bool MainSpan(Rebar rb, BbFrame f, out double r0, out double r1)
+        {
+            r0 = r1 = 0;
+            Line main = null;
+            try
+            {
+                foreach (Curve c in rb.GetTransformedCenterlineCurves(false, true, true, MultiplanarOption.IncludeOnlyPlanarCurves, 0))
+                    if (c is Line l && (main == null || l.Length > main.Length)) main = l;
+            }
+            catch { }
+            if (main == null) return false;
+            double x0 = f.Local(main.GetEndPoint(0)).X, x1 = f.Local(main.GetEndPoint(1)).X;
+            r0 = Math.Min(x0, x1); r1 = Math.Max(x0, x1);
+            return true;
         }
 
         /// <summary>
@@ -230,6 +358,12 @@ namespace MglBb.RevitSide
         }
 
         /// <summary>Гишүүний тэнхлэгт перпендикуляр (харагдацын R-ийн дагуух нормальтай) хоёр захын нүүр.</summary>
+        /// <summary>Гишүүний захын хоёр төгсгөлийн нүүр (R, лавлагаа) — <see cref="BbElevStirrupDims"/>-д.</summary>
+        internal static List<KeyValuePair<double, Reference>> EndFaceRefs(Element host, View view, BbFrame f)
+        {
+            return EndFaces(host, view, f).Where(p => p.Ref != null).Select(p => new KeyValuePair<double, Reference>(p.R, p.Ref)).ToList();
+        }
+
         private static List<Pt> EndFaces(Element host, View view, BbFrame f)
         {
             var res = new List<Pt>();
@@ -250,7 +384,25 @@ namespace MglBb.RevitSide
                         faces.Add(new Pt { R = f.Local(tr.OfPoint(pf.Origin)).X, Ref = pf.Reference, Rank = 0 });
                     }
                 });
-                if (faces.Count > 0) break;
+                // Нэг л төгсгөлийн нүүр — Fine геометрээс нөгөөг нь нэмэх.
+                if (faces.Count > 0 && faces.Max(x => x.R) - faces.Min(x => x.R) > RfTol.MmToFt(300)) break;
+            }
+            // Төгсгөл нь хавтгай нүүр биш (ДДН-3: «800h-600hx600» haunch family-ийн зүүн үзүүр) — харагдацын БОСОО ирмэг (инженер «…:5951:LINEAR»).
+            if (faces.Count == 0 || faces.Max(x => x.R) - faces.Min(x => x.R) <= RfTol.MmToFt(300))
+            {
+                GeometryElement ge = null;
+                try { ge = host.get_Geometry(new Options { ComputeReferences = true, View = view }); } catch { }
+                if (ge != null)
+                    Walk(ge, Transform.Identity, (s, tr) =>
+                    {
+                        foreach (Edge ed in s.Edges)
+                        {
+                            if (ed.Reference == null || !(ed.AsCurve() is Line l)) continue;
+                            XYZ a = f.Local(tr.OfPoint(l.GetEndPoint(0))), b = f.Local(tr.OfPoint(l.GetEndPoint(1)));
+                            if (Math.Abs(a.X - b.X) > RfTol.MmToFt(1) || Math.Abs(a.Y - b.Y) < RfTol.MmToFt(50)) continue;
+                            faces.Add(new Pt { R = (a.X + b.X) / 2, Ref = ed.Reference, Rank = 0 });
+                        }
+                    });
             }
             if (faces.Count == 0) return res;
             res.Add(faces.OrderBy(x => x.R).First());
@@ -262,7 +414,7 @@ namespace MglBb.RevitSide
         /// Solid бүрийг загварын хувиргалттай нь.  Таслагдаагүй family (ДН-11-ийн дамнуруу) GeometryInstance-аар ирдэг — instance геометрийн нүүрэнд
         /// хэмжээсийн лавлагаа байдаггүй тул SYMBOL геометр (лавлагаатай) + instance-ийн хувиргалт.
         /// </summary>
-        private static void Walk(GeometryElement ge, Transform tr, Action<Solid, Transform> onSolid)
+        internal static void Walk(GeometryElement ge, Transform tr, Action<Solid, Transform> onSolid)
         {
             foreach (GeometryObject go in ge)
             {

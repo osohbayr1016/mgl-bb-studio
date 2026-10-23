@@ -29,7 +29,8 @@ namespace MglBb.Gate
         public static BbStandard LoadStd(Dictionary<string, string> kv, string outDir)
         {
             string p = kv.TryGetValue("std", out string sp) ? sp : Path.Combine(outDir, "standard-learned.json");
-            return File.Exists(p) ? BbStandard.Load(p) : new BbStandard();
+            // Жинхэнэ ачаалалттай адил (BbStore) — компанийн тогтмол дүрэм давхарлана.
+            return BbCompanyRules.Apply(File.Exists(p) ? BbStandard.Load(p) : new BbStandard());
         }
 
         public static string Run(UIApplication app, Document doc, string op, string rest, string outDir)
@@ -154,6 +155,242 @@ namespace MglBb.Gate
                             " elevTags " + rep.ElevTags + " (side " + rep.ElevSideTags + ") mras " + rep.ElevMras + " (dupes " + rep.ElevStirrupDupes + ")" + " laps " + rep.ElevLaps + " spans " + rep.ElevSpans + " in " + sw.ElapsedMilliseconds + " ms");
                         foreach (string n in rep.Notes.Take(40)) sb.AppendLine("  note " + n);
                         foreach (BbIssue i in rep.Issues.Take(40)) sb.AppendLine("  issue " + i.View + ": " + i.Problem);
+                        break;
+                    }
+                case "learnview":
+                    {
+                        // «Стандарт сурах»-ын заасан горим (нэг харагдац) — std= суурь дээр, standard-learned.json руу.
+                        BbStandard baseStd = LoadStd(kv, outDir);
+                        string vname = kv.TryGetValue("view", out string vn8) ? vn8 : "";
+                        var names = new HashSet<string>(vname.Split('|').Select(x => x.Trim()));   // олон харагдац: «A|B»
+                        var only = new HashSet<long>(new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().Where(x => names.Contains(x.Name)).Select(x => x.Id.Value));
+                        BbStandard learned = BbLearner.Learn(doc, baseStd, 100000, out BbLearnReport lr, only);
+                        learned.Save(Path.Combine(outDir, "standard-learned.json"));
+                        File.WriteAllText(Path.Combine(outDir, "learn-elev.txt"), lr.ElevDump.ToString(), new UTF8Encoding(true));
+                        sb.AppendLine("views " + only.Count + " classified " + lr.Classified + " fields " + lr.FieldsLearned);
+                        string flt = kv.TryGetValue("keys", out string ks) ? ks : "";
+                        if (flt.Length > 0)
+                            foreach (string key in lr.Samples.Keys.Where(x => flt.Split(',').Any(x.Contains)))
+                                sb.AppendLine("  sample " + key + " n=" + lr.Samples.Count(key) + " med=" + lr.Samples.Median(key) + " mode=" + lr.Samples.Mode(key) + " hist " + string.Join(", ", lr.Samples.Histogram(key).Take(6).Select(h => h.Key + "×" + h.Value)));
+                        foreach (string key in new[] { "ElevDimFirstPaperMm", "DimPitchPaperMm", "StirrupDimOffsetPaperMm", "ElevEndSymBottom", "ElevEndSymTop" })
+                            sb.AppendLine("  " + key + " = " + typeof(BbMemberStandard).GetField(key)?.GetValue(learned.Beam));
+                        break;
+                    }
+                case "dimtest":
+                    {
+                        // Огтлолын ирмэгийн хос лавлагаагаар хэмжээс: шугамын (u, гүн) бүрд үүссэн байрлал (буцаана).
+                        string vname = kv.TryGetValue("view", out string vn3b) ? vn3b : "";
+                        var v = new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().FirstOrDefault(x => x.Name == vname);
+                        BbFrame f = BbFrame.Of(v);
+                        var refs = kv["refs"].Split('|').Select(x => x.Trim()).Select(x => x.StartsWith("el:") ? new Reference(doc.GetElement(new ElementId(long.Parse(x.Substring(3))))) : Reference.ParseFromStableRepresentation(doc, x)).ToList();
+                        double r0t = kv.TryGetValue("r0", out string r0s) ? double.Parse(r0s) : 2000, r1t = kv.TryGetValue("r1", out string r1s) ? double.Parse(r1s) : 3500;
+                        using (var t = new Transaction(doc, "dimtest"))
+                        {
+                            t.Start();
+                            foreach (string zs in kv["z"].Split(','))
+                            {
+                                double z = BbGeom.Ft(double.Parse(zs)), u = BbGeom.Ft(double.Parse(kv["u"]));
+                                using (var st = new SubTransaction(doc))
+                                {
+                                    st.Start();
+                                    try
+                                    {
+                                        var ra = new ReferenceArray(); foreach (Reference r in refs) ra.Append(r);
+                                        Dimension d = doc.Create.NewDimension(v, Line.CreateBound(f.World(BbGeom.Ft(r0t), u, z), f.World(BbGeom.Ft(r1t), u, z)), ra);
+                                        doc.Regenerate();
+                                        XYZ o = f.Local((d.Curve as Line).Origin);
+                                        sb.AppendLine("z " + zs + " → u " + BbGeom.ToMm(o.Y).ToString("0") + " z " + BbGeom.ToMm(o.Z).ToString("0"));
+                                    }
+                                    catch (Exception ex) { sb.AppendLine("z " + zs + " FAIL " + ex.Message.Split('\n')[0]); }
+                                    st.RollBack();
+                                }
+                            }
+                            t.RollBack();
+                        }
+                        break;
+                    }
+                case "cutedge":
+                    {
+                        // Налуу нүүрний огтлолын ирмэгийн лавлагаа (…:24:CUT_EDGE/k) — аль k хүчинтэй вэ (түр хэмжээс, буцаана).
+                        string vname = kv.TryGetValue("view", out string vn4) ? vn4 : "";
+                        var v = new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().FirstOrDefault(x => x.Name == vname);
+                        Element e = doc.GetElement(new ElementId(long.Parse(kv["el"])));
+                        BbFrame f = BbFrame.Of(v);
+                        string uid = e.UniqueId;
+                        // Харагдацын геометрээс ирмэгүүд (Edge.Reference) — нүүрний ирмэг бүр.
+                        GeometryElement ge = e.get_Geometry(new Options { ComputeReferences = true, View = v });
+                        BbElevTopChain.Walk(ge, Transform.Identity, (so, tr) =>
+                        {
+                            foreach (Edge ed in so.Edges)
+                            {
+                                Reference r = ed.Reference;
+                                if (r == null) continue;
+                                Curve c = ed.AsCurve();
+                                if (!(c is Line l)) continue;
+                                XYZ a = f.Local(tr.OfPoint(l.GetEndPoint(0))), b = f.Local(tr.OfPoint(l.GetEndPoint(1)));
+                                if (Math.Abs(a.Z) > 0.05 || Math.Abs(b.Z) > 0.05) continue;   // харагдацын хавтгай дахь ирмэг
+                                sb.AppendLine("edge " + r.ConvertToStableRepresentation(doc) + " r " + BbGeom.ToMm(a.X).ToString("0") + ".." + BbGeom.ToMm(b.X).ToString("0") + " u " + BbGeom.ToMm(a.Y).ToString("0") + ".." + BbGeom.ToMm(b.Y).ToString("0"));
+                            }
+                        });
+                        foreach (string fa in new[] { "24", "28" })
+                            for (int k = 0; k < 8; k++)
+                            {
+                                string rep = uid + ":" + fa + ":CUT_EDGE/" + k;
+                                try
+                                {
+                                    Reference r = Reference.ParseFromStableRepresentation(doc, rep);
+                                    sb.AppendLine("parse " + rep.Substring(rep.Length - 14) + " ok " + (r != null));
+                                }
+                                catch (Exception ex) { sb.AppendLine("parse " + fa + "/" + k + " fail " + ex.Message.Split('\n')[0]); }
+                            }
+                        break;
+                    }
+                case "dimrefs":
+                    {
+                        foreach (string id in (kv.TryGetValue("ids", out string ids5) ? ids5 : "").Split(','))
+                        {
+                            if (!(doc.GetElement(new ElementId(long.Parse(id.Trim()))) is Dimension d)) { sb.AppendLine(id + ": no dim"); continue; }
+                            sb.AppendLine("DIM " + id + " view " + d.OwnerViewId.Value);
+                            var vv = doc.GetElement(d.OwnerViewId) as View;
+                            if (vv != null && d.Curve is Line dl)
+                            {
+                                BbFrame ff = BbFrame.Of(vv);
+                                Func<XYZ, string> L = q => { XYZ z = ff.Local(q); return "(" + BbGeom.ToMm(z.X).ToString("0") + "," + BbGeom.ToMm(z.Y).ToString("0") + "," + BbGeom.ToMm(z.Z).ToString("0") + ")"; };
+                                sb.AppendLine("   curve origin " + L(dl.Origin) + " dir " + dl.Direction.DotProduct(ff.R).ToString("0.000") + " segs " + (d.Segments?.Size ?? 0) + (d.Segments != null && d.Segments.Size > 0 ? " seg0 " + L(d.Segments.get_Item(0).Origin) : " dimOrigin " + L(d.Origin)));
+                            }
+                            foreach (Reference r in d.References) sb.AppendLine("   " + r.ConvertToStableRepresentation(doc) + " type " + r.ElementReferenceType);
+                        }
+                        string vname = kv.TryGetValue("view", out string vn5) ? vn5 : "";
+                        var v = new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().FirstOrDefault(x => x.Name == vname);
+                        if (v != null && kv.TryGetValue("el", out string el))
+                        {
+                            BbFrame f = BbFrame.Of(v);
+                            Element e = doc.GetElement(new ElementId(long.Parse(el)));
+                            BbElevTopChain.Walk(e.get_Geometry(new Options { ComputeReferences = true, View = v }), Transform.Identity, (so, tr) =>
+                            {
+                                foreach (Face fc in so.Faces)
+                                    if (fc is PlanarFace pf && pf.Reference != null && Math.Abs(tr.OfVector(pf.FaceNormal).DotProduct(f.R)) > 0.9)
+                                        sb.AppendLine("   face " + pf.Reference.ConvertToStableRepresentation(doc) + " R " + BbGeom.ToMm(BbElevStirrupDims.PlaneR(f, tr.OfPoint(pf.Origin), tr.OfVector(pf.FaceNormal))).ToString("0") + " solidVol " + so.Volume.ToString("0.000"));
+                            });
+                        }
+                        break;
+                    }
+                case "cropinfo":
+                    {
+                        foreach (string vname in (kv.TryGetValue("view", out string vn6) ? vn6 : "").Split('|'))
+                        {
+                            var v = new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().FirstOrDefault(x => x.Name == vname.Trim());
+                            if (v == null) { sb.AppendLine("no view " + vname); continue; }
+                            BoundingBoxXYZ cb = v.CropBox;
+                            var mgr = v.GetCropRegionShapeManager();
+                            sb.AppendLine("«" + v.Name + "» crop " + v.CropBoxActive + " visible " + v.CropBoxVisible + " min " + BbGeom.ToMm(cb.Min.X).ToString("0") + "," + BbGeom.ToMm(cb.Min.Y).ToString("0") + "," + BbGeom.ToMm(cb.Min.Z).ToString("0")
+                                + " max " + BbGeom.ToMm(cb.Max.X).ToString("0") + "," + BbGeom.ToMm(cb.Max.Y).ToString("0") + "," + BbGeom.ToMm(cb.Max.Z).ToString("0")
+                                + " annoCrop " + v.get_Parameter(BuiltInParameter.VIEWER_ANNOTATION_CROP_ACTIVE)?.AsInteger()
+                                + " offsets L" + BbGeom.ToMm(mgr.LeftAnnotationCropOffset).ToString("0") + " R" + BbGeom.ToMm(mgr.RightAnnotationCropOffset).ToString("0") + " T" + BbGeom.ToMm(mgr.TopAnnotationCropOffset).ToString("0") + " B" + BbGeom.ToMm(mgr.BottomAnnotationCropOffset).ToString("0")
+                                + " shapeSplit " + mgr.Split + " template " + v.ViewTemplateId.Value);
+                            var own = new FilteredElementCollector(doc).OwnedByView(v.Id).ToElements();
+                            var vis = new HashSet<long>(new FilteredElementCollector(doc, v.Id).ToElementIds().Select(x => x.Value));
+                            foreach (var g in own.GroupBy(e => e.Category?.Name ?? e.GetType().Name))
+                                sb.AppendLine("   " + g.Key + " owned " + g.Count() + " visible " + g.Count(e => vis.Contains(e.Id.Value)));
+                            View fv = v.ViewTemplateId != ElementId.InvalidElementId ? doc.GetElement(v.ViewTemplateId) as View ?? v : v;
+                            var tagsOwn = own.OfType<IndependentTag>().ToList();
+                            IndependentTag hid = tagsOwn.FirstOrDefault(x => !vis.Contains(x.Id.Value)), shown = tagsOwn.FirstOrDefault(x => vis.Contains(x.Id.Value) && x.GetTypeId() == hid?.GetTypeId());
+                            foreach (ElementId fid in fv.GetFilters())
+                            {
+                                var pf = doc.GetElement(fid) as FilterElement;
+                                string pass = "";
+                                try
+                                {
+                                    ElementFilter ef = (pf as ParameterFilterElement)?.GetElementFilter();
+                                    var cats = (pf as ParameterFilterElement)?.GetCategories();
+                                    bool catTag = cats != null && cats.Contains(new ElementId(BuiltInCategory.OST_RebarTags));
+                                    if (hid != null) pass += " hid:" + (catTag && (ef == null || ef.PassesFilter(hid)));
+                                    if (shown != null) pass += " shown:" + (catTag && (ef == null || ef.PassesFilter(shown)));
+                                }
+                                catch (Exception ex) { pass = " err " + ex.Message.Split('\n')[0]; }
+                                sb.AppendLine("   FILTER «" + pf?.Name + "» visible " + fv.GetFilterVisibility(fid) + pass);
+                            }
+                            if (hid != null) foreach (Parameter pr in hid.Parameters) { string a1 = pr.AsValueString() ?? pr.AsString() ?? ""; string b1 = shown == null ? "" : (shown.get_Parameter(pr.Definition)?.AsValueString() ?? shown.get_Parameter(pr.Definition)?.AsString() ?? ""); if (a1 != b1) sb.AppendLine("   PARAM " + pr.Definition.Name + " hid=" + a1 + " shown=" + b1); }
+                            BbFrame cf = BbFrame.Of(v);
+                            foreach (var rbx in new FilteredElementCollector(doc, v.Id).OfClass(typeof(Autodesk.Revit.DB.Structure.Rebar)).Cast<Autodesk.Revit.DB.Structure.Rebar>())
+                            {
+                                var zs = new List<string>();
+                                for (int i = 0; i < rbx.NumberOfBarPositions; i++)
+                                {
+                                    double z = 0; try { z = v.CropBox.Transform.Inverse.OfPoint(rbx.GetTransformedCenterlineCurves(false, true, true, Autodesk.Revit.DB.Structure.MultiplanarOption.IncludeOnlyPlanarCurves, i)[0].Evaluate(0.5, true)).Z; } catch { }
+                                    zs.Add(i + ":" + BbGeom.ToMm(z).ToString("0"));
+                                }
+                                var vz = new List<string>();
+                                try { foreach (GeometryObject go in rbx.get_Geometry(new Options { View = v })) if (go is Curve cc) vz.Add(BbGeom.ToMm(v.CropBox.Transform.Inverse.OfPoint(cc.Evaluate(0.5, true)).Z).ToString("0")); } catch { }
+                                sb.AppendLine("   REBAR " + rbx.Id.Value + " mode " + rbx.GetPresentationMode(v) + " bars " + string.Join(" ", zs) + " | visible geom z " + string.Join(",", vz.Distinct()));
+                            }
+                            foreach (IndependentTag t in own.OfType<IndependentTag>())
+                            {
+                                string tg = ""; try { tg = string.Join(",", t.GetTaggedLocalElementIds().Select(x => x.Value + (vis.Contains(x.Value) ? "" : "(hidden)"))); } catch { }
+                                try { tg += " refs " + string.Join(",", t.GetTaggedReferences().Select(r => r.ConvertToStableRepresentation(doc).Split(':').Skip(1).DefaultIfEmpty("").Aggregate((x, y) => x + ":" + y))); } catch { }
+                                XYZ h = cf.Local(t.TagHeadPosition);
+                                var tt = doc.GetElement(t.GetTypeId()) as FamilySymbol;
+                                sb.AppendLine("   TAG " + t.Id.Value + " type «" + tt?.FamilyName + " : " + tt?.Name + "» typeId " + t.GetTypeId().Value + " ws " + t.WorksetId.IntegerValue + " orient " + t.TagOrientation + " vis " + vis.Contains(t.Id.Value) + " hiddenInView " + t.IsHidden(v) + " head " + BbGeom.ToMm(h.X).ToString("0") + "," + BbGeom.ToMm(h.Y).ToString("0") + "," + BbGeom.ToMm(h.Z).ToString("0") + " → " + tg + " txt " + (t.TagText ?? "").Replace('\n', ' '));
+                            }
+                        }
+                        break;
+                    }
+                case "supports":
+                    {
+                        string vname = kv.TryGetValue("view", out string vn7) ? vn7 : "";
+                        var v = new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().FirstOrDefault(x => x.Name == vname);
+                        if (v == null) { sb.AppendLine("no view"); break; }
+                        BbFrame f = BbFrame.Of(v);
+                        foreach (var sp in BbElevStirrupDims.Supports(doc, v, f, true))
+                            sb.AppendLine("support r " + BbGeom.ToMm(sp.R0).ToString("0") + ".." + BbGeom.ToMm(sp.R1).ToString("0"));
+                        foreach (Element e in new FilteredElementCollector(doc, v.Id).OfCategory(BuiltInCategory.OST_StructuralFraming).WhereElementIsNotElementType())
+                        {
+                            string dir = e.Location is LocationCurve lc && lc.Curve is Line ln ? Math.Abs(ln.Direction.DotProduct(f.R)).ToString("0.000") : (e.Location is LocationCurve lc2 ? lc2.Curve.GetType().Name : "nolc");
+                            var faces = new List<string>();
+                            try
+                            {
+                                GeometryElement ge = e.get_Geometry(new Options { ComputeReferences = true, View = v });
+                                BbElevTopChain.Walk(ge, Transform.Identity, (so, tr) =>
+                                {
+                                    foreach (Face fc in so.Faces)
+                                        if (fc is PlanarFace pf) { XYZ nn = tr.OfVector(pf.FaceNormal); if (Math.Abs(nn.DotProduct(f.R)) > 0.9) faces.Add(BbGeom.ToMm(f.Local(tr.OfPoint(pf.Origin)).X).ToString("0") + (pf.Reference == null ? "(noref)" : "") + "/" + Math.Abs(nn.DotProduct(f.R)).ToString("0.000")); }
+                                });
+                            }
+                            catch (Exception ex) { faces.Add("ERR " + ex.Message); }
+                            sb.AppendLine("framing " + e.Id.Value + " " + e.Name + " dir·R " + dir + " faces " + string.Join(" ", faces));
+                        }
+                        break;
+                    }
+                case "dupanno":
+                    {
+                        // Инженерийн харагдацыг (тэмдэглэгээгүй) хуулбарлаж плагинаар тэмдэглээд хоёуланг нь BbElevDump-аар — «сурах → харьцуулах» давталт.
+                        BbStandard std = LoadStd(kv, outDir);
+                        string vname = kv.TryGetValue("view", out string vn9) ? vn9 : "";
+                        var src = new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().FirstOrDefault(x => x.Name == vname);
+                        if (src == null) { sb.AppendLine("no view"); break; }
+                        ViewSection dup;
+                        using (var t = new Transaction(doc, "gate dup"))
+                        {
+                            t.Start();
+                            dup = doc.GetElement(src.Duplicate(ViewDuplicateOption.Duplicate)) as ViewSection;
+                            dup.Name = vname + " (MGL " + DateTime.Now.ToString("HHmmss") + ")";
+                            t.Commit();
+                        }
+                        BbViewSample smp = BbLearner.Classify(doc, dup);
+                        if (smp == null) { sb.AppendLine("ангилагдсангүй"); break; }
+                        var rep = new BbAnnoReport();
+                        BbAnnotate.Elevation(doc, dup, BbAnnotate.ElevationHosts(doc, dup, smp), std.For(smp.Kind), rep, smp.Mark);
+                        sb.AppendLine("«" + dup.Name + "» " + Counts(doc, dup) + " tags " + rep.ElevTags + " mras " + rep.ElevMras + " laps " + rep.ElevLaps + " spans " + rep.ElevSpans);
+                        foreach (string n in rep.Notes.Take(20)) sb.AppendLine("  note " + n);
+                        foreach (BbIssue i in rep.Issues.Take(20)) sb.AppendLine("  issue " + i.Problem);
+                        foreach (ViewSection v in new[] { src, dup })
+                        {
+                            var dump = new StringBuilder();
+                            BbViewSample s2 = BbLearner.Classify(doc, v);
+                            if (s2 != null) BbElevDump.Beam(doc, s2, dump);
+                            File.WriteAllText(Path.Combine(outDir, (v == src ? "eng" : "mgl") + "-elev.txt"), dump.ToString(), new UTF8Encoding(true));
+                        }
+                        if (kv.ContainsKey("img")) sb.AppendLine("img " + ExportImage(doc, dup, outDir) + " | " + ExportImage(doc, src, outDir));
                         break;
                     }
                 case "compare":
