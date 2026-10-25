@@ -50,6 +50,28 @@ namespace MglBb.Commands
     }
 
     [Transaction(TransactionMode.Manual)]
+    public sealed class BeamRebarCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
+            try { return BeamRebar.BeamRebarFlow.Run(uidoc); }
+            catch (Exception ex) { return CommandGuard.Fail("Дамнурууны арматур", ex); }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
+    public sealed class ColumnRebarCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
+            try { return BeamRebar.ColumnRebarFlow.Run(uidoc); }
+            catch (Exception ex) { return CommandGuard.Fail("Баганын арматур", ex); }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
     public sealed class GenerateCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -94,6 +116,28 @@ namespace MglBb.Commands
     }
 
     [Transaction(TransactionMode.Manual)]
+    public sealed class FilterCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
+            try { return Filter.FilterFlow.Run(uidoc); }
+            catch (Exception ex) { return CommandGuard.Fail("Параметрээр шүүх", ex); }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
+    public sealed class DimLineCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
+            try { return DimLines.DimLineFlow.Run(uidoc); }
+            catch (Exception ex) { return CommandGuard.Fail("Шугамаар хэмжээс", ex); }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
     public sealed class EndSymbolCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -123,6 +167,39 @@ namespace MglBb.Commands
             if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
             try { return Issues.IssuesFlow.Run(uidoc); }
             catch (Exception ex) { return CommandGuard.Fail("Асуудал – Шийдэл", ex); }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
+    public sealed class MarkTidyCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
+            try { return MarkTidy.MarkTidyFlow.Run(uidoc); }
+            catch (Exception ex) { return CommandGuard.Fail("Хамааралгүй тэмдэг нуух", ex); }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
+    public sealed class HostFixCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
+            try { return HostFix.HostFixFlow.Run(uidoc); }
+            catch (Exception ex) { return CommandGuard.Fail("Арматурын хост засах", ex); }
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
+    public sealed class DeleteLogCommand : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            if (!CommandGuard.Begin(commandData, out UIDocument uidoc)) return Result.Cancelled;
+            try { return DeleteLog.DeleteLogFlow.Run(uidoc); }
+            catch (Exception ex) { return CommandGuard.Fail("Устгалтын түүх", ex); }
         }
     }
 }

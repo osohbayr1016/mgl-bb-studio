@@ -73,10 +73,18 @@ namespace MglBbHarness
             try
             {
                 FailuresAccessor fa = e.GetFailuresAccessor();
+                bool resolved = false;
                 foreach (FailureMessageAccessor m in fa.GetFailureMessages())
                 {
-                    if (m.GetSeverity() == FailureSeverity.Warning) fa.DeleteWarning(m);
+                    if (m.GetSeverity() == FailureSeverity.Warning) { fa.DeleteWarning(m); continue; }
+                    // Хуулбар загварын нээлт / шинэчлэлийн алдаа (ж: «dimension references are invalid») — Revit-ийн шийдлээр (тэр элементийг
+                    // устгах) шийднэ; эс бол алдааны цонх «Cancel»-оор хаагдаж нээлт цуцлагддаг (2024 → 2027 шинэчлэл).
+                    if (m.GetSeverity() == FailureSeverity.Error && m.HasResolutions())
+                    {
+                        try { fa.ResolveFailure(m); resolved = true; Log("resolved failure: " + m.GetDescriptionText()); } catch { }
+                    }
                 }
+                if (resolved) e.SetProcessingResult(FailureProcessingResult.ProceedWithCommit);
             }
             catch { }
         }

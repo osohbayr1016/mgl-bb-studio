@@ -64,6 +64,10 @@
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);REVIT$(RevitVersion)</DefineConstants>
   </PropertyGroup>
+  <!-- package.ps1 -NoLicense: лицензийн шалгалтгүй туршилтын багц (үндсэн MGL plugin шаардахгүй). -->
+  <PropertyGroup Condition="'$(NoLicense)' == 'true'">
+    <DefineConstants>$(DefineConstants);BB_NOLICENSE</DefineConstants>
+  </PropertyGroup>
 
   <!-- Үндсэн plugin-тэй ИЖИЛ тогтмол API багц (V02, 2026-10-16). -->
   <PropertyGroup Condition="'$(RevitApiPackageVersion)' == ''">

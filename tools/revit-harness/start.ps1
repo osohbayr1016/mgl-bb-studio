@@ -3,13 +3,16 @@
 param(
   [string]$Year = '2024',
   [Parameter(Mandatory = $true)][string]$Run,
-  [string]$Model = ''
+  [string]$Model = '',
+  # Start a second, separate Revit <Year> process next to the user's (never touches it; the harness add-in is inert in the user's
+  # process because MGL_BB_HARNESS_DIR is set only for ours, and the user's process read its add-ins long ago).
+  [switch]$Beside
 )
 $ErrorActionPreference = 'Stop'
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $revitExe = "C:\Program Files\Autodesk\Revit $Year\Revit.exe"
 $busy = @(Get-Process -Name Revit -ErrorAction SilentlyContinue | Where-Object { $_.Path -and $_.Path -like "*Revit $Year*" })
-if ($busy.Count -gt 0) { Write-Host "NOT RUN - Revit $Year already running (PID $($busy[0].Id))"; exit 3 }
+if ($busy.Count -gt 0 -and -not $Beside) { Write-Host "NOT RUN - Revit $Year already running (PID $($busy[0].Id))"; exit 3 }
 New-Item -ItemType Directory -Force -Path (Join-Path $Run 'bin') | Out-Null
 Copy-Item -Path (Join-Path $here "bin\$Year\*") -Destination (Join-Path $Run 'bin') -Force
 $dll = Join-Path $Run 'bin\MglBbHarness.dll'

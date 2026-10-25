@@ -815,6 +815,9 @@ namespace MglBb.RevitSide
             new System.Text.RegularExpressions.Regex(@"^(?<pre>.*?ХАНА\s+)(?<mark>\S+)\s+(?<kind>ХЭВ|АРМАТУРЧЛАЛ)$", System.Text.RegularExpressions.RegexOptions.CultureInvariant);
         private static readonly System.Text.RegularExpressions.Regex SlabView =
             new System.Text.RegularExpressions.Regex(@"^(?<lvl>[-+]?\d+[.,]\d+)\s+(?<rest>ТҮВШНИЙ ХУЧИЛТЫН .*?(?<kind>ХЭВНИЙ БАЙГУУЛАЛТ|ДООД ҮЕИЙН АРМАТУРЧЛАЛ|ДЭЭД ҮЕИЙН АРМАТУРЧЛАЛ))$", System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+        // ЖИШЭЭ-2 3-1: «БАГАНА, ДАМНУРУУНЫ БАЙГУУЛАЛТ /-5.02/» (нэгтгэсэн «/8.93 ÷ 12.93/» нь таарахгүй — давхар бүр тусдаа).
+        private static readonly System.Text.RegularExpressions.Regex FrameView =
+            new System.Text.RegularExpressions.Regex(@"^(?<pre>.*БАЙГУУЛАЛТ\s*/)(?<lvl>[-+]?\d+[.,]\d+)(?<post>/)$", System.Text.RegularExpressions.RegexOptions.CultureInvariant);
 
         /// <summary>
         /// Хуудсанд байрласан ХАНА («ЦУТГАМАЛ ХАНА ЦХ-1 ХЭВ / АРМАТУРЧЛАЛ») ба ХУЧИЛТЫН («4.93 ТҮВШНИЙ ХУЧИЛТЫН ХЭВНИЙ БАЙГУУЛАЛТ / ДООД / ДЭЭД ҮЕИЙН
@@ -832,7 +835,7 @@ namespace MglBb.RevitSide
                 if (!mraByView.TryGetValue(m.OwnerViewId.Value, out var l)) mraByView[m.OwnerViewId.Value] = l = new List<MultiReferenceAnnotation>();
                 l.Add(m);
             }
-            int walls = 0, slabs = 0;
+            int walls = 0, slabs = 0, frames = 0;
             foreach (View v in new FilteredElementCollector(doc).OfClass(typeof(View)).Cast<View>())
             {
                 if (only == null && !placed.Contains(v.Id.Value)) continue;
@@ -841,6 +844,13 @@ namespace MglBb.RevitSide
                 string prefix, field;
                 var wm = WallView.Match(name);
                 var sm = wm.Success ? System.Text.RegularExpressions.Match.Empty : SlabView.Match(name);
+                var fm = wm.Success || sm.Success ? System.Text.RegularExpressions.Match.Empty : FrameView.Match(name);
+                if (fm.Success && v is ViewPlan && name.IndexOf("ХУЧИЛТ", StringComparison.OrdinalIgnoreCase) < 0)
+                {
+                    LearnFrame(doc, v, fm.Groups["pre"].Value + "{level}" + fm.Groups["post"].Value, s);
+                    frames++;
+                    continue;
+                }
                 if (wm.Success && v is ViewSection && wallMarks.Contains(wm.Groups["mark"].Value))
                 {
                     bool form = wm.Groups["kind"].Value == "ХЭВ";
@@ -877,6 +887,35 @@ namespace MglBb.RevitSide
             }
             rep.PerKind["Wall.elev"] = walls;
             rep.PerKind["Slab.plan"] = slabs;
+            rep.PerKind["Frame.plan"] = frames;
+        }
+
+        /// <summary>Рамын байгуулалтын төлөвлөгөө: төрөл, загвар, масштаб, хэмжээсийн төрөл, баганын / дамнурууны маркийн төрөл.</summary>
+        private static void LearnFrame(Document doc, View v, string namePattern, BbSamples s)
+        {
+            s.Str("plate.FrameName", namePattern);
+            s.Num("plate.FrameScale", v.Scale);
+            try { s.Str("plate.FrameViewType", doc.GetElement(v.GetTypeId())?.Name); } catch { }
+            try
+            {
+                ElementId t = v.ViewTemplateId;
+                if (t != null && t != ElementId.InvalidElementId) s.Str("plate.FrameTemplate", doc.GetElement(t)?.Name);
+            }
+            catch { }
+            foreach (Element e in new FilteredElementCollector(doc, v.Id).WhereElementIsNotElementType().Where(x => x.OwnerViewId == v.Id))
+            {
+                try
+                {
+                    if (e is Dimension d && d.DimensionType != null) s.Str("plate.FrameDimType", d.DimensionType.Name);
+                    else if (e is IndependentTag tag && doc.GetElement(tag.GetTypeId()) is FamilySymbol fs)
+                    {
+                        long cat = tag.Category?.Id.Value ?? 0;
+                        if (cat == (long)BuiltInCategory.OST_StructuralColumnTags) s.Str("plate.FrameColumnTagType", fs.FamilyName + " : " + fs.Name);
+                        else if (cat == (long)BuiltInCategory.OST_StructuralFramingTags) s.Str("plate.FrameBeamTagType", fs.FamilyName + " : " + fs.Name);
+                    }
+                }
+                catch { }
+            }
         }
 
         // ── Хуудас ──────────────────────────────────────────────────────

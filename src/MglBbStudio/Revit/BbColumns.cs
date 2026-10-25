@@ -27,7 +27,7 @@ namespace MglBb.RevitSide
     /// </summary>
     internal static class BbColumns
     {
-        public static BbColumnStack Stack(Document doc, FamilyInstance seed)
+        public static BbColumnStack Stack(Document doc, FamilyInstance seed, IEnumerable<FamilyInstance> sameMark = null)
         {
             var st = new BbColumnStack { Mark = BbGeom.Mark(seed) };
             BoundingBoxXYZ sb = seed.get_BoundingBox(null);
@@ -37,7 +37,7 @@ namespace MglBb.RevitSide
             var cands = new List<FamilyInstance> { seed };
             if (st.Mark.Length > 0)
             {
-                cands = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns).OfClass(typeof(FamilyInstance)).Cast<FamilyInstance>()
+                cands = (sameMark ?? new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns).OfClass(typeof(FamilyInstance)).Cast<FamilyInstance>())
                     .Where(f => BbGeom.Mark(f) == st.Mark)
                     .Where(f =>
                     {

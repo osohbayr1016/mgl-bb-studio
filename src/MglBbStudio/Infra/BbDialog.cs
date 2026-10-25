@@ -159,6 +159,9 @@ namespace MglBb.Infra
             return cb;
         }
 
+        /// <summary>Дурын WPF элемент (жишээ нь нэг мөрөнд хэд хэдэн сонголт).</summary>
+        public void Add(UIElement e) { _body.Children.Add(e); }
+
         public bool Show(IntPtr owner)
         {
             try { if (owner != IntPtr.Zero) new WindowInteropHelper(_w).Owner = owner; } catch { }

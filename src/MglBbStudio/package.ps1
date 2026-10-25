@@ -6,7 +6,9 @@
 [CmdletBinding()]
 param(
   [string]$Version = '',
-  [string[]]$Years = @('2024', '2025', '2026', '2027')
+  [string[]]$Years = @('2024', '2025', '2026', '2027'),
+  # Лицензийн шалгалтгүй туршилтын багц (үндсэн MGL plugin шаардахгүй) — zip нэрэнд «-nolicense».
+  [switch]$NoLicense
 )
 
 $ErrorActionPreference = 'Stop'
@@ -26,7 +28,7 @@ New-Item -ItemType Directory -Force -Path $Stage | Out-Null
 foreach ($y in $Years) {
   $cfg = "Release R$($y - 2000)"
   Write-Host "== $cfg"
-  & dotnet build $Proj -c $cfg -p:Platform=x64 -p:Version=$Version -v q -nologo
+  & dotnet build $Proj -c $cfg -p:Platform=x64 -p:Version=$Version "-p:NoLicense=$(if ($NoLicense) { 'true' } else { 'false' })" -v q -nologo
   if ($LASTEXITCODE -ne 0) { throw "Бүтээлт унав: $cfg" }
   $out = Join-Path $Here "bin\x64\$cfg"
   $dst = Join-Path $Stage "$y"
@@ -44,7 +46,7 @@ $ubat = "@echo off`r`npowershell -NoProfile -ExecutionPolicy Bypass -File `"%~dp
 [IO.File]::WriteAllText((Join-Path $Stage 'Uninstall.bat'), $ubat, (New-Object Text.ASCIIEncoding))
 Copy-Item (Join-Path $Here 'installer\README.txt') $Stage
 
-$zip = Join-Path $Dist "MGL-BB-Studio-$Version.zip"
+$zip = Join-Path $Dist "MGL-BB-Studio-$Version$(if ($NoLicense) { '-nolicense' }).zip"
 if (Test-Path $zip) { Remove-Item $zip -Force }
 Compress-Archive -Path (Join-Path $Stage '*') -DestinationPath $zip
 $h = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLower()

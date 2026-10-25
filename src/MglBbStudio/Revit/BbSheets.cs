@@ -27,9 +27,9 @@ namespace MglBb.RevitSide
             List<BbIssue> issues, List<string> notes)
         {
             List<ViewSheet> res;
-            if (kind == BbMemberKind.Slab)
+            if (kind == BbMemberKind.Slab || kind == BbMemberKind.Frame)
             {
-                // Хучилтын төлөвлөгөө бүтэн хуудсыг эзэлдэг (ЖИШЭЭ-1 7-10 … 7-12) — түүврийн зурвас нөөцлөхгүй.
+                // Хучилтын / рамын төлөвлөгөө бүтэн хуудсыг эзэлдэг (ЖИШЭЭ-1 7-10 … 7-12, ЖИШЭЭ-2 3-1) — түүврийн зурвас нөөцлөхгүй.
                 _reserve = false;
                 res = PlaceOnce(doc, mark, kind, elevs, secs, std, issues, notes);
                 Number(doc, res, secs);
@@ -88,7 +88,8 @@ namespace MglBb.RevitSide
             if (tb == null) return sheets;
             if (!tb.IsActive) tb.Activate();
             string baseName = BaseName(ss, kind, mark);
-            ElementId vpElev = ViewportType(doc, string.IsNullOrEmpty(ss.ElevViewportType) ? "Гарчиг - Доогуур зураас" : ss.ElevViewportType);
+            string elevVp = kind == BbMemberKind.Frame && !string.IsNullOrEmpty(ss.FrameViewportType) ? ss.FrameViewportType : ss.ElevViewportType;
+            ElementId vpElev = ViewportType(doc, string.IsNullOrEmpty(elevVp) ? "Гарчиг - Доогуур зураас" : elevVp);
             ElementId vpPart = ViewportType(doc, ss.ElevPartViewportType);
             ElementId vpSec = ViewportType(doc, ss.SecViewportType);
 
@@ -167,13 +168,14 @@ namespace MglBb.RevitSide
                 case BbMemberKind.Column: return ss.ColumnSheetPrefix;
                 case BbMemberKind.Wall: return ss.WallSheetPrefix;
                 case BbMemberKind.Slab: return ss.SlabSheetPrefix;
+                case BbMemberKind.Frame: return ss.FrameSheetPrefix;
                 default: return ss.BeamSheetPrefix;
             }
         }
 
         private static string BaseName(BbSheetStandard ss, BbMemberKind kind, string mark)
         {
-            if (kind == BbMemberKind.Slab) return mark;                                    // хучилт: хуудасны нэр = төлөвлөгөөний нэр
+            if (kind == BbMemberKind.Slab || kind == BbMemberKind.Frame) return mark;     // хучилт, рам: хуудасны нэр = төлөвлөгөөний нэр
             if (kind == BbMemberKind.Wall) return ss.WallSheetNamePattern.Replace("{mark}", mark);
             string pattern = kind == BbMemberKind.Column ? ss.ColumnSheetNamePattern : ss.BeamSheetNamePattern;
             if (kind == BbMemberKind.BeamAux && !pattern.StartsWith("ТУСЛАХ", StringComparison.Ordinal)) pattern = "ТУСЛАХ " + pattern;
@@ -257,7 +259,7 @@ namespace MglBb.RevitSide
             string prefix = Prefix(ss, kind);
             string num = BbSheetSeries.Next(doc, prefix, null, s.Id);
             if (num != null) { try { s.SheetNumber = num; } catch { } }
-            BbSheetSeries.ApplyParams(doc, s, prefix, kind == BbMemberKind.Column ? ss.ColumnSheetParams : kind == BbMemberKind.Wall ? ss.WallSheetParams : kind == BbMemberKind.Slab ? ss.SlabSheetParams : ss.BeamSheetParams);
+            BbSheetSeries.ApplyParams(doc, s, prefix, kind == BbMemberKind.Column ? ss.ColumnSheetParams : kind == BbMemberKind.Wall ? ss.WallSheetParams : kind == BbMemberKind.Slab ? ss.SlabSheetParams : kind == BbMemberKind.Frame ? ss.FrameSheetParams : ss.BeamSheetParams);
             sheets.Add(s);
             doc.Regenerate();
             BoundingBoxXYZ bb = null;

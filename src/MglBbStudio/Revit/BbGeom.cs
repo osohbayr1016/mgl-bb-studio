@@ -145,7 +145,7 @@ namespace MglBb.RevitSide
         /// Сонгосон дамнурууны ГИНЖ: ижил тэмдэгтэй, ижил өндөрт (±50 мм), параллель (≤ 2°), нэг шугам дээр (≤ 100 мм) бүх framing элемент.
         /// Тэмдэггүй бол зөвхөн өөрөө.
         /// </summary>
-        public static BbBeamChain BeamChain(Document doc, FamilyInstance seed)
+        public static BbBeamChain BeamChain(Document doc, FamilyInstance seed, IEnumerable<FamilyInstance> sameMark = null, bool findSupports = true)
         {
             if (!LineOf(seed, out XYZ a0, out XYZ a1)) return null;
             XYZ ax = new XYZ(a1.X - a0.X, a1.Y - a0.Y, 0);
@@ -157,7 +157,7 @@ namespace MglBb.RevitSide
             var cands = new List<FamilyInstance> { seed };
             if (!string.IsNullOrEmpty(chain.Mark))
             {
-                foreach (FamilyInstance fi in new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralFraming).OfClass(typeof(FamilyInstance)).Cast<FamilyInstance>())
+                foreach (FamilyInstance fi in sameMark ?? new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralFraming).OfClass(typeof(FamilyInstance)).Cast<FamilyInstance>())
                 {
                     if (fi.Id == seed.Id || !string.Equals(Mark(fi), chain.Mark, StringComparison.Ordinal)) continue;
                     if (!LineOf(fi, out XYZ b0, out XYZ b1)) continue;
@@ -193,7 +193,7 @@ namespace MglBb.RevitSide
                 chain.RebarCount += RebarCount(f);
             }
             chain.S0 = s0m; chain.S1 = s1m; chain.Bottom = zb; chain.Top = zt; chain.Near = vn; chain.Far = vf;
-            FindSupports(doc, chain, fr);
+            if (findSupports) FindSupports(doc, chain, fr);
             return chain;
         }
 

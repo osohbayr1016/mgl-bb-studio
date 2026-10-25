@@ -8,8 +8,8 @@ using MglBb.Infra;
 namespace MglBb
 {
     /// <summary>
-    /// «MGL ББ» — тусдаа ribbon таб.  Үндсэн MGL plugin-ий табыг («MGL») ХӨНДӨХГҮЙ.  OnStartup юу ч уншихгүй, ямар ч event бүртгэхгүй —
-    /// товч дарах хүртэл энэ plugin Revit-ийн ажилд оролцохгүй (үндсэн plugin-д нөлөөлөх зүйл байхгүй).
+    /// «MGL ББ» — тусдаа ribbon таб.  Үндсэн MGL plugin-ий табыг («MGL») ХӨНДӨХГҮЙ.  OnStartup юу ч уншихгүй; ЦОРЫН ГАНЦ байнгын event =
+    /// «Устгалтын анхааруулга» (<see cref="RevitSide.BbDeleteWatch"/>) — бусад нь товч дарах хүртэл Revit-ийн ажилд оролцохгүй.
     /// </summary>
     public sealed class App : IExternalApplication
     {
@@ -33,10 +33,34 @@ namespace MglBb
                     "Идэвхтэй (эсвэл сонгосон) огтлол, дэлгээс, хучилтын төлөвлөгөөнд хэмжээс, шошго, MRA-г сурсан стандартаар тавина (өмнөхийг солино).");
                 Add(drawings, "MglBbBreaks", "Break\nline", typeof(Commands.BreakCommand), "≈",
                     "Дамнурууны огтлол: crop-ын зүүн/баруун ирмэгийг дайрсан хучилтад; дэлгээс: ирмэгийг дайрсан дамнуруу, баганад «DET-Symbol_Break_Line» тавина (өмнөхийг солино, гараар тавьсныг хөндөхгүй).");
+                Add(drawings, "MglBbMarkTidy", "Хамааралгүй\nтэмдэг нуух", typeof(Commands.MarkTidyCommand), "Н",
+                    "Дэлгээс (сонгосон / идэвхтэй; сонгоогүй бол төслийн бүх дэлгээс) бүрт тэр гишүүнд хамааралгүй огтлол, хэсэглэлийн тэмдгийг нууна.  Нэрэнд гишүүний тэмдэгтэй, эсвэл ижил хуудсанд байрласан харагдацынх үлдэнэ.  «Ажлын зураг үүсгэх» үүнийг автоматаар хийдэг.");
                 Add(drawings, "MglBbEndSymbols", "Төгсгөлийн\nтэмдэг", typeof(Commands.EndSymbolCommand), "Ө",
                     "Дамнурууны дэлгээсэд арматурын төгсгөлийн тэмдгийг «Стандарт сурах»-аар сурсан дүрмээр тавина (тэмдэг, үе, ширхэг, эргэлт; өмнөхийг солино, гараар тавьсныг хөндөхгүй).");
+                Add(drawings, "MglBbDimLine", "Шугамаар\nхэмжээс", typeof(Commands.DimLineCommand), "↔",
+                    "Хоёр цэгээр шугам заахад түүнийг огтолсон элементүүдийн (тохиргооны ангилал: багана, хана, дамнуруу, тэнхлэг, түвшин …) нүүр / төвд нэг хэмжээсийн гинж тавина.  Нэрлэсэн тохиргоо хэдэн ч үүсгэж болно; «Давтах» бол Esc дарах хүртэл.");
                 Add(drawings, "MglBbSchedules", "Түүвэр\nүүсгэх", typeof(Commands.ScheduleCommand), "Ү",
                     "Сонгосон дамнуруу, багана, ханын бетон ба арматурын түүврийг төсөлд байгаа өөр гишүүний түүврээс хувилж (нэр, шүүлтүүрийн тэмдэг сольж) хуудсанд байрлуулна.");
+
+                RibbonPanel model = application.CreateRibbonPanel(TabName, "Арматур");
+                Add(model, "MglBbBeamRebar", "Дамнурууны\nарматур", typeof(Commands.BeamRebarCommand), "Д",
+                    "Төмөр бетон дамнуруунд (олон алгаслын, туслах дамнуруутай) арматур үүсгэнэ: компанийн хэв маяг (ЖИШЭЭ-1) эсвэл СП 52-101, LIRA-ийн As-аас санал.  " +
+                    "Дахин ажиллуулахад өмнө үүсгэсэн арматурыг солино; гараар тавьсныг хөндөхгүй (сонголтоор солино).");
+                Add(model, "MglBbColumnRebar", "Баганын\nарматур", typeof(Commands.ColumnRebarCommand), "Б",
+                    "Төмөр бетон баганад (давхар бүрийн элемент) арматур үүсгэнэ: ажлын арматур периметрээр (дээд давхартай давхцал эсвэл зангилаанд L), " +
+                    "гадна битүү хомут + C-хомут, доод / дээд нягт бүс.  Өмнө үүсгэснийг солино; гараар тавьсныг хөндөхгүй.");
+                Add(model, "MglBbHostFix", "Хост\nзасах", typeof(Commands.HostFixCommand), "Х",
+                    "Арматур буруу гишүүнд хостлогдсон бол (жишээ нь туслах дамнурууны арматур тулгуур дамнуруунд) дэлгээс түүнийг харуулдаггүй.  " +
+                    "Сонгосон арматур / гишүүд, эсвэл идэвхтэй огтлол, дэлгээсийн гишүүд (сонгоогүй бол бүх загвар) — арматурын тэнхлэг аль гишүүнд " +
+                    "багтсанаар зөв хостыг олж, жагсаалтаар баталгаажуулаад шилжүүлнэ.");
+
+                RibbonPanel tools = application.CreateRibbonPanel(TabName, "Шүүлт");
+                Add(tools, "MglBbFilter", "Параметрээр\nшүүх", typeof(Commands.FilterCommand), "Ш",
+                    "Нэрлэсэн шүүлтүүр (ангилал, ≤ 3 параметрийн нөхцөл, харагдацын төрөл) хадгалж, идэвхтэй харагдацын элементүүдийг нэг товшилтоор сонгоно эсвэл түр тусгаарлана.  Цонх нээлттэй үлдэнэ.");
+
+                RibbonPanel watch = application.CreateRibbonPanel(TabName, "Хамтын ажил");
+                Add(watch, "MglBbDeleteLog", "Устгалтын\nтүүх", typeof(Commands.DeleteLogCommand), "У",
+                    "Загварт бүртгэгдсэн устгалт: аль элементийг хэн, хэзээ устгасан.  Delete дарахад анхааруулж, устгалтыг загварт бичнэ — Synchronize хийсний дараа хамт ажилладаг бүх хүнд «… элементийг … устгалаа» гэж мэдэгдэнэ.");
 
                 RibbonPanel learn = application.CreateRibbonPanel(TabName, "Стандарт");
                 Add(learn, "MglBbLearn", "Стандарт\nсурах", typeof(Commands.LearnCommand), "С",
@@ -49,6 +73,12 @@ namespace MglBb
             catch (Exception ex)
             {
                 // Ribbon үүсгэж чадсангүй — Revit-ийг саатуулахгүй, үндсэн plugin-д нөлөөлөхгүй.
+                try { File.AppendAllText(Path.Combine(Paths.Root, "startup-error.txt"), DateTime.Now.ToString("o") + " " + ex + Environment.NewLine); }
+                catch { }
+            }
+            try { RevitSide.BbDeleteWatch.Init(application); }
+            catch (Exception ex)
+            {
                 try { File.AppendAllText(Path.Combine(Paths.Root, "startup-error.txt"), DateTime.Now.ToString("o") + " " + ex + Environment.NewLine); }
                 catch { }
             }

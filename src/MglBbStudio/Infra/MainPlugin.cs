@@ -14,6 +14,11 @@ namespace MglBb.Infra
     {
         private const string AssemblyName = "RevitMcpAddin";
         private const string GateType = "RevitMcpAddin.Licensing.LicenseGate";
+#if BB_NOLICENSE
+        public const bool NoLicense = true;
+#else
+        public const bool NoLicense = false;
+#endif
 
         public static Assembly Find()
         {
@@ -46,6 +51,9 @@ namespace MglBb.Infra
         /// <summary>Команд бүрийн эхэнд.  false бол шалтгааныг хэрэглэгчид аль хэдийн хэлсэн.</summary>
         public static bool EnsureLicensed()
         {
+#if BB_NOLICENSE
+            return true;   // лицензгүй туршилтын багц (package.ps1 -NoLicense)
+#else
             Assembly a = Find();
             if (a == null)
             {
@@ -76,6 +84,7 @@ namespace MglBb.Infra
                 TaskDialog.Show("MGL ББ", "Лицензийн шалгалт унав:\n\n" + ex.Message);
                 return false;
             }
+#endif
         }
     }
 }

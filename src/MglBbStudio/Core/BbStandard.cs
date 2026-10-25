@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MglBb.Core
 {
-    public enum BbMemberKind { Beam = 0, BeamAux = 1, Column = 2, Wall = 3, Slab = 4 }
+    public enum BbMemberKind { Beam = 0, BeamAux = 1, Column = 2, Wall = 3, Slab = 4, Frame = 5 }
 
     /// <summary>
     /// Компанийн ББ ажлын зургийн СТАНДАРТ — «Стандарт сурах» нь инженерийн аль хэдийн зурсан дамнуруу/баганын зургаас (харагдацын төрөл,
@@ -49,6 +49,7 @@ namespace MglBb.Core
                 case BbMemberKind.BeamAux: return "beamAux";
                 case BbMemberKind.Wall: return "wall";
                 case BbMemberKind.Slab: return "slab";
+                case BbMemberKind.Frame: return "frame";
                 default: return "beam";
             }
         }
@@ -61,6 +62,7 @@ namespace MglBb.Core
                 case BbMemberKind.BeamAux: return "Туслах дамнуруу";
                 case BbMemberKind.Wall: return "Хана";
                 case BbMemberKind.Slab: return "Хучилт";
+                case BbMemberKind.Frame: return "Рамын байгуулалт";
                 default: return "Дамнуруу";
             }
         }
@@ -175,8 +177,6 @@ namespace MglBb.Core
         public bool ElevStirrupGapsShort = false;
         /// <summary>Дэлгээс: дээд үеийн гинж «дамнурууны төгсгөл | тэнхлэгүүд | дээд ажлын арматурын таслах цэгүүд | төгсгөл» — сурна.</summary>
         public bool ElevTopChain = false;
-        /// <summary>
-        /// Дэлгээсийн арматурын шошгоны leader (сурна; ЖИШЭЭ-2 ДДН-10): бичвэр хугарлын <see cref="ElevLeaderSide"/> талд, хугарлаас шошгоны ТОЛГОЙН цэг
         /// <summary>Дээд гинжинд тэнхлэг оруулах (ДН-5: «200 | 2000 …» тийм; ЖИШЭЭ 3 ТДН-1-5/1-6: «2400 | 1765 | 2410» — Ay2-гүй) — сурна.</summary>
         public bool ElevTopChainGrids = true;
         /// <summary>
@@ -186,6 +186,8 @@ namespace MglBb.Core
         public bool ElevGridChainToSupport = true;
         /// <summary>Хомутын эгнээний тулгуурын хэмжээст дотор нь байгаа тэнхлэгийг оруулах (ДДН-3 «50 | 450 | 450 | 50», ТДН-1-11 тийм; ДН-5 «50 | 400 | 50» үгүй).  Сурна.</summary>
         public bool ElevGapGrid = true;
+        /// <summary>
+        /// Дэлгээсийн арматурын шошгоны leader (сурна; ЖИШЭЭ-2 ДДН-10): бичвэр хугарлын <see cref="ElevLeaderSide"/> талд, хугарлаас шошгоны ТОЛГОЙН цэг
         /// хүртэл <see cref="ElevLeaderHeadPaperMm"/>, хугарлаас арматур хүртэл <see cref="ElevLeaderRunPaperMm"/> — хэвтээ, цаасан мм.  Side хоосон = хөдөлгүүрийн
         /// автомат (бичвэр арматурын дээр).  Толгойноос хэмжинэ: шошгоны bbox leader-ийг хамардаг тул бичвэрийн ирмэгээс хэмжиж болохгүй.
         /// </summary>
@@ -389,6 +391,10 @@ namespace MglBb.Core
         public string SlabSheetParams = "* Classification=Ажлын зураг|* Sub-Discipline=Барилга бүтээц|* Type Designator=7 - ХУЧИЛТ";
         public string WallSheetNamePattern = "ЦУТГАМАЛ ХАНА {mark} ХЭВ, АРМАТУРЧЛАЛ, ТҮҮВЭР";
         public string SlabSheetNamePattern = "{level} ТҮВШНИЙ ХУЧИЛТЫН {part}";
+        // ЖИШЭЭ-2 3-1 … 3-16 «БАГАНА, ДАМНУРУУНЫ БАЙГУУЛАЛТ /-5.02/»: 3- цуврал, хуудасны нэр = төлөвлөгөөний нэр.
+        public string FrameSheetPrefix = "3-";
+        public string FrameSheetParams = "* Classification=Ажлын зураг|* Sub-Discipline=Барилга бүтээц|* Type Designator=3 - РАМ";
+        public string FrameViewportType = "Гарчиг - Доогуур зураас тэмдэглэгээ";
         public int SectionsPerRow = 3;
         public double SectionPitchMm = 106;
         public double LeftMarginMm = 20;
@@ -466,6 +472,35 @@ namespace MglBb.Core
         public string SlabMraType = "(Поз)Тоо/ш-⌀Диаметр-Алхам";
         public string SlabMraDimType = "Шулуун 2.5 - Ташуу зураас_BIMon";
         public string SlabGridDimType = "Арматур хэмжээ - 2.5 / Алхам Opaque";
+
+        // ── Рамын байгуулалт (түвшин бүрийн төлөвлөгөө) — ЖИШЭЭ-2 3-1 «БАГАНА, ДАМНУРУУНЫ БАЙГУУЛАЛТ /-5.02/» (1:100) ба 3-3 «/4.93/»-д хэмжсэн:
+        // доор + баруун талд тэнхлэгийн гинж (+ нийт), багана бүрт «нүүр | тэнхлэг | нүүр» (хэвтээ нь доор, босоо нь баруун талд), тэнхлэг
+        // дээрх дамнуруу бүрт ижил, тэнхлэг хоорондын зурвас бүрийг хөндлөн огтолсон дамнуурын нүүрний гинж, баганын марк (хөтлөгчтэй, зүүн
+        // дээд талд), дамнуурын марк (хөтлөгчгүй, дамнуруун дээр).  Огтлолуудыг (S1…, 1:50) инженер тавина.
+        public string FrameViewType = BbCompanyRules.FrameViewType;
+        public string FrameTemplate = "Байгуулалт-ББ Рамын байгуулалт";
+        public string FrameName = "БАГАНА, ДАМНУРУУНЫ БАЙГУУЛАЛТ /{level}/";
+        public int FrameScale = 100;
+        public double FrameCropMm = 1500;
+        public string FrameDimType = "Арматур хэмжээ - 2.5 / Алхам";
+        public string FrameColumnTagType = "MNS - TAG - COLUMN : Багана марк тэмдэглэгээ 4L";
+        public string FrameBeamTagType = "MNS - TAG - BEAM : В рамке";
+        /// <summary>Тэнхлэгийн гинж / нийт хэмжээс гишүүдийн хүрээнээс (цаасан мм).</summary>
+        public double FrameGridChainPaperMm = 12;
+        public double FrameGridTotalPaperMm = 20;
+        /// <summary>Баганын «нүүр | тэнхлэг | нүүр» шугам баганын нүүрнээс (цаасан мм; 1:100-д 650–950 мм хэмжсэн).</summary>
+        public double FrameColumnDimPaperMm = 8;
+        /// <summary>Дамнуурын «нүүр | тэнхлэг | нүүр» дамнуурын уртын хэдэн хувьд (0.4–0.6 хэмжсэн), марк нь хаана.</summary>
+        public double FrameBeamDimAt = 0.6;
+        public double FrameBeamTagAt = 0.35;
+        /// <summary>Дамнуурын марк тэнхлэгээс (дээш / зүүн тийш, цаасан мм; 530–620 мм хэмжсэн).</summary>
+        public double FrameBeamTagOffPaperMm = 5.5;
+        /// <summary>Баганын маркийн толгой баганын төвөөс (цаасан мм; −2719 / +184 мм хэмжсэн).</summary>
+        public double FrameColumnTagDxPaperMm = -27;
+        public double FrameColumnTagDyPaperMm = 2;
+        /// <summary>Тэнхлэг хоорондын зурвасыг хөндлөн огтолсон дамнуурын нүүрний гинж — зурвасын хэдэн хувьд (0.3–0.6 хэмжсэн).</summary>
+        public bool FrameBayChains = true;
+        public double FrameBayChainAt = 0.45;
 
         /// <summary>MRA-ийн хэмжээсийн шугам хамгийн гадна арматураас; шугамаас шошго хүртэл (цаасан мм).</summary>
         public double MraOffsetPaperMm = 10;

@@ -62,10 +62,21 @@ namespace MglBb.RevitSide
         /// <summary>Хучилтын төлөвлөгөө: доор босоо тэнхлэгүүдийн гинж + нийт, зүүн талд хэвтээ тэнхлэгүүдийн гинж + нийт.</summary>
         public static int SlabPlan(Document doc, View view, IList<Element> hosts, DimensionType type, List<string> notes)
         {
+            return Plan(doc, view, hosts, type, notes, false, 12, 20);
+        }
+
+        /// <summary>Рамын байгуулалт (ЖИШЭЭ-2 3-1): доор босоо тэнхлэгүүдийн гинж + нийт, БАРУУН талд хэвтээ тэнхлэгүүдийн гинж + нийт.</summary>
+        public static int FramePlan(Document doc, View view, IList<Element> hosts, DimensionType type, List<string> notes, double chainPaperMm, double totalPaperMm)
+        {
+            return Plan(doc, view, hosts, type, notes, true, chainPaperMm, totalPaperMm);
+        }
+
+        private static int Plan(Document doc, View view, IList<Element> hosts, DimensionType type, List<string> notes, bool right, double chainPaperMm, double totalPaperMm)
+        {
             BbFrame f = BbFrame.Of(view);
             if (!Extent(f, hosts, out double r0, out double r1, out double u0, out double u1)) return 0;
             double sc = Math.Max(1, view.Scale);
-            double off1 = 12 * Paper * sc, off2 = 20 * Paper * sc;
+            double off1 = chainPaperMm * Paper * sc, off2 = totalPaperMm * Paper * sc;
             var alongR = new List<KeyValuePair<double, Reference>>();   // харагдацад босоо тэнхлэг → r
             var alongU = new List<KeyValuePair<double, Reference>>();   // хэвтээ тэнхлэг → u
             foreach (Grid g in new FilteredElementCollector(doc, view.Id).OfClass(typeof(Grid)).Cast<Grid>())
@@ -89,8 +100,8 @@ namespace MglBb.RevitSide
             }
             if (alongU.Count >= 2)
             {
-                made += Chain(doc, view, f, alongU, false, r0 - off1, type, notes, vz);
-                if (alongU.Count >= 3) made += Chain(doc, view, f, new List<KeyValuePair<double, Reference>> { alongU[0], alongU[alongU.Count - 1] }, false, r0 - off2, type, notes, vz);
+                made += Chain(doc, view, f, alongU, false, right ? r1 + off1 : r0 - off1, type, notes, vz);
+                if (alongU.Count >= 3) made += Chain(doc, view, f, new List<KeyValuePair<double, Reference>> { alongU[0], alongU[alongU.Count - 1] }, false, right ? r1 + off2 : r0 - off2, type, notes, vz);
             }
             return made;
         }
@@ -116,7 +127,7 @@ namespace MglBb.RevitSide
             return res;
         }
 
-        private static int Chain(Document doc, View view, BbFrame f, List<KeyValuePair<double, Reference>> refs, bool horizontal, double at, DimensionType type, List<string> notes, double v = 0)
+        internal static int Chain(Document doc, View view, BbFrame f, List<KeyValuePair<double, Reference>> refs, bool horizontal, double at, DimensionType type, List<string> notes, double v = 0)
         {
             var ra = new ReferenceArray();
             foreach (var r in refs) ra.Append(r.Value);

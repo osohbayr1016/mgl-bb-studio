@@ -75,6 +75,26 @@ namespace MglBb.Core
             return RequiredScheduleWords.Any(w => p.Contains(w));
         }
 
+        /// <summary>Рамын байгуулалтын харагдацын төрөл — компанийн загварт 3- цуврал «3.1.» (ББ инженер 2026-10-23; ЖИШЭЭ-2-т «2.1.»).</summary>
+        public const string FrameViewType = "3.1. Рамын байгуулалт";
+
+        /// <summary>
+        /// Рамын байгуулалтын төрөл: сурсан нэр → компанийн «3.1.» (яг / <see cref="Norm"/>-оор) → дугаараас үл хамааран «Рамын байгуулалт»
+        /// үгтэй хамгийн богино нэр.  Дугаараар (<see cref="Code"/>) хайхгүй — өөр төсөлд «2.1.» нь өөр төрөл байдаг.  Олдохгүй бол null
+        /// (Structural Plan-ийн эхнийх «1.1. Суурийн байгуулалт» болж байв).
+        /// </summary>
+        public static string PickFrameViewType(IEnumerable<string> available, string learned)
+        {
+            List<string> names = available.Where(n => n != null).ToList();
+            foreach (string c in new[] { learned, FrameViewType })
+            {
+                if (string.IsNullOrWhiteSpace(c)) continue;
+                string hit = names.FirstOrDefault(n => string.Equals(n, c, StringComparison.Ordinal)) ?? names.FirstOrDefault(n => Norm(n) == Norm(c));
+                if (hit != null) return hit;
+            }
+            return Pick(names, new[] { "Рамын байгуулалт" });
+        }
+
         /// <summary>
         /// <paramref name="available"/>-ээс <paramref name="candidates"/>-ийн эхний таарсныг буцаана: яг ижил → <see cref="Norm"/>-оор ижил.
         /// Олдохгүй бол null.

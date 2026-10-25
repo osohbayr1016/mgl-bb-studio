@@ -607,6 +607,13 @@ namespace MglBb.Gate
                             if (fl != null) picked.Add(fl); else sb.AppendLine(lname + ": хучилт олдсонгүй");
                         }
                         var items = MglBb.Generate.GenerateFlow.BuildItems(doc, picked);
+                        foreach (string fname in (kv.TryGetValue("frames", out string fr6) ? fr6 : "").Split('|').Select(x => x.Trim()).Where(x => x.Length > 0))
+                        {
+                            Level flv = new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().FirstOrDefault(x => x.Name == fname);
+                            if (flv == null) { sb.AppendLine(fname + ": түвшин олдсонгүй"); continue; }
+                            BbFrameLevel fl = BbFramePlan.Of(doc, flv);
+                            items.Add(new MglBb.Generate.GenerateFlow.Item { Mark = fl.LevelText, Frame = fl, Text = MglBb.Generate.GenerateFlow.FrameText(fl) });
+                        }
                         foreach (var it in items) sb.AppendLine("  " + it.Text);
                         var opt = new BbGenOptions { NameSuffix = kv.TryGetValue("suffix", out string suf6) ? suf6 : "", Existing = "new", SectionMode = kv.TryGetValue("mode", out string md6) ? md6 : "auto" };
                         var g = MglBb.Generate.GenerateFlow.Execute(doc, items, std, opt, true, !kv.ContainsKey("nosheet"));
@@ -651,6 +658,35 @@ namespace MglBb.Gate
                                 double l = cb.Min.X - Math.Min(q0.X, q1.X), r = Math.Max(q0.X, q1.X) - cb.Max.X, bo = cb.Min.Y - Math.Min(q0.Y, q1.Y), t = Math.Max(q0.Y, q1.Y) - cb.Max.Y;
                                 if (Math.Max(Math.Max(l, r), Math.Max(bo, t)) > 0) sb.AppendLine("   " + e.GetType().Name + " " + e.Id.Value + " over L " + pm(l) + " R " + pm(r) + " B " + pm(bo) + " T " + pm(t));
                             }
+                        }
+                        break;
+                    }
+                case "annoone":
+                    {
+                        // Жинхэнэ «Стандартаар тэмдэглэх»-ийн нэг харагдацын зам (огтлолын шошгоны үүрэг / хугарал орно).
+                        BbStandard std = LoadStd(kv, outDir);
+                        var rep = new BbAnnoReport();
+                        foreach (string vn in (kv.TryGetValue("view", out string vn9) ? vn9 : "").Split('|').Select(x => x.Trim()).Where(x => x.Length > 0))
+                        {
+                            View v = new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<View>().FirstOrDefault(x => x.Name == vn);
+                            if (v == null) { sb.AppendLine("no view " + vn); continue; }
+                            MglBb.Generate.GenerateFlow.AnnotateOne(doc, v, std, rep);
+                            sb.AppendLine("«" + vn + "» roleTags " + rep.RoleTags);
+                        }
+                        foreach (string n in rep.Notes.Take(20)) sb.AppendLine("  note " + n);
+                        break;
+                    }
+                case "listviews":
+                    {
+                        // Огтлол / дэлгээсийн нэр (like= шүүлтүүр), хуудастай эсэх, ангилал.
+                        string like = kv.TryGetValue("like", out string lk2) ? lk2 : "";
+                        foreach (ViewSection v in new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().Where(x => !x.IsTemplate && x.Name.Contains(like)))
+                        {
+                            BbViewSample smp = null;
+                            try { smp = BbLearner.Classify(doc, v); } catch { }
+                            if (smp == null && kv.ContainsKey("onlyknown")) continue;
+                            sb.AppendLine(v.Name + " | sheet=" + (v.get_Parameter(BuiltInParameter.VIEWPORT_SHEET_NUMBER)?.AsString() ?? "-") +
+                                " | " + (smp == null ? "-" : smp.Kind + (smp.IsSection ? " sec " : " elev ") + smp.Mark));
                         }
                         break;
                     }
@@ -713,6 +749,199 @@ namespace MglBb.Gate
                         }
                         break;
                     }
+                case "dimline":
+                    {
+                        // view=«нэр»; cfg=«тохиргоо»: баганын төвөөр дайрсан хэвтээ ба босоо шугамаар (crop-ын өргөнөөр) «Шугамаар хэмжээс»-ийг (ХУУЛБАР дээр).
+                        View v = new FilteredElementCollector(doc).OfClass(typeof(View)).Cast<View>().FirstOrDefault(x => !x.IsTemplate && x.Name == (kv.TryGetValue("view", out string dvn) ? dvn : ""));
+                        if (v == null)
+                            v = new FilteredElementCollector(doc).OfClass(typeof(ViewPlan)).Cast<ViewPlan>().Where(x => !x.IsTemplate && x.CropBoxActive)
+                                .FirstOrDefault(x => new FilteredElementCollector(doc, x.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).GetElementCount() > 3);
+                        if (v == null) { sb.AppendLine("харагдац алга"); break; }
+                        BbDimLines book = BbDimLines.Load(MglBb.DimLines.DimLineFlow.BookPath);
+                        BbDimConfig cfg = book.Find(kv.TryGetValue("cfg", out string dcn) ? dcn : book.Current);
+                        if (kv.TryGetValue("cats", out string dcats))       // cats=OST_Levels,OST_Walls:e,OST_StructuralColumns:ec (e = захын нүүр, c = төв)
+                        {
+                            cfg = new BbDimConfig { Name = "gate" };
+                            foreach (string part in dcats.Split(',').Select(x => x.Trim()).Where(x => x.Length > 0))
+                            {
+                                string[] kf = part.Split(':');
+                                string fl = kf.Length > 1 ? kf[1] : "";
+                                cfg.Cats.Add(new BbDimCat { Key = kf[0], Edges = fl.Contains("e"), Center = fl.Contains("c") });
+                            }
+                        }
+                        if (cfg == null) { sb.AppendLine("тохиргоо алга"); break; }
+                        if (kv.ContainsKey("section"))
+                            v = new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().Where(x => !x.IsTemplate && x.ViewType == ViewType.Section)
+                                .FirstOrDefault(x => new FilteredElementCollector(doc, x.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).GetElementCount() > 0
+                                                     && x.Scale >= 50) ?? v;
+                        FamilyInstance col = new FilteredElementCollector(doc, v.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).OfType<FamilyInstance>().FirstOrDefault();
+                        if (col == null) { sb.AppendLine("баганагүй харагдац"); break; }
+                        BbFrame f = BbFrame.Of(v);
+                        XYZ c0 = f.Local(((LocationPoint)col.Location).Point);
+                        BoundingBoxXYZ cb = v.CropBox;
+                        sb.AppendLine("«" + v.Name + "» 1:" + v.Scale + " · «" + cfg.Name + "» · багана " + col.Id.Value);
+                        foreach (bool horiz in new[] { true, false })
+                        {
+                            XYZ p0 = horiz ? f.World(cb.Min.X, c0.Y, 0) : f.World(c0.X, cb.Min.Y, 0);
+                            XYZ p1 = horiz ? f.World(cb.Max.X, c0.Y, 0) : f.World(c0.X, cb.Max.Y, 0);
+                            List<BbDimCand> refs = MglBb.DimLines.DimLineFlow.Collect(doc, v, p0, p1, cfg, book.Linked);
+                            sb.AppendLine((horiz ? "  хэвтээ" : "  босоо") + ": " + refs.Count + " лавлагаа — " + string.Join(" ", refs.Select(r => r.Cat.Replace("OST_", "") + (r.Kind == BbDimCand.Face ? "|" : r.Kind == BbDimCand.Center ? "+" : "#")
+                                + BbGeom.ToMm(r.At).ToString("0", CultureInfo.InvariantCulture))));
+                            if (refs.Count < 2) continue;
+                            using (var t = new Transaction(doc, "gate: шугамаар хэмжээс"))
+                            {
+                                t.Start();
+                                string err = MglBb.DimLines.DimLineFlow.Place(doc, v, p0, p1, (horiz ? f.World(0, c0.Y + 3, 0) : f.World(c0.X + 3, 0, 0)), refs, null);
+                                if (err != null) { sb.AppendLine("    алдаа: " + err); t.RollBack(); continue; }
+                                t.Commit();
+                            }
+                            Dimension dim = new FilteredElementCollector(doc, v.Id).OfClass(typeof(Dimension)).Cast<Dimension>().OrderByDescending(x => x.Id.Value).First();
+                            sb.AppendLine("    хэмжээс " + dim.Id.Value + ": " + (dim.NumberOfSegments == 0 ? dim.ValueString
+                                : string.Join(" ", dim.Segments.Cast<DimensionSegment>().Select(s => s.ValueString))));
+                        }
+                        break;
+                    }
+                case "marktidy":
+                    {
+                        // Хамааралгүй тэмдэг нуух: views=«нэр|нэр» (эсвэл бүх танигдсан дэлгээсийн эхний n=6) — нуух өмнө/дараах тэмдгийг жагсааж БУЦААНА.
+                        BbStandard std = MglBb.Infra.BbStore.LoadStandard(out string _);
+                        var names = (kv.TryGetValue("views", out string mvs) ? mvs : "").Split('|').Select(x => x.Trim()).Where(x => x.Length > 0).ToList();
+                        List<string> pats = BbMarkTidy.ElevPatterns(std);
+                        var elevs = new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().Where(x => !x.IsTemplate)
+                            .Where(x => names.Count > 0 ? names.Contains(x.Name) : BbMarkNames.MarkOf(x.Name, pats) != null)
+                            .Take(names.Count > 0 ? 100 : (kv.TryGetValue("n", out string mn) ? int.Parse(mn) : 6)).ToList();
+                        using (var t = new Transaction(doc, "MGL gate marktidy"))
+                        {
+                            t.Start();
+                            foreach (ViewSection v in elevs)
+                            {
+                                string mark = BbMarkTidy.ElevationMark(doc, v, std);
+                                if (kv.ContainsKey("reveal"))
+                                {
+                                    // Инженерийн гараар нуусныг эхлээд гаргана — хэрэгсэл юуг нуухыг цэвэр шалгах.
+                                    var hid = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Viewers).WhereElementIsNotElementType().Where(e => e.IsHidden(v)).Select(e => e.Id).ToList();
+                                    if (hid.Count > 0) { v.UnhideElements(hid); doc.Regenerate(); }
+                                }
+                                if (kv.ContainsKey("probe") && mark != null)
+                                {
+                                    // Дэлгээсийг crop-ын төвд хөндлөн огтлох 2 огтлол: харь («Б-99 S1» — нуух ёстой) ба өөрийн («<mark> S99» — үлдэх ёстой).
+                                    BoundingBoxXYZ cb = v.CropBox;
+                                    XYZ c = cb.Transform.OfPoint((cb.Min + cb.Max) / 2);
+                                    XYZ bz = v.RightDirection, by = XYZ.BasisZ, bx = by.CrossProduct(bz);
+                                    for (int k = 0; k < 2; k++)
+                                    {
+                                        var box = new BoundingBoxXYZ { Transform = Transform.Identity, Min = new XYZ(-40, -15, 0), Max = new XYZ(40, 15, 2) };
+                                        Transform tr = Transform.Identity;
+                                        tr.Origin = c + bz * (k * 1.5); tr.BasisX = bx; tr.BasisY = by; tr.BasisZ = bz;
+                                        box.Transform = tr;
+                                        ViewSection s = ViewSection.CreateDetail(doc, v.GetTypeId(), box);
+                                        s.Name = k == 0 ? "Б-99 S1 (gate)" : mark + " S99";
+                                        s.Scale = v.Scale;
+                                    }
+                                    doc.Regenerate();
+                                }
+                                Func<List<string>> seen = () => new FilteredElementCollector(doc, v.Id).OfCategory(BuiltInCategory.OST_Viewers).WhereElementIsNotElementType().Select(e => e.Name).OrderBy(x => x).ToList();
+                                List<string> before = seen();
+                                foreach (Element e in new FilteredElementCollector(doc, v.Id).OfCategory(BuiltInCategory.OST_Viewers).WhereElementIsNotElementType())
+                                {
+                                    View tv = new FilteredElementCollector(doc).OfClass(typeof(View)).Cast<View>().FirstOrDefault(x => !x.IsTemplate && x.Name == e.Name);
+                                    sb.AppendLine("   viewer " + e.Id.Value + " «" + e.Name + "» " + e.GetType().Name + " canHide " + e.CanBeHidden(v) + " owner " + e.OwnerViewId.Value
+                                        + " view " + (tv == null ? "-" : tv.Id.Value + " " + tv.ViewType + " sheet " + tv.get_Parameter(BuiltInParameter.VIEWER_SHEET_NUMBER)?.AsString()));
+                                }
+                                int h = mark == null ? 0 : BbMarkTidy.HideForeign(doc, v, mark, null);
+                                doc.Regenerate();
+                                List<string> after = seen();
+                                sb.AppendLine("== «" + v.Name + "» mark " + (mark ?? "-") + " sheetmates " + BbMarkTidy.SheetMates(doc, v, mark).Count + " hidden " + h);
+                                sb.AppendLine("   kept   " + string.Join(" | ", after));
+                                sb.AppendLine("   hidden " + string.Join(" | ", before.Except(after)));
+                            }
+                            t.RollBack();
+                        }
+                        break;
+                    }
+                case "delwatch":
+                    {
+                        // Устгалтын бүртгэл: элементийг (ids=1,2 эсвэл анхны n=3 багана/дамнуруу) Delete командын оронд API-аар устгаж updater-ийн
+                        // бичсэн DataStorage-ийг уншина; дараа нь БҮГДИЙГ буцаана (TransactionGroup.RollBack).  Цонхгүй.
+                        BbDeleteWatch.InitForGate(app);
+                        var ids = (kv.TryGetValue("ids", out string idsu) ? idsu : "").Split(',').Where(x => x.Trim().Length > 0).Select(x => new ElementId(long.Parse(x.Trim()))).ToList();
+                        if (ids.Count == 0)
+                            ids = new FilteredElementCollector(doc).WhereElementIsNotElementType()
+                                .Where(x => x.Category != null && (x.Category.Id.Value == (long)BuiltInCategory.OST_StructuralColumns || x.Category.Id.Value == (long)BuiltInCategory.OST_StructuralFraming))
+                                .Take(kv.TryGetValue("n", out string nu) ? int.Parse(nu) : 3).Select(x => x.Id).ToList();
+                        int before = BbDeleteWatch.ReadAll(doc).Count;
+                        using (var g = new TransactionGroup(doc, "MGL gate delwatch"))
+                        {
+                            g.Start();
+                            BbDeleteWatch.ArmForGate(doc, ids);
+                            using (var t = new Transaction(doc, "Delete"))
+                            {
+                                t.Start();
+                                ICollection<ElementId> gone = doc.Delete(ids);
+                                sb.AppendLine("deleted " + ids.Count + " picked, " + gone.Count + " total");
+                                t.Commit();
+                            }
+                            List<BbDeleteBatch> all = BbDeleteWatch.ReadAll(doc);
+                            sb.AppendLine("log batches before " + before + " after " + all.Count);
+                            foreach (string l in BbDeleteLog.Lines(all.OrderBy(b => b.When), x => x.ToLocalTime(), 40)) sb.AppendLine("  " + l);
+                            g.RollBack();
+                        }
+                        sb.AppendLine("after rollback " + BbDeleteWatch.ReadAll(doc).Count + " · elements back " + ids.Count(i => doc.GetElement(i) != null) + "/" + ids.Count);
+                        break;
+                    }
+                case "hostfix":
+                    {
+                        // «Хост засах»: mark= (тэмдэгтэй гишүүдийн хүрээ; хоосон бол бүх загвар) — санал болгосон шилжүүлэлт; apply=1 бол хийж, дэлгээсийн
+                        // нуусан арматурыг тоолоод БУЦААНА (RollBack; keep=1 бол хадгална — зөвхөн хуулбар дээр).
+                        string mk = kv.TryGetValue("mark", out string mk1) ? mk1 : "";
+                        var scope = mk.Length == 0 ? new List<Element>() : new FilteredElementCollector(doc).WherePasses(new ElementMulticategoryFilter(new List<BuiltInCategory>
+                            { BuiltInCategory.OST_StructuralFraming, BuiltInCategory.OST_StructuralColumns })).WhereElementIsNotElementType().Where(e => BbGeom.Mark(e) == mk).ToList();
+                        foreach (FamilyInstance e in scope.Take(3).OfType<FamilyInstance>())
+                        {
+                            BoundingBoxXYZ bb = e.get_BoundingBox(null);
+                            string og = "-";
+                            try
+                            {
+                                BoundingBoxXYZ ob = e.GetOriginalGeometry(new Options()).GetTransformed(e.GetTotalTransform()).GetBoundingBox();
+                                og = BbGeom.ToMm(ob.Min.X).ToString("0") + "," + BbGeom.ToMm(ob.Min.Y).ToString("0") + "," + BbGeom.ToMm(ob.Min.Z).ToString("0") + " .. " + BbGeom.ToMm(ob.Max.X).ToString("0") + "," + BbGeom.ToMm(ob.Max.Y).ToString("0") + "," + BbGeom.ToMm(ob.Max.Z).ToString("0");
+                            }
+                            catch (Exception ex) { og = ex.Message; }
+                            sb.AppendLine("member " + e.Id.Value + " bbox " + BbGeom.ToMm(bb.Min.X).ToString("0") + "," + BbGeom.ToMm(bb.Min.Y).ToString("0") + "," + BbGeom.ToMm(bb.Min.Z).ToString("0") + " .. " + BbGeom.ToMm(bb.Max.X).ToString("0") + "," + BbGeom.ToMm(bb.Max.Y).ToString("0") + "," + BbGeom.ToMm(bb.Max.Z).ToString("0") + " | original " + og);
+                        }
+                        var sw = System.Diagnostics.Stopwatch.StartNew();
+                        List<BbHostFix> fixes = BbRebarHost.Find(doc, scope, out int chk, out int unc);
+                        sb.AppendLine("checked " + chk + " unclear " + unc + " fixes " + fixes.Count + " in " + sw.ElapsedMilliseconds + " ms");
+                        foreach (BbHostFix f in fixes.Take(60))
+                            sb.AppendLine("  " + f.Bar.Id.Value + " " + doc.GetElement(f.Bar.GetTypeId())?.Name + " : " + BbRebarHost.Describe(f.From) + " " + (f.FromShare * 100).ToString("0") + "% -> " + BbRebarHost.Describe(f.To) + " " + (f.Share * 100).ToString("0") + "% | " + f.Bar.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)?.AsString() + " | by " + WorksharingUtils.GetWorksharingTooltipInfo(doc, f.Bar.Id).Creator);
+                        if (kv.ContainsKey("apply"))
+                        {
+                            BbStandard std = LoadStd(kv, outDir);
+                            using (var t = new Transaction(doc, "MGL gate hostfix"))
+                            {
+                                t.Start();
+                                var errs = new List<string>();
+                                int done = BbRebarHost.Apply(doc, fixes, std, errs, out int shown, out int hidden);
+                                sb.AppendLine("applied " + done + " shown " + shown + " hidden " + hidden);
+                                foreach (string er in errs.Take(10)) sb.AppendLine("  err " + er);
+                                List<BbHostFix> again = BbRebarHost.Find(doc, scope, out int chk2, out int _);
+                                sb.AppendLine("re-check fixes " + again.Count + " of " + chk2);
+                                if (kv.ContainsKey("keep")) t.Commit(); else t.RollBack();
+                            }
+                        }
+                        break;
+                    }
+                case "rebargen":
+                    sb.Append(GateRebar.Run(doc, kv));
+                    break;
+                case "rebarcompare":
+                    sb.Append(GateRebar.Compare(doc, kv));
+                    break;
+                case "colrebargen":
+                    sb.Append(GateRebar.Columns(doc, kv));
+                    break;
+                case "rebarprobe":
+                    sb.Append(GateRebar.Probe(doc, kv));
+                    break;
                 case "ping":
                     {
                         // Арын ажил явж байхад өөр команд (хэрэглэгчийн ажил) гүйцэтгэгдэж байгааг шалгана.
@@ -737,6 +966,11 @@ namespace MglBb.Gate
                             if (v != null) sel.Add(v.Id);
                         }
                         ud.Selection.SetElementIds(sel);
+                        if (kv.TryGetValue("active", out string avn))
+                        {
+                            View av = new FilteredElementCollector(doc).OfClass(typeof(View)).Cast<View>().FirstOrDefault(x => !x.IsTemplate && x.Name == avn);
+                            if (av != null) ud.ActiveView = av;
+                        }
                         Result res;
                         switch (kv.TryGetValue("cmd", out string cmd) ? cmd : "")
                         {
@@ -745,7 +979,10 @@ namespace MglBb.Gate
                             case "issues": res = MglBb.Issues.IssuesFlow.Run(ud); break;
                             case "learn": res = MglBb.Learn.LearnFlow.Run(ud); break;
                             case "settings": res = MglBb.Settings.SettingsFlow.Run(ud); break;
-                            default: return "cmd=generate|annotate|issues|learn|settings";
+                            case "dimline": res = MglBb.DimLines.DimLineFlow.Run(ud); break;
+                            case "beamrebar": res = MglBb.BeamRebar.BeamRebarFlow.Run(ud); break;
+                            case "colrebar": res = MglBb.BeamRebar.ColumnRebarFlow.Run(ud); break;
+                            default: return "cmd=generate|annotate|issues|learn|settings|dimline|beamrebar|colrebar";
                         }
                         sb.AppendLine("result " + res + " selected " + sel.Count + " active «" + ud.ActiveView?.Name + "»");
                         break;

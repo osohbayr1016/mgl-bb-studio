@@ -54,6 +54,17 @@ namespace MglBb.RevitSide
             // ── Дэлгээс
             if (opt.Elevation)
             {
+                // Энэ гишүүнд байх ёстой ч өөр элементэд хостлогдсон арматур дэлгээсэд нуугдана (ЖИШЭЭ-5 ТДН-4) — анхааруулна.
+                try
+                {
+                    var mine = new HashSet<long>(chain.Members.Select(m => m.Id.Value));
+                    int wrong = BbRebarHost.Find(doc, chain.Members.Cast<Element>().ToList(), out int _, out int _).Count(f => mine.Contains(f.To.Id.Value));
+                    if (wrong > 0)
+                        res.Issues.Add(Issue(mark, BbSeverity.Warning, wrong + " арматур энэ гишүүнд байрлаж байгаа ч өөр элементэд хостлогдсон тул дэлгээсэд харагдахгүй.",
+                            "«Арматур» самбарын «Хост засах»-аар засаад дэлгээсийг дахин үүсгэх.", "host"));
+                }
+                catch { }
+
                 List<string> want = BbCompanyRules.ElevViewTypes(kind, ms);
                 ViewFamilyType vft = BbGeom.FindVft(doc, want, ViewFamily.Detail, out bool matched);
                 if (vft == null) throw new InvalidOperationException("«Detail View» төрөл энэ төсөлд алга.");

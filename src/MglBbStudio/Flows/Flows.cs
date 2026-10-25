@@ -160,6 +160,7 @@ namespace MglBb.Learn
                 "Багана: «" + learned.Column.ElevViewType + "» 1:" + learned.Column.ElevScale + ", огтлол 1:" + learned.Column.SecScale,
                 "Хана: «" + learned.Plate.WallRebarViewType + "», MRA «" + learned.Plate.WallMraType + "»",
                 "Хучилт: «" + learned.Plate.SlabBottomViewType + "» 1:" + learned.Plate.SlabScale + ", MRA «" + learned.Plate.SlabMraType + "»",
+                "Рамын байгуулалт: «" + learned.Plate.FrameViewType + "» 1:" + learned.Plate.FrameScale + ", нэр «" + learned.Plate.FrameName + "», марк «" + learned.Plate.FrameColumnTagType + "» / «" + learned.Plate.FrameBeamTagType + "»",
                 "Хуудас: «" + learned.Sheet.TitleBlock + "», цуврал " + learned.Sheet.ColumnSheetPrefix + " / " + learned.Sheet.BeamSheetPrefix + " / " + learned.Sheet.WallSheetPrefix + " / " + learned.Sheet.SlabSheetPrefix,
             };
             lines.AddRange(rep.Notes.Take(5));
@@ -229,6 +230,7 @@ namespace MglBb.Generate
             public BbColumnStack Column;
             public BbWallStack Wall;
             public BbSlabLevel Slab;
+            public BbFrameLevel Frame;
 
             public BbMemberKind Kind
             {
@@ -237,6 +239,7 @@ namespace MglBb.Generate
                     if (Column != null) return BbMemberKind.Column;
                     if (Wall != null) return BbMemberKind.Wall;
                     if (Slab != null) return BbMemberKind.Slab;
+                    if (Frame != null) return BbMemberKind.Frame;
                     return Beam != null && Beam.Aux ? BbMemberKind.BeamAux : BbMemberKind.Beam;
                 }
             }
@@ -245,15 +248,32 @@ namespace MglBb.Generate
         public static Result Run(UIDocument uidoc)
         {
             Document doc = uidoc.Document;
+            // Юу ч сонголгүй «Finish» дарвал зөвхөн рамын байгуулалт (түвшнээр).
             List<Element> picked = Pick(uidoc);
-            if (picked == null || picked.Count == 0) return Result.Cancelled;
+            if (picked == null) return Result.Cancelled;
             BbStandard std = BbStore.LoadStandard(out string src);
 
             List<Item> items = BuildItems(doc, picked);
+            List<BbFrameLevel> frameLevels = BbFramePlan.Levels(doc);
 
             var dlg = new BbDialog("MGL ББ — Ажлын зураг гаргах", "Сонгосон гишүүдийн загварчилсан арматураас компанийн стандартаар дэлгээс ба огтлол үүсгэнэ.");
-            dlg.Section("Гишүүд (" + items.Count + ")");
-            dlg.List(items.Select(i => i.Text), Math.Min(160, 26 + 18 * items.Count));
+            if (items.Count > 0)
+            {
+                dlg.Section("Гишүүд (" + items.Count + ")");
+                dlg.List(items.Select(i => i.Text), Math.Min(160, 26 + 18 * items.Count));
+            }
+            System.Windows.Controls.ListBox frameBox = null;
+            if (frameLevels.Count > 0)
+            {
+                dlg.Section("Рамын байгуулалт — түвшин (" + frameLevels.Count + ")");
+                frameBox = dlg.Picker(frameLevels.Select(FrameText), Math.Min(200, 30 + 20 * frameLevels.Count));
+                dlg.Note("«" + std.Plate.FrameName.Replace("{level}", "…") + "» төлөвлөгөө (" + std.Sheet.FrameSheetPrefix + " цуврал).  Ctrl / Shift дарж олныг сонгоно; сонгоогүй бол үүсгэхгүй.");
+            }
+            if (items.Count == 0 && frameBox == null)
+            {
+                TaskDialog.Show("MGL ББ — Ажлын зураг гаргах", "Дамнуруу / багана / хана / хучилт сонгоогүй, рамын байгуулалт хийх түвшин ч алга.");
+                return Result.Cancelled;
+            }
             dlg.Section("Юу үүсгэх");
             var cElev = dlg.Check("Дэлгээс (арматурчлал)", true);
             var cSec = dlg.Check("Огтлол", true);
@@ -297,10 +317,22 @@ namespace MglBb.Generate
                 if (cBreaks.IsChecked != true) { ms.SecBreakLines = false; ms.ElevBreakLines = false; }
                 if (cEndSym.IsChecked != true) ms.ElevEndSymbols = false;
             }
-            if (!opt.Elevation && !opt.Sections) return Result.Cancelled;
+            if (frameBox != null)
+                foreach (object sel in frameBox.SelectedItems)
+                {
+                    BbFrameLevel fl = frameLevels[frameBox.Items.IndexOf(sel)];
+                    items.Add(new Item { Mark = fl.LevelText, Frame = fl, Text = FrameText(fl) });
+                }
+            if (items.Count == 0) return Result.Cancelled;
+            if (!opt.Elevation && !opt.Sections && items.All(i => i.Frame == null)) return Result.Cancelled;
 
             GenJobHost.Start(uidoc, new GenJob(doc, items, std, opt, annotate, onSheet, cSched.IsChecked == true), src);
             return Result.Succeeded;
+        }
+
+        internal static string FrameText(BbFrameLevel fl)
+        {
+            return fl.LevelText + " түвшний рамын байгуулалт — багана " + fl.Columns.Count + ", дамнуруу " + fl.Beams.Count + "   (" + fl.Level?.Name + ")";
         }
 
         /// <summary>Дууссан ажлын дүгнэлтийн мөрүүд (явцын цонх / TaskDialog).</summary>
@@ -440,6 +472,7 @@ namespace MglBb.Generate
                             r = it.Column != null ? BbColumns.Create(doc, it.Column, std, opt)
                                 : it.Wall != null ? BbPlates.CreateWall(doc, it.Wall, std, opt, roles)
                                 : it.Slab != null ? BbPlates.CreateSlab(doc, it.Slab, std, opt, roles)
+                                : it.Frame != null ? BbFramePlan.Create(doc, it.Frame, std, opt, roles)
                                 : BbViews.CreateBeam(doc, it.Beam, std, opt);
                             t.Commit();
                         }
@@ -451,7 +484,11 @@ namespace MglBb.Generate
                         if (g.First == null) g.First = r.Elevations.Cast<View>().Concat(r.Sections).Concat(r.Plans).FirstOrDefault();
                         if (annotate)
                         {
-                            if (it.Wall != null || it.Slab != null)
+                            if (it.Frame != null)
+                            {
+                                foreach (View v in r.Plans) BbFramePlan.Annotate(doc, v, it.Frame, std.Plate, rep, it.Mark);
+                            }
+                            else if (it.Wall != null || it.Slab != null)
                             {
                                 IList<Element> hosts = it.Wall != null ? it.Wall.Members.Cast<Element>().ToList() : it.Slab.Floors.Cast<Element>().ToList();
                                 foreach (View v in r.Elevations.Cast<View>().Concat(r.Sections).Concat(r.Plans))
@@ -467,6 +504,17 @@ namespace MglBb.Generate
                             FlowCommon.Swallow(t);
                             var all = r.Elevations.Cast<View>().Concat(r.Sections).Concat(r.Plans).ToList();
                             if (it.Wall != null) BbPlates.TidyMarks(doc, all, roles);
+                            if (it.Slab == null && it.Frame == null)
+                            {
+                                // Дэлгээсэд хамааралгүй огтлол / хэсэглэлийн тэмдгийг нуух (2026-10-23).
+                                var own = new HashSet<string>(all.Select(v => v.Name), StringComparer.Ordinal);
+                                foreach (View e in r.Elevations)
+                                {
+                                    int h = BbMarkTidy.HideForeign(doc, e, it.Mark, own);
+                                    if (h > 0) notes.Add("«" + e.Name + "»: хамааралгүй " + h + " огтлол / хэсэглэлийн тэмдгийг нуув.");
+                                }
+                                BbMarkTidy.HideInOthers(doc, it.Mark, all, std);
+                            }
                             foreach (View v in all)
                             {
                                 BbDatums.Trim(doc, v);
@@ -474,7 +522,7 @@ namespace MglBb.Generate
                             }
                             t.Commit();
                         }
-                        if (onSheet && it.Slab != null)
+                        if (onSheet && (it.Slab != null || it.Frame != null))
                         {
                             // Хучилт: төлөвлөгөө бүр өөрийн хуудсанд (ЖИШЭЭ-1 7-10/7-11/7-12), нэр = төлөвлөгөөний нэр.
                             using (var t = new Transaction(doc, "MGL ББ: хуудас " + it.Mark))
@@ -483,7 +531,7 @@ namespace MglBb.Generate
                                 FlowCommon.Swallow(t);
                                 foreach (View p in r.Plans)
                                 {
-                                    List<ViewSheet> sh = BbSheets.Place(doc, p.Name, BbMemberKind.Slab, new List<View> { p }, new List<View>(), std, issues, notes);
+                                    List<ViewSheet> sh = BbSheets.Place(doc, p.Name, it.Kind, new List<View> { p }, new List<View>(), std, issues, notes);
                                     g.Sheets += sh.Count;
                                     g.CreatedSheets.AddRange(sh);
                                     if (sh.Count > 0) g.First = sh[0];
@@ -597,7 +645,7 @@ namespace MglBb.Generate
                 BbAnnotate.Section(doc, v, smp.Host, ms, rep, smp.Mark);
                 if (beam)
                 {
-                    BbSecTagLayout.Apply(doc, v, smp.Host, ms, before, rep, smp.Mark);
+                    BbSecTagLayout.Apply(doc, v, smp.Host, ms, before, rep, smp.Mark, smp.Kind == BbMemberKind.BeamAux ? std.Beam : null);
                     BbBreaks.Section(doc, v, ms, rep, smp.Mark);
                 }
             }
@@ -606,7 +654,7 @@ namespace MglBb.Generate
 
         private static string Label(string mark, Element e) { return string.IsNullOrEmpty(mark) ? "(тэмдэггүй #" + e.Id.Value + ")" : mark; }
 
-        internal static List<Element> Pick(UIDocument uidoc, string prompt = "Ажлын зураг гаргах дамнуруу / багана / хана / хучилтаа сонгоно уу (Finish — дуусгах)")
+        internal static List<Element> Pick(UIDocument uidoc, string prompt = "Ажлын зураг гаргах дамнуруу / багана / хана / хучилтаа сонгоно уу (Finish — дуусгах; юу ч сонгохгүй Finish = зөвхөн рамын байгуулалт)")
         {
             Document doc = uidoc.Document;
             var filter = new MemberFilter();

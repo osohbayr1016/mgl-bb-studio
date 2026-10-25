@@ -143,19 +143,27 @@ namespace MglBb.RevitSide
             }
         }
 
-        /// <summary>
-        /// Нээлттэй Transaction-гүй үед: <paramref name="before"/>-оос хойш энэ огтлолд үүссэн арматурын шошгыг сурсан байрлал руу зөөнө.  Зөөсөн тоо.
-        /// </summary>
-        public static int Apply(Document doc, ViewSection view, Element host, BbMemberStandard ms, ISet<long> before, BbAnnoReport rep, string mark)
+        private static bool AnyRoleTag(BbMemberStandard ms)
         {
-            if (view == null || host == null || ms == null) return 0;
-            bool any = false;
             foreach (BbBarRole r in new[] { BbBarRole.Top, BbBarRole.Bottom, BbBarRole.Side, BbBarRole.Stirrup })
             {
                 ms.RoleTag(r, out string sd, out double _, out double __);
-                if (!string.IsNullOrEmpty(sd)) any = true;
+                if (!string.IsNullOrEmpty(sd)) return true;
             }
-            if (!any) return 0;
+            return false;
+        }
+
+        /// <summary>
+        /// Нээлттэй Transaction-гүй үед: <paramref name="before"/>-оос хойш энэ огтлолд үүссэн арматурын шошгыг сурсан байрлал руу зөөнө.  Зөөсөн тоо.
+        /// </summary>
+        public static int Apply(Document doc, ViewSection view, Element host, BbMemberStandard ms, ISet<long> before, BbAnnoReport rep, string mark,
+            BbMemberStandard fallback = null)
+        {
+            if (view == null || host == null || ms == null) return 0;
+            // Туслах дамнурууны байрлал сураагүй бол (хэрэглэгчийн стандартад хоосон — шошго зөөгдөхгүй, хугаралгүй үлддэг байв) гол дамнурууных:
+            // ЖИШЭЭ-5 ТДН-1…2-ийн огтлол гол дамнуруутай ижил (тал, зай, хугарал).
+            if (!AnyRoleTag(ms) && fallback != null && AnyRoleTag(fallback)) ms = fallback;
+            if (!AnyRoleTag(ms)) return 0;
             BoundingBoxXYZ hbx = host.get_BoundingBox(null);
             if (hbx == null) return 0;
             BbFrame f = BbFrame.Of(view);
@@ -181,7 +189,8 @@ namespace MglBb.RevitSide
             }
 
             int moved = 0;
-            double landing = ms.SecLeaderLandingPaperMm * ft;
+            // Хугарал сураагүй бол (туслах дамнуруу — хэрэглэгчийн загварт хоосон байв, шошго хугаралгүй ташуу) гол дамнурууных.
+            double landing = (ms.SecLeaderLandingPaperMm > 0 || fallback == null ? ms.SecLeaderLandingPaperMm : fallback.SecLeaderLandingPaperMm) * ft;
             using (var tr = new Transaction(doc, "MGL ББ: огтлолын шошго " + (mark ?? "")))
             {
                 tr.Start();
@@ -197,6 +206,7 @@ namespace MglBb.RevitSide
                     {
                         h.Tag.TagHeadPosition = f.World(hr, hu, h.Local.Z);
                         ms.RoleElbow(h.Role, out string eref, out double ed);
+                        if (string.IsNullOrEmpty(eref) && fallback != null) fallback.RoleElbow(h.Role, out eref, out ed);
                         bool learned = !string.IsNullOrEmpty(eref);
                         if ((learned || landing > 0) && h.Tag.HasLeader && h.Tag.LeaderEndCondition == LeaderEndCondition.Free)
                             foreach (Reference rf in h.Tag.GetTaggedReferences())
