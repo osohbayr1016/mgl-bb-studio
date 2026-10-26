@@ -38,6 +38,19 @@ namespace MglBb.Commands
         }
     }
 
+    /// <summary>
+    /// Товч идэвхтэй эсэх: нээлттэй төслийн (Family биш) баримт — <see cref="CommandGuard.Begin"/>-тэй ижил нөхцөл.  mgl-e-c-ийн үндсэн plugin
+    /// «Бүтээц» самбартаа энэ нэрээр заадаг (Revit availability-ийн ангийг командын assembly-аас ачаалдаг) — нэрийг солибол тэнд дагуулж засна.
+    /// </summary>
+    public sealed class ProjectAvailability : IExternalCommandAvailability
+    {
+        public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
+        {
+            Document doc = applicationData?.ActiveUIDocument?.Document;
+            return doc != null && !doc.IsFamilyDocument;
+        }
+    }
+
     [Transaction(TransactionMode.Manual)]
     public sealed class LearnCommand : IExternalCommand
     {
