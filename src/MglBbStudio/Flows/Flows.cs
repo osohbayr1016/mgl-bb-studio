@@ -253,7 +253,8 @@ namespace MglBb.Generate
             if (picked == null) return Result.Cancelled;
             BbStandard std = BbStore.LoadStandard(out string src);
 
-            List<Item> items = BuildItems(doc, picked);
+            int dirWas = GridDirection.Load();
+            List<Item> items = BuildItems(doc, picked, dirWas);
             List<BbFrameLevel> frameLevels = BbFramePlan.Levels(doc);
 
             var dlg = new BbDialog("MGL ББ — Ажлын зураг гаргах", "Сонгосон гишүүдийн загварчилсан арматураас компанийн стандартаар дэлгээс ба огтлол үүсгэнэ.");
@@ -288,6 +289,9 @@ namespace MglBb.Generate
                 .Select(s => s.FamilyName + " : " + s.Name).Distinct().OrderBy(s => s, StringComparer.CurrentCulture).ToList();
             System.Windows.Controls.ComboBox tbBox =tbs.Count > 0 ? dlg.Combo("Хуудасны хүрээ (title block)", tbs, Math.Max(0, tbs.IndexOf(std.Sheet.TitleBlock))) : null;
             var cSched = dlg.Check("Түүврийг хувилж хуудсанд байрлуулах (арматур, бетон)", true, "Энэ төслийн өөр гишүүний түүврийг хуулж, нэр болон шүүлтүүрийн тэмдгийг солино.");
+            var dirBox = items.Any(i => i.Beam != null)
+                ? dlg.Combo("Дамнурууны дэлгээсийн чиглэл", new[] { "Тэнхлэг өсөх эрэмбээр (FX1 → FX4, А → Б)", "Тэнхлэг буурах эрэмбээр (FX4 → FX1, Б → А)" }, dirWas < 0 ? 1 : 0)
+                : null;
             var exist = dlg.Combo("Ижил нэртэй харагдац байвал", new[] { "Алгасах", "Шинээр (нэрийн ард дугаар)" }, 0);
             var optBox = FlowCommon.OptionCombo(dlg, doc, out BbOptionBook book);
             dlg.Note("Стандарт: " + src);
@@ -299,6 +303,15 @@ namespace MglBb.Generate
                 return Result.Cancelled;
             }
             string tbPicked = tbBox != null && tbBox.SelectedIndex >= 0 ? tbs[tbBox.SelectedIndex] : null;
+            if (dirBox != null)
+            {
+                int dir = dirBox.SelectedIndex == 1 ? -1 : 1;
+                GridDirection.Save(dir);
+                // Сонголт өөрчлөгдсөн бол гинжийг тэр чиглэлээр дахин (дэлгээс зүүнээс баруун тийш, огтлол S1 нь зүүн захад).
+                if (dir != dirWas)
+                    foreach (Item it in items.Where(i => i.Beam != null && i.Beam.Members.Count > 0))
+                        it.Beam = BbGeom.BeamChain(doc, it.Beam.Members[0], gridOrder: dir) ?? it.Beam;
+            }
             std = FlowCommon.StandardFor(doc, book, optBox, out src);
 
             var opt = new BbGenOptions
@@ -330,6 +343,24 @@ namespace MglBb.Generate
             return Result.Succeeded;
         }
 
+        /// <summary>Дамнурууны дэлгээсийн чиглэлийн сүүлийн сонголт (+1 өсөх, −1 буурах) — хэрэглэгчийн компьютерт, дараагийн удаа үүнээр нээгдэнэ.</summary>
+        private static class GridDirection
+        {
+            static string File { get { return System.IO.Path.Combine(Paths.Root, "elev-direction.txt"); } }
+
+            public static int Load()
+            {
+                try { return System.IO.File.Exists(File) && System.IO.File.ReadAllText(File).Trim() == "-1" ? -1 : 1; }
+                catch { return 1; }
+            }
+
+            public static void Save(int dir)
+            {
+                try { System.IO.File.WriteAllText(File, dir < 0 ? "-1" : "1"); }
+                catch { }
+            }
+        }
+
         internal static string FrameText(BbFrameLevel fl)
         {
             return fl.LevelText + " түвшний рамын байгуулалт — багана " + fl.Columns.Count + ", дамнуруу " + fl.Beams.Count + "   (" + fl.Level?.Name + ")";
@@ -351,7 +382,7 @@ namespace MglBb.Generate
             return lines;
         }
 
-        internal static List<Item> BuildItems(Document doc, IEnumerable<Element> picked)
+        internal static List<Item> BuildItems(Document doc, IEnumerable<Element> picked, int dir = 1)
         {
             var items = new List<Item>();
             var seen = new HashSet<long>();
@@ -383,7 +414,7 @@ namespace MglBb.Generate
                 }
                 else
                 {
-                    BbBeamChain ch = BbGeom.BeamChain(doc, fi, gridOrder: true);
+                    BbBeamChain ch = BbGeom.BeamChain(doc, fi, gridOrder: dir);
                     foreach (FamilyInstance m in ch.Members) seen.Add(m.Id.Value);
                     items.Add(new Item { Mark = ch.Mark, Beam = ch, Text = Label(ch.Mark, fi) + " — " + (ch.Aux ? "туслах дамнуруу" : "дамнуруу") + ", " + ch.Members.Count + " элемент, " + FlowCommon.Mm(BbGeom.ToMm(ch.S1 - ch.S0)) + ", тулгуур " + ch.Supports.Count + ", арматур " + ch.RebarCount + (ch.RebarCount == 0 ? "  ⚠ арматургүй" : "") });
                 }

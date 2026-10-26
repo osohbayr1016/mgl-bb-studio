@@ -80,7 +80,7 @@ namespace MglBb.Gate
                             }
                             FamilyInstance seed = SeedForMark(doc, mark, kv.TryGetValue("level", out string lv) ? lv : null);
                             if (seed == null) { sb.AppendLine(mark + ": seed олдсонгүй"); continue; }
-                            BbBeamChain chain = BbGeom.BeamChain(doc, seed, gridOrder: !kv.ContainsKey("drawn"));
+                            BbBeamChain chain = BbGeom.BeamChain(doc, seed, gridOrder: kv.ContainsKey("drawn") ? 0 : kv.TryGetValue("dir", out string gdir) && gdir == "desc" ? -1 : 1);
                             sb.AppendLine(mark + ": гинж " + chain.Members.Count + " элемент, урт " + BbGeom.ToMm(chain.S1 - chain.S0).ToString("0") + " мм, тулгуур " + chain.Supports.Count +
                                 ", арматур " + chain.RebarCount + (chain.Aux ? " (туслах)" : ""));
                             BbGenResult r;

@@ -145,9 +145,10 @@ namespace MglBb.RevitSide
         /// Сонгосон дамнурууны ГИНЖ: ижил тэмдэгтэй, ижил өндөрт (±50 мм), параллель (≤ 2°), нэг шугам дээр (≤ 100 мм) бүх framing элемент.
         /// Тэмдэггүй бол зөвхөн өөрөө.
         /// </summary>
-        /// <param name="gridOrder">Ажлын зураг: тэнхлэгийг дайрсан тэнхлэгийн шугамууд (Grid) өсөх эрэмбээр (FX1 → FX4) байхаар чиглүүлнэ —
-        /// дэлгээс зүүнээс баруун тийш, огтлол түүнийг дагана (<see cref="BbGridOrder"/>).  Бусад (арматур, сургалт) зурсан чиглэлээр.</param>
-        public static BbBeamChain BeamChain(Document doc, FamilyInstance seed, IEnumerable<FamilyInstance> sameMark = null, bool findSupports = true, bool gridOrder = false)
+        /// <param name="gridOrder">Ажлын зураг: тэнхлэгийг дайрсан тэнхлэгийн шугамууд (Grid) зүүнээс баруун тийш +1 = өсөх (FX1 → FX4),
+        /// −1 = буурах (FX4 → FX1) эрэмбээр байхаар чиглүүлнэ (хэрэглэгч цонхонд сонгоно); огтлол түүнийг дагана (<see cref="BbGridOrder"/>).
+        /// 0 = зурсан чиглэлээр (арматур, сургалт).</param>
+        public static BbBeamChain BeamChain(Document doc, FamilyInstance seed, IEnumerable<FamilyInstance> sameMark = null, bool findSupports = true, int gridOrder = 0)
         {
             if (!LineOf(seed, out XYZ a0, out XYZ a1)) return null;
             XYZ ax = new XYZ(a1.X - a0.X, a1.Y - a0.Y, 0);
@@ -180,7 +181,7 @@ namespace MglBb.RevitSide
             while (iA > 0 && withS[iA].lo - withS[iA - 1].hi < Ft(2000)) iA--;
             while (iB < withS.Count - 1 && withS[iB + 1].lo - withS[iB].hi < Ft(2000)) iB++;
             for (int i = iA; i <= iB; i++) chain.Members.Add(withS[i].f);
-            if (gridOrder && GridsReversed(doc, chain, withS[iA].lo, withS[iB].hi))
+            if (gridOrder != 0 && GridsFlip(doc, chain, withS[iA].lo, withS[iB].hi, gridOrder))
             {
                 ax = ax.Negate();
                 chain.Axis = ax;
@@ -205,8 +206,8 @@ namespace MglBb.RevitSide
             return chain;
         }
 
-        /// <summary>Гинжийн шугамыг [<paramref name="lo"/>, <paramref name="hi"/>] (± 1 м) мужид дайрсан тэнхлэгүүд станц өсөхөд буурах нэртэй эсэх.</summary>
-        private static bool GridsReversed(Document doc, BbBeamChain chain, double lo, double hi)
+        /// <summary>Гинжийн шугамыг [<paramref name="lo"/>, <paramref name="hi"/>] (± 1 м) мужид дайрсан тэнхлэгүүдийг <paramref name="want"/> эрэмбэд оруулахын тулд эргүүлэх эсэх.</summary>
+        private static bool GridsFlip(Document doc, BbBeamChain chain, double lo, double hi, int want)
         {
             var hits = new List<KeyValuePair<double, string>>();
             double ox = chain.Origin.X, oy = chain.Origin.Y, ax = chain.Axis.X, ay = chain.Axis.Y, pad = Ft(1000);
@@ -229,7 +230,7 @@ namespace MglBb.RevitSide
                 }
             }
             catch { return false; }
-            return BbGridOrder.Reversed(hits);
+            return BbGridOrder.Flip(hits, want);
         }
 
         private static bool PerpOverlap(Element a, Element b, XYZ perp)

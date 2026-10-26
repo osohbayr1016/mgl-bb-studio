@@ -31,6 +31,17 @@ namespace MglBb.Tests
         }
 
         [Test]
+        public static void UserPicksAscendingOrDescending()
+        {
+            var drawnDesc = L(0.0, "FX4", 6.0, "FX3", 12.0, "FX1");
+            Assert.True(BbGridOrder.Flip(drawnDesc, 1), "өсөх сонгосон → эргүүлнэ");
+            Assert.False(BbGridOrder.Flip(drawnDesc, -1), "буурах сонгосон → хэвээр");
+            Assert.True(BbGridOrder.Flip(L(0.0, "FX1", 6.0, "FX2"), -1));
+            Assert.False(BbGridOrder.Flip(drawnDesc, 0), "0 = зурсан чиглэлээр");
+            Assert.False(BbGridOrder.Flip(L(3.0, "FX2"), -1), "нэг тэнхлэг → тодорхойгүй");
+        }
+
+        [Test]
         public static void OneOrNoGridKeepsDrawnDirection()
         {
             Assert.False(BbGridOrder.Reversed(L(3.0, "FX2")));
