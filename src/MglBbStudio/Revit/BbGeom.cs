@@ -145,7 +145,9 @@ namespace MglBb.RevitSide
         /// Сонгосон дамнурууны ГИНЖ: ижил тэмдэгтэй, ижил өндөрт (±50 мм), параллель (≤ 2°), нэг шугам дээр (≤ 100 мм) бүх framing элемент.
         /// Тэмдэггүй бол зөвхөн өөрөө.
         /// </summary>
-        public static BbBeamChain BeamChain(Document doc, FamilyInstance seed, IEnumerable<FamilyInstance> sameMark = null, bool findSupports = true)
+        /// <param name="gridOrder">Ажлын зураг: тэнхлэгийг дайрсан тэнхлэгийн шугамууд (Grid) өсөх эрэмбээр (FX1 → FX4) байхаар чиглүүлнэ —
+        /// дэлгээс зүүнээс баруун тийш, огтлол түүнийг дагана (<see cref="BbGridOrder"/>).  Бусад (арматур, сургалт) зурсан чиглэлээр.</param>
+        public static BbBeamChain BeamChain(Document doc, FamilyInstance seed, IEnumerable<FamilyInstance> sameMark = null, bool findSupports = true, bool gridOrder = false)
         {
             if (!LineOf(seed, out XYZ a0, out XYZ a1)) return null;
             XYZ ax = new XYZ(a1.X - a0.X, a1.Y - a0.Y, 0);
@@ -178,6 +180,12 @@ namespace MglBb.RevitSide
             while (iA > 0 && withS[iA].lo - withS[iA - 1].hi < Ft(2000)) iA--;
             while (iB < withS.Count - 1 && withS[iB + 1].lo - withS[iB].hi < Ft(2000)) iB++;
             for (int i = iA; i <= iB; i++) chain.Members.Add(withS[i].f);
+            if (gridOrder && GridsReversed(doc, chain, withS[iA].lo, withS[iB].hi))
+            {
+                ax = ax.Negate();
+                chain.Axis = ax;
+                chain.Members.Reverse();
+            }
 
             // Геометрийн хэмжээ (тэнхлэгийн хүрээнд)
             var fr = new BbFrame { O = chain.Origin, R = ax, U = XYZ.BasisZ, V = ax.CrossProduct(XYZ.BasisZ).Normalize() };
@@ -195,6 +203,33 @@ namespace MglBb.RevitSide
             chain.S0 = s0m; chain.S1 = s1m; chain.Bottom = zb; chain.Top = zt; chain.Near = vn; chain.Far = vf;
             if (findSupports) FindSupports(doc, chain, fr);
             return chain;
+        }
+
+        /// <summary>Гинжийн шугамыг [<paramref name="lo"/>, <paramref name="hi"/>] (± 1 м) мужид дайрсан тэнхлэгүүд станц өсөхөд буурах нэртэй эсэх.</summary>
+        private static bool GridsReversed(Document doc, BbBeamChain chain, double lo, double hi)
+        {
+            var hits = new List<KeyValuePair<double, string>>();
+            double ox = chain.Origin.X, oy = chain.Origin.Y, ax = chain.Axis.X, ay = chain.Axis.Y, pad = Ft(1000);
+            try
+            {
+                foreach (Grid g in new FilteredElementCollector(doc).OfClass(typeof(Grid)).Cast<Grid>())
+                {
+                    if (!(g.Curve is Line ln)) continue;
+                    XYZ g0 = ln.GetEndPoint(0), g1 = ln.GetEndPoint(1);
+                    double gx = g1.X - g0.X, gy = g1.Y - g0.Y, glen = Math.Sqrt(gx * gx + gy * gy);
+                    if (glen < 1e-6) continue;
+                    gx /= glen; gy /= glen;
+                    double cross = ax * gy - ay * gx;
+                    if (Math.Abs(cross) < 0.5) continue;                 // 30°-аас бага өнцөгтэй — дайрахгүй
+                    // O + t·a = G0 + u·g  →  t, u
+                    double dx = g0.X - ox, dy = g0.Y - oy;
+                    double t = (dx * gy - dy * gx) / cross, u = (dx * ay - dy * ax) / cross;
+                    if (t < lo - pad || t > hi + pad || u < -pad || u > glen + pad) continue;
+                    hits.Add(new KeyValuePair<double, string>(t, g.Name));
+                }
+            }
+            catch { return false; }
+            return BbGridOrder.Reversed(hits);
         }
 
         private static bool PerpOverlap(Element a, Element b, XYZ perp)
