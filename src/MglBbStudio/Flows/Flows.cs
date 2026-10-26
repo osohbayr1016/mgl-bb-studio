@@ -383,7 +383,7 @@ namespace MglBb.Generate
                 }
                 else
                 {
-                    BbBeamChain ch = BbGeom.BeamChain(doc, fi);
+                    BbBeamChain ch = BbGeom.BeamChain(doc, fi, gridOrder: true);
                     foreach (FamilyInstance m in ch.Members) seen.Add(m.Id.Value);
                     items.Add(new Item { Mark = ch.Mark, Beam = ch, Text = Label(ch.Mark, fi) + " — " + (ch.Aux ? "туслах дамнуруу" : "дамнуруу") + ", " + ch.Members.Count + " элемент, " + FlowCommon.Mm(BbGeom.ToMm(ch.S1 - ch.S0)) + ", тулгуур " + ch.Supports.Count + ", арматур " + ch.RebarCount + (ch.RebarCount == 0 ? "  ⚠ арматургүй" : "") });
                 }
