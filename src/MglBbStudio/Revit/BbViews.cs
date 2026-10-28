@@ -21,6 +21,14 @@ namespace MglBb.RevitSide
         public string NameSuffix = "";
         /// <summary>Аль хэдийн ижил нэртэй харагдац байвал: skip | new (нэрийн ард (2)).</summary>
         public string Existing = "skip";
+        /// <summary>Шинэ харагдацад бусад гишүүний арматурыг нуух (зөвхөн тэр харагдацыг засна).</summary>
+        public bool HideForeignRebar = true;
+        /// <summary>Хөрш хана/хучилтын арматурыг «Middle» болгох — БУСДЫН арматурын элементийг засдаг (workshared-д sync нэхнэ).</summary>
+        public bool NeighbourMiddle = true;
+        /// <summary>Хамааралгүй огтлолын тэмдэг: none | new (шинэ дэлгээсэд л) | all (+ бусад гишүүний өмнөх дэлгээсэд — бусдын харагдацыг засна).</summary>
+        public string ForeignMarks = "all";
+        /// <summary>Түвшин/тэнхлэгийн шугамыг тайрах, тэнхлэгийн толгой — түвшин/тэнхлэгийн элемент дээр хадгалагддаг (workshared-д sync нэхнэ).</summary>
+        public bool Datums = true;
     }
 
     internal sealed class BbGenResult
@@ -102,7 +110,7 @@ namespace MglBb.RevitSide
                     ViewSection v = CreateDetail(doc, vft, o, R, U, V, -hw, hw, -hd - below, hd + above, depth, res, mark);
                     if (v == null) continue;
                     Configure(doc, v, template, ms.ElevScale, depth, BbGeom.UniqueViewName(doc, name), res, mark);
-                    int hidden = HideForeignRebar(doc, v, chain.Members.Select(m => m.Id.Value));
+                    int hidden = opt.HideForeignRebar ? HideForeignRebar(doc, v, chain.Members.Select(m => m.Id.Value)) : 0;
                     if (hidden > 0) res.Notes.Add("«" + v.Name + "»: энэ дамнуруунд хамааралгүй " + hidden + " арматурыг нуув.");
                     res.Elevations.Add(v);
                 }

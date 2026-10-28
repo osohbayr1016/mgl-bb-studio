@@ -163,7 +163,8 @@ namespace MglBb.RevitSide
         }
 
         /// <summary>Нээлттэй Transaction-гүй үед.  Энэ хэрэгслийн өмнөх тэмдэглэгээг сольж, шинээр тавина.</summary>
-        public static void Annotate(Document doc, View view, BbFrameLevel fl, BbPlateStandard ps, BbAnnoReport rep, string mark)
+        /// <param name="bubbles">Тэнхлэгийн толгойг гинжийн талд шилжүүлэх — тэнхлэгийн элементийг засна (workshared-д sync нэхнэ).</param>
+        public static void Annotate(Document doc, View view, BbFrameLevel fl, BbPlateStandard ps, BbAnnoReport rep, string mark, bool bubbles = true)
         {
             if (!(view is ViewPlan vp) || vp.GenLevel == null) return;
             DimensionType dimType = DimType(doc, ps.FrameDimType, rep, mark);
@@ -195,8 +196,8 @@ namespace MglBb.RevitSide
                 {
                     if (!(g.Curve is Line gl)) continue;
                     XYZ p = f.Local(gl.GetEndPoint(0)), q = f.Local(gl.GetEndPoint(1));
-                    if (Math.Abs(gl.Direction.DotProduct(f.R)) < 0.02) { gridsR.Add(new KeyValuePair<double, Reference>(p.X, new Reference(g))); Bubble(g, view, p.Y < q.Y); }
-                    else if (Math.Abs(gl.Direction.DotProduct(f.U)) < 0.02) { gridsU.Add(new KeyValuePair<double, Reference>(p.Y, new Reference(g))); Bubble(g, view, p.X > q.X); }
+                    if (Math.Abs(gl.Direction.DotProduct(f.R)) < 0.02) { gridsR.Add(new KeyValuePair<double, Reference>(p.X, new Reference(g))); if (bubbles) Bubble(g, view, p.Y < q.Y); }
+                    else if (Math.Abs(gl.Direction.DotProduct(f.U)) < 0.02) { gridsU.Add(new KeyValuePair<double, Reference>(p.Y, new Reference(g))); if (bubbles) Bubble(g, view, p.X > q.X); }
                 }
                 gridsR = gridsR.OrderBy(x => x.Key).ToList();
                 gridsU = gridsU.OrderBy(x => x.Key).ToList();

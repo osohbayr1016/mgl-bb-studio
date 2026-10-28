@@ -505,6 +505,10 @@ namespace MglBb.Core
         /// <summary>MRA-ийн хэмжээсийн шугам хамгийн гадна арматураас; шугамаас шошго хүртэл (цаасан мм).</summary>
         public double MraOffsetPaperMm = 10;
         public double MraTagGapPaperMm = 4;
+        /// <summary>MRA шошгоны leader-ийн хугарал (<see cref="BbMraElbow"/>): толгойноос зүүн тийш / бичвэрийн төгсгөлөөс дотогш (цаасан мм, ЖИШЭЭ-1 хучилт).</summary>
+        public bool MraElbows = true;
+        public double MraElbowLeftPaperMm = 3.9;
+        public double MraElbowRightPaperMm = 0.9;
 
         public string WallName(string pattern, string mark, int n = 0)
         {

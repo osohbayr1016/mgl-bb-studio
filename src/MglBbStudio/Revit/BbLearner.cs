@@ -883,11 +883,43 @@ namespace MglBb.RevitSide
                 {
                     try { s.Str(slab ? "plate.SlabMraType" : "plate.WallMraType", doc.GetElement(m.GetTypeId())?.Name); } catch { }
                     try { s.Str(slab ? "plate.SlabMraDimType" : "plate.WallMraDimType", (doc.GetElement(m.DimensionId) as Dimension)?.DimensionType?.Name); } catch { }
+                    LearnMraElbow(doc, v, m, s);
                 }
             }
             rep.PerKind["Wall.elev"] = walls;
             rep.PerKind["Slab.plan"] = slabs;
             rep.PerKind["Frame.plan"] = frames;
+        }
+
+        /// <summary>
+        /// Хана/хучилтын MRA шошгоны хугарал (<see cref="BbMraElbow"/>): хэмжээсийн шугам бичвэртэй зэрэгцээ үед — толгойн зүүн талд бол толгойноос
+        /// хүртэл, баруун талд бол бичвэрийн төгсгөлөөс (bbox-ийн хамгийн баруун) хүртэл, цаасан мм.  Хугаралгүй / перпендикуляр шугамыг алгасна.
+        /// </summary>
+        private static void LearnMraElbow(Document doc, View v, MultiReferenceAnnotation m, BbSamples s)
+        {
+            try
+            {
+                var t = doc.GetElement(m.TagId) as IndependentTag;
+                var d = doc.GetElement(m.DimensionId) as Dimension;
+                if (t == null || !t.HasLeader || !(d?.Curve is Line dl) || !BbMraElbow.Along(dl.Direction.DotProduct(v.RightDirection))) return;
+                Reference r = t.GetTaggedReferences().FirstOrDefault();
+                if (r == null || !t.HasLeaderElbow(r)) return;
+                double sc = Math.Max(1, v.Scale);
+                XYZ rt = v.RightDirection;
+                double hu = t.TagHeadPosition.DotProduct(rt), eu = t.GetLeaderElbow(r).DotProduct(rt);
+                if (eu < hu)
+                {
+                    double gap = BbGeom.ToMm(hu - eu) / sc;
+                    if (gap > 0.5 && gap < 10) s.Num("plate.MraElbowLeftPaperMm", gap);
+                    return;
+                }
+                BoundingBoxXYZ bb = t.get_BoundingBox(v);
+                if (bb == null) return;
+                double tr = Math.Max(bb.Min.DotProduct(rt), bb.Max.DotProduct(rt));
+                double inset = BbGeom.ToMm(tr - eu) / sc;
+                if (inset >= 0 && inset < 5) s.Num("plate.MraElbowRightPaperMm", inset);
+            }
+            catch { }
         }
 
         /// <summary>Рамын байгуулалтын төлөвлөгөө: төрөл, загвар, масштаб, хэмжээсийн төрөл, баганын / дамнурууны маркийн төрөл.</summary>

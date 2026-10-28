@@ -273,7 +273,10 @@ namespace MglBb.RevitSide
         // ── Тэмдэглэх ───────────────────────────────────────────────────
 
         /// <summary>Нээлттэй Transaction-гүй үед.  Арматурын харагдацад олонлог бүрд MRA; хэвний дэлгээсэд ханын ерөнхий хэмжээс.</summary>
-        public static void Annotate(Document doc, View view, string role, IList<Element> hosts, BbPlateStandard ps, BbAnnoReport rep, string mark)
+        /// <param name="hideForeign">Ханын бус арматурыг энэ харагдацад нуух.</param>
+        /// <param name="neighbourMiddle">Хөрш (өөр тэмдэгтэй) хана/хавтангийн арматурыг ч «Middle» болгох — тэдгээрийн элементийг засна.</param>
+        public static void Annotate(Document doc, View view, string role, IList<Element> hosts, BbPlateStandard ps, BbAnnoReport rep, string mark,
+            bool hideForeign = true, bool neighbourMiddle = true)
         {
             bool slab = role.StartsWith("slab", StringComparison.Ordinal);
             bool rebar = role == RoleRebar || role == RoleCutRebar || role == RoleSlabBottom || role == RoleSlabTop;
@@ -305,8 +308,8 @@ namespace MglBb.RevitSide
                 if (removed > 0) { doc.Regenerate(); rep.Replaced += removed; }
                 HashSet<long> before = BbAnnoStore.Owned(doc, view);
                 int made = 0;
-                if (role == RoleRebar || role == RoleCutRebar) HideForeignSlabBars(doc, view);
-                if (role == RoleRebar || role == RoleSlabBottom || role == RoleSlabTop) made += MiddlePresentation(doc, view, hosts);
+                if (hideForeign && (role == RoleRebar || role == RoleCutRebar)) HideForeignSlabBars(doc, view);
+                if (role == RoleRebar || role == RoleSlabBottom || role == RoleSlabTop) made += MiddlePresentation(doc, view, hosts, neighbourMiddle);
                 foreach (Element h in rebar ? hosts : new List<Element>())
                 {
                     try
@@ -314,6 +317,7 @@ namespace MglBb.RevitSide
                         RfSetMraContext ctx = RfSetMraService.Analyze(doc, view, h);
                         if (rebar && ctx.Sets.Count == 0) continue;
                         RfSetMraReport r = RfSetMraService.Render(ctx, ui, dimType);
+                        if (r.Made > 0) rep.ElevMraElbows += BbMraElbows.Apply(doc, view, r.Created, ps);
                         made += r.Made + r.OverallMade + r.ChainsMade;
                         rep.ElevLaps += r.ChainsMade;
                         rep.ElevMras += r.Made;
@@ -368,7 +372,7 @@ namespace MglBb.RevitSide
             if (hide.Count > 0) { try { view.HideElements(hide); } catch { } }
         }
 
-        private static int MiddlePresentation(Document doc, View view, IList<Element> hosts)
+        private static int MiddlePresentation(Document doc, View view, IList<Element> hosts, bool neighbours)
         {
             var hostIds = new HashSet<long>(hosts.Select(h => h.Id.Value));
             int n = 0;
@@ -378,7 +382,7 @@ namespace MglBb.RevitSide
                 {
                     // Зэргэлдээ (өөр тэмдэгтэй) хана/хавтангийн олонлог ч энэ харагдацад бүтнээрээ зурагдана (ЦХ-1: 2 олонлог) — ижил төрлийн хостынх бүгд.
                     Element hh = doc.GetElement(r.GetHostId());
-                    bool sameKind = hh != null && hosts.Count > 0 && hh.GetType() == hosts[0].GetType();
+                    bool sameKind = neighbours && hh != null && hosts.Count > 0 && hh.GetType() == hosts[0].GetType();
                     if ((!hostIds.Contains(r.GetHostId().Value) && !sameKind) || r.NumberOfBarPositions < 2) continue;
                     if (r.GetPresentationMode(view) != RebarPresentationMode.All) continue;
                     r.SetPresentationMode(view, RebarPresentationMode.Middle);

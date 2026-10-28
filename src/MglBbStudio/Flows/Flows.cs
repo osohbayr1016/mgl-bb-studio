@@ -261,13 +261,13 @@ namespace MglBb.Generate
             if (items.Count > 0)
             {
                 dlg.Section("Гишүүд (" + items.Count + ")");
-                dlg.List(items.Select(i => i.Text), Math.Min(160, 26 + 18 * items.Count));
+                dlg.List(items.Select(i => i.Text), Math.Min(110, 26 + 18 * items.Count));
             }
             System.Windows.Controls.ListBox frameBox = null;
             if (frameLevels.Count > 0)
             {
                 dlg.Section("Рамын байгуулалт — түвшин (" + frameLevels.Count + ")");
-                frameBox = dlg.Picker(frameLevels.Select(FrameText), Math.Min(200, 30 + 20 * frameLevels.Count));
+                frameBox = dlg.Picker(frameLevels.Select(FrameText), Math.Min(140, 30 + 20 * frameLevels.Count));
                 dlg.Note("«" + std.Plate.FrameName.Replace("{level}", "…") + "» төлөвлөгөө (" + std.Sheet.FrameSheetPrefix + " цуврал).  Ctrl / Shift дарж олныг сонгоно; сонгоогүй бол үүсгэхгүй.");
             }
             if (items.Count == 0 && frameBox == null)
@@ -278,24 +278,48 @@ namespace MglBb.Generate
             dlg.Section("Юу үүсгэх");
             var cElev = dlg.Check("Дэлгээс (арматурчлал)", true);
             var cSec = dlg.Check("Огтлол", true);
-            var mode = dlg.Combo("Огтлолын байрлал", new[] { "Стандарт — тулгуур + дунд, давхардалгүй", "Алгасал бүрд (тулгуур + дунд)", "Зөвхөн дунд хэсэгт", "Зөвхөн тулгуурт" }, 0);
             var cAnn = dlg.Check("Стандартаар тэмдэглэх (хэмжээс, шошго, MRA)", true);
-            var cBreaks = dlg.Check("Break line (огтлолын хучилт, дэлгээсийн дамнуруу / багана)", std.Beam.SecBreakLines || std.Beam.ElevBreakLines,
-                "Crop-ын ирмэгийг дайрсан хучилт, дамнуруу, баганад «" + std.Beam.BreakFamily + "».");
-            var cEndSym = dlg.Check("Арматурын төгсгөлийн тэмдэг (дэлгээс)", std.Beam.ElevEndSymbols,
-                string.IsNullOrEmpty(std.Beam.ElevEndSymbolType) ? "Тэмдэг сураагүй — «Стандарт сурах»-аар тэмдэгтэй дэлгээсээс сурна." : "«" + std.Beam.ElevEndSymbolType + "» — сурсан дүрмээр.");
             var cSheet = dlg.Check("Хуудсанд байрлуулах (A2, дэлгээс дээр, огтлол доор)", true, "Дугаар — компанийн цувралын дараагийн чөлөөт дугаар (дамнуруу 5-, багана 4-).");
-            List<string> tbs = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TitleBlocks).OfClass(typeof(FamilySymbol)).Cast<FamilySymbol>()
-                .Select(s => s.FamilyName + " : " + s.Name).Distinct().OrderBy(s => s, StringComparer.CurrentCulture).ToList();
-            System.Windows.Controls.ComboBox tbBox =tbs.Count > 0 ? dlg.Combo("Хуудасны хүрээ (title block)", tbs, Math.Max(0, tbs.IndexOf(std.Sheet.TitleBlock))) : null;
             var cSched = dlg.Check("Түүврийг хувилж хуудсанд байрлуулах (арматур, бетон)", true, "Энэ төслийн өөр гишүүний түүврийг хуулж, нэр болон шүүлтүүрийн тэмдгийг солино.");
             var dirBox = items.Any(i => i.Beam != null)
                 ? dlg.Combo("Дамнурууны дэлгээсийн чиглэл", new[] { "Тэнхлэг өсөх эрэмбээр (FX1 → FX4, А → Б)", "Тэнхлэг буурах эрэмбээр (FX4 → FX1, Б → А)" }, dirWas < 0 ? 1 : 0)
                 : null;
-            var exist = dlg.Combo("Ижил нэртэй харагдац байвал", new[] { "Алгасах", "Шинээр (нэрийн ард дугаар)" }, 0);
             var optBox = FlowCommon.OptionCombo(dlg, doc, out BbOptionBook book);
+
+            // Ховор өөрчилдөг тохиргоо — эвхэгддэг хэсэгт (цонх урт болж «Эхлүүлэх» дэлгэцээс гардаг байв, 2026-10-28).
+            dlg.Group("Огтлол, хуудас, тэмдэг — нэмэлт");
+            var mode = dlg.Combo("Огтлолын байрлал", new[] { "Стандарт — тулгуур + дунд, давхардалгүй", "Алгасал бүрд (тулгуур + дунд)", "Зөвхөн дунд хэсэгт", "Зөвхөн тулгуурт" }, 0);
+            var cBreaks = dlg.Check("Break line (огтлолын хучилт, дэлгээсийн дамнуруу / багана)", std.Beam.SecBreakLines || std.Beam.ElevBreakLines,
+                "Crop-ын ирмэгийг дайрсан хучилт, дамнуруу, баганад «" + std.Beam.BreakFamily + "».");
+            var cEndSym = dlg.Check("Арматурын төгсгөлийн тэмдэг (дэлгээс)", std.Beam.ElevEndSymbols,
+                string.IsNullOrEmpty(std.Beam.ElevEndSymbolType) ? "Тэмдэг сураагүй — «Стандарт сурах»-аар тэмдэгтэй дэлгээсээс сурна." : "«" + std.Beam.ElevEndSymbolType + "» — сурсан дүрмээр.");
+            List<string> tbs = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TitleBlocks).OfClass(typeof(FamilySymbol)).Cast<FamilySymbol>()
+                .Select(s => s.FamilyName + " : " + s.Name).Distinct().OrderBy(s => s, StringComparer.CurrentCulture).ToList();
+            System.Windows.Controls.ComboBox tbBox = tbs.Count > 0 ? dlg.Combo("Хуудасны хүрээ (title block)", tbs, Math.Max(0, tbs.IndexOf(std.Sheet.TitleBlock))) : null;
+            var exist = dlg.Combo("Ижил нэртэй харагдац байвал", new[] { "Алгасах", "Шинээр (нэрийн ард дугаар)" }, 0);
+            dlg.EndGroup();
+
+            // Бусад гишүүн / түвшин / тэнхлэгт хүрэх алхмууд — хэрэглэгч шийднэ (workshared-д бусдын элементийг засвал Revit sync нэхдэг, 2026-10-28).
+            Choices ch = Choices.Load();
+            bool syncRisk = ch.ForeignMarks == "all" || ch.NeighbourMiddle || ch.Datums;
+            dlg.Group("Бусад гишүүн, түвшин, тэнхлэг" + (doc.IsWorkshared && syncRisk ? "  —  ⚠ sync нэхэж болно" : ""));
+            var cHideBars = dlg.Check("Бусад гишүүний арматурыг шинэ зурагт нуух", ch.HideForeignRebar, "Зөвхөн шинэ харагдацыг засна — sync нэхэхгүй.");
+            var marks = dlg.Combo("Хамааралгүй огтлолын тэмдэг", new[]
+            {
+                "Шинэ дэлгээсэд нуух",
+                "Шинэ дэлгээс + бусад гишүүний өмнөх дэлгээсэд нуух  ⚠ sync",
+                "Нуухгүй",
+            }, ch.ForeignMarks == "new" ? 0 : ch.ForeignMarks == "none" ? 2 : 1);
+            var cNeighbour = items.Any(i => i.Wall != null || i.Slab != null)
+                ? dlg.Check("Хөрш хана / хучилтын арматурыг «Middle» болгох  ⚠ sync", ch.NeighbourMiddle, "Тэр арматурын элементийг өөрөө засдаг.")
+                : null;
+            var cDatums = dlg.Check("Түвшин, тэнхлэгийн шугамыг зургийн хүрээнд тайрах  ⚠ sync", ch.Datums, "Тайралт, тэнхлэгийн толгой нь түвшин/тэнхлэгийн элемент дээр хадгалагддаг.");
+            if (doc.IsWorkshared)
+                dlg.Note("«⚠ sync» алхам бусдын эзэмшдэг элементийг засдаг тул Revit Synchronize / Reload Latest нэхэж болно — унтраавал нэхэх нь багасна.", false);
+            dlg.EndGroup();
+
             dlg.Note("Стандарт: " + src);
-            dlg.Note("Ажиллаж байх хооронд явцын цонх нээгдэнэ — гишүүн бүрийн хооронд Revit чөлөөлөгдөх тул загвар дээр үргэлжлүүлэн ажиллаж болно.");
+            dlg.OkButton.ToolTip = "Явцын цонх нээгдэнэ — гишүүн бүрийн хооронд Revit чөлөөлөгдөх тул загвар дээр үргэлжлүүлэн ажиллаж болно.";
             if (!dlg.Show(uidoc.Application.MainWindowHandle)) return Result.Cancelled;
             if (GenJobHost.Busy)
             {
@@ -320,7 +344,12 @@ namespace MglBb.Generate
                 Sections = cSec.IsChecked == true,
                 SectionMode = new[] { "auto", "all", "mid", "supports" }[Math.Max(0, mode.SelectedIndex)],
                 Existing = exist.SelectedIndex == 1 ? "new" : "skip",
+                HideForeignRebar = cHideBars.IsChecked == true,
+                ForeignMarks = new[] { "new", "all", "none" }[Math.Max(0, marks.SelectedIndex)],
+                NeighbourMiddle = cNeighbour != null ? cNeighbour.IsChecked == true : ch.NeighbourMiddle,
+                Datums = cDatums.IsChecked == true,
             };
+            new Choices { HideForeignRebar = opt.HideForeignRebar, ForeignMarks = opt.ForeignMarks, NeighbourMiddle = opt.NeighbourMiddle, Datums = opt.Datums }.Save();
             bool annotate = cAnn.IsChecked == true;
             bool onSheet = cSheet.IsChecked == true;
             if (tbPicked != null) std.Sheet.TitleBlock = tbPicked;
@@ -357,6 +386,51 @@ namespace MglBb.Generate
             public static void Save(int dir)
             {
                 try { System.IO.File.WriteAllText(File, dir < 0 ? "-1" : "1"); }
+                catch { }
+            }
+        }
+
+        /// <summary>«Бусад гишүүн, түвшин, тэнхлэг»-ийн сүүлийн сонголт — хэрэглэгчийн компьютерт (key=value), дараагийн удаа үүнээр нээгдэнэ.</summary>
+        private sealed class Choices
+        {
+            public bool HideForeignRebar = true, NeighbourMiddle = true, Datums = true;
+            public string ForeignMarks = "all";
+
+            static string File { get { return System.IO.Path.Combine(Paths.Root, "gen-choices.txt"); } }
+
+            public static Choices Load()
+            {
+                var c = new Choices();
+                try
+                {
+                    if (!System.IO.File.Exists(File)) return c;
+                    foreach (string line in System.IO.File.ReadAllLines(File))
+                    {
+                        int i = line.IndexOf('=');
+                        if (i <= 0) continue;
+                        string k = line.Substring(0, i).Trim(), v = line.Substring(i + 1).Trim();
+                        if (k == "hideRebar") c.HideForeignRebar = v != "0";
+                        else if (k == "neighbourMiddle") c.NeighbourMiddle = v != "0";
+                        else if (k == "datums") c.Datums = v != "0";
+                        else if (k == "marks" && (v == "new" || v == "all" || v == "none")) c.ForeignMarks = v;
+                    }
+                }
+                catch { }
+                return c;
+            }
+
+            public void Save()
+            {
+                try
+                {
+                    System.IO.File.WriteAllLines(File, new[]
+                    {
+                        "hideRebar=" + (HideForeignRebar ? "1" : "0"),
+                        "marks=" + ForeignMarks,
+                        "neighbourMiddle=" + (NeighbourMiddle ? "1" : "0"),
+                        "datums=" + (Datums ? "1" : "0"),
+                    });
+                }
                 catch { }
             }
         }
@@ -517,13 +591,13 @@ namespace MglBb.Generate
                         {
                             if (it.Frame != null)
                             {
-                                foreach (View v in r.Plans) BbFramePlan.Annotate(doc, v, it.Frame, std.Plate, rep, it.Mark);
+                                foreach (View v in r.Plans) BbFramePlan.Annotate(doc, v, it.Frame, std.Plate, rep, it.Mark, opt.Datums);
                             }
                             else if (it.Wall != null || it.Slab != null)
                             {
                                 IList<Element> hosts = it.Wall != null ? it.Wall.Members.Cast<Element>().ToList() : it.Slab.Floors.Cast<Element>().ToList();
                                 foreach (View v in r.Elevations.Cast<View>().Concat(r.Sections).Concat(r.Plans))
-                                    if (roles.TryGetValue(v.Id.Value, out string role)) BbPlates.Annotate(doc, v, role, hosts, std.Plate, rep, it.Mark);
+                                    if (roles.TryGetValue(v.Id.Value, out string role)) BbPlates.Annotate(doc, v, role, hosts, std.Plate, rep, it.Mark, opt.HideForeignRebar, opt.NeighbourMiddle);
                             }
                             else foreach (ViewSection v in r.Elevations.Concat(r.Sections)) AnnotateOne(doc, v, std, rep);
                         }
@@ -535,7 +609,7 @@ namespace MglBb.Generate
                             FlowCommon.Swallow(t);
                             var all = r.Elevations.Cast<View>().Concat(r.Sections).Concat(r.Plans).ToList();
                             if (it.Wall != null) BbPlates.TidyMarks(doc, all, roles);
-                            if (it.Slab == null && it.Frame == null)
+                            if (it.Slab == null && it.Frame == null && opt.ForeignMarks != "none")
                             {
                                 // Дэлгээсэд хамааралгүй огтлол / хэсэглэлийн тэмдгийг нуух (2026-10-23).
                                 var own = new HashSet<string>(all.Select(v => v.Name), StringComparer.Ordinal);
@@ -544,11 +618,12 @@ namespace MglBb.Generate
                                     int h = BbMarkTidy.HideForeign(doc, e, it.Mark, own);
                                     if (h > 0) notes.Add("«" + e.Name + "»: хамааралгүй " + h + " огтлол / хэсэглэлийн тэмдгийг нуув.");
                                 }
-                                BbMarkTidy.HideInOthers(doc, it.Mark, all, std);
+                                // Бусад гишүүний өмнөх дэлгээсийг засна — workshared-д эзэмшигч нь sync хийтэл Revit асууна (2026-10-28).
+                                if (opt.ForeignMarks == "all") BbMarkTidy.HideInOthers(doc, it.Mark, all, std);
                             }
                             foreach (View v in all)
                             {
-                                BbDatums.Trim(doc, v);
+                                if (opt.Datums) BbDatums.Trim(doc, v);
                                 BbCrop.AnnotationCropOff(v);
                             }
                             t.Commit();

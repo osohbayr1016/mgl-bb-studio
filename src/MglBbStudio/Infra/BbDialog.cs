@@ -15,7 +15,9 @@ namespace MglBb.Infra
     internal sealed class BbDialog
     {
         private readonly Window _w;
-        private readonly StackPanel _body;
+        private readonly StackPanel _main;
+        /// <summary>Шинэ мөр нэмэгдэх самбар (<see cref="Group"/> дотор бол эвхэгддэг хэсгийнх).</summary>
+        private StackPanel _body;
 
         public BbDialog(string title, string header, double width = 520)
         {
@@ -24,11 +26,19 @@ namespace MglBb.Infra
                 Title = title,
                 Width = width,
                 SizeToContent = SizeToContent.Height,
+                // Урт цонхонд «Эхлүүлэх» дэлгэцээс гардаг байв (2026-10-28) — дэлгэцэнд багтаана, агуулга нь гүйлгэгдэнэ.
+                MaxHeight = Math.Max(400, SystemParameters.WorkArea.Height - 20),
                 ResizeMode = ResizeMode.NoResize,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 ShowInTaskbar = false,
                 FontFamily = new FontFamily("Segoe UI"),
                 FontSize = 13,
+            };
+            // Эвхэгддэг хэсгийг дэлгэхэд цонх доошоо томорч дэлгэцээс гарахгүй.
+            _w.SizeChanged += (s, e) =>
+            {
+                Rect wa = SystemParameters.WorkArea;
+                if (_w.Top + _w.ActualHeight > wa.Bottom) _w.Top = Math.Max(wa.Top, wa.Bottom - _w.ActualHeight);
             };
             var root = new DockPanel { Margin = new Thickness(16) };
             var buttons = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 14, 0, 0) };
@@ -40,12 +50,30 @@ namespace MglBb.Infra
             buttons.Children.Add(cancel);
             OkButton = ok;
             root.Children.Add(buttons);
-            _body = new StackPanel();
+            _main = _body = new StackPanel { Margin = new Thickness(0, 0, 6, 0) };
             if (!string.IsNullOrEmpty(header))
                 _body.Children.Add(new TextBlock { Text = header, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 10) });
-            root.Children.Add(_body);
+            root.Children.Add(new ScrollViewer { Content = _body, VerticalScrollBarVisibility = ScrollBarVisibility.Auto, HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled });
             _w.Content = root;
         }
+
+        /// <summary>Эвхэгддэг хэсэг: дараагийн мөрүүд (<see cref="EndGroup"/> хүртэл) түүн дотор.  Ховор өөрчилдөг тохиргоонд — цонхыг богино байлгана.</summary>
+        public Expander Group(string title, bool expanded = false)
+        {
+            var inner = new StackPanel { Margin = new Thickness(18, 4, 0, 4) };
+            var ex = new Expander
+            {
+                Header = new TextBlock { Text = title, FontWeight = FontWeights.SemiBold },
+                IsExpanded = expanded,
+                Content = inner,
+                Margin = new Thickness(0, 10, 0, 2),
+            };
+            _main.Children.Add(ex);
+            _body = inner;
+            return ex;
+        }
+
+        public void EndGroup() { _body = _main; }
 
         public Button OkButton { get; private set; }
 

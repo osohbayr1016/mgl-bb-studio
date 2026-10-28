@@ -999,6 +999,40 @@ namespace MglBb.Gate
                 case "plates":
                     sb.Append(GatePlates.Probe(doc, kv));
                     break;
+                case "mraelbow":
+                    sb.Append(GatePlates.MraElbows(doc, kv));
+                    break;
+                case "plateanno":
+                    {
+                        // Хана/хучилтын инженерийн харагдацыг (тэмдэглэгээгүй) хуулбарлаж плагинаар тэмдэглээд MRA-г хэмжинэ.
+                        BbStandard std = LoadStd(kv, outDir);
+                        var dups = new List<string>();
+                        foreach (string vname in (kv.TryGetValue("views", out string pv) ? pv : "").Split('|').Where(x => x.Length > 0))
+                        {
+                            View src = new FilteredElementCollector(doc).OfClass(typeof(View)).Cast<View>().FirstOrDefault(x => !x.IsTemplate && x.Name == vname);
+                            if (src == null) { sb.AppendLine("no view «" + vname + "»"); continue; }
+                            View dup;
+                            using (var t = new Transaction(doc, "gate dup"))
+                            {
+                                t.Start();
+                                dup = doc.GetElement(src.Duplicate(ViewDuplicateOption.Duplicate)) as View;
+                                dup.Name = vname + " (MGL " + DateTime.Now.ToString("HHmmss") + ")";
+                                t.Commit();
+                            }
+                            string role = BbPlates.Classify(doc, dup, std.Plate, out List<Element> hosts, out string pmark);
+                            if (role == null) { sb.AppendLine("«" + dup.Name + "» ангилагдсангүй"); continue; }
+                            var rep = new BbAnnoReport();
+                            var sw = System.Diagnostics.Stopwatch.StartNew();
+                            BbPlates.Annotate(doc, dup, role, hosts, std.Plate, rep, pmark);
+                            sb.AppendLine("«" + dup.Name + "» " + role + " hosts " + hosts.Count + " mras " + rep.ElevMras + " elbows " + rep.ElevMraElbows + " in " + sw.ElapsedMilliseconds + " ms");
+                            foreach (string n in rep.Notes.Take(10)) sb.AppendLine("  note " + n);
+                            foreach (BbIssue i in rep.Issues.Take(10)) sb.AppendLine("  issue " + i.Problem);
+                            if (kv.ContainsKey("img")) sb.AppendLine("  img " + ExportImage(doc, dup, outDir) + " | " + ExportImage(doc, src, outDir));
+                            dups.Add(dup.Name);
+                        }
+                        if (dups.Count > 0) sb.Append(GatePlates.MraElbows(doc, new Dictionary<string, string> { ["views"] = string.Join("|", dups) }));
+                        break;
+                    }
                 case "store":
                     {
                         BbStandard s = MglBb.Infra.BbStore.LoadStandard(out string src);

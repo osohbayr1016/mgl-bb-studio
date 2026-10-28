@@ -26,7 +26,7 @@
 | Хавтас | Агуулга |
 |---|---|
 | `Core/` | Revit-гүй цэвэр код (тест `tests/BbStudio.Tests`): стандарт (`BbStandard` — дамнуруу/туслах/багана + `BbPlateStandard` хана/хучилт + `BbSheetStandard` хуудас/цуврал), сурах статистик (`BbLearnStats`), байрлалын математик, MRA-ийн байрлал (`BbMraLayout`), JSON, XLSX, «Асуудал – Шийдэл» (`BbIssues`) |
-| `Revit/` | `BbLearner` (стандарт сурах), `BbViews` (дамнуруу), `BbColumns` (багана), `BbPlates` (хана, хучилт), `BbAnnotate` + `BbElevMra` + `BbBarChain` + `BbGridDims` (тэмдэглэх), `BbDatums` + `BbCrop` (түвшин/тэнхлэгийн шугам, тэмдэглэгээний crop), `BbSheets` + `BbSheetSeries` (хуудас, дугаарын цуврал), `BbSchedules` (түүвэр хувилах), `BbMarkTidy` (дэлгээсэд хамааралгүй огтлол / хэсэглэлийн тэмдэг нуух — өөрийнх = нэрэнд тэмдэгтэй эсвэл гишүүний хуудсанд байрласан; gate `marktidy[:views=…;reveal;probe]`) |
+| `Revit/` | `BbLearner` (стандарт сурах), `BbViews` (дамнуруу), `BbColumns` (багана), `BbPlates` (хана, хучилт) + `BbMraElbows` (MRA шошгоны хугарал, ЖИШЭЭ-1 хучилтаас; gate `mraelbow[:views=A|B;try=1]`, `plateanno:views=…`), `BbAnnotate` + `BbElevMra` + `BbBarChain` + `BbGridDims` (тэмдэглэх), `BbDatums` + `BbCrop` (түвшин/тэнхлэгийн шугам, тэмдэглэгээний crop), `BbSheets` + `BbSheetSeries` (хуудас, дугаарын цуврал), `BbSchedules` (түүвэр хувилах), `BbMarkTidy` (дэлгээсэд хамааралгүй огтлол / хэсэглэлийн тэмдэг нуух — өөрийнх = нэрэнд тэмдэгтэй эсвэл гишүүний хуудсанд байрласан; gate `marktidy[:views=…;reveal;probe]`) |
 | `Flows/` | 4 командын урсгал (`Flows.cs`, `IssuesFlow.cs`) |
 | `Infra/` | `BbStore` (стандарт/Excel зам), `BbAnnoStore`, `BbDialog` (XAML-гүй WPF), лиценз, ribbon дүрс |
 | `Gate/` | Хөгжүүлэгчийн тусгаар Revit-ийн шалгалт (`MglBb.Gate.Entry.Run`) — хэрэглэгчид хамааралгүй |

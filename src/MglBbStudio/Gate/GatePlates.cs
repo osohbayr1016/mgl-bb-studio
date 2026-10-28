@@ -94,6 +94,85 @@ namespace MglBb.Gate
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Харагдац бүрийн MRA: шошгоны толгой, leader-ийн хугарал/төгсгөл, хэмжээсийн шугам, арматурын хүрээ — харагдацын (right, up) тэнхлэгт, цаасны мм.
+        /// <c>views=A|B</c>, <c>try=1</c> = хугарлыг түр зөөж уншаад буцаана (API зөвшөөрөх эсэх).
+        /// </summary>
+        public static string MraElbows(Document doc, Dictionary<string, string> kv)
+        {
+            var sb = new StringBuilder();
+            bool tryMove = kv.TryGetValue("try", out string tm) && tm == "1";
+            foreach (string name in (kv.TryGetValue("views", out string vs) ? vs : "4.93 ТҮВШНИЙ ХУЧИЛТЫН ДООД ҮЕИЙН АРМАТУРЧЛАЛ|4.93 ТҮВШНИЙ ХУЧИЛТЫН ДЭЭД ҮЕИЙН АРМАТУРЧЛАЛ").Split('|'))
+            {
+                View v = new FilteredElementCollector(doc).OfClass(typeof(View)).Cast<View>().FirstOrDefault(x => !x.IsTemplate && x.Name == name);
+                if (v == null) { sb.AppendLine("view «" + name + "» —"); continue; }
+                double sc = Math.Max(1, v.Scale);
+                XYZ o = v.Origin, rt = v.RightDirection, up = v.UpDirection;
+                Func<XYZ, string> P = p => "(" + F((p - o).DotProduct(rt) * 304.8 / sc) + "," + F((p - o).DotProduct(up) * 304.8 / sc) + ")";
+                Func<XYZ, string> D = d => "(" + F(d.DotProduct(rt)) + "," + F(d.DotProduct(up)) + ")";
+                var mras = new FilteredElementCollector(doc).OwnedByView(v.Id).OfClass(typeof(MultiReferenceAnnotation)).Cast<MultiReferenceAnnotation>().ToList();
+                sb.AppendLine("view «" + name + "» id " + v.Id.Value + " 1:" + v.Scale + " mra " + mras.Count + " (paper mm, right/up)");
+                foreach (MultiReferenceAnnotation m in mras)
+                {
+                    var t = doc.GetElement(m.TagId) as IndependentTag;
+                    var d = doc.GetElement(m.DimensionId) as Dimension;
+                    var line = new StringBuilder("  MRA " + m.Id.Value + " «" + doc.GetElement(m.GetTypeId())?.Name + "»");
+                    try
+                    {
+                        if (d != null)
+                        {
+                            Line dl = d.Curve as Line;
+                            line.Append(" dim dir " + (dl != null ? D(dl.Direction) : "?") + " n " + d.NumberOfSegments);
+                            if (d.NumberOfSegments == 0) line.Append(" origin " + P(d.Origin) + " val " + F((d.Value ?? 0) * 304.8));
+                            else line.Append(" seg " + P(d.Segments.get_Item(0).Origin) + ".." + P(d.Segments.get_Item(d.NumberOfSegments - 1).Origin) + "=" + F((d.Segments.get_Item(0).Value ?? 0) * 304.8));
+                        }
+                    }
+                    catch (Exception ex) { line.Append(" dimERR " + ex.Message); }
+                    if (t == null) { sb.AppendLine(line + " tag —"); continue; }
+                    try
+                    {
+                        var ids = t.GetTaggedLocalElementIds();
+                        line.Append(" bars " + string.Join(",", ids.Select(id => id.Value)));
+                        foreach (ElementId id in ids)
+                        {
+                            BoundingBoxXYZ bb = doc.GetElement(id)?.get_BoundingBox(v);
+                            if (bb != null) line.Append(" bbox " + P(bb.Min) + ".." + P(bb.Max));
+                        }
+                    }
+                    catch { }
+                    line.Append(" | head " + P(t.TagHeadPosition) + " leader " + t.HasLeader);
+                    try { line.Append(" " + t.LeaderEndCondition); } catch { }
+                    try { BoundingBoxXYZ tb = t.get_BoundingBox(v); if (tb != null) line.Append(" text " + P(tb.Min) + ".." + P(tb.Max)); } catch { }
+                    try
+                    {
+                        foreach (Reference rf in t.GetTaggedReferences())
+                        {
+                            try { line.Append(t.HasLeaderElbow(rf) ? " elbow " + P(t.GetLeaderElbow(rf)) : " noelbow"); } catch (Exception ex) { line.Append(" elbowERR " + ex.GetType().Name); }
+                            try { line.Append(" end " + P(t.GetLeaderEnd(rf))); } catch (Exception ex) { line.Append(" endERR " + ex.GetType().Name); }
+                            if (!tryMove) continue;
+                            using (var tx = new Transaction(doc, "mra elbow try"))
+                            {
+                                tx.Start();
+                                try
+                                {
+                                    XYZ want = t.TagHeadPosition + rt * (5 * sc / 304.8);
+                                    t.SetLeaderElbow(rf, want);
+                                    doc.Regenerate();
+                                    line.Append(" try→ " + P(t.GetLeaderElbow(rf)) + " want " + P(want));
+                                }
+                                catch (Exception ex) { line.Append(" tryERR " + ex.GetType().Name + ": " + ex.Message.Split('\n')[0]); }
+                                tx.RollBack();
+                            }
+                        }
+                    }
+                    catch { }
+                    line.Append(" txt «" + (t.TagText ?? "").Replace('\n', ' ').Replace('\r', ' ') + "»");
+                    sb.AppendLine(line.ToString());
+                }
+            }
+            return sb.ToString();
+        }
+
         private static string Refs(Document doc, Dimension d)
         {
             var cats = new SortedSet<string>(StringComparer.Ordinal);
