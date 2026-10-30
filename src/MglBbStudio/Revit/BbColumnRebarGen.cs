@@ -164,12 +164,18 @@ namespace MglBb.RevitSide
                 : new[] { P(x0, y1, z), P(x1, y1, z), P(x1, y0, z), P(x0, y0, z) };
         }
 
+        /// <summary>Үүсгэхэд устгагдах арматур (<see cref="BbDeleteImpact"/>-ийн урьдчилсан шалгалтад).</summary>
+        public static List<ElementId> DeleteSet(Document doc, BbColumnGenItem it, bool replaceForeign)
+        {
+            return BbBeamRebarGen.RebarsOf(doc, it.Column).Where(r => replaceForeign || BbBeamRebarGen.IsOwn(r)).Select(r => r.Id).ToList();
+        }
+
         public static BbBeamRebarGen.Outcome Generate(Document doc, BbColumnGenItem it, BbColumnPreset p, bool replaceForeign)
         {
             var o = new BbBeamRebarGen.Outcome();
             BbColumnRebar plan = BbColumnRebarPlan.Plan(it.Input, p);
             o.Notes.AddRange(plan.Warnings);
-            var del = BbBeamRebarGen.RebarsOf(doc, it.Column).Where(r => replaceForeign || BbBeamRebarGen.IsOwn(r)).Select(r => r.Id).ToList();
+            List<ElementId> del = DeleteSet(doc, it, replaceForeign);
             if (del.Count > 0) { doc.Delete(del); o.Deleted = del.Count; }
 
             var bld = new BbRebarBuilder(doc, o, Partition(it));

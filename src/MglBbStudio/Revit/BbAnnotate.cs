@@ -365,6 +365,15 @@ namespace MglBb.RevitSide
         [ThreadStatic] public static List<string> LastErrorsStore;
         public static List<string> LastErrors { get { return LastErrorsStore ?? (LastErrorsStore = new List<string>()); } }
 
+        /// <summary>
+        /// true = алдааны шийдэл хэмжээс / шошго / MRA-г устгах бол шийдэхгүй, transaction-ийг БУЦААНА (арматур үүсгэх: хүний тэмдэглэгээ
+        /// чимээгүй устаад Synchronize-оор бусдаас алга болдог байв).  Тэмдэглэх хэрэгсэлд false — өөрийн хэмжээсийг засах/хасах нь хэвийн.
+        /// </summary>
+        private readonly bool _keepAnnotations;
+
+        public BbSwallowWarnings() { }
+        public BbSwallowWarnings(bool keepAnnotations) { _keepAnnotations = keepAnnotations; }
+
         public FailureProcessingResult PreprocessFailures(FailuresAccessor fa)
         {
             bool resolved = false;
@@ -372,6 +381,7 @@ namespace MglBb.RevitSide
             {
                 if (m.GetSeverity() == FailureSeverity.Warning) { fa.DeleteWarning(m); continue; }
                 try { LastErrors.Add(m.GetDescriptionText() + " [" + string.Join(",", m.GetFailingElementIds().Select(x => x.Value)) + "]"); } catch { }
+                if (_keepAnnotations && HitsAnnotation(fa.GetDocument(), m)) return FailureProcessingResult.ProceedWithRollBack;
                 // Хэмжээсийн лавлагаа хүчингүй (ЖИШЭЭ 3 ТДН-1-5: налуу тулгуур) — Revit-ийн шийдлээр тэр хэмжээсийг л засах/устгах; бүх тэмдэглэгээ
                 // буцаагдахгүй.
                 if (m.GetSeverity() == FailureSeverity.Error && m.HasResolutions())
@@ -380,6 +390,20 @@ namespace MglBb.RevitSide
                 }
             }
             return resolved ? FailureProcessingResult.ProceedWithCommit : FailureProcessingResult.Continue;
+        }
+
+        static bool HitsAnnotation(Document doc, FailureMessageAccessor m)
+        {
+            try
+            {
+                foreach (ElementId id in m.GetFailingElementIds())
+                {
+                    Element e = doc.GetElement(id);
+                    if (e is Dimension || e is IndependentTag || e is MultiReferenceAnnotation) return true;
+                }
+            }
+            catch { }
+            return false;
         }
     }
 }

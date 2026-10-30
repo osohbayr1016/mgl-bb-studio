@@ -87,15 +87,41 @@ namespace MglBb.RevitSide
         /// <summary>Нээлттэй Transaction дотор.  Өмнөх бүртгэлийн ЭНЭ харагдацынх хэвээр байгаа элементүүдийг устгана.  Устгасан тоо.</summary>
         public static int DeletePrevious(Document doc, View view)
         {
-            int n = 0;
+            var mine = new List<ElementId>();
             foreach (string uid in Read(view))
             {
                 Element e;
                 try { e = doc.GetElement(uid); } catch { e = null; }
-                if (e == null || e.OwnerViewId != view.Id) continue;
-                try { doc.Delete(e.Id); n++; } catch { }
+                if (e != null && e.OwnerViewId == view.Id) mine.Add(e.Id);
+            }
+            // Хэрэглэгч манай шошго / төгсгөлийн тэмдэгт өөрийн хэмжээсийг холбосон бол Delete тэр хэмжээсийг ч хамт устгана — тийм элементийг үлдээнэ
+            // (огтлолын RfSectionService.DeleteWouldTakeForeign-тай ижил дүрэм).
+            var ours = new HashSet<long>(mine.Select(i => i.Value));
+            foreach (ElementId id in mine)
+                if (doc.GetElement(id) is MultiReferenceAnnotation mra) ours.Add(mra.DimensionId.Value);   // MRA-ийн дотоод хэмжээс хамт устна
+            int n = 0;
+            foreach (ElementId id in mine)
+            {
+                if (TakesForeign(doc, id, ours)) continue;
+                try { doc.Delete(id); n++; } catch { }
             }
             return n;
+        }
+
+        static bool TakesForeign(Document doc, ElementId id, HashSet<long> ours)
+        {
+            try
+            {
+                using (var st = new SubTransaction(doc))
+                {
+                    st.Start();
+                    ICollection<ElementId> gone;
+                    try { gone = doc.Delete(id); }
+                    finally { if (st.HasStarted() && !st.HasEnded()) st.RollBack(); }
+                    return gone != null && gone.Any(g => g != null && g != id && !ours.Contains(g.Value));
+                }
+            }
+            catch { return true; }
         }
 
         /// <summary>Харагдацын одоогийн өмчлөлийн тэмдэглэгээний элементүүд (хэмжээс, шошго, MRA, бичвэр).</summary>
