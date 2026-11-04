@@ -94,6 +94,11 @@ namespace MglBb.BeamRebar
             var notes = new List<string>();
             var errors = new List<string>();
             var steps = new List<RebarJobHost.Step>();
+            // Хуучин арматуртай хамт устах шошго / хэмжээс (бусдынх ч) — үүсгэхээс өмнө нэг удаа асууна.
+            HashSet<string> spared = BbDeleteImpact.Confirm(doc, Title, items
+                .Where(x => book.Row(x.Key).Enabled && x.Skip == null && !(x.Foreign > 0 && !book.ReplaceForeign))
+                .Select(x => new KeyValuePair<string, List<ElementId>>(x.Key, BbBeamRebarGen.DeleteSet(doc, x, book))));
+            if (spared == null) return Result.Cancelled;
             foreach (BbBeamGenItem item in items)
             {
                 BbBeamGenItem it = item;
@@ -101,6 +106,7 @@ namespace MglBb.BeamRebar
                 if (!row.Enabled) continue;
                 if (it.Skip != null) { notes.Add(it.Key + ": алгаслаа — " + it.Skip + "."); continue; }
                 if (it.Foreign > 0 && !book.ReplaceForeign) { notes.Add(it.Key + ": гараар тавьсан арматуртай — алгаслаа (солих бол цонхонд тэмдэглэнэ)."); continue; }
+                if (spared.Contains(it.Key)) { notes.Add(it.Key + ": шошго / хэмжээс хамт устах байсан — алгаслаа."); continue; }
                 steps.Add(new RebarJobHost.Step
                 {
                     Text = it.Key,
@@ -110,13 +116,14 @@ namespace MglBb.BeamRebar
                         using (var t = new Transaction(doc, "Арматур " + it.Key))
                         {
                             FailureHandlingOptions fh = t.GetFailureHandlingOptions();
-                            fh.SetFailuresPreprocessor(new BbSwallowWarnings());
+                            fh.SetFailuresPreprocessor(new BbSwallowWarnings(keepAnnotations: true));
                             t.SetFailureHandlingOptions(fh);
                             t.Start();
                             BbBeamRebarGen.Outcome o;
                             try { o = BbBeamRebarGen.Generate(doc, it, book, errors); }
                             catch (Exception ex) { t.RollBack(); notes.Add(it.Key + ": алдаа — " + ex.Message); failed++; return "✗ " + it.Key + " — алдаа (буцаагдсан)"; }
-                            if (t.Commit() != TransactionStatus.Committed) { notes.Add(it.Key + ": Revit буцаалаа."); failed++; return "✗ " + it.Key + " — Revit буцаалаа"; }
+                            BbSwallowWarnings.LastErrors.Clear();
+                            if (t.Commit() != TransactionStatus.Committed) { notes.Add(it.Key + ": Revit буцаалаа" + RolledBackWhy()); failed++; return "✗ " + it.Key + " — Revit буцаалаа"; }
                             made += o.Created;
                             chains++;
                             failed += o.Failed;
@@ -139,6 +146,13 @@ namespace MglBb.BeamRebar
                     + ".  Гинж бүр өөрийн Ctrl+Z-тэй.",
                 () => errors.Concat(notes).Distinct().Take(300).ToList());
             return Result.Succeeded;
+        }
+
+        /// <summary>Буцаагдсан шалтгаан (<see cref="BbSwallowWarnings"/>-ийн бүртгэсэн алдаа) — тайлангийн мөрт.</summary>
+        internal static string RolledBackWhy()
+        {
+            List<string> errs = BbSwallowWarnings.LastErrors.Distinct().Take(3).ToList();
+            return errs.Count == 0 ? "." : " (шошго / хэмжээсийг устгахын оронд буцаав): " + string.Join(" | ", errs);
         }
 
         private sealed class FramingFilter : ISelectionFilter

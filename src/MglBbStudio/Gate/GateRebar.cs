@@ -129,7 +129,9 @@ namespace MglBb.Gate
                 using (var t = new Transaction(doc, "rebargen " + it.Key))
                 {
                     FailureHandlingOptions fh = t.GetFailureHandlingOptions();
-                    fh.SetFailuresPreprocessor(new BbSwallowWarnings());
+                    // strict=1 — цонхны урсгалтай адил: шошго / хэмжээс устгах алдаа бол буцаана.
+                    fh.SetFailuresPreprocessor(new BbSwallowWarnings(kv.ContainsKey("strict")));
+                    BbSwallowWarnings.LastErrors.Clear();
                     t.SetFailureHandlingOptions(fh);
                     t.Start();
                     var sw = System.Diagnostics.Stopwatch.StartNew();

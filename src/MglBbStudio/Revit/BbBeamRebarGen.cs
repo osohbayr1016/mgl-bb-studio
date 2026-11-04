@@ -523,10 +523,36 @@ namespace MglBb.RevitSide
         /// <summary>Дэвтрээс үүсгэх: мөрийн утга, алгасал бүрийн засвар, унтраасан алгасал, элементийн cover.</summary>
         public static Outcome Generate(Document doc, BbBeamGenItem it, BbRebarBook book, List<string> errors)
         {
+            return Generate(doc, it, (a, c) => PresetFor(book, it, errors, a, c), Enabled(book, it), book.ReplaceForeign);
+        }
+
+        static bool[] Enabled(BbRebarBook book, BbBeamGenItem it)
+        {
             BbRebarRow row = book.Row(it.Key);
             int n = BbBeamRebarPlan.SpanCount(it.Input);
-            bool[] en = Enumerable.Range(0, n).Select(i => !(row.Spans.FirstOrDefault(s => s.Index == i)?.Off ?? false)).ToArray();
-            return Generate(doc, it, (a, c) => PresetFor(book, it, errors, a, c), en, book.ReplaceForeign);
+            return Enumerable.Range(0, n).Select(i => !(row.Spans.FirstOrDefault(s => s.Index == i)?.Off ?? false)).ToArray();
+        }
+
+        /// <summary>Дэвтрээс үүсгэхэд устгагдах арматур (<see cref="BbDeleteImpact"/>-ийн урьдчилсан шалгалтад).</summary>
+        public static List<ElementId> DeleteSet(Document doc, BbBeamGenItem it, BbRebarBook book)
+        {
+            return DeleteSet(doc, it, Enabled(book, it), book.ReplaceForeign);
+        }
+
+        static List<ElementId> DeleteSet(Document doc, BbBeamGenItem it, bool[] enabled, bool replaceForeign)
+        {
+            var parts = BbBeamRebarPlan.SplitBySpans(it.Input, enabled);
+            int n = BbBeamRebarPlan.SpanCount(it.Input);
+            bool whole = parts.Count == 1 && parts[0].Item3 == 0 && parts[0].Item4 == n;
+            var del = new List<ElementId>();
+            foreach (FamilyInstance m in it.Members)
+                foreach (Rebar r in RebarsOf(doc, m))
+                {
+                    if (!IsOwn(r)) { if (replaceForeign) del.Add(r.Id); continue; }
+                    if (whole || !SpanRange(r, out int ra, out int rb)) { del.Add(r.Id); continue; }
+                    if (parts.Any(pt => ra <= pt.Item3 + pt.Item4 - 1 && rb >= pt.Item3)) del.Add(r.Id);
+                }
+            return del;
         }
 
         /// <summary>Тэмдэглэгээнээс алгаслын муж («MGL-BB-GEN s1-3» → 1…3); мужгүй (бүхэл) бол false.</summary>
@@ -550,14 +576,7 @@ namespace MglBb.RevitSide
             int n = BbBeamRebarPlan.SpanCount(it.Input);
             bool whole = parts.Count == 1 && parts[0].Item3 == 0 && parts[0].Item4 == n;
             var o = new Outcome();
-            var del = new List<ElementId>();
-            foreach (FamilyInstance m in it.Members)
-                foreach (Rebar r in RebarsOf(doc, m))
-                {
-                    if (!IsOwn(r)) { if (replaceForeign) del.Add(r.Id); continue; }
-                    if (whole || !SpanRange(r, out int ra, out int rb)) { del.Add(r.Id); continue; }
-                    if (parts.Any(pt => ra <= pt.Item3 + pt.Item4 - 1 && rb >= pt.Item3)) del.Add(r.Id);
-                }
+            List<ElementId> del = DeleteSet(doc, it, enabled, replaceForeign);
             if (del.Count > 0) { doc.Delete(del); o.Deleted = del.Count; }
             foreach (var pt in parts)
             {

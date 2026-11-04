@@ -889,6 +889,64 @@ namespace MglBb.Gate
                         sb.AppendLine("after rollback " + BbDeleteWatch.ReadAll(doc).Count + " · elements back " + ids.Count(i => doc.GetElement(i) != null) + "/" + ids.Count);
                         break;
                     }
+                case "delimpact":
+                    {
+                        // Арматурыг дахин үүсгэхэд хамт устах шошго/хэмжээс (BbDeleteImpact): mark= (эсвэл арматуртай эхний гинж) — скан, нэг шошго нэмээд
+                        // дахин скан (+1 байх ёстой), дараа нь бодитоор устгаж шошго алга болсныг шалгана.  БҮГДИЙГ буцаана.
+                        IEnumerable<FamilyInstance> bms = BbBeamRebarGen.AllBeams(doc);
+                        if (kv.TryGetValue("mark", out string dm)) bms = bms.Where(b => BbGeom.Mark(b) == dm);
+                        BbBeamGenItem it = BbBeamRebarGen.Collect(doc, bms).FirstOrDefault(x => x.Own + x.Foreign > 0);
+                        if (it == null) { sb.AppendLine("no beam chain with rebar"); break; }
+                        var book = new BbRebarBook { ReplaceForeign = true };
+                        List<ElementId> del = BbBeamRebarGen.DeleteSet(doc, it, book);
+                        sb.AppendLine("chain " + it.Key + " own " + it.Own + " foreign " + it.Foreign + " deleteSet " + del.Count);
+                        var sets = new[] { new KeyValuePair<string, List<ElementId>>(it.Key, del) };
+                        List<BbDeleteImpact.Hit> h0 = BbDeleteImpact.Scan(doc, sets);
+                        int n0 = h0.Sum(x => x.Annotations);
+                        sb.AppendLine("scan0 annotations " + n0 + " · " + BbDeleteImpact.Describe(h0, 5).Replace(Environment.NewLine, " | "));
+                        using (var g = new TransactionGroup(doc, "MGL gate delimpact"))
+                        {
+                            g.Start();
+                            ElementId tagId = ElementId.InvalidElementId;
+                            using (var t = new Transaction(doc, "probe tag"))
+                            {
+                                t.Start();
+                                ElementId tagType = doc.GetDefaultFamilyTypeId(new ElementId(BuiltInCategory.OST_RebarTags));
+                                foreach (ViewSection v in new FilteredElementCollector(doc).OfClass(typeof(ViewSection)).Cast<ViewSection>().Where(x => !x.IsTemplate))
+                                {
+                                    var inView = new HashSet<long>(new FilteredElementCollector(doc, v.Id).OfCategory(BuiltInCategory.OST_Rebar).ToElementIds().Select(x => x.Value));
+                                    Autodesk.Revit.DB.Structure.Rebar rb = del.Where(x => inView.Contains(x.Value)).Select(x => doc.GetElement(x)).OfType<Autodesk.Revit.DB.Structure.Rebar>().FirstOrDefault();
+                                    if (rb == null) continue;
+                                    BoundingBoxXYZ bb = rb.get_BoundingBox(v);
+                                    XYZ at = bb != null ? (bb.Min + bb.Max) / 2 : v.Origin;
+                                    var refs = new List<Reference>();
+                                    try { refs.AddRange(rb.GetSubelements().Select(s => s.GetReference())); } catch { }
+                                    refs.Add(new Reference(rb));
+                                    foreach (Reference rf in refs)
+                                    {
+                                        try { tagId = IndependentTag.Create(doc, tagType, v.Id, rf, true, TagOrientation.Horizontal, at).Id; break; }
+                                        catch { }
+                                    }
+                                    if (tagId != ElementId.InvalidElementId) { sb.AppendLine("probe tag " + tagId.Value + " on rebar " + rb.Id.Value + " in «" + v.Name + "»"); break; }
+                                }
+                                t.Commit();
+                            }
+                            if (tagId == ElementId.InvalidElementId) sb.AppendLine("probe tag: could not place");
+                            List<BbDeleteImpact.Hit> h1 = BbDeleteImpact.Scan(doc, sets);
+                            int n1 = h1.Sum(x => x.Annotations);
+                            sb.AppendLine("scan1 annotations " + n1 + " (delta " + (n1 - n0) + ") · model unchanged by scan: tag alive " + (tagId != ElementId.InvalidElementId && doc.GetElement(tagId) != null)
+                                + ", rebar alive " + del.Count(x => doc.GetElement(x) != null) + "/" + del.Count);
+                            using (var t = new Transaction(doc, "real delete"))
+                            {
+                                t.Start();
+                                doc.Delete(del);
+                                sb.AppendLine("after real delete: tag alive " + (tagId != ElementId.InvalidElementId && doc.GetElement(tagId) != null));
+                                t.RollBack();
+                            }
+                            g.RollBack();
+                        }
+                        break;
+                    }
                 case "hostfix":
                     {
                         // «Хост засах»: mark= (тэмдэгтэй гишүүдийн хүрээ; хоосон бол бүх загвар) — санал болгосон шилжүүлэлт; apply=1 бол хийж, дэлгээсийн

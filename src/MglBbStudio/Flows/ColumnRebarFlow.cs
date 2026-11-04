@@ -66,6 +66,11 @@ namespace MglBb.BeamRebar
             int made = 0, done = 0, failed = 0;
             var notes = new List<string>();
             var steps = new List<RebarJobHost.Step>();
+            // Хуучин арматуртай хамт устах шошго / хэмжээс (бусдынх ч) — үүсгэхээс өмнө нэг удаа асууна.
+            HashSet<string> spared = BbDeleteImpact.Confirm(doc, Title, items
+                .Where(x => book.Col(x.Mark).Enabled && x.Skip == null && !(x.Foreign > 0 && !book.ReplaceForeign))
+                .Select(x => new KeyValuePair<string, List<ElementId>>(x.Mark + " (" + x.Level + ")", BbColumnRebarGen.DeleteSet(doc, x, book.ReplaceForeign))));
+            if (spared == null) return Result.Cancelled;
             foreach (BbColumnGenItem item in items)
             {
                 BbColumnGenItem it = item;
@@ -74,6 +79,7 @@ namespace MglBb.BeamRebar
                 string tag = it.Mark + " (" + it.Level + ")";
                 if (it.Skip != null) { notes.Add(tag + ": алгаслаа — " + it.Skip + "."); continue; }
                 if (it.Foreign > 0 && !book.ReplaceForeign) { notes.Add(tag + ": гараар тавьсан арматуртай — алгаслаа."); continue; }
+                if (spared.Contains(tag)) { notes.Add(tag + ": шошго / хэмжээс хамт устах байсан — алгаслаа."); continue; }
                 steps.Add(new RebarJobHost.Step
                 {
                     Text = tag,
@@ -84,13 +90,14 @@ namespace MglBb.BeamRebar
                         using (var t = new Transaction(doc, "Арматур " + it.Mark))
                         {
                             FailureHandlingOptions fh = t.GetFailureHandlingOptions();
-                            fh.SetFailuresPreprocessor(new BbSwallowWarnings());
+                            fh.SetFailuresPreprocessor(new BbSwallowWarnings(keepAnnotations: true));
                             t.SetFailureHandlingOptions(fh);
                             t.Start();
                             BbBeamRebarGen.Outcome o;
                             try { o = BbColumnRebarGen.Generate(doc, it, p, book.ReplaceForeign); }
                             catch (Exception ex) { t.RollBack(); notes.Add(tag + ": алдаа — " + ex.Message); failed++; return "✗ " + tag + " — алдаа (буцаагдсан)"; }
-                            if (t.Commit() != TransactionStatus.Committed) { notes.Add(tag + ": Revit буцаалаа."); failed++; return "✗ " + tag + " — Revit буцаалаа"; }
+                            BbSwallowWarnings.LastErrors.Clear();
+                            if (t.Commit() != TransactionStatus.Committed) { notes.Add(tag + ": Revit буцаалаа" + BeamRebarFlow.RolledBackWhy()); failed++; return "✗ " + tag + " — Revit буцаалаа"; }
                             made += o.Created; done++; failed += o.Failed;
                             List<string> mine = o.Notes.Distinct().ToList();
                             foreach (string n in mine) notes.Add(tag + ": " + n);
